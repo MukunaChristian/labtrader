@@ -21,6 +21,27 @@ a {
   transition: color 0.15s;
 }
 
+button {
+  border-width: 0;
+}
+
+td, tr, th {
+  border-bottom: 1px solid #E5E7EB;
+  border-top: 1px solid #E5E7EB;
+}
+
+.default-button {
+  @apply flex bg-white rounded-sm px-2 h-8 border-solid border-[1.5px] justify-center items-center cursor-pointer hover:bg-light-grey
+}
+
+.default-save-button {
+  @apply flex bg-navy-blue rounded-sm px-2 h-8 border-solid border-[1.5px] justify-center items-center cursor-pointer text-white hover:bg-light-blue
+}
+
+.default-filter-button {
+  @apply default-button mr-2 my-2 text-sm;
+}
+
 .default-input {
   @apply w-full h-10 border border-solid rounded-md mt-5 px-2 focus:outline-none focus:border-navy-blue;
 }

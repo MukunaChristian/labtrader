@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import { LanguageDropdown } from '../components/dropdowns/languageDropdown';
+import { CurrencyDropdown } from '../components/dropdowns/currencyDropdown';
 
 
 export const Layout = ({ children }) => {
@@ -12,8 +13,8 @@ export const Layout = ({ children }) => {
   return (
     <div className='w-full h-full'>
       {isLogin ? null : 
-        <div className='w-full h-16 bg-navy-blue flex items-center justify-between px-5'>
-          <div className='flex items-center'>
+        <div className='w-full z-30 h-16 bg-navy-blue flex items-center justify-between px-5 fixed'>
+          <div className='flex items-center hover:bg-light-blue p-2 rounded-sm cursor-pointer'>
             <Bars3Icon className='h-6 w-6 text-white' />
             <p className='text-white ml-2'>Menu</p>
           </div>
@@ -24,10 +25,15 @@ export const Layout = ({ children }) => {
 
           <div className='h-full flex items-center'>
             <LanguageDropdown />
+            <CurrencyDropdown />
           </div>
+          
         </div>
       }
-      {children}
+      <div>
+        {children}
+      </div>
+      
     </div>
   )
 }

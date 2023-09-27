@@ -13,7 +13,7 @@ const options = [
 
 export const CurrencyDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState({ id: 1, text: 'Option 1', imgSrc: 'path/to/image1.jpg' });
+  const [selectedOption, setSelectedOption] = useState({id: 5, name: 'South African Rand', symbol: 'R', imgSrc: 'path/to/image5.jpg', toOneUSD: 14.66, code: 'ZAR'});
   const ref = useRef(null);
 
   // Close dropdown when clicking outside
@@ -38,10 +38,10 @@ export const CurrencyDropdown = () => {
           flex items-center justify-center
           w-full text-white 
           h-8 rounded-sm
-          border-0
+          border-0 cursor-pointer
           bg-navy-blue
           hover:outline-none hover:bg-light-blue">
-        <p className='w-12'>{selectedOption.symbol}</p>
+        <p className=''>{selectedOption.symbol}</p>
         <p className='w-12'>{selectedOption.code}</p>
         <ChevronDownIcon className="w-4 h-4 ml-1 text-white" />
       </button>
