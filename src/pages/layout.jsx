@@ -11,7 +11,7 @@ export const Layout = ({ children }) => {
   let isLogin = location.pathname === '/login';
 
   return (
-    <div className='w-full h-full'>
+    <div className='w-[100%] h-full'>
       {isLogin ? null : 
         <div className='w-full z-30 h-16 bg-navy-blue flex items-center justify-between px-5 fixed'>
           <div className='flex items-center hover:bg-light-blue p-2 rounded-sm cursor-pointer'>
@@ -24,8 +24,8 @@ export const Layout = ({ children }) => {
           </form>
 
           <div className='h-full flex items-center'>
-            <LanguageDropdown />
             <CurrencyDropdown />
+            <LanguageDropdown /> 
           </div>
           
         </div>

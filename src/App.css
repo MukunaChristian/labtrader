@@ -23,6 +23,17 @@ a {
 
 button {
   border-width: 0;
+  background-color: white;
+  cursor: pointer;
+}
+
+input:focus {
+  outline: none;
+}
+
+input {
+  border: none;
+  outline: none;
 }
 
 td, tr, th {
@@ -31,7 +42,7 @@ td, tr, th {
 }
 
 .default-button {
-  @apply flex bg-white rounded-sm px-2 h-8 border-solid border-[1.5px] justify-center items-center cursor-pointer hover:bg-light-grey
+  @apply flex rounded-sm px-2 h-8 border-solid border-[1.5px] justify-center items-center cursor-pointer hover:bg-light-grey
 }
 
 .default-save-button {
@@ -42,8 +53,17 @@ td, tr, th {
   @apply default-button mr-2 my-2 text-sm;
 }
 
+.default-filter-active {
+  @apply default-button mr-2 my-2 text-sm bg-dark-grey text-white hover:bg-dark-grey;
+}
+
+
 .default-input {
   @apply w-full h-10 border border-solid rounded-md mt-5 px-2 focus:outline-none focus:border-navy-blue;
+}
+
+.default-button-focus {
+  @apply bg-dark-grey border-solid border-[1.5px] text-white
 }
 
 .logo {

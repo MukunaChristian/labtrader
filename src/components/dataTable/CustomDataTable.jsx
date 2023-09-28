@@ -1,17 +1,28 @@
-import { ChevronDownIcon } from '@heroicons/react/20/solid';
-import { ChevronUpIcon } from '@heroicons/react/20/solid';
+import { diamondRows } from '../diamondData/diamondRows';
 import { DataRows } from './DataRows';
+import { Pagenation } from './Pagenation';
 
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 
 export const CustomDataTable = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const currency = useSelector(state => state.app.currency);
+  const maxItems = 5;
+
+  const maxPages = Math.ceil(diamondRows.length / maxItems);
+  const lastPage = currentPage === maxPages;
+
+  let cutDiamondRows = diamondRows.slice((currentPage - 1) * maxItems, currentPage * maxItems);
+
   const columns = [
     {
       field: 'image',
       headerName: 'Image',
       width: 80,
       renderCell: (params) => 
-        <img className="w-20 h-20 object-contain" src={params.value} />, // renderCell will render the component
+        <img className="w-20 h-20 object-contain border-solid border-[1px]" src={params.value} />, // renderCell will render the component
     },
     {
       field: 'shape',
@@ -87,12 +98,16 @@ export const CustomDataTable = () => {
         <div className="grid grid-cols-2 gap-2">
           <div>
             <div className="flex"><p>Ratio: </p></div>
-            <div className="flex"><p>Measurements: </p></div>
+            <div className="flex"><p>Width: </p></div>
+            <div className="flex"><p>Height: </p></div>
+            <div className="flex"><p>Depth: </p></div>
           </div>
 
           <div>
             <div className="flex"><p>{params.value.ratio}</p></div>
-            <div className="flex"><p>{params.value.measurements}</p></div>
+            <div className="flex"><p>{params.value.measurements.width}</p></div>
+            <div className="flex"><p>{params.value.measurements.height}</p></div>
+            <div className="flex"><p>{params.value.measurements.depth}</p></div>
           </div>
         </div>
       )
@@ -101,6 +116,13 @@ export const CustomDataTable = () => {
       field: 'total',
       headerName: 'Total',
       width: 150,
+      renderCell: (params) => (
+        <div className="flex flex-col">
+          <div className="flex"><p className='text-xs text-[#79de43]'>${parseFloat(params.value) / parseFloat(params.row.specifications.carat)}/ct</p></div>
+          <div className="flex"><p className='text-lg'>${params.value}</p></div>
+          <div className="flex"><p>{parseFloat(params.value) * currency.toOneUSD} {currency.code}</p></div>
+        </div>
+      )
     },
     {
       field: 'shipping',
@@ -110,47 +132,7 @@ export const CustomDataTable = () => {
 
   ];
 
-  
-  const rows = [
-    {
-      id: 1,
-      image: "src/assets/diamond-shapes/round.png",
-      shape: "Round",
-      specifications: {
-        carat: "1.00",
-        col: "D",
-        cla: "IF",
-        cut: "EX"
-      },
-      finish: {
-        pol: "EX",
-        sym: "EX",
-        fluor: "N",
-      },
-      table_depth: {table: "40", depth: "60"},
-      ratio_measurements: {ratio: "0.67", measurements: "6.67 x 6.67 x 4.00"},
-      shipping: "7-10 days",
-    },
-    {
-      id: 1,
-      image: "src/assets/diamond-shapes/round.png",
-      shape: "Round",
-      specifications: {
-        carat: "1.00",
-        col: "D",
-        cla: "IF",
-        cut: "EX"
-      },
-      finish: {
-        pol: "EX",
-        sym: "EX",
-        fluor: "N",
-      },
-      table_depth: {table: "40", depth: "60"},
-      ratio_measurements: {ratio: "0.67", measurements: "6.67 x 6.67 x 4.00"},
-      shipping: "7-10 days",
-    },
-  ];
+
 
   return (
     <div>
@@ -163,11 +145,16 @@ export const CustomDataTable = () => {
           </tr>
         </thead>
         <tbody className='text-sm'>
-          {rows.map((row, rowIndex) => (
+          {cutDiamondRows.map((row, rowIndex) => (
             <DataRows key={rowIndex} row={row} rowIndex={rowIndex} columns={columns} />
           ))}
         </tbody>
       </table>
+      
+      <div className='w-full my-6'>
+        <Pagenation currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} />
+      </div>
+      
     </div>
   );
 }

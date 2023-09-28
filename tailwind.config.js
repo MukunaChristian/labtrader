@@ -18,6 +18,7 @@ export default {
         "delete-red": "#c42346",
         "light-red": "#cc6a7f",
         "light-grey": "#f5f5f5",
+        grey: "#d8d8d8",
         "dark-grey": "#959595",
       },
     },
