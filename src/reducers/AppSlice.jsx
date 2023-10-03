@@ -34,7 +34,8 @@ const appSlice = createSlice({
       "with_unknown_shade": false,
       "with_unknown_luster": false,
       "no_bgm": false,
-    }
+    },
+    diamondData: [],
   },
   reducers: {
     setCurrencyState: (state, action) => {
@@ -46,11 +47,38 @@ const appSlice = createSlice({
     setFiltersState: (state, action) => {
       state.filters = action.payload
     },
+    setDiamondDataState: (state, action) => {
+      state.diamondData = action.payload
+    },
     resetFiltersState: (state) => {
-      state.filters = {}
+      state.filters = {
+        "delivery_time": [],
+        "certificate": [],
+        "shape": [],
+        "carat_range": {
+          "from": 0,
+          "to": 0,
+        },
+        "color": [],
+        "clarity": [],
+        "cut": [],
+        "polish": [],
+        "symmetry": [],
+        "fluorescence": [],
+        "fluorescence_color": [],
+        "eye_clean": [],
+        "show_only_image": false,
+        "show_only_video": false,
+        "show_only_returnable": false,
+        "show_only_immediate_purchase": false,
+        "with_unknown_eye_clean": false,
+        "with_unknown_shade": false,
+        "with_unknown_luster": false,
+        "no_bgm": false,
+      }
     }
   },
 })
 
-export const { setCurrencyState, setLanguageState, setFiltersState, resetFiltersState } = appSlice.actions
+export const { setCurrencyState, setLanguageState, setFiltersState, resetFiltersState, setDiamondDataState } = appSlice.actions
 export default appSlice.reducer;

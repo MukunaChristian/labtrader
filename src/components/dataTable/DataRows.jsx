@@ -2,13 +2,19 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { HandRaisedIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+// import { getQuotes } from './scrapeGem';
 
 
 export const DataRows = ({ row, rowIndex, columns }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  console.log(row)
+  console.log(row["video_link"])
+
+  // useEffect(() => {
+  //   getQuotes(row["video_link"])
+  // }, [])
 
   return (
     <>
@@ -35,7 +41,10 @@ export const DataRows = ({ row, rowIndex, columns }) => {
           `}>
             <div className='flex flex-col items-center justify-top pt-4'>
               <p className='font-bold'>Media</p>
-              <img className='w-48 h-48 my-2' src={row.image} alt="" />
+              {/* <img className='w-48 h-48 my-2' src={row.image} alt="" /> */}
+              <div className='iframe-container'>
+                <iframe src={row["video_link"]} height="200" width="300" className='iframe-custom my-2'></iframe> 
+              </div>
               <button className='bg-dark-grey rounded-sm text-white px-3 py-1 cursor-pointer'>CVD</button>
             </div>
             <div className='pt-4'>
@@ -54,7 +63,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             <div className='pt-4'>
               <p className='font-bold pb-2'>Diamond Details</p>
               <div className='pb-2'>
-                {row.shape} {row.specifications.carat}ct {row.specifications.col} {row.specifications.cla} {row.specifications.cut} {row.finish.pol} {row.finish.sym} {row.finish.fluor}
+                {row.shape} {row.specifications.carat}ct {row.specifications.color} {row.specifications.clarity} {row.specifications.cut} {row.finish.polish} {row.finish.symmetry} {row.finish.fluorescence}
               </div>
 
               <div className='grid grid-cols-2 gap-4'>

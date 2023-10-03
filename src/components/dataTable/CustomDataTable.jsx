@@ -1,20 +1,27 @@
-import { diamondRows } from '../diamondData/diamondRows';
 import { DataRows } from './DataRows';
 import { Pagenation } from './Pagenation';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 
-export const CustomDataTable = () => {
+export const CustomDataTable = ({ currentRows }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentRowsLocal, setCurrentRowsLocal] = useState(currentRows); // diamondRows.slice(0, 5) // [0, 5
+  
   const currency = useSelector(state => state.app.currency);
   const maxItems = 5;
 
-  const maxPages = Math.ceil(diamondRows.length / maxItems);
+  console.log(currentRows)
+
+  const maxPages = Math.ceil(currentRows.length / maxItems);
   const lastPage = currentPage === maxPages;
 
-  let cutDiamondRows = diamondRows.slice((currentPage - 1) * maxItems, currentPage * maxItems);
+
+  useEffect(() => {
+    let cutDiamondRows = currentRows.slice((currentPage - 1) * maxItems, currentPage * maxItems);
+    setCurrentRowsLocal(cutDiamondRows);
+  }, [currentPage])
 
   const columns = [
     {
@@ -44,8 +51,8 @@ export const CustomDataTable = () => {
 
           <div>
             <div className="flex"><p>{params.value.carat}</p></div>
-            <div className="flex"><p>{params.value.col}</p></div>
-            <div className="flex"><p>{params.value.cla}</p></div>
+            <div className="flex flex-wrap"><p>{params.value.color}</p></div>
+            <div className="flex"><p>{params.value.clarity}</p></div>
             <div className="flex"><p>{params.value.cut}</p></div>
 
           </div>
@@ -62,12 +69,14 @@ export const CustomDataTable = () => {
             <div className="flex"><p>Polish: </p></div>
             <div className="flex"><p>Symmetry: </p></div>
             <div className="flex"><p>Fluor: </p></div>
+            <div className="flex"><p>Fluor Color: </p></div>
           </div>
 
           <div>
-            <div className="flex"><p>{params.value.pol}</p></div>
-            <div className="flex"><p>{params.value.sym}</p></div>
-            <div className="flex"><p>{params.value.fluor}</p></div>
+            <div className="flex"><p>{params.value.polish}</p></div>
+            <div className="flex"><p>{params.value.symmetry}</p></div>
+            <div className="flex"><p>{params.value.fluorescence}</p></div>
+            <div className="flex"><p>{params.value.fluorescence_color}</p></div>
           </div>
         </div>
       )
@@ -133,6 +142,11 @@ export const CustomDataTable = () => {
   ];
 
 
+  useEffect(() => {
+    let cutDiamondRows = currentRows.slice((currentPage - 1) * maxItems, currentPage * maxItems);
+    setCurrentRowsLocal(cutDiamondRows);
+  }, [currentRows])
+
 
   return (
     <div>
@@ -145,7 +159,7 @@ export const CustomDataTable = () => {
           </tr>
         </thead>
         <tbody className='text-sm'>
-          {cutDiamondRows.map((row, rowIndex) => (
+          {currentRowsLocal.map((row, rowIndex) => (
             <DataRows key={rowIndex} row={row} rowIndex={rowIndex} columns={columns} />
           ))}
         </tbody>

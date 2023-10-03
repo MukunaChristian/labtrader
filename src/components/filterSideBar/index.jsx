@@ -1,6 +1,5 @@
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 
@@ -16,32 +15,35 @@ import {
   fluorescence_color_list,
   certificate_list
 } from "./filterLists";
+import { filterTemplate } from "./filterTemplate"
+
+import { useApp } from "../../hooks/useApp"
 
 export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) => {
   const [showMore, setShowMore] = useState(false);
   const [whiteFancy, setWhiteFancy] = useState("white");
 
-  const imageDir = 'src/assets/diamond-shapes/';
-  const filtersGlobal = useSelector((state) => state.app.filters);
-  
-  const [filters, setFilters] = useState(filtersGlobal);
+  const imageDir = 'src/assets/diamond-shapes/';  
+  const [filtersLocal, setFiltersLocal] = useState(filterTemplate);
+
+  const { setFilters, resetFilters } = useApp()
 
   const handleFilterChange = (filterName, filterItem) => {
     if (typeof filterItem === 'string') {
-      const newFilters = { ...filters };
+      const newFilters = { ...filtersLocal };
       console.log(newFilters[filterName])
       if (newFilters[filterName].includes(filterItem)) {
         newFilters[filterName] = newFilters[filterName].filter((item) => item !== filterItem);
       } else {
         newFilters[filterName] = [ ...newFilters[filterName], filterItem]
       }
-      setFilters(newFilters);
+      setFiltersLocal(newFilters);
     } else {
       // if filter is boolean
       console.log(filterName)
-      const newFilters = { ...filters };
+      const newFilters = { ...filtersLocal };
       newFilters[filterName] = !newFilters[filterName];
-      setFilters(newFilters);
+      setFiltersLocal(newFilters);
     }
   }
 
@@ -55,11 +57,76 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
 
   const onSave = () => {
     setIsFilterSideBarOpen(false);
+    setFilters(filtersLocal)
   }
 
-  const resetFilters = () => {
-    setIsFilterSideBarOpen(false);
+  const handleReset = () => {
+    setFiltersLocal(filterTemplate);
+    resetFilters()
   }
+
+  // Triggered if min or max is changed
+  // validate if min is less than max and vice versa
+  // also validate if min and max are numbers or float
+  const handleCaratInput = (event) => {
+    const { name, value } = event.target;
+    console.log(name, value)
+
+    if (value.isInteger) {
+      console.log("not a number or float")
+      return
+    }
+
+    if (filtersLocal["carat_range"]["from"] === 0 && filtersLocal["carat_range"]["to"] === 0) {
+      console.log("both are 0")
+      const newFilters = { ...filtersLocal };
+      newFilters["carat_range"]["from"] = value;
+      newFilters["carat_range"]["to"] = value;
+      setFiltersLocal(newFilters);
+    }
+
+    if (name === "min") {
+      const newFilters = { ...filtersLocal };
+      newFilters["carat_range"]["from"] = value;
+      setFiltersLocal(newFilters);
+    } else {
+      const newFilters = { ...filtersLocal };
+      newFilters["carat_range"]["to"] = value;
+      setFiltersLocal(newFilters);
+    }
+  }
+
+  const checkIfCaratInRange = (carat) => {
+    if (carat.endsWith("ct")) {
+      carat = carat.slice(0, -2)
+    } else if (carat.endsWith("s")) {
+      carat = carat.slice(0, -1) / 100
+    } else if (carat.endsWith("ct+")) {
+      carat = carat.slice(0, -3)
+    }
+
+    // if only "to" or "from" is set check if value is exactly equal to "to" or "from"
+    if (filtersLocal["carat_range"]["from"] && !filtersLocal["carat_range"]["to"]) {
+      if (carat === filtersLocal["carat_range"]["to"]) {
+        return true
+      } else {
+        return false
+      }
+    } else if (!filtersLocal["carat_range"]["from"] && filtersLocal["carat_range"]["to"]) {
+      if (carat === filtersLocal["carat_range"]["from"]) {
+        return true
+      } else {
+        return false
+      }
+    }
+
+    if (carat >= filtersLocal["carat_range"]["from"] && carat <= filtersLocal["carat_range"]["to"]) {
+      return true
+    } else {  
+      return false
+    }
+  }
+
 
 
   return (
@@ -76,7 +143,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             <FieldGroups 
               fieldGroups={["5d or less", "8d or less", "10d or less", "15d or less"]} 
               fieldGroupName="delivery_time" 
-              selectedFieldGroup={filters["delivery_time"]} 
+              selectedFieldGroup={filtersLocal["delivery_time"]} 
               onFieldGroupSelect={handleFilterChange}  
             /> 
           </div>
@@ -85,7 +152,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             <FieldGroups 
               fieldGroups={certificate_list} 
               fieldGroupName="certificate" 
-              selectedFieldGroup={filters["certificate"]} 
+              selectedFieldGroup={filtersLocal["certificate"]} 
               onFieldGroupSelect={handleFilterChange}  
             /> 
           </div>
@@ -116,13 +183,13 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
           <div className="grid grid-cols-4 gap-4">
             {showMore ? 
             diamondShapes.map((diamondShape) => (
-              <div key={diamondShape.id} className="flex flex-col items-center justify-around border-solid border-[1.5px] h-24">
+              <div key={diamondShape.id} onClick={() => {handleFilterChange("shape", diamondShape.name)}} className={`flex flex-col items-center justify-around border-solid border-[1.5px] h-24 ${filtersLocal["shape"].includes(diamondShape.name) && "border-red-100"}`}>
                 <p className="text-xs w-[80%] text-center">{diamondShape.name}</p>
                 <img className="w-12 h-12" src={imageDir + diamondShape.imgSrc}/>
               </div>
             )) : 
             diamondShapes.slice(0, 16).map((diamondShape) => (
-              <div key={diamondShape.id} className="flex flex-col items-center justify-around border-solid border-[1.5px] h-24">
+              <div key={diamondShape.id} onClick={() => {handleFilterChange("shape", diamondShape.name)}} className={`flex flex-col items-center justify-around border-solid border-[1.5px] h-24 ${filtersLocal["shape"].includes(diamondShape.name) && "border-red-100"}`}>
                 <p className="text-xs w-[80%] text-center">{diamondShape.name}</p>
                 <img className="w-12 h-12" src={imageDir + diamondShape.imgSrc}/>
               </div>
@@ -151,7 +218,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
               <div>
                 <label className="text-xs">Min</label>
                 <div className="flex border-solid border-[1.5px] rounded-md">
-                  <input className="w-24 p-1 rounded-md" />
+                  <input name="min" className="w-24 p-1 rounded-md" onChange={handleCaratInput} value={filtersLocal["carat_range"]["from"]}/>
                   <p className="text-xs text-dark-grey px-2">ct</p>
                 </div>
                 
@@ -160,7 +227,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
               <div className="ml-2">
                 <label className="text-xs">Max</label>
                 <div className="flex border-solid border-[1.5px] rounded-md">
-                  <input className="w-24 p-1 rounded-md" />
+                  <input name="max" className="w-24 p-1 rounded-md" onChange={handleCaratInput} value={filtersLocal["carat_range"]["to"]}/>
                   <p className="text-xs text-dark-grey px-2">ct</p>
                 </div>
               </div>
@@ -168,7 +235,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
 
             <div className="flex flex-wrap ml-8">
               {carat_list.map((carat) => (
-                <div key={carat} className="default-filter-button w-12">{carat}</div>
+                <div key={carat} className={`default-filter-button w-12 ${checkIfCaratInRange(carat) && 'bg-dark-grey'}`}>{carat}</div>
               ))}
             </div>
           </div>    
@@ -197,7 +264,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
           <FieldGroups 
             fieldGroups={color_list} 
             fieldGroupName="color" 
-            selectedFieldGroup={filters["color"]} 
+            selectedFieldGroup={filtersLocal["color"]} 
             onFieldGroupSelect={handleFilterChange} />  
         </div>
 
@@ -207,7 +274,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             <FieldGroups 
               fieldGroups={clarity_list} 
               fieldGroupName="clarity" 
-              selectedFieldGroup={filters["clarity"]} 
+              selectedFieldGroup={filtersLocal["clarity"]} 
               onFieldGroupSelect={handleFilterChange}  
             />   
           </div>
@@ -217,7 +284,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             <FieldGroups 
               fieldGroups={cut_list} 
               fieldGroupName="cut" 
-              selectedFieldGroup={filters["cut"]} 
+              selectedFieldGroup={filtersLocal["cut"]} 
               onFieldGroupSelect={handleFilterChange}  
             />   
           </div>
@@ -229,7 +296,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             <FieldGroups 
               fieldGroups={polish_symmetry_list} 
               fieldGroupName="polish" 
-              selectedFieldGroup={filters["polish"]} 
+              selectedFieldGroup={filtersLocal["polish"]} 
               onFieldGroupSelect={handleFilterChange}  />    
           </div>
 
@@ -238,7 +305,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             <FieldGroups 
               fieldGroups={polish_symmetry_list} 
               fieldGroupName="symmetry" 
-              selectedFieldGroup={filters["symmetry"]} 
+              selectedFieldGroup={filtersLocal["symmetry"]} 
               onFieldGroupSelect={handleFilterChange}  />   
           </div>
         </div>
@@ -249,7 +316,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             <FieldGroups 
               fieldGroups={fluorescence_list} 
               fieldGroupName="fluorescence" 
-              selectedFieldGroup={filters["fluorescence"]} 
+              selectedFieldGroup={filtersLocal["fluorescence"]} 
               onFieldGroupSelect={handleFilterChange}  />    
           </div>
 
@@ -258,7 +325,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             <FieldGroups 
               fieldGroups={fluorescence_color_list} 
               fieldGroupName="fluorescence_color" 
-              selectedFieldGroup={filters["fluorescence_color"]} 
+              selectedFieldGroup={filtersLocal["fluorescence_color"]} 
               onFieldGroupSelect={handleFilterChange} 
             />   
           </div>
@@ -269,7 +336,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
           <FieldGroups 
             fieldGroups={["Yes", "No", "Borderline"]} 
             fieldGroupName="eye_clean" 
-            selectedFieldGroup={filters["eye_clean"]} 
+            selectedFieldGroup={filtersLocal["eye_clean"]} 
             onFieldGroupSelect={handleFilterChange} 
           />  
         </div>
@@ -297,7 +364,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
       
 
         <div className="fixed py-4 flex justify-end mt-4 bottom-0 w-[93vh] bg-white">
-          <button onClick={() => {resetFilters()}} className="default-button w-16 mr-2" >Reset</button>
+          <button onClick={() => {handleReset()}} className="default-button w-16 mr-2" >Reset</button>
           <button onClick={() => {setIsFilterSideBarOpen(false)}} className="default-button w-16" >Cancel</button>
           <button onClick={() => {onSave()}} className="default-save-button ml-2 w-16" >Apply</button>
         </div>

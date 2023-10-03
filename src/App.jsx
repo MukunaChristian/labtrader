@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Dashboard } from './pages/dashboard'
 import { Layout } from './pages/layout';
 import { Login } from './pages/login';
+import { Details } from './pages/Details';
 import store from './store';
 
 
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/details/:id" element={<Details />} />
           </Routes>
         </Layout>
       </BrowserRouter>

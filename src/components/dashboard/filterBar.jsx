@@ -4,7 +4,15 @@ import { FilterDropdown } from "../dropdowns/filterDropdown"
 import { BarsArrowUpIcon } from "@heroicons/react/20/solid"
 
 
-export const FilterBar = ({ setIsFilterSideBarOpen }) => {
+export const FilterBar = ({ setIsFilterSideBarOpen, setCurrentRows, currentRows }) => {
+
+  const sortPrice = () => {
+    let sortedRows = [...currentRows];
+    sortedRows.sort((a, b) => a.total > b.total ? 1 : -1);
+    console.log(sortedRows)
+    setCurrentRows(sortedRows);
+  }
+
   return (
     <div className="flex flex-wrap p-4 pt-0">
       <button onClick={() => {setIsFilterSideBarOpen(true)}} className="flex bg-navy-blue rounded-sm h-8 w-24 text-white justify-center items-center cursor-pointer hover:bg-light-blue">
@@ -18,7 +26,7 @@ export const FilterBar = ({ setIsFilterSideBarOpen }) => {
       <div className="ml-4">
         <FilterDropdown />
       </div>
-      <button className="default-button ml-auto">
+      <button onClick={() => sortPrice()} className="default-button ml-auto">
         <p>Price: low to high</p>
         <BarsArrowUpIcon className="w-4 h-4 ml-2" />
       </button>

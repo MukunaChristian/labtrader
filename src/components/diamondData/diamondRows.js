@@ -5,14 +5,15 @@ export const diamondRows = [
     shape: "Round",
     specifications: {
       carat: "1.00",
-      col: "D",
-      cla: "IF",
-      cut: "EX",
+      color: "D",
+      clarity: "IF",
+      cut: "Excellent",
     },
     finish: {
-      pol: "EX",
-      sym: "EX",
-      fluor: "N",
+      polish: "Excellent",
+      symmetry: "Excellent",
+      fluorescence: "None",
+      fluorescence_color: "None",
     },
     table_depth: { table: "40", depth: "60" },
     ratio_measurements: {
@@ -23,8 +24,10 @@ export const diamondRows = [
         depth: "4.00",
       },
     },
-    total: "1000",
-    shipping: "7-10 days",
+    total: "1500",
+
+    video_link:
+      "https://view.gem360.in/gem360/1103230822-K351/gem360-1103230822-K351.html",
   },
   {
     id: 1,
@@ -32,14 +35,15 @@ export const diamondRows = [
     shape: "Round",
     specifications: {
       carat: "1.00",
-      col: "D",
-      cla: "IF",
-      cut: "EX",
+      color: "D",
+      clarity: "IF",
+      cut: "Excellent",
     },
     finish: {
-      pol: "EX",
-      sym: "EX",
-      fluor: "N",
+      polish: "Excellent",
+      symmetry: "Excellent",
+      fluorescence: "None",
+      fluorescence_color: "None",
     },
     table_depth: { table: "40", depth: "60" },
     ratio_measurements: {
@@ -51,7 +55,9 @@ export const diamondRows = [
       },
     },
     total: "1000",
-    shipping: "7-10 days",
+
+    video_link:
+      "https://view.gem360.in/gem360/1103230822-K351/gem360-1103230822-K351.html",
   },
   {
     id: 2,
@@ -59,14 +65,15 @@ export const diamondRows = [
     shape: "Round",
     specifications: {
       carat: "1.00",
-      col: "D",
-      cla: "IF",
-      cut: "EX",
+      color: "D",
+      clarity: "IF",
+      cut: "Excellent",
     },
     finish: {
-      pol: "EX",
-      sym: "EX",
-      fluor: "N",
+      polish: "Excellent",
+      symmetry: "Excellent",
+      fluorescence: "None",
+      fluorescence_color: "None",
     },
     table_depth: { table: "40", depth: "60" },
     ratio_measurements: {
@@ -77,8 +84,10 @@ export const diamondRows = [
         depth: "4.00",
       },
     },
-    total: "1000",
-    shipping: "7-10 days",
+    total: "1400",
+
+    video_link:
+      "https://view.gem360.in/gem360/1103230822-K351/gem360-1103230822-K351.html",
   },
   {
     id: 3,
@@ -86,14 +95,15 @@ export const diamondRows = [
     shape: "Round",
     specifications: {
       carat: "1.00",
-      col: "D",
-      cla: "IF",
-      cut: "EX",
+      color: "D",
+      clarity: "IF",
+      cut: "Excellent",
     },
     finish: {
-      pol: "EX",
-      sym: "EX",
-      fluor: "N",
+      polish: "Excellent",
+      symmetry: "Excellent",
+      fluorescence: "None",
+      fluorescence_color: "None",
     },
     table_depth: { table: "40", depth: "60" },
     ratio_measurements: {
@@ -104,8 +114,10 @@ export const diamondRows = [
         depth: "4.00",
       },
     },
-    total: "1000",
-    shipping: "7-10 days",
+    total: "1300",
+
+    video_link:
+      "https://view.gem360.in/gem360/1103230822-K351/gem360-1103230822-K351.html",
   },
   {
     id: 4,
@@ -113,14 +125,15 @@ export const diamondRows = [
     shape: "Round",
     specifications: {
       carat: "1.00",
-      col: "D",
-      cla: "IF",
-      cut: "EX",
+      color: "D",
+      clarity: "IF",
+      cut: "Excellent",
     },
     finish: {
-      pol: "EX",
-      sym: "EX",
-      fluor: "N",
+      polish: "Excellent",
+      symmetry: "Excellent",
+      fluorescence: "None",
+      fluorescence_color: "None",
     },
     table_depth: { table: "40", depth: "60" },
     ratio_measurements: {
@@ -132,7 +145,9 @@ export const diamondRows = [
       },
     },
     total: "1000",
-    shipping: "7-10 days",
+
+    video_link:
+      "https://view.gem360.in/gem360/1103230822-K351/gem360-1103230822-K351.html",
   },
   {
     id: 5,
@@ -140,14 +155,15 @@ export const diamondRows = [
     shape: "Round",
     specifications: {
       carat: "1.00",
-      col: "D",
-      cla: "IF",
-      cut: "EX",
+      color: "D",
+      clarity: "IF",
+      cut: "Excellent",
     },
     finish: {
-      pol: "EX",
-      sym: "EX",
-      fluor: "N",
+      polish: "Excellent",
+      symmetry: "Excellent",
+      fluorescence: "None",
+      fluorescence_color: "None",
     },
     table_depth: { table: "40", depth: "60" },
     ratio_measurements: {
@@ -158,7 +174,9 @@ export const diamondRows = [
         depth: "4.00",
       },
     },
-    total: "1000",
-    shipping: "7-10 days",
+    total: "1200",
+
+    video_link:
+      "https://view.gem360.in/gem360/1103230822-K351/gem360-1103230822-K351.html",
   },
 ];

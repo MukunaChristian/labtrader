@@ -2,13 +2,22 @@ import { useLocation } from 'react-router-dom';
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import { LanguageDropdown } from '../components/dropdowns/languageDropdown';
 import { CurrencyDropdown } from '../components/dropdowns/currencyDropdown';
+import { transformedList } from '../data/getDiamondData';
+import { setDiamondDataState } from '../reducers/appSlice';
+import { useDispatch } from 'react-redux';
 
+import { useEffect } from 'react';
 
 export const Layout = ({ children }) => {
+  const dispatch = useDispatch();
   const location = useLocation();
-  console.log(location.pathname);
 
   let isLogin = location.pathname === '/login';
+
+  useEffect(() => {
+    const data = transformedList();
+    dispatch(setDiamondDataState(data))
+  }, [])
 
   return (
     <div className='w-[100%] h-full'>
@@ -30,7 +39,7 @@ export const Layout = ({ children }) => {
           
         </div>
       }
-      <div>
+      <div className='h-full'>
         {children}
       </div>
       
