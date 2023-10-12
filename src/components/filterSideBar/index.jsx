@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 
-import { FieldGroups } from "./fieldGroups";
+import { FieldGroups, FancyColorFields } from "./fieldGroups";
 import { 
   diamondShapes, 
   carat_list, 
@@ -28,7 +28,20 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
 
   const { setFilters, resetFilters } = useApp()
 
-  const handleFilterChange = (filterName, filterItem) => {
+  const handleFilterChange = (filterName, filterItemInp) => {
+    const filterItem = filterItemInp.toLowerCase();
+
+    if (filterName === "fancyColor") {
+      const newFilters = { ...filtersLocal };
+      if (newFilters["color"].includes(filterItem)) {
+        newFilters["color"] = newFilters["color"].filter((item) => item !== filterItem);
+      } else {
+        newFilters["color"] = [ ...newFilters["color"], filterItem]
+      }
+      setFiltersLocal(newFilters);
+      return  
+    }
+
     if (typeof filterItem === 'string') {
       const newFilters = { ...filtersLocal };
       console.log(newFilters[filterName])
@@ -86,12 +99,10 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
     }
 
     if (name === "min") {
-      const newFilters = { ...filtersLocal };
-      newFilters["carat_range"]["from"] = value;
+      let newFilters = { ...filtersLocal, carat_range: { ...filtersLocal["carat_range"], from: value } };
       setFiltersLocal(newFilters);
     } else {
-      const newFilters = { ...filtersLocal };
-      newFilters["carat_range"]["to"] = value;
+      let newFilters = { ...filtersLocal, carat_range: { ...filtersLocal["carat_range"], to: value } };
       setFiltersLocal(newFilters);
     }
   }
@@ -183,13 +194,13 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
           <div className="grid grid-cols-4 gap-4">
             {showMore ? 
             diamondShapes.map((diamondShape) => (
-              <div key={diamondShape.id} onClick={() => {handleFilterChange("shape", diamondShape.name)}} className={`flex flex-col items-center justify-around border-solid border-[1.5px] h-24 ${filtersLocal["shape"].includes(diamondShape.name) && "border-red-100"}`}>
+              <div key={diamondShape.id} onClick={() => {handleFilterChange("shape", diamondShape.name)}} className={`flex flex-col items-center justify-around border-solid border-[1.5px] h-24 ${filtersLocal["shape"].includes(diamondShape.name.toLowerCase()) && "border-red-100"}`}>
                 <p className="text-xs w-[80%] text-center">{diamondShape.name}</p>
                 <img className="w-12 h-12" src={imageDir + diamondShape.imgSrc}/>
               </div>
             )) : 
             diamondShapes.slice(0, 16).map((diamondShape) => (
-              <div key={diamondShape.id} onClick={() => {handleFilterChange("shape", diamondShape.name)}} className={`flex flex-col items-center justify-around border-solid border-[1.5px] h-24 ${filtersLocal["shape"].includes(diamondShape.name) && "border-red-100"}`}>
+              <div key={diamondShape.id} onClick={() => {handleFilterChange("shape", diamondShape.name)}} className={`flex flex-col items-center justify-around border-solid border-[1.5px] h-24 ${filtersLocal["shape"].includes(diamondShape.name.toLowerCase()) && "border-red-100"}`}>
                 <p className="text-xs w-[80%] text-center">{diamondShape.name}</p>
                 <img className="w-12 h-12" src={imageDir + diamondShape.imgSrc}/>
               </div>
@@ -261,11 +272,14 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
               >Fancy</button>
             </div>
           </div>
+          {whiteFancy === "white" ? (
           <FieldGroups 
             fieldGroups={color_list} 
             fieldGroupName="color" 
             selectedFieldGroup={filtersLocal["color"]} 
-            onFieldGroupSelect={handleFilterChange} />  
+            onFieldGroupSelect={handleFilterChange} /> ) : (
+          <FancyColorFields selectedFieldGroup={filtersLocal["color"]} onFieldGroupSelect={handleFilterChange} />
+            )} 
         </div>
 
         <div className="flex">

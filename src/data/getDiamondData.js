@@ -1,5 +1,13 @@
 import diamondData from "./output.json";
 
+const callDiamondApi = async () => {
+  const response = await fetch(
+    import.meta.env.VITE_DATA_PROVIDER_URL + "/diamonds"
+  );
+  const data = await response.json();
+  return data;
+};
+
 function getDiamondDataList(sourceObj) {
   // fit diamond data into default object structure
   let videoLink = sourceObj["Video Link"];
@@ -13,8 +21,13 @@ function getDiamondDataList(sourceObj) {
     videoLink = videoLink.replace("http", "https");
   }
 
+  if (!videoLink.includes("view.gem360.in")) {
+    videoLink = "";
+  }
+
   return {
-    id: parseInt(sourceObj["Stock Id."]), // Assuming the 'K' in "K351" can be ignored
+    id: sourceObj["Stock Id."], // Assuming the 'K' in "K351" can be ignored
+    cert_id: "LG" + sourceObj["Report"],
     image: "src/assets/diamond-shapes/round.png", // This is static in your example
     shape: sourceObj["Shape"].toLowerCase(),
     specifications: {
@@ -46,7 +59,7 @@ function getDiamondDataList(sourceObj) {
   };
 }
 
-export const transformedList = () => {
+export const transformedList = (data) => {
   const diamondDataCollect = [];
   for (const item of diamondData) {
     const diamondItem = getDiamondDataList(item);

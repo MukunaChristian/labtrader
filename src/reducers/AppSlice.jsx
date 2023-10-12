@@ -36,8 +36,12 @@ const appSlice = createSlice({
       "no_bgm": false,
     },
     diamondData: [],
+    loggedIn: false
   },
   reducers: {
+    setLoggedInState: (state, action) => {
+      state.loggedIn = action.payload
+    },
     setCurrencyState: (state, action) => {
       state.currency = action.payload
     },
@@ -55,10 +59,7 @@ const appSlice = createSlice({
         "delivery_time": [],
         "certificate": [],
         "shape": [],
-        "carat_range": {
-          "from": 0,
-          "to": 0,
-        },
+        "carat_range": {},
         "color": [],
         "clarity": [],
         "cut": [],
@@ -80,5 +81,5 @@ const appSlice = createSlice({
   },
 })
 
-export const { setCurrencyState, setLanguageState, setFiltersState, resetFiltersState, setDiamondDataState } = appSlice.actions
+export const { setCurrencyState, setLanguageState, setFiltersState, resetFiltersState, setDiamondDataState, setLoggedInState } = appSlice.actions
 export default appSlice.reducer;

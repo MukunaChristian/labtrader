@@ -65,20 +65,20 @@ export const clarity_list = [
 ];
 
 export const cut_list = [
-  "Ideal",
-  "Excellent",
-  "Very Good",
-  "Good",
-  "Fair",
-  "Poor",
+  { display: "Ideal", name: "ID" },
+  { display: "Excellent", name: "EX" },
+  { display: "Very Good", name: "VG" },
+  { display: "Good", name: "GD" },
+  { display: "Fair", name: "FR" },
+  { display: "Poor", name: "PR" },
 ];
 
 export const polish_symmetry_list = [
-  "Excellent",
-  "Very Good",
-  "Good",
-  "Fair",
-  "Poor",
+  { display: "Excellent", name: "EX" },
+  { display: "Very Good", name: "VG" },
+  { display: "Good", name: "GD" },
+  { display: "Fair", name: "FR" },
+  { display: "Poor", name: "PR" },
 ];
 
 export const fluorescence_list = [
@@ -102,12 +102,12 @@ export const diamondShapes = [
   { id: 1, name: "Round", imgSrc: "round.png" },
   { id: 2, name: "Princess", imgSrc: "princess.png" },
   { id: 3, name: "Emerald", imgSrc: "emerald.png" },
-  { id: 4, name: "Sq. emerald", imgSrc: "square-emerald.jpg" },
+  { id: 4, name: "Square emerald", imgSrc: "square-emerald.jpg" },
   { id: 5, name: "Asscher", imgSrc: "asscher.png" },
   { id: 6, name: "Cushion", imgSrc: "cushion.png" },
   { id: 7, name: "Cushion bril modified", imgSrc: "cushion.png" },
   { id: 8, name: "Radiant", imgSrc: "radiant.png" },
-  { id: 9, name: "Sq. radiant", imgSrc: "radiant.png" },
+  { id: 9, name: "Square radiant", imgSrc: "radiant.png" },
   { id: 10, name: "Pear", imgSrc: "pear.png" },
   { id: 11, name: "Oval", imgSrc: "oval.jpg" },
   { id: 12, name: "Marquise", imgSrc: "marquise.png" },

@@ -7,7 +7,9 @@ import { Layout } from './pages/layout';
 import { Login } from './pages/login';
 import { Details } from './pages/Details';
 import store from './store';
+import axios from 'axios';
 
+axios.defaults.baseURL = import.meta.env.VITE_DATA_PROVIDER_URL;
 
 function App() {
 

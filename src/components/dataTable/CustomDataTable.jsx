@@ -1,5 +1,6 @@
 import { DataRows } from './DataRows';
 import { Pagenation } from './Pagenation';
+import { capitalizeFirstLetter } from '../toUpperCase';
 
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -11,8 +12,6 @@ export const CustomDataTable = ({ currentRows }) => {
   
   const currency = useSelector(state => state.app.currency);
   const maxItems = 5;
-
-  console.log(currentRows)
 
   const maxPages = Math.ceil(currentRows.length / maxItems);
   const lastPage = currentPage === maxPages;
@@ -35,28 +34,52 @@ export const CustomDataTable = ({ currentRows }) => {
       field: 'shape',
       headerName: 'Shape',
       width: 100,
+      renderCell: (params) => (
+        <p>{capitalizeFirstLetter(params.value)}</p>
+      )
     },
     {
       field: 'specifications',
       headerName: 'Specifications',
       width: 200,
       renderCell: (params) => (
-        <div className="grid grid-cols-2 gap-6">
           <div>
-            <div className="flex"><p>Carat: </p></div>
-            <div className="flex"><p>Color: </p></div>
-            <div className="flex"><p>Clarity: </p></div>
-            <div className="flex"><p>Cut: </p></div>
-          </div>
+            <div className='flex'>
+              <div className='w-[25%]'>
+                <p>Carat: </p>
+              </div>
+              <div className='w-[50%]'>
+                <p>{params.value.carat}</p>
+              </div>
+            </div>
 
-          <div>
-            <div className="flex"><p>{params.value.carat}</p></div>
-            <div className="flex flex-wrap"><p>{params.value.color}</p></div>
-            <div className="flex"><p>{params.value.clarity}</p></div>
-            <div className="flex"><p>{params.value.cut}</p></div>
+            <div className='flex'>
+              <div className='w-[25%]'>
+                <p>Color: </p>
+              </div>
+              <div className='w-[50%]'>
+                {params.value.color}
+              </div>
+            </div>
 
+            <div className='flex'>
+              <div className='w-[25%]'>
+                <p>Clarity: </p>
+              </div>
+              <div className='w-[50%]'>
+                <p>{params.value.clarity}</p>
+              </div>
+            </div>
+
+            <div className='flex'>
+              <div className='w-[25%]'>
+                <p>Cut: </p>
+              </div>
+              <div className='w-[50%]'>
+                <p>{params.value.cut}</p>
+              </div>
+            </div>
           </div>
-        </div>
       )
     },
     {
@@ -73,10 +96,10 @@ export const CustomDataTable = ({ currentRows }) => {
           </div>
 
           <div>
-            <div className="flex"><p>{params.value.polish}</p></div>
-            <div className="flex"><p>{params.value.symmetry}</p></div>
-            <div className="flex"><p>{params.value.fluorescence}</p></div>
-            <div className="flex"><p>{params.value.fluorescence_color}</p></div>
+            <div className="flex"><p>{capitalizeFirstLetter(params.value.polish)}</p></div>
+            <div className="flex"><p>{capitalizeFirstLetter(params.value.symmetry)}</p></div>
+            <div className="flex"><p>{capitalizeFirstLetter(params.value.fluorescence)}</p></div>
+            <div className="flex"><p>{capitalizeFirstLetter(params.value.fluorescence_color)}</p></div>
           </div>
         </div>
       )
@@ -84,7 +107,7 @@ export const CustomDataTable = ({ currentRows }) => {
     {
       field: 'table_depth',
       headerName: 'Table/Depth',
-      width: 80,
+      width: 50,
       renderCell: (params) => (
         <div className="grid grid-cols-2 gap-6">
           <div>
@@ -127,7 +150,7 @@ export const CustomDataTable = ({ currentRows }) => {
       width: 150,
       renderCell: (params) => (
         <div className="flex flex-col">
-          <div className="flex"><p className='text-xs text-[#79de43]'>${parseFloat(params.value) / parseFloat(params.row.specifications.carat)}/ct</p></div>
+          <div className="flex"><p className='text-xs text-[#79de43]'>${(parseFloat(params.value) / parseFloat(params.row.specifications.carat)).toFixed(2)}/ct</p></div>
           <div className="flex"><p className='text-lg'>${params.value}</p></div>
           <div className="flex"><p>{parseFloat(params.value) * currency.toOneUSD} {currency.code}</p></div>
         </div>

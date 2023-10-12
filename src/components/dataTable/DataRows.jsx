@@ -3,18 +3,33 @@ import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { HandRaisedIcon } from '@heroicons/react/24/outline';
 import { useState, useEffect } from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // import { getQuotes } from './scrapeGem';
 
 
 export const DataRows = ({ row, rowIndex, columns }) => {
+  const currency = useSelector(state => state.app.currency);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [gemDisabled, setGemDisabled] = useState(true);
+  const [gemLoaded, setGemLoaded] = useState(false);
+  const navigate = useNavigate();
 
-  console.log(row["video_link"])
+  const handleExpand = () => {
+    if (isExpanded) {
+      setTimeout(() => {
+        setGemDisabled(true);
+      }, 1000);
+    } else {
+      setGemDisabled(false);
+    }
 
-  // useEffect(() => {
-  //   getQuotes(row["video_link"])
-  // }, [])
+    setTimeout(() => {
+      setGemLoaded(true);
+    }, 5000);
+
+    setIsExpanded(!isExpanded);
+  }
 
   return (
     <>
@@ -25,7 +40,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
           </td>
         ))}
         <td className="px-3 py-4 whitespace-nowrap border-solid border-[1.5px]">
-          <button onClick={() => {setIsExpanded(!isExpanded)}} className={`${isExpanded ? 'bg-navy-blue text-white' : ''} rounded-md w-6 h-6 duration-300`}>
+          <button onClick={() => {handleExpand()}} className={`${isExpanded ? 'bg-navy-blue text-white' : ''} rounded-md w-6 h-6 duration-300`}>
             {isExpanded ? <ChevronUpIcon className='w-6 h-6'/> : <ChevronDownIcon className='w-6 h-6'/> }
           </button>
         </td>
@@ -36,14 +51,14 @@ export const DataRows = ({ row, rowIndex, columns }) => {
           `}>
           <div className={`
             overflow-hidden border-none flex justify-between
-            transition-max-height duration-300 ease-in-out pr-10
+            transition-max-height duration-500 ease-in-out pr-10
             ${isExpanded ? 'h-72' : 'h-0'}
           `}>
             <div className='flex flex-col items-center justify-top pt-4'>
               <p className='font-bold'>Media</p>
               {/* <img className='w-48 h-48 my-2' src={row.image} alt="" /> */}
               <div className='iframe-container'>
-                <iframe src={row["video_link"]} height="200" width="300" className='iframe-custom my-2'></iframe> 
+                <iframe src={!gemDisabled ? row["video_link"] : ""} className='iframe-custom my-2'></iframe> 
               </div>
               <button className='bg-dark-grey rounded-sm text-white px-3 py-1 cursor-pointer'>CVD</button>
             </div>
@@ -111,15 +126,15 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             <div className='pt-4'>
               <p className='font-bold pb-2'>Price</p>
               <p className='text-dark-grey'>Total Price</p>
-              <p>xxxxx</p>
-              <p>xxxxx</p>
+              <p>${row.total}</p>
+              <p>{parseFloat(row.total) * currency.toOneUSD} {currency.code}</p>
               <p className='text-dark-grey pt-2'>Price Per Carat</p>
-              <p>xxxxxx</p>
+              <p>${(parseFloat(row.total) / parseFloat(row.specifications.carat)).toFixed(2)}/ct</p>
             </div>
             <div className='pt-4'>
               <p className='font-bold'>Actions</p>
               <button className='mt-4 h-7 w-28 rounded-md bg-navy-blue text-white flex justify-center items-center'>Add to cart</button>
-              <button className='mt-4 h-7 w-28 rounded-md border-solid border-[1.5px] flex justify-center items-center'>More details</button>
+              <button onClick={() => {navigate("/details/" + row["id"])}} className='mt-4 h-7 w-28 rounded-md border-solid border-[1.5px] flex justify-center items-center'>More details</button>
 
               <div className='flex mt-4 justify-between'>
                 <button className='group h-10 w-12 rounded-md border-solid border-[#e8413d]/30 border-[1.5px] flex justify-center items-center hover:border-[#e8413d]'>

@@ -1,16 +1,21 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { useSelector } from 'react-redux';
+import euro from '../../assets/euro.png';
+import pound from '../../assets/pound.png';
+import hongkong from '../../assets/hongkong.png';
+import indian from '../../assets/indian.png';
+import rand from '../../assets/rand.png';
 
 import { useApp } from '../../hooks/useApp';
 
 // Euro, British Pound, Hong Kong Dollar, Indian Rupee, South African Rand
 const options = [
-  { id: 1, name: 'Euro', symbol: '€', imgSrc: 'src/assets/euro.png', toOneUSD: 0.85, code: 'EUR' },
-  { id: 2, name: 'British Pound', symbol: '£', imgSrc: 'src/assets/pound.png', toOneUSD: 0.72, code: 'GBP' },
-  { id: 3, name: 'Hong Kong Dollar', symbol: 'HK$', imgSrc: 'src/assets/hongkong.png', toOneUSD: 7.77, code: 'HKD' },
-  { id: 4, name: 'Indian Rupee', symbol: '₹', imgSrc: 'src/assets/indian.png', toOneUSD: 73.66, code: 'INR' },
-  { id: 5, name: 'South African Rand', symbol: 'R', imgSrc: 'src/assets/rand.png', toOneUSD: 14.66, code: 'ZAR' }
+  { id: 1, name: 'Euro', symbol: '€', imgSrc: euro, toOneUSD: 0.85, code: 'EUR' },
+  { id: 2, name: 'British Pound', symbol: '£', imgSrc: pound, toOneUSD: 0.72, code: 'GBP' },
+  { id: 3, name: 'Hong Kong Dollar', symbol: 'HK$', imgSrc: hongkong, toOneUSD: 7.77, code: 'HKD' },
+  { id: 4, name: 'Indian Rupee', symbol: '₹', imgSrc: indian, toOneUSD: 73.66, code: 'INR' },
+  { id: 5, name: 'South African Rand', symbol: 'R', imgSrc: rand, toOneUSD: 14.66, code: 'ZAR' }
 ];
 
 export const CurrencyDropdown = () => {

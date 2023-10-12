@@ -1,23 +1,42 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import { LanguageDropdown } from '../components/dropdowns/languageDropdown';
 import { CurrencyDropdown } from '../components/dropdowns/currencyDropdown';
-import { transformedList } from '../data/getDiamondData';
-import { setDiamondDataState } from '../reducers/appSlice';
-import { useDispatch } from 'react-redux';
-
+import { useApp } from "../hooks/useApp";
+import { useSelector } from "react-redux";
+import { validateToken } from "../api/login";
 import { useEffect } from 'react';
 
+
 export const Layout = ({ children }) => {
-  const dispatch = useDispatch();
   const location = useLocation();
+  const { setLoggedIn } = useApp();
+  const loggedIn = useSelector(state => state.app.loggedIn);
+  const navigate = useNavigate();
 
   let isLogin = location.pathname === '/login';
 
+  const checkToken = () => {
+    console.log("checking")
+    setLoggedIn(false)
+
+    const token = localStorage.getItem("jwt");
+    if (!token) {
+      navigate("/login")
+      return
+    }
+
+    validateToken(token, navigate, setLoggedIn);
+  }
+
   useEffect(() => {
-    const data = transformedList();
-    dispatch(setDiamondDataState(data))
+    checkToken()
   }, [])
+
+  if (!loggedIn && !isLogin) {
+    navigate("/login")
+    return
+  }
 
   return (
     <div className='w-[100%] h-full'>

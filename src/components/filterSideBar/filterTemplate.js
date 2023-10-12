@@ -1,4 +1,4 @@
-export const filterTemplate = {
+export let filterTemplate = {
   delivery_time: [],
   certificate: [],
   shape: [],
