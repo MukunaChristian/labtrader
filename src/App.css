@@ -23,6 +23,17 @@ a {
 
 button {
   border-width: 0;
+  background-color: white;
+  cursor: pointer;
+}
+
+input:focus {
+  outline: none;
+}
+
+input {
+  border: none;
+  outline: none;
 }
 
 td, tr, th {
@@ -30,8 +41,41 @@ td, tr, th {
   border-top: 1px solid #E5E7EB;
 }
 
+.iframe-container {
+  width: 164px; /* Width of the visible area */
+  height: 160px; /* Height of the visible area */
+  overflow: hidden; /* Hide anything outside of the container */
+  position: relative; /* To allow absolute positioning inside */
+}
+
+.iframe-container iframe {
+  overflow: hidden;
+  position: absolute;
+  top: -3rem;
+  left: -1rem;
+
+  width: 200px; /* This should match the iframe's actual width */
+  height: 300px; /* This should match the iframe's actual height */
+}
+
+.iframe-container-details {
+  width: 200px; /* Width of the visible area */
+  height: 236px; /* Height of the visible area */
+  overflow: hidden; /* Hide anything outside of the container */
+  position: relative; /* To allow absolute positioning inside */
+}
+
+.iframe-container-details iframe {
+  overflow: hidden;
+  position: absolute;
+  top: -3rem;
+
+  width: 200px; /* This should match the iframe's actual width */
+  height: 300px; /* This should match the iframe's actual height */
+}
+
 .default-button {
-  @apply flex bg-white rounded-sm px-2 h-8 border-solid border-[1.5px] justify-center items-center cursor-pointer hover:bg-light-grey
+  @apply flex rounded-sm px-2 h-8 border-solid border-[1.5px] justify-center items-center cursor-pointer hover:bg-light-grey
 }
 
 .default-save-button {
@@ -42,8 +86,17 @@ td, tr, th {
   @apply default-button mr-2 my-2 text-sm;
 }
 
+.default-filter-active {
+  @apply default-button mr-2 my-2 text-sm bg-dark-grey text-white hover:bg-dark-grey;
+}
+
+
 .default-input {
   @apply w-full h-10 border border-solid rounded-md mt-5 px-2 focus:outline-none focus:border-navy-blue;
+}
+
+.default-button-focus {
+  @apply bg-dark-grey border-solid border-[1.5px] text-white
 }
 
 .logo {

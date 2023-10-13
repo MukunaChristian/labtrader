@@ -50,7 +50,7 @@ export const LanguageDropdown = () => {
               <a
                 key={option.id}
                 href="#"
-                className="flex items-center px-4 py-2 hover:bg-gray-200"
+                className="flex items-center text-black px-4 py-2 hover:bg-gray-200"
                 onClick={() => {
                   setSelectedOption(option);
                   setIsOpen(false);
