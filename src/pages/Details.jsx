@@ -6,6 +6,7 @@ import { capitalizeFirstLetter } from "../components/toUpperCase";
 import { ChevronLeftIcon } from "@heroicons/react/20/solid"
 
 import { DetailsGrid } from "../components/detailsComponents/DetailsGrid";
+import loader from '../assets/loader.gif';
 
 
 export const Details = () => {
@@ -16,6 +17,7 @@ export const Details = () => {
 
   const diamondID = location.pathname.split('/')[2];
   const [diamond, setDiamond] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   
 
@@ -35,9 +37,15 @@ export const Details = () => {
           {diamond && 
             <>
               <div className="w-[25%] py-2">
-                <div className='iframe-container-details border-none'>
-                  <iframe src={diamond["video_link"]} className='iframe-custom my-2 border-none rounded-none'></iframe> 
+                <div className={`iframe-container-details border-none ${!isLoaded && "hidden"}`}>
+                  <iframe src={diamond["video_link"]} onLoad={() => {setIsLoaded(true)}} className='iframe-custom my-2 border-none rounded-none'></iframe>
                 </div>
+
+                {!isLoaded &&
+                  <div className='iframe-container-details border-none'>
+                    <div className='iframe-custom h-full my-2 bg-light-grey flex items-center justify-center'><img className='w-5 h-5' src={loader}/></div> :
+                  </div>
+                }
                 <div className="flex mt-8">
                   <div className="h-8 w-24 rounded-md border-solid border-grey border-[1.5px] flex justify-center items-center hover:border-black">
                     <p className="text-xs font-semibold">Copy Video Link</p>

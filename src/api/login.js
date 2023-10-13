@@ -7,8 +7,8 @@ export const login = (email, password) => {
   });
 };
 
-export const validateToken = (token, navigate, setLoggedin) => {
-  return axios
+export const validateToken = async (token, navigate, setLoggedin) => {
+  await axios
     .post("/validate", {
       token: token,
     })
@@ -16,7 +16,6 @@ export const validateToken = (token, navigate, setLoggedin) => {
       console.log(response);
       if (response.status === 200) {
         setLoggedin(true);
-        navigate("/");
       }
     })
     .catch((error) => {

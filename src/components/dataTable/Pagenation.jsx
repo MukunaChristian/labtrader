@@ -6,8 +6,9 @@ export const Pagenation = ({ currentPage, setCurrentPage, lastPage }) => {
 
 
   return (
-    <div className="w-60 h-10 px-4 shadow-lg border-solid border-[1px] flex justify-between items-center rounded-md">
-      <ChevronLeftIcon className="w-7 h-7 text-dark-grey hover:bg-grey rounded-sm" />
+    <div className="w-60 h-10 px-4 border-solid border-[1.5px] flex justify-between items-center rounded-md">
+      { currentPage === 1 ? <ChevronLeftIcon className="w-7 h-7 text-grey rounded-sm" />
+      : <ChevronLeftIcon onClick={() => {setCurrentPage(currentPage - 1)}} className="w-7 h-7 text-dark-grey hover:bg-grey rounded-sm" />}
 
       { currentPage !== 1 && (
         <>
@@ -22,7 +23,9 @@ export const Pagenation = ({ currentPage, setCurrentPage, lastPage }) => {
           <button onClick={() => {setCurrentPage(currentPage + 1)}} className="w-7 h-7 text-dark-grey rounded-sm flex justify-center items-center hover:bg-grey">{ currentPage + 1 }</button>
         </>
       )}
-      <ChevronRightIcon className="w-7 h-7 text-dark-grey hover:bg-grey rounded-sm" />
+
+      { lastPage ? <ChevronRightIcon className="w-7 h-7 text-grey rounded-sm" /> : 
+      <ChevronRightIcon onClick={() => {setCurrentPage(currentPage + 1)}} className="w-7 h-7 text-dark-grey hover:bg-grey rounded-sm" />}
     </div>
   )
 }

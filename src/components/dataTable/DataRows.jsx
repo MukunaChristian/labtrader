@@ -5,6 +5,7 @@ import { HandRaisedIcon } from '@heroicons/react/24/outline';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import loader from '../../assets/loader.gif';
 // import { getQuotes } from './scrapeGem';
 
 
@@ -16,17 +17,15 @@ export const DataRows = ({ row, rowIndex, columns }) => {
   const navigate = useNavigate();
 
   const handleExpand = () => {
+    console.log("expand")
     if (isExpanded) {
       setTimeout(() => {
         setGemDisabled(true);
       }, 1000);
+    
     } else {
       setGemDisabled(false);
     }
-
-    setTimeout(() => {
-      setGemLoaded(true);
-    }, 5000);
 
     setIsExpanded(!isExpanded);
   }
@@ -35,7 +34,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
     <>
       <tr>
         {columns.map((column, colIndex) => (
-          <td key={colIndex} className="px-3 py-4 whitespace-nowrap border-solid border-[1.5px]">
+          <td key={colIndex} className={`w-[${row.width}px] px-3 py-4 whitespace-nowrap border-solid border-[1.5px]`}>
             {column.renderCell ? column.renderCell({ value: row[column.field], row: row }) : row[column.field]}
           </td>
         ))}
@@ -56,21 +55,25 @@ export const DataRows = ({ row, rowIndex, columns }) => {
           `}>
             <div className='flex flex-col items-center justify-top pt-4'>
               <p className='font-bold'>Media</p>
-              {/* <img className='w-48 h-48 my-2' src={row.image} alt="" /> */}
-              <div className='iframe-container'>
-                <iframe src={!gemDisabled ? row["video_link"] : ""} className='iframe-custom my-2'></iframe> 
+              <div className={`iframe-container ${gemLoaded ? 'block' : 'hidden'}`}>
+                {!gemDisabled ? 
+                  <iframe src={row["video_link"]} onLoad={() => setGemLoaded(true)} className={`iframe-custom my-2`}></iframe> 
+                : <div className='iframe-custom my-2 bg-blue-100'></div>}
               </div>
+              {gemLoaded ? null : 
+                <div className='iframe-container h-full flex items-center justify-center '><img className='w-5 h-5' src={loader}/></div>
+              }
               <button className='bg-dark-grey rounded-sm text-white px-3 py-1 cursor-pointer'>CVD</button>
             </div>
             <div className='pt-4'>
               <p className='font-bold mb-2'>Information</p>
               <div className='mb-2'>
                 <p className='text-dark-grey'>IGI</p>
-                <p className='font-semibold'>XXXXXXX</p>
+                <p className='font-semibold'>{row.cert_id}</p>
               </div>
               <div className='mb-4'>
                 <p className='text-dark-grey'>Stock ID</p>
-                <p className='font-semibold'>XXXXXXX</p>
+                <p className='font-semibold'>{row.id}</p>
               </div>
               <p className='mb-4 rounded-full border-solid border-[1.5px] border-dark-grey px-6'>Req. Shade</p>
               <p className='mb-2 rounded-full border-solid border-[1.5px] border-dark-grey px-6'>Req. Eye clean</p>
@@ -78,7 +81,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             <div className='pt-4'>
               <p className='font-bold pb-2'>Diamond Details</p>
               <div className='pb-2'>
-                {row.shape} {row.specifications.carat}ct {row.specifications.color} {row.specifications.clarity} {row.specifications.cut} {row.finish.polish} {row.finish.symmetry} {row.finish.fluorescence}
+                {row.shape.toUpperCase()} {row.specifications.carat}ct {row.specifications.color} {row.specifications.clarity.toUpperCase()} {row.specifications.cut.toUpperCase()} {row.finish.polish.toUpperCase()} {row.finish.symmetry.toUpperCase()} {row.finish.fluorescence.toUpperCase()}
               </div>
 
               <div className='grid grid-cols-2 gap-4'>

@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 export const CustomDataTable = ({ currentRows }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentRowsLocal, setCurrentRowsLocal] = useState(currentRows); // diamondRows.slice(0, 5) // [0, 5
+  const [cutRows, setCutRows] = useState([]); // [0, 5
   
   const currency = useSelector(state => state.app.currency);
   const maxItems = 5;
@@ -19,7 +20,7 @@ export const CustomDataTable = ({ currentRows }) => {
 
   useEffect(() => {
     let cutDiamondRows = currentRows.slice((currentPage - 1) * maxItems, currentPage * maxItems);
-    setCurrentRowsLocal(cutDiamondRows);
+    setCutRows(cutDiamondRows);
   }, [currentPage])
 
   const columns = [
@@ -35,7 +36,7 @@ export const CustomDataTable = ({ currentRows }) => {
       headerName: 'Shape',
       width: 100,
       renderCell: (params) => (
-        <p>{capitalizeFirstLetter(params.value)}</p>
+        <p className='w-32'>{capitalizeFirstLetter(params.value)}</p>
       )
     },
     {
@@ -44,8 +45,8 @@ export const CustomDataTable = ({ currentRows }) => {
       width: 200,
       renderCell: (params) => (
           <div>
-            <div className='flex'>
-              <div className='w-[25%]'>
+            <div className='flex mb-1'>
+              <div className='w-[30%]'>
                 <p>Carat: </p>
               </div>
               <div className='w-[50%]'>
@@ -53,17 +54,17 @@ export const CustomDataTable = ({ currentRows }) => {
               </div>
             </div>
 
-            <div className='flex'>
-              <div className='w-[25%]'>
+            <div className='flex mb-1'>
+              <div className='w-[30%]'>
                 <p>Color: </p>
               </div>
-              <div className='w-[50%]'>
+              <div className='w-[70%] whitespace-normal'>
                 {params.value.color}
               </div>
             </div>
 
-            <div className='flex'>
-              <div className='w-[25%]'>
+            <div className='flex mb-1'>
+              <div className='w-[30%]'>
                 <p>Clarity: </p>
               </div>
               <div className='w-[50%]'>
@@ -71,8 +72,8 @@ export const CustomDataTable = ({ currentRows }) => {
               </div>
             </div>
 
-            <div className='flex'>
-              <div className='w-[25%]'>
+            <div className='flex mb-1'>
+              <div className='w-[30%]'>
                 <p>Cut: </p>
               </div>
               <div className='w-[50%]'>
@@ -87,7 +88,7 @@ export const CustomDataTable = ({ currentRows }) => {
       headerName: 'Finish',
       width: 200,
       renderCell: (params) => (
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-4">
           <div>
             <div className="flex"><p>Polish: </p></div>
             <div className="flex"><p>Symmetry: </p></div>
@@ -167,30 +168,31 @@ export const CustomDataTable = ({ currentRows }) => {
 
   useEffect(() => {
     let cutDiamondRows = currentRows.slice((currentPage - 1) * maxItems, currentPage * maxItems);
-    setCurrentRowsLocal(cutDiamondRows);
+    setCutRows(cutDiamondRows);
   }, [currentRows])
 
 
   return (
     <div>
-      <table className="bg-white table-auto border-collapse w-full">
+      <div className='w-full my-1'>
+        <Pagenation currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} />
+      </div>
+      <table className="bg-white table-auto border-collapse w-full mb-4">
         <thead>
           <tr>
             {columns.map((column, index) => (
-              <th key={index} className="px-3 py-3 text-md text-left leading-4 text-dark-grey border-solid border-[1.5px]">{column.headerName}</th>
+              <th key={index} width={column.width} className="px-3 py-3 text-md text-left leading-4 text-dark-grey border-solid border-[1.5px]">{column.headerName}</th>
             ))}
           </tr>
         </thead>
         <tbody className='text-sm'>
-          {currentRowsLocal.map((row, rowIndex) => (
+          {cutRows.map((row, rowIndex) => (
             <DataRows key={rowIndex} row={row} rowIndex={rowIndex} columns={columns} />
           ))}
         </tbody>
       </table>
       
-      <div className='w-full my-6'>
-        <Pagenation currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} />
-      </div>
+      
       
     </div>
   );
