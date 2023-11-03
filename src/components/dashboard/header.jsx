@@ -31,14 +31,16 @@ export const Header = ({ title, results }) => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop})
 
-  const handleFileUpload = () => {
+  const handleFileUpload = (e) => {
+    e.stopPropagation();
     console.log("File uploaded");
     setUploadConfirm(false);
     setFileLoaded(null);
     uploadStock(fileLoaded);
   }
 
-  const cancelFileUpload = () => {
+  const cancelFileUpload = (e) => {
+    e.stopPropagation();
     setUploadConfirm(false);
     setFileLoaded(null);
   }
@@ -90,8 +92,8 @@ export const Header = ({ title, results }) => {
                 }
                 {fileLoaded && 
                   <div className="flex justify-around">
-                    <button onClick={() => handleFileUpload()} className="default-button w-24">Upload</button>
-                    <button onClick={() => cancelFileUpload()} className="default-button w-24">Cancel</button>
+                    <button onClick={(e) => handleFileUpload(e)} className="default-button w-24">Upload</button>
+                    <button onClick={(e) => cancelFileUpload(e)} className="default-button w-24">Cancel</button>
                   </div>
                 }
               </div>
