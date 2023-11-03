@@ -36,6 +36,7 @@ const appSlice = createSlice({
       "no_bgm": false,
     },
     diamondData: [],
+    loadingData: true,
     loggedIn: false
   },
   reducers: {
@@ -53,6 +54,9 @@ const appSlice = createSlice({
     },
     setDiamondDataState: (state, action) => {
       state.diamondData = action.payload
+    },
+    setLoadingDataState: (state, action) => {
+      state.loadingData = action.payload
     },
     resetFiltersState: (state) => {
       state.filters = {
@@ -81,5 +85,5 @@ const appSlice = createSlice({
   },
 })
 
-export const { setCurrencyState, setLanguageState, setFiltersState, resetFiltersState, setDiamondDataState, setLoggedInState } = appSlice.actions
+export const { setCurrencyState, setLanguageState, setFiltersState, resetFiltersState, setDiamondDataState, setLoggedInState, setLoadingDataState } = appSlice.actions
 export default appSlice.reducer;

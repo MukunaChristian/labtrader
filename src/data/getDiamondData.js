@@ -16,52 +16,54 @@ function getDiamondDataList(sourceObj) {
     return false;
   }
 
-  if (!videoLink.startsWith("https")) {
+  if (videoLink && !videoLink.startsWith("https")) {
     // replace http with https
     videoLink = videoLink.replace("http", "https");
   }
 
-  if (!videoLink.includes("view.gem360.in")) {
+  if (!videoLink || !videoLink.includes("view.gem360.in")) {
     videoLink = "";
+    console.log("Video link not found for", sourceObj["Stock Id."]);
+    console.log(sourceObj["Video Link"]);
   }
 
   return {
-    id: sourceObj["Stock Id."], // Assuming the 'K' in "K351" can be ignored
-    cert_id: "LG" + sourceObj["Report"],
-    image: "src/assets/diamond-shapes/round.png", // This is static in your example
-    shape: sourceObj["Shape"].toLowerCase(),
+    id: sourceObj["Stock Id."] || null, // Default to null if undefined
+    cert_id: "LG" + (sourceObj["Report"] || ""), // Append only if Report is defined
+    image: "src/assets/diamond-shapes/round.png", // Remains static
+    shape: (sourceObj["Shape"] || "").toLowerCase(),
     specifications: {
-      carat: sourceObj["Carat"].toString(),
-      color: sourceObj["Color"].toUpperCase(), // Extracting last word as color
-      clarity: sourceObj["Clarity"],
-      cut: sourceObj["Cut"].toUpperCase() || "Unknown", // Default to "Unknown" if cut is empty
+      carat: (sourceObj["Carat"] || 0).toString(), // Default to '0' if Carat is undefined
+      color: (sourceObj["Color"] || "").toUpperCase(),
+      clarity: sourceObj["Clarity"] || "", // Default to empty string if Clarity is undefined
+      cut: sourceObj["Cut"] ? sourceObj["Cut"].toUpperCase() : "Unknown",
     },
     finish: {
-      polish: sourceObj["Pol"].toLowerCase(),
-      symmetry: sourceObj["Sym"].toLowerCase(),
-      fluorescence: sourceObj["Fluro"].toLowerCase(),
-      fluorescence_color: "None", // Static value, adjust as needed
+      polish: (sourceObj["Pol"] || "").toLowerCase(),
+      symmetry: (sourceObj["Sym"] || "").toLowerCase(),
+      fluorescence: (sourceObj["Fluro"] || "").toLowerCase(),
+      fluorescence_color: "None", // Remains static
     },
     table_depth: {
-      table: sourceObj["Table"].toString(),
-      depth: sourceObj["Td"].toString(),
+      table: (sourceObj["Table"] || 0).toString(),
+      depth: (sourceObj["Td"] || 0).toString(),
     },
     ratio_measurements: {
-      ratio: sourceObj["Ratio"].toString(),
+      ratio: (sourceObj["Ratio"] || 0).toString(),
       measurements: {
-        width: sourceObj["L"],
-        height: sourceObj["W"],
-        depth: sourceObj["H"],
+        width: sourceObj["L"] || 0, // Default to 0 if L is undefined
+        height: sourceObj["W"] || 0, // Default to 0 if W is undefined
+        depth: sourceObj["H"] || 0, // Default to 0 if H is undefined
       },
     },
-    total: "1000", // This value is static in your example
-    video_link: videoLink,
+    total: "1000", // Remains static
+    video_link: videoLink || "", // Default to empty string if videoLink is undefined
   };
 }
 
 export const transformedList = (data) => {
   const diamondDataCollect = [];
-  for (const item of diamondData) {
+  for (const item of data) {
     const diamondItem = getDiamondDataList(item);
     if (diamondItem) {
       diamondDataCollect.push(diamondItem);

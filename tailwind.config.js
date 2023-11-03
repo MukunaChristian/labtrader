@@ -20,6 +20,12 @@ export default {
         "light-grey": "#f5f5f5",
         grey: "#d8d8d8",
         "dark-grey": "#959595",
+
+        text: "#C0C0C0",
+        background: "#747272",
+        primary: "#7CD3F8",
+        secondary: "#0D080C",
+        accent: "#0E474E",
       },
     },
   },

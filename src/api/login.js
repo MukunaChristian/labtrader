@@ -19,7 +19,14 @@ export const validateToken = async (token, navigate, setLoggedin) => {
       }
     })
     .catch((error) => {
-      console.log(error.response.status);
+      console.log(error.message);
+
+      if (!error.response) {
+        console.log("Network error");
+        navigate("/login");
+        return;
+      }
+
       if (error.response.status === 401) {
         navigate("/login");
       }

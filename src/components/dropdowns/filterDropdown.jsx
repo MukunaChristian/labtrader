@@ -37,7 +37,7 @@ export const FilterDropdown = () => {
           px-2
           border-solid border-[1.5px]
           bg-white
-          cursor-pointer
+          cursor-pointer z-[-20]
           hover:outline-none hover:bg-light-grey">
         <p className='w-12'>{selectedOption.text ? selectedOption.text : "Price"}</p>
         <ChevronDownIcon className="w-4 h-4 ml-1 text-navy-blue" />
