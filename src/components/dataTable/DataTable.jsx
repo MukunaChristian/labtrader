@@ -1,4 +1,5 @@
 import { DataGrid } from "@mui/x-data-grid";
+import diamondIcon from "../../assets/diamond-shapes/round.png";
 
 export const DataTable = () => {
   // image, shape, carat, col, cla, cut, pol, sym, fluor, table, depth, ratio, measurements, total, shipping 
@@ -84,7 +85,7 @@ export const DataTable = () => {
   const rows = [
     {
       id: 1,
-      image: "src/assets/diamond-shapes/round.png",
+      image: diamondIcon,
       shape: "Round",
       specifications: {
         carat: "1.00",
@@ -104,7 +105,7 @@ export const DataTable = () => {
     },
     {
       id: 1,
-      image: "src/assets/diamond-shapes/round.png",
+      image: diamondIcon,
       shape: "Round",
       specifications: {
         carat: "1.00",

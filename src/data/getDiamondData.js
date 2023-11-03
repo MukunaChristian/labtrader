@@ -1,4 +1,5 @@
 import diamondData from "./output.json";
+import diamondIcon from "../assets/diamond-shapes/round.png";
 
 const callDiamondApi = async () => {
   const response = await fetch(
@@ -30,7 +31,7 @@ function getDiamondDataList(sourceObj) {
   return {
     id: sourceObj["Stock Id."] || null, // Default to null if undefined
     cert_id: "LG" + (sourceObj["Report"] || ""), // Append only if Report is defined
-    image: "src/assets/diamond-shapes/round.png", // Remains static
+    image: diamondIcon, // Remains static
     shape: (sourceObj["Shape"] || "").toLowerCase(),
     specifications: {
       carat: (sourceObj["Carat"] || 0).toString(), // Default to '0' if Carat is undefined
