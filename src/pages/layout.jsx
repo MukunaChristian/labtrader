@@ -5,7 +5,7 @@ import { CurrencyDropdown } from '../components/dropdowns/currencyDropdown';
 import { useApp } from "../hooks/useApp";
 import { useSelector } from "react-redux";
 import { validateToken } from "../api/login";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { default as Logo } from '../assets/Color logo with background (3).svg';
 import { getResponse } from './api_test';
 

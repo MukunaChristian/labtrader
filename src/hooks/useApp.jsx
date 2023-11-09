@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { setCurrencyState, setLanguageState, setFiltersState, resetFiltersState, setLoggedInState } from "../reducers/appSlice"
+import { setCurrencyState, setLanguageState, setFiltersState, resetFiltersState, setLoggedInState } from "../reducers/AppSlice"
 
 
 export const useApp = () => {
