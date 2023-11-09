@@ -29,7 +29,7 @@ export const CustomDataTable = ({ currentRows }) => {
       headerName: 'Image',
       width: 80,
       renderCell: (params) => 
-        <img className="w-20 h-20 object-contain border-solid border-[1px]" src={params.value} />, // renderCell will render the component
+        <img className="w-20 h-20 object-contain border-solid border-[1px] bg-white text-" src={params.value} />, // renderCell will render the component
     },
     {
       field: 'shape',
@@ -171,17 +171,19 @@ export const CustomDataTable = ({ currentRows }) => {
     setCutRows(cutDiamondRows);
   }, [currentRows])
 
+  console.log(currentRows[0])
+
 
   return (
     <div>
       <div className='w-full my-1'>
         <Pagenation currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} />
       </div>
-      <table className="bg-white table-auto border-collapse w-full mb-4">
+      <table className="bg-secondary table-auto border-collapse w-full pb-4">
         <thead>
           <tr>
             {columns.map((column, index) => (
-              <th key={index} width={column.width} className="px-3 py-3 text-md text-left leading-4 text-dark-grey border-solid border-[1.5px]">{column.headerName}</th>
+              <th key={index} width={column.width} className="px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] border-dark-grey">{column.headerName}</th>
             ))}
           </tr>
         </thead>

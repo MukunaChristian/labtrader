@@ -23,8 +23,8 @@ export const Login = () => {
 
 
   return (
-    <div className="h-full w-full flex justify-center">
-      <div className="w-[20rem] h-[22rem] border-[1.5px] border-solid my-auto p-5">
+    <div className="h-[100vh] overflow-hidden w-full flex justify-center bg-white">
+      <div className="w-[20rem] h-[22rem] border-[1.5px] border-solid border-text bg-text/20 my-auto p-5 shadow-lg">
         <p className="text-3xl mb-2">Login</p>
         <p className="text-sm">Please enter your username and password</p>
         <form className="mb-4" onSubmit={(e) => {handleLogin(e)}}>

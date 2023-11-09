@@ -49,8 +49,8 @@ export const Header = ({ title, results }) => {
     <>
       <div className="p-4 flex">
         <div>
-          <p className="text-xl font-bold">{ title }</p>
-          <p className="text-sm text-dark-grey font-semibold">{ results } results</p>
+          <p className="text-xl font-bold text-secondary">{ title }</p>
+          <p className="text-sm text-text font-semibold">{ results } results</p>
         </div>
         <div className="flex ml-auto mt-4">
           <a href="src\assets\Stock Upload Template.xlsx" download>
