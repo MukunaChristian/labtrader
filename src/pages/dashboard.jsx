@@ -6,7 +6,7 @@ import { FilterBar } from "../components/dashboard/filterBar"
 import { FilterSideBar } from "../components/filterSideBar"
 import { CustomDataTable } from "../components/dataTable/CustomDataTable"
 import { diamonds } from '../api/diamonds';
-import { setDiamondDataState, setLoadingDataState } from '../reducers/appSlice';
+import { setDiamondDataState, setLoadingDataState } from '../reducers/AppSlice';
 import { useDispatch } from 'react-redux';
 
 
