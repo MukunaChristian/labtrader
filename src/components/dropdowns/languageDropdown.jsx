@@ -30,15 +30,16 @@ export const LanguageDropdown = () => {
   }, []);
 
   return (
-    <div ref={ref} className="relative w-28 h-8 bg-navy-blue">
+    <div ref={ref} className="relative w-28 h-8 rounded-md">
       <button onClick={() => setIsOpen(!isOpen)} 
         className="
           flex items-center justify-center
           w-full text-white 
-          h-8 rounded-sm
+          h-8 rounded-md
           border-0 cursor-pointer
-          bg-navy-blue
-          hover:outline-none hover:bg-light-blue">
+          bg-background
+          border-white border-solid border-[1px]
+          hover:outline-none hover:bg-text">
         <GlobeAltIcon className="w-4 h-4 mr-2 text-white" />
         <p className='w-12'>{selectedOption.text}</p>
         <ChevronDownIcon className="w-4 h-4 ml-1 text-white" />

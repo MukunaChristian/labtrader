@@ -51,15 +51,16 @@ export const CurrencyDropdown = () => {
   }, []);
 
   return (
-    <div ref={ref} className="relative w-28 h-8 bg-navy-blue">
+    <div ref={ref} className="relative w-28 h-8 rounded-md mr-4">
       <button onClick={() => setIsOpen(!isOpen)} 
         className="
           flex items-center justify-center
           w-full text-white 
-          h-8 rounded-sm
+          h-8 rounded-lg
           border-0 cursor-pointer
-          bg-navy-blue
-          hover:outline-none hover:bg-light-blue">
+          bg-background
+          border-white border-solid border-[1px]
+          hover:outline-none hover:bg-text">
         <p className=''>{selectedOption.symbol}</p>
         <p className='w-12'>{selectedOption.code}</p>
         <ChevronDownIcon className="w-4 h-4 ml-1 text-white" />

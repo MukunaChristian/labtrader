@@ -109,7 +109,7 @@ export const Dashboard = () => {
 
 
   return (
-    <div>
+    <div className="pb-4">
       <FilterSideBar setIsFilterSideBarOpen={setIsFilterSideBarOpen} isFilterSideBarOpen={isFilterSideBarOpen} />
       <div className="border-0 pt-16 mx-6">
         <Header title='Lab Grown Diamonds' results={currentRows ? currentRows.length : 0} />

@@ -22,7 +22,11 @@ function getDiamondDataList(sourceObj) {
     videoLink = videoLink.replace("http", "https");
   }
 
-  if (!videoLink || !videoLink.includes("view.gem360.in")) {
+  if (
+    !videoLink ||
+    (!videoLink.includes("view.gem360.in") &&
+      !videoLink.includes("videos.gem360.in"))
+  ) {
     videoLink = "";
     console.log("Video link not found for", sourceObj["Stock Id."]);
     console.log(sourceObj["Video Link"]);

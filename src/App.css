@@ -43,9 +43,20 @@ td, tr, th {
 
 .iframe-container {
   width: 164px; /* Width of the visible area */
-  height: 160px; /* Height of the visible area */
+  height: 148px; /* Height of the visible area */
   overflow: hidden; /* Hide anything outside of the container */
   position: relative; /* To allow absolute positioning inside */
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.iframe-container-second {
+  width: 164px; /* Width of the visible area */
+  height: 148px; /* Height of the visible area */
+  overflow: hidden; /* Hide anything outside of the container */
+  position: relative; /* To allow absolute positioning inside */
+  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 .iframe-container iframe {
@@ -56,6 +67,16 @@ td, tr, th {
 
   width: 200px; /* This should match the iframe's actual width */
   height: 300px; /* This should match the iframe's actual height */
+}
+
+.iframe-container-second iframe {
+  overflow: hidden;
+  position: absolute;
+  top: -1rem;
+  left: -1rem;
+
+  width: 200px; /* This should match the iframe's actual width */
+  height: 320px; /* This should match the iframe's actual height */
 }
 
 .iframe-container-details {
@@ -74,6 +95,23 @@ td, tr, th {
   height: 300px; /* This should match the iframe's actual height */
 }
 
+.iframe-container-second-details {
+  width: 197px; /* Width of the visible area */
+  height: 310px; /* Height of the visible area */
+  overflow: hidden; /* Hide anything outside of the container */
+  position: relative; /* To allow absolute positioning inside */
+}
+
+.iframe-container-second-details iframe {
+  overflow: hidden;
+  position: absolute;
+  top: -1rem;
+  left: -0.5rem;
+
+  width: 210px; /* This should match the iframe's actual width */
+  height: 340px; /* This should match the iframe's actual height */
+}
+
 .default-button {
   @apply flex rounded-sm px-2 h-8 border-solid border-[1.5px] justify-center items-center cursor-pointer hover:bg-light-grey
 }
@@ -83,7 +121,7 @@ td, tr, th {
 }
 
 .default-filter-button {
-  @apply default-button mr-2 my-2 text-sm;
+  @apply default-button mr-2 my-2 text-sm bg-white;
 }
 
 .default-filter-active {

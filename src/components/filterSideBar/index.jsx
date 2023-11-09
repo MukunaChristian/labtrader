@@ -143,14 +143,14 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
   return (
     <div>
       <div onClick={() => {setIsFilterSideBarOpen(false)}} className={`fixed h-full w-full z-40 bg-dark-grey/20 duration-500 ${isFilterSideBarOpen ? "block" : "hidden"}`}></div>
-      <div className={`flex flex-col fixed h-[100%] w-[100vh] overflow-auto z-50 py-20 px-4 bg-white shadow-2xl duration-300 top-0 ${isFilterSideBarOpen ? "left-0" : "left-[-100%]"}`}>
-        <div className="fixed bg-white flex py-4 w-[93vh] top-0">
-          <p className="font-bold">Filters</p>
+      <div className={`flex flex-col fixed h-[100%] w-[100vh] overflow-auto z-50 py-20 px-4 bg-background shadow-2xl duration-300 top-0 ${isFilterSideBarOpen ? "left-0" : "left-[-100%]"}`}>
+        <div className="fixed flex py-4 w-[93vh] top-0 bg-background border-0 border-solid border-b-[1px]">
+          <p className="font-bold text-primary">Filters</p>
           <XMarkIcon onClick={() => {setIsFilterSideBarOpen(false)}} className="w-6 h-6 text-dark-grey hover:text-navy-blue ml-auto cursor-pointer" />
         </div>
         <div className="flex justify-between border-solid border-0 border-b-[1.5px] pb-12">
           <div className="w-1/4">
-            <p className="font-bold pb-2">Delivery time</p>
+            <p className="font-bold pb-2 text-primary">Delivery time</p>
             <FieldGroups 
               fieldGroups={["5d or less", "8d or less", "10d or less", "15d or less"]} 
               fieldGroupName="delivery_time" 
@@ -159,7 +159,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             /> 
           </div>
           <div className="w-1/3">
-            <p className="font-bold pb-2">Certificate</p>
+            <p className="font-bold pb-2 text-primary">Certificate</p>
             <FieldGroups 
               fieldGroups={certificate_list} 
               fieldGroupName="certificate" 
@@ -168,39 +168,39 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             /> 
           </div>
           <div className="w-1/3">
-            <p className="font-bold pb-4">Show/Hide Results</p>
+            <p className="font-bold pb-4 text-primary">Show/Hide Results</p>
             <div className="flex pb-2">
               <input onClick={() => handleFilterChange("show_only_image")} type="checkbox"/>
-              <label className="ml-2 text-sm">Show only image</label>
+              <label className="ml-2 text-sm text-text">Show only image</label>
             </div>
             <div className="flex pb-2">
               <input onClick={() => handleFilterChange("show_only_video")} type="checkbox"/>
-              <label className="ml-2 text-sm">Show only video</label>
+              <label className="ml-2 text-sm text-text">Show only video</label>
             </div>
             <div className="flex pb-2">
               <input onClick={() => handleFilterChange("show_only_returnable")} type="checkbox"/>
-              <label className="ml-2 text-sm">Show only returnable</label>
+              <label className="ml-2 text-sm text-text">Show only returnable</label>
             </div>
             <div className="flex pb-2">
               <input onClick={() => handleFilterChange("show_only_immediate_purchase")} type="checkbox"/>
-              <label className="ml-2 text-sm">Show only available for immediate purchase</label>
+              <label className="ml-2 text-sm text-text">Show only available for immediate purchase</label>
             </div>
             
           </div>
         </div>
 
         <div>
-          <p className="font-bold pt-4 pb-4">Shape</p>
+          <p className="font-bold pt-4 pb-4 text-primary">Shape</p>
           <div className="grid grid-cols-4 gap-4">
             {showMore ? 
             diamondShapes.map((diamondShape) => (
-              <div key={diamondShape.id} onClick={() => {handleFilterChange("shape", diamondShape.name)}} className={`flex flex-col items-center justify-around border-solid border-[1.5px] h-24 ${filtersLocal["shape"].includes(diamondShape.name.toLowerCase()) && "border-red-100"}`}>
+              <div key={diamondShape.id} onClick={() => {handleFilterChange("shape", diamondShape.name)}} className={`flex flex-col bg-white items-center justify-around border-solid border-[1.5px] h-24 ${filtersLocal["shape"].includes(diamondShape.name.toLowerCase()) && "border-red-100"}`}>
                 <p className="text-xs w-[80%] text-center">{diamondShape.name}</p>
                 <img className="w-12 h-12" src={imageDir + diamondShape.imgSrc}/>
               </div>
             )) : 
             diamondShapes.slice(0, 16).map((diamondShape) => (
-              <div key={diamondShape.id} onClick={() => {handleFilterChange("shape", diamondShape.name)}} className={`flex flex-col items-center justify-around border-solid border-[1.5px] h-24 ${filtersLocal["shape"].includes(diamondShape.name.toLowerCase()) && "border-red-100"}`}>
+              <div key={diamondShape.id} onClick={() => {handleFilterChange("shape", diamondShape.name)}} className={`flex flex-col bg-white items-center justify-around border-solid border-[2px] h-24 ${filtersLocal["shape"].includes(diamondShape.name.toLowerCase()) && "border-primary"}`}>
                 <p className="text-xs w-[80%] text-center">{diamondShape.name}</p>
                 <img className="w-12 h-12" src={imageDir + diamondShape.imgSrc}/>
               </div>
@@ -210,12 +210,12 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
           </div>
           {!showMore ? (
             <div onClick={() => {setShowMore(true)}} className="flex items-center justify-center mt-4">
-              <p className="text-sm">Show more</p>
+              <p className="text-sm text-primary">Show more</p>
               <ChevronDownIcon className="w-4 h-4 ml-1" />
             </div>
           ) : (
             <div onClick={() => {setShowMore(false)}} className="flex items-center justify-center mt-4">
-              <p className="text-sm font-bold">Show less</p>
+              <p className="text-sm font-bold text-primary">Show less</p>
               <ChevronUpIcon className="w-4 h-4 ml-1" />
             </div>
           )}
@@ -223,11 +223,11 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
         </div>
 
         <div className="pt-12">
-          <p className="font-bold pb-2">Carat (ct)</p>
+          <p className="font-bold pb-2 text-primary">Carat (ct)</p>
           <div className="flex">
             <div className="flex">
               <div>
-                <label className="text-xs">Min</label>
+                <label className="text-xs text-primary">Min</label>
                 <div className="flex border-solid border-[1.5px] rounded-md">
                   <input name="min" className="w-24 p-1 rounded-md" onChange={handleCaratInput} value={filtersLocal["carat_range"]["from"]}/>
                   <p className="text-xs text-dark-grey px-2">ct</p>
@@ -236,7 +236,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
               </div>
 
               <div className="ml-2">
-                <label className="text-xs">Max</label>
+                <label className="text-xs text-primary">Max</label>
                 <div className="flex border-solid border-[1.5px] rounded-md">
                   <input name="max" className="w-24 p-1 rounded-md" onChange={handleCaratInput} value={filtersLocal["carat_range"]["to"]}/>
                   <p className="text-xs text-dark-grey px-2">ct</p>
@@ -254,7 +254,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
 
         <div className="pt-12">
           <div className="flex">
-            <p className="font-bold mb-4">Color</p>
+            <p className="font-bold mb-4 text-primary">Color</p>
             <div className="flex items-center h-8 border-solid border-[1.5px] rounded-lg ml-auto mr-4">
               <button 
                 className={`
@@ -284,7 +284,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
 
         <div className="flex">
           <div className="pt-12 w-[50%]">
-            <p className="font-bold pb-2">Clarity</p>
+            <p className="font-bold pb-2 text-primary">Clarity</p>
             <FieldGroups 
               fieldGroups={clarity_list} 
               fieldGroupName="clarity" 
@@ -294,7 +294,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
           </div>
 
           <div className="pt-12 w-[50%] ">
-            <p className="font-bold pb-2">Cut</p>
+            <p className="font-bold pb-2 text-primary">Cut</p>
             <FieldGroups 
               fieldGroups={cut_list} 
               fieldGroupName="cut" 
@@ -306,7 +306,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
         
         <div className="flex">
           <div className="pt-12 w-[50%]">
-            <p className="font-bold pb-2">Polish</p>
+            <p className="font-bold pb-2 text-primary">Polish</p>
             <FieldGroups 
               fieldGroups={polish_symmetry_list} 
               fieldGroupName="polish" 
@@ -315,7 +315,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
           </div>
 
           <div className="pt-12 w-[50%]">
-            <p className="font-bold pb-2">Symmetry</p>
+            <p className="font-bold pb-2 text-primary">Symmetry</p>
             <FieldGroups 
               fieldGroups={polish_symmetry_list} 
               fieldGroupName="symmetry" 
@@ -326,7 +326,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
 
         <div className="flex">
           <div className="pt-12 w-[50%]">
-            <p className="font-bold pb-2">Fluorescence</p>
+            <p className="font-bold pb-2 text-primary">Fluorescence</p>
             <FieldGroups 
               fieldGroups={fluorescence_list} 
               fieldGroupName="fluorescence" 
@@ -335,7 +335,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
           </div>
 
           <div className="pt-12 w-[50%]">
-            <p className="font-bold pb-2">Fluorescence Color</p>
+            <p className="font-bold pb-2 text-primary">Fluorescence Color</p>
             <FieldGroups 
               fieldGroups={fluorescence_color_list} 
               fieldGroupName="fluorescence_color" 
@@ -346,7 +346,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
         </div>
 
         <div className="pt-12 w-[50%]">
-          <p className="font-bold pb-2">Eye clean</p>
+          <p className="font-bold pb-2 text-primary">Eye clean</p>
           <FieldGroups 
             fieldGroups={["Yes", "No", "Borderline"]} 
             fieldGroupName="eye_clean" 
@@ -357,27 +357,27 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
 
         <div className="flex pb-2">
           <input onClick={() => handleFilterChange("with_unknown_eye_clean")} type="checkbox"/>
-          <label className="ml-2 text-sm">Allow unknown eye clean</label>
+          <label className="ml-2 text-sm text-text">Allow unknown eye clean</label>
         </div>
 
         <div className="pt-12 w-[50%]">
-          <p className="font-bold pb-2">Shade and Luster</p>
+          <p className="font-bold pb-2 text-primary">Shade and Luster</p>
           <div className="flex pb-2">
             <input onClick={() => handleFilterChange("no_bgm")} type="checkbox"/>
-            <label className="ml-2 text-sm">No BGM</label>
+            <label className="ml-2 text-sm text-text">No BGM</label>
           </div>
           <div className="flex pb-2">
             <input onClick={() => handleFilterChange("with_unknown_shade")} type="checkbox"/>
-            <label className="ml-2 text-sm">Allow unknown shade</label>
+            <label className="ml-2 text-sm text-text">Allow unknown shade</label>
           </div>
           <div className="flex pb-2">
             <input onClick={() => handleFilterChange("with_unknown_luster")} type="checkbox"/>
-            <label className="ml-2 text-sm">Allow unknown luster</label>
+            <label className="ml-2 text-sm text-text">Allow unknown luster</label>
           </div>
         </div>
       
 
-        <div className="fixed py-4 flex justify-end mt-4 bottom-0 w-[93vh] bg-white">
+        <div className="fixed py-4 flex justify-end mt-4 bottom-0 w-[93vh] bg-background border-0 border-solid border-t-[1px]">
           <button onClick={() => {handleReset()}} className="default-button w-16 mr-2" >Reset</button>
           <button onClick={() => {setIsFilterSideBarOpen(false)}} className="default-button w-16" >Cancel</button>
           <button onClick={() => {onSave()}} className="default-save-button ml-2 w-16" >Apply</button>
