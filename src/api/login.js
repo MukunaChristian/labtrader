@@ -1,10 +1,19 @@
 import axios from "axios";
 
 export const login = (email, password) => {
-  return axios.post("/api_login", {
-    email: email,
-    password: password,
-  });
+  return axios
+    .post("/api_login", {
+      email: email,
+      password: password,
+    })
+    .then((response) => {
+      console.log(response);
+      return response;
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return error.response;
+    });
 };
 
 export const validateToken = async (token, navigate, setLoggedin) => {

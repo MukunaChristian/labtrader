@@ -8,12 +8,13 @@ import { Login } from './pages/login';
 import { Details } from './pages/Details';
 import store from './store';
 import axios from 'axios';
-import { HashRouter } from "react-router-dom";
+
 
 axios.defaults.baseURL = import.meta.env.VITE_DATA_PROVIDER_URL;
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+
 
 function App() {
-
   return (
     <Provider store={store}>
       <BrowserRouter>
