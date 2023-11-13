@@ -55,15 +55,14 @@ export const CurrencyDropdown = () => {
       <button onClick={() => setIsOpen(!isOpen)} 
         className="
           flex items-center justify-center
-          w-full text-white 
+          w-full 
           h-8 rounded-lg
           border-0 cursor-pointer
-          bg-background
-          border-white border-solid border-[1px]
+          border-black border-solid border-[1px]
           hover:outline-none hover:bg-text">
         <p className=''>{selectedOption.symbol}</p>
         <p className='w-12'>{selectedOption.code}</p>
-        <ChevronDownIcon className="w-4 h-4 ml-1 text-white" />
+        <ChevronDownIcon className="w-4 h-4 ml-1 text-black" />
       </button>
       {isOpen && (
         <div className="absolute right-0 mt-2 w-72 bg-white border-solid border-[1.5px] rounded-sm">

@@ -46,22 +46,21 @@ export const Layout = ({ children }) => {
 
 
   return (
-    <div className='w-[100%] h-full bg-background'>
+    <div className='w-[100%] h-full'>
       {isLogin ? null : 
-        <div className='w-full z-30 h-16 bg-background flex relative items-center justify-start px-5 pt-24 fixed'>
-          <div className='h-24 w-[50vw] flex justify-start border-0 border-solid border-y-[1px]'>
-            <div className='flex items-center hover:bg-light-blue p-2 rounded-sm cursor-pointer'>
-              <Bars3Icon className='h-6 w-6 text-white' />
-              <p className='text-white ml-2'>Menu</p>
+        <div className='w-full z-30 h-16 bg-white flex relative items-center justify-start px-5 pt-24 fixed'>
+          <div className='h-24 w-[50vw] flex justify-start items-center pl-6 border-0 border-solid border-y-[1px] border-black'>
+            <div className='flex items-center hover:bg-grey h-12 w-12 p-2 rounded-sm cursor-pointer'>
+              <Bars3Icon className='h-8 w-8' />
             </div>
           </div>
 
-          <div className='absolute left-[50%] translate-x-[-50%] bg-black w-44 h-44 rounded-full flex items-center justify-center'> 
+          <div className='absolute left-[50%] translate-x-[-50%] bg-black w-48 h-48 rounded-full flex items-center justify-center border-solid border-[12px] border-white'> 
             <img src={Logo} className='w-32 h-32' />
           </div>
 
           
-          <div className='h-24 w-[50vw] flex justify-start border-0 border-solid border-y-[1px]'>
+          <div className='h-24 w-[50vw] flex justify-start border-0 border-solid border-y-[1px] border-black'>
             <div className='h-full flex items-center ml-auto mr-6'>
               <CurrencyDropdown />
               <LanguageDropdown /> 
@@ -70,7 +69,7 @@ export const Layout = ({ children }) => {
           
         </div>
       }
-      <div className='bg-background'>
+      <div className=''>
         {children}
       </div>
       

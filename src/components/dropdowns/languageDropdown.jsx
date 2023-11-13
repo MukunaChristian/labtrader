@@ -37,12 +37,11 @@ export const LanguageDropdown = () => {
           w-full text-white 
           h-8 rounded-md
           border-0 cursor-pointer
-          bg-background
-          border-white border-solid border-[1px]
+          border-black border-solid border-[1px]
           hover:outline-none hover:bg-text">
-        <GlobeAltIcon className="w-4 h-4 mr-2 text-white" />
-        <p className='w-12'>{selectedOption.text}</p>
-        <ChevronDownIcon className="w-4 h-4 ml-1 text-white" />
+        <GlobeAltIcon className="w-4 h-4 mr-2 text-black" />
+        <p className='w-12 text-black'>{selectedOption.text}</p>
+        <ChevronDownIcon className="w-4 h-4 ml-1 text-black" />
       </button>
       {isOpen && (
         <div className="absolute right-0 mt-2 w-40 bg-white border-solid border-[1.5px] rounded-sm">

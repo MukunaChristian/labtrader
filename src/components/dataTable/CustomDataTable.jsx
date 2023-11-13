@@ -29,7 +29,7 @@ export const CustomDataTable = ({ currentRows }) => {
       headerName: 'Image',
       width: 80,
       renderCell: (params) => 
-        <img className="w-20 h-20 object-contain border-solid border-[1px] bg-white text-" src={params.value} />, // renderCell will render the component
+        <img className="w-20 h-20 object-contain border-solid border-[1px] bg-white rounded-full" src={params.value} />, // renderCell will render the component
     },
     {
       field: 'shape',
@@ -151,7 +151,7 @@ export const CustomDataTable = ({ currentRows }) => {
       width: 150,
       renderCell: (params) => (
         <div className="flex flex-col">
-          <div className="flex"><p className='text-xs text-[#79de43]'>${(parseFloat(params.value) / parseFloat(params.row.specifications.carat)).toFixed(2)}/ct</p></div>
+          <div className="flex"><p className='text-xs'>${(parseFloat(params.value) / parseFloat(params.row.specifications.carat)).toFixed(2)}/ct</p></div>
           <div className="flex"><p className='text-lg'>${params.value}</p></div>
           <div className="flex"><p>{parseFloat(params.value) * currency.toOneUSD} {currency.code}</p></div>
         </div>

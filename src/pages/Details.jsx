@@ -22,14 +22,14 @@ export const Details = () => {
   
 
   useEffect(() => {
-    setDiamond(diamonds.find(diamond => diamond.id === diamondID))
+    setDiamond(diamonds.find(diamond => String(diamond.id) === String(diamondID)))
   }, [diamonds])
 
   return (
     <div className="w-full pb-4">
 
       <div className="border-0 pt-28 h-full ml-6 mr-12">
-        <div onClick={() => {navigate("/")}} className="flex text-text items-center ml-40 mb-2 pr-2 w-24 py-1 rounded-md bg-secondary hover:bg-light-grey cursor-pointer">
+        <div onClick={() => {navigate("/")}} className="flex text-white items-center ml-40 mb-2 pr-2 w-24 py-1 rounded-md bg-secondary hover:bg-black/80 cursor-pointer">
           <ChevronLeftIcon className="w-7 h-7 mr-2 rounded-sm" />
           <p className="h-5 mb-[3px]">Return</p>
         </div>
@@ -99,11 +99,11 @@ export const Details = () => {
                 </div>
 
                 <div className="flex">
-                  <div className="h-6 w-32 mr-2 text-xs rounded-md bg-text border-solid border-grey border-[1.5px] flex justify-center items-center hover:border-black">
+                  <div className="h-6 w-32 mr-2 text-xs bg-text border-solid border-grey border-[1.5px] flex justify-center items-center hover:border-black">
                     REQUEST EYESHADE
                   </div>
 
-                  <div className="h-6 w-32 text-xs rounded-md bg-text border-solid border-grey border-[1.5px] flex justify-center items-center hover:border-black">
+                  <div className="h-6 w-32 text-xs bg-text border-solid border-grey border-[1.5px] flex justify-center items-center hover:border-black">
                     REQUEST EYE CLEAN
                   </div>
                 </div>

@@ -34,19 +34,19 @@ function getDiamondDataList(sourceObj) {
 
   return {
     id: sourceObj["Stock Id."] || null, // Default to null if undefined
-    cert_id: "LG" + (sourceObj["Report"] || ""), // Append only if Report is defined
+    cert_id: "LG" + (sourceObj["Report"] || "N/A"), // Append only if Report is defined
     image: diamondIcon, // Remains static
-    shape: (sourceObj["Shape"] || "").toLowerCase(),
+    shape: (sourceObj["Shape"] || "N/A").toLowerCase(),
     specifications: {
       carat: (sourceObj["Carat"] || 0).toString(), // Default to '0' if Carat is undefined
-      color: (sourceObj["Color"] || "").toUpperCase(),
-      clarity: sourceObj["Clarity"] || "", // Default to empty string if Clarity is undefined
+      color: (sourceObj["Color"] || "N/A").toUpperCase(),
+      clarity: sourceObj["Clarity"] || "N/A", // Default to empty string if Clarity is undefined
       cut: sourceObj["Cut"] ? sourceObj["Cut"].toUpperCase() : "Unknown",
     },
     finish: {
-      polish: (sourceObj["Pol"] || "").toLowerCase(),
-      symmetry: (sourceObj["Sym"] || "").toLowerCase(),
-      fluorescence: (sourceObj["Fluro"] || "").toLowerCase(),
+      polish: (sourceObj["Pol"] || "N/A").toLowerCase(),
+      symmetry: (sourceObj["Sym"] || "N/A").toLowerCase(),
+      fluorescence: (sourceObj["Fluro"] || "N/A").toLowerCase(),
       fluorescence_color: "None", // Remains static
     },
     table_depth: {
@@ -63,6 +63,14 @@ function getDiamondDataList(sourceObj) {
     },
     total: "1000", // Remains static
     video_link: videoLink || "", // Default to empty string if videoLink is undefined
+    crown_height: (sourceObj["Crown Height"] || 0).toString(),
+    crown_angle: (sourceObj["Crown Angle"] || 0).toString(),
+    pavilion_depth: (sourceObj["Pavilion Depth"] || 0).toString(),
+    pavilion_angle: (sourceObj["Pavilion Angle"] || 0).toString(),
+    girdle: sourceObj["Girdle"] || "N/A",
+    culet: sourceObj["Culet"] || "N/A",
+    canada: sourceObj["Canada Mark"] || "N/A",
+    forever: sourceObj["Forever Mark"] || "N/A",
   };
 }
 

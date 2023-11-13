@@ -38,7 +38,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             {column.renderCell ? column.renderCell({ value: row[column.field], row: row }) : row[column.field]}
           </td>
         ))}
-        <td className="px-3 py-4 whitespace-nowrap border-solid border-[1.5px] border-dark-grey">
+        <td className="px-3 py-4 w-1 whitespace-nowrap border-solid border-[1.5px] border-dark-grey">
           <button onClick={() => {handleExpand()}} className={`${isExpanded ? 'bg-accent text-white' : ''} rounded-md w-6 h-6 duration-300`}>
             {isExpanded ? <ChevronUpIcon className='w-6 h-6'/> : <ChevronDownIcon className='w-6 h-6'/> }
           </button>
@@ -61,7 +61,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
                 : <div className='iframe-custom my-2 bg-text'></div>}
               </div>
               {gemLoaded ? null : 
-                <div className='iframe-container h-full flex items-center justify-center '><img className='w-5 h-5' src={loader}/></div>
+                <div className='iframe-container h-full flex items-center bg-white justify-center'><img className='w-5 h-5 text-white' src={loader}/></div>
               }
               <button className='bg-dark-grey rounded-sm text-white px-3 py-1 cursor-pointer'>CVD</button>
             </div>
@@ -109,7 +109,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
                 </div>
                 <div>
                   <p className='text-primary'>Girdle</p>
-                  <p className='text-text'>XXXXXXX</p>
+                  <p className='text-text'>{row.girdle}</p>
                 </div>
               </div>
 

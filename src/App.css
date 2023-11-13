@@ -113,7 +113,7 @@ td, tr, th {
 }
 
 .default-button {
-  @apply flex rounded-sm px-2 h-8 border-solid border-[1.5px] justify-center items-center cursor-pointer hover:bg-light-grey
+  @apply flex rounded-sm px-2 h-8 border-solid border-[1px] border-black justify-center items-center cursor-pointer hover:bg-light-grey
 }
 
 .default-save-button {

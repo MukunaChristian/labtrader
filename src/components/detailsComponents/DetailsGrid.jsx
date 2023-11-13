@@ -33,7 +33,7 @@ export const DetailsGrid = ({ diamond }) => {
           Crown Angle
         </p>
         <p className="text-text">
-          xxxx
+          {diamond.crown_angle}
         </p>
       </div>
       <div>
@@ -41,7 +41,7 @@ export const DetailsGrid = ({ diamond }) => {
           Girdle
         </p>
         <p className="text-text">
-          xxxx
+          {diamond.girdle}
         </p>
       </div>
       
@@ -74,7 +74,7 @@ export const DetailsGrid = ({ diamond }) => {
           Crown Height
         </p>
         <p className="text-text">
-          xxxx
+          {diamond.crown_height}
         </p>
       </div>
       <div>
@@ -82,7 +82,7 @@ export const DetailsGrid = ({ diamond }) => {
           Culet
         </p>
         <p className="text-text">
-          xxxx
+          {diamond.culet}
         </p>
       </div>
 
@@ -115,7 +115,7 @@ export const DetailsGrid = ({ diamond }) => {
           Pavilion Angle
         </p>
         <p className="text-text">  
-          xxxx
+          {diamond.pavilion_angle}
         </p>
       </div>
       <div>
@@ -123,7 +123,7 @@ export const DetailsGrid = ({ diamond }) => {
           Canada Mark
         </p>
         <p className="text-text">
-          xxxx
+          {diamond.canada}
         </p>
       </div>
 
@@ -156,7 +156,7 @@ export const DetailsGrid = ({ diamond }) => {
           Pavilion Depth
         </p>
         <p className="text-text">
-          xxxx
+          {diamond.pavilion_depth}
         </p>
       </div>
       <div>
@@ -164,7 +164,7 @@ export const DetailsGrid = ({ diamond }) => {
           Forever Mark
         </p>
         <p className="text-text">
-          xxxx
+          {diamond.forever}
         </p>
       </div>
     </div>

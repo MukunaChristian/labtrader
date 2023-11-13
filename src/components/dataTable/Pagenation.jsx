@@ -16,7 +16,7 @@ export const Pagenation = ({ currentPage, setCurrentPage, lastPage }) => {
         </>
       )}
 
-      <button className="w-7 h-7 bg-accent text-white rounded-sm flex justify-center items-center hover:bg-primary/90">{currentPage}</button>
+      <button className="w-7 h-7 text-black rounded-sm flex justify-center items-center bg-primary/90">{currentPage}</button>
 
       { !lastPage && (
         <>
