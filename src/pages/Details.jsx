@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { capitalizeFirstLetter } from "../components/toUpperCase";
 import { ChevronLeftIcon } from "@heroicons/react/20/solid"
+import { LinkIcon } from "@heroicons/react/20/solid";
 
 import { DetailsGrid } from "../components/detailsComponents/DetailsGrid";
 import loader from '../assets/loader.gif';
@@ -79,9 +80,10 @@ export const Details = () => {
                       target="_blank" 
                       rel="noreferrer" 
                       href={`http://www.igi.org/verify.php?r=${diamond.cert_id}`} 
-                      className="text-dark-grey text-text">
+                      className="text-dark-grey text-text font-bold border-0 border-solid border-b-[1px]">
                         {diamond.cert_id}
                     </a>
+                    <LinkIcon className='w-4 h-4 text-text ml-1'/>
                     
                   </div>
                   <div className="ml-4 flex">

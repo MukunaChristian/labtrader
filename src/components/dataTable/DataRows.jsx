@@ -1,9 +1,10 @@
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
+import { LinkIcon } from '@heroicons/react/20/solid';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { HandRaisedIcon } from '@heroicons/react/24/outline';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import loader from '../../assets/loader.gif';
 // import { getQuotes } from './scrapeGem';
@@ -83,9 +84,10 @@ export const DataRows = ({ row, rowIndex, columns }) => {
               <div className='mb-2'>
                 <p className='text-primary'>IGI</p>
                 <p className='font-semibold text-text'>
-                  <a className='text-text' target="_blank" rel="noreferrer" href={`http://www.igi.org/verify.php?r=${row.cert_id}`}>
+                  <a className='text-text font-bold border-0 border-solid border-b-[1px]' target="_blank" rel="noreferrer" href={`http://www.igi.org/verify.php?r=${row.cert_id}`}>
                     {row.cert_id}
                   </a>
+                  <LinkIcon className='w-4 h-4 text-text ml-1'/>
                 </p>
               </div>
               <div className='mb-4'>
@@ -135,13 +137,12 @@ export const DataRows = ({ row, rowIndex, columns }) => {
               <p className='font-bold pb-2 text-primary'>Delivery</p>
               <p className='pb-2 text-text'>COMPANY</p>
               <div className='flex items-center pb-2'>
-                <p className='pr-1 text-text'>Location</p>
-                <p className='font-semibold text-text'>LOCATION</p>
+                <p className='pr-1 text-text'>LOCATION</p>
               </div>
               
               <p className='pb-2 text-text'>DELIVERY TYPE</p>
               <p className='pb-2 text-text'>DELIVERY TIME</p>
-              <p className='pb-2 text-text'>Returnable</p>
+              <p className='pb-2 text-text'>RETURNABLE</p>
             </div>
             <div className='pt-4'>
               <p className='font-bold pb-2 text-primary'>Price</p>
