@@ -1,5 +1,35 @@
 import diamondData from "./output.json";
+
 import diamondIcon from "../assets/diamond-shapes/round.png";
+import asscherIcon from "../assets/diamond-shapes/asscher.png";
+import emeraldIcon from "../assets/diamond-shapes/emerald.png";
+import heartIcon from "../assets/diamond-shapes/heart.png";
+import marquiseIcon from "../assets/diamond-shapes/marquise.png";
+import ovalIcon from "../assets/diamond-shapes/oval.jpg";
+import pearIcon from "../assets/diamond-shapes/pear.png";
+import princessIcon from "../assets/diamond-shapes/princess.png";
+import radiantIcon from "../assets/diamond-shapes/radiant.png";
+import cushionIcon from "../assets/diamond-shapes/cushion.png";
+import oldMinerIcon from "../assets/diamond-shapes/old-miner.png";
+import squareEmeraldIcon from "../assets/diamond-shapes/square-emerald.jpg";
+import defaultIcon from "../assets/diamond-shapes/diamond.png";
+
+const imageHashMap = {
+  round: diamondIcon,
+  asscher: asscherIcon,
+  emerald: emeraldIcon,
+  heart: heartIcon,
+  marquise: marquiseIcon,
+  oval: ovalIcon,
+  pear: pearIcon,
+  princess: princessIcon,
+  radiant: radiantIcon,
+  "square emerald": squareEmeraldIcon,
+  "square radiant": radiantIcon,
+  cushion: cushionIcon,
+  "cushion bril modified": cushionIcon,
+  "old miner": oldMinerIcon,
+};
 
 const callDiamondApi = async () => {
   const response = await fetch(
@@ -28,14 +58,22 @@ function getDiamondDataList(sourceObj) {
       !videoLink.includes("videos.gem360.in"))
   ) {
     videoLink = "";
-    console.log("Video link not found for", sourceObj["Stock Id."]);
-    console.log(sourceObj["Video Link"]);
+  }
+
+  //console.log(sourceObj["Shape"]);
+
+  let imageIcon;
+  // check if shape is in imageHashMap
+  if (sourceObj["Shape"].toLowerCase() in imageHashMap) {
+    imageIcon = imageHashMap[sourceObj["Shape"].toLowerCase()];
+  } else {
+    imageIcon = defaultIcon;
   }
 
   return {
     id: sourceObj["Stock Id."] || null, // Default to null if undefined
-    cert_id: "LG" + (sourceObj["Report"] || "N/A"), // Append only if Report is defined
-    image: diamondIcon, // Remains static
+    cert_id: sourceObj["Report"] || "N/A", // Append only if Report is defined
+    image: imageIcon, // Remains static
     shape: (sourceObj["Shape"] || "N/A").toLowerCase(),
     specifications: {
       carat: (sourceObj["Carat"] || 0).toString(), // Default to '0' if Carat is undefined
@@ -76,6 +114,7 @@ function getDiamondDataList(sourceObj) {
 
 export const transformedList = (data) => {
   const diamondDataCollect = [];
+  console.log(data.length);
   for (const item of data) {
     const diamondItem = getDiamondDataList(item);
     if (diamondItem) {

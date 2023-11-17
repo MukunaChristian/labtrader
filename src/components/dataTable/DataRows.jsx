@@ -11,10 +11,13 @@ import loader from '../../assets/loader.gif';
 
 export const DataRows = ({ row, rowIndex, columns }) => {
   const currency = useSelector(state => state.app.currency);
+  const rates = useSelector(state => state.app.rates);
   const [isExpanded, setIsExpanded] = useState(false);
   const [gemDisabled, setGemDisabled] = useState(true);
   const [gemLoaded, setGemLoaded] = useState(false);
   const navigate = useNavigate();
+
+  const spotPrice = Math.round((parseFloat(row.total) * rates[currency.code]) * 10) / 10;
 
   const handleExpand = () => {
     console.log("expand")
@@ -35,7 +38,17 @@ export const DataRows = ({ row, rowIndex, columns }) => {
       <tr>
         {columns.map((column, colIndex) => (
           <td key={colIndex} className={`w-[${row.width}px] px-3 py-4 whitespace-nowrap text-text border-solid border-[1.5px] border-dark-grey`}>
-            {column.renderCell ? column.renderCell({ value: row[column.field], row: row }) : row[column.field]}
+            {
+            column.field === "total" ? 
+            <div className="flex flex-col">
+              <div className="flex"><p className='text-xs'>{currency.symbol} {(spotPrice / parseFloat(row.specifications.carat)).toFixed(2)}/ct</p></div>
+              <div className="flex"><p className='text-lg'>${row[column.field]}</p></div>
+              <div className="flex"><p>{spotPrice} {currency.code}</p></div>
+            </div> : 
+            column.renderCell ? 
+            column.renderCell({ value: row[column.field], row: row }) : 
+            row[column.field]
+            }
           </td>
         ))}
         <td className="px-3 py-4 w-1 whitespace-nowrap border-solid border-[1.5px] border-dark-grey">
@@ -69,7 +82,11 @@ export const DataRows = ({ row, rowIndex, columns }) => {
               <p className='font-bold text-primary mb-2'>Information</p>
               <div className='mb-2'>
                 <p className='text-primary'>IGI</p>
-                <p className='font-semibold text-text'>{row.cert_id}</p>
+                <p className='font-semibold text-text'>
+                  <a target="_blank" rel="noreferrer" href={`http://www.igi.org/verify.php?r=${row.cert_id}`}>
+                    {row.cert_id}
+                  </a>
+                </p>
               </div>
               <div className='mb-4'>
                 <p className='text-primary'>Stock ID</p>
@@ -130,9 +147,9 @@ export const DataRows = ({ row, rowIndex, columns }) => {
               <p className='font-bold pb-2 text-primary'>Price</p>
               <p className='text-primary'>Total Price</p>
               <p className='text-text'>${row.total}</p>
-              <p className='text-text'>{parseFloat(row.total) * currency.toOneUSD} {currency.code}</p>
+              <p className='text-text'>{spotPrice} {currency.code}</p>
               <p className='text-primary pt-2'>Price Per Carat</p>
-              <p className='text-text'>${(parseFloat(row.total) / parseFloat(row.specifications.carat)).toFixed(2)}/ct</p>
+              <p className='text-text'>{currency.symbol} {(spotPrice / parseFloat(row.specifications.carat)).toFixed(2)}/ct</p>
             </div>
             <div className='pt-4'>
               <p className='font-bold text-primary'>Actions</p>

@@ -6,7 +6,7 @@ import { FilterBar } from "../components/dashboard/filterBar"
 import { FilterSideBar } from "../components/filterSideBar"
 import { CustomDataTable } from "../components/dataTable/CustomDataTable"
 import { diamonds } from '../api/diamonds';
-import { setDiamondDataState, setLoadingDataState } from '../reducers/AppSlice';
+import { setDiamondDataState, setLoadingDataState, setCurrencyRateState } from '../reducers/AppSlice';
 import { useDispatch } from 'react-redux';
 
 
@@ -24,8 +24,10 @@ export const Dashboard = () => {
   }, [stateRows])
 
   useEffect(() => {
-    diamonds(dispatch, setDiamondDataState, setLoadingDataState);
+    diamonds(dispatch, setDiamondDataState, setLoadingDataState, setCurrencyRateState);
   }, [])
+
+
 
 
   function filterList() {
@@ -36,6 +38,13 @@ export const Dashboard = () => {
                 // Handling nested properties
                 let itemValue = item;
                 console.log(key)
+                // check if shape is asscher
+                if (key === "shape") {
+                    if (itemValue.shape.toLowerCase().trim() === "asscher") {
+                      console.log("asscher")
+                      console.log(itemValue)
+                    }   
+                }
 
                 if (key === "clarity") {
                   console.log("item: ", item)

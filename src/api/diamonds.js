@@ -1,7 +1,7 @@
 import axios from "axios";
 import { transformedList } from "../data/getDiamondData";
 
-export const diamonds = async (dispatch, setData, setLoading) => {
+export const diamonds = async (dispatch, setData, setLoading, setRates) => {
   dispatch(setLoading(true));
   const response = await axios.get(
     "/item/8868260a-42fd-450a-81a7-225a55fb70e5",
@@ -15,8 +15,9 @@ export const diamonds = async (dispatch, setData, setLoading) => {
 
   let objectList = response.data.items.map((str) => JSON.parse(str));
   objectList = transformedList(objectList);
-  console.log(response.data.items.length);
+  console.log(response.data.rates);
   dispatch(setData(objectList));
+  dispatch(setRates(response.data.rates));
   dispatch(setLoading(false));
 };
 

@@ -12,10 +12,12 @@ export const CustomDataTable = ({ currentRows }) => {
   const [cutRows, setCutRows] = useState([]); // [0, 5
   
   const currency = useSelector(state => state.app.currency);
+  const rates = useSelector(state => state.app.rates);
   const maxItems = 5;
 
   const maxPages = Math.ceil(currentRows.length / maxItems);
   const lastPage = currentPage === maxPages;
+
 
 
   useEffect(() => {
@@ -153,7 +155,7 @@ export const CustomDataTable = ({ currentRows }) => {
         <div className="flex flex-col">
           <div className="flex"><p className='text-xs'>${(parseFloat(params.value) / parseFloat(params.row.specifications.carat)).toFixed(2)}/ct</p></div>
           <div className="flex"><p className='text-lg'>${params.value}</p></div>
-          <div className="flex"><p>{parseFloat(params.value) * currency.toOneUSD} {currency.code}</p></div>
+          <div className="flex"><p>{Math.round((parseFloat(params.total) * rates[currency.code]) * 10) / 10} {currency.code}</p></div>
         </div>
       )
     },

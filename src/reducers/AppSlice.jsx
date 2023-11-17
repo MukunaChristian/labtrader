@@ -9,7 +9,6 @@ const appSlice = createSlice({
       name: 'Euro', 
       symbol: '€', 
       imgSrc: 'src/assets/euro.png', 
-      toOneUSD: 0.85, 
       code: 'EUR' 
     },
     language: "English",
@@ -35,6 +34,7 @@ const appSlice = createSlice({
       "with_unknown_luster": false,
       "no_bgm": false,
     },
+    rates: {},
     diamondData: [],
     loadingData: true,
     loggedIn: false
@@ -54,6 +54,9 @@ const appSlice = createSlice({
     },
     setDiamondDataState: (state, action) => {
       state.diamondData = action.payload
+    },
+    setCurrencyRateState: (state, action) => {
+      state.rates = action.payload
     },
     setLoadingDataState: (state, action) => {
       state.loadingData = action.payload
@@ -85,5 +88,14 @@ const appSlice = createSlice({
   },
 })
 
-export const { setCurrencyState, setLanguageState, setFiltersState, resetFiltersState, setDiamondDataState, setLoggedInState, setLoadingDataState } = appSlice.actions
+export const { 
+  setCurrencyState, 
+  setLanguageState, 
+  setFiltersState, 
+  setCurrencyRateState, 
+  resetFiltersState, 
+  setDiamondDataState, 
+  setLoggedInState, 
+  setLoadingDataState 
+} = appSlice.actions
 export default appSlice.reducer;

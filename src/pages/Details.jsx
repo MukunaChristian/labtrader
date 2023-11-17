@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { capitalizeFirstLetter } from "../components/toUpperCase";
 import { ChevronLeftIcon } from "@heroicons/react/20/solid"
 
@@ -11,6 +11,7 @@ import loader from '../assets/loader.gif';
 
 export const Details = () => {
   const diamonds = useSelector(state => state.app.diamondData)
+  const rates = useSelector(state => state.app.rates);
   const currency = useSelector(state => state.app.currency);
   const location = useLocation();
   const navigate = useNavigate();
@@ -19,13 +20,22 @@ export const Details = () => {
   const [diamond, setDiamond] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  
+  let spotPrice = useRef(0);
+
 
   useEffect(() => {
-    setDiamond(diamonds.find(diamond => String(diamond.id) === String(diamondID)))
+    const foundDiamond = diamonds.find(diamond => String(diamond.id) === String(diamondID));
+    if (!foundDiamond) {
+      return
+    }
+    setDiamond(foundDiamond)
+    spotPrice.current = Math.round((parseFloat(foundDiamond.total) * rates[currency.code]) * 10) / 10;
   }, [diamonds])
 
+  console.log(diamond)
+
   return (
+
     <div className="w-full pb-4">
 
       <div className="border-0 pt-28 h-full ml-6 mr-12">
@@ -93,8 +103,8 @@ export const Details = () => {
 
                   <div className="w-32 text-right">
                     <p className="text-text">{diamond["total"]}</p>
-                    <p className="text-text">{parseFloat(diamond["total"]) * currency.toOneUSD} {currency.code}</p>
-                    <p className="text-text">${(parseFloat(diamond["total"]) / parseFloat(diamond.specifications.carat)).toFixed(2)}/ct</p>
+                    <p className="text-text">{spotPrice.current} {currency.code}</p>
+                    <p className="text-text">{currency.symbol} {(spotPrice.current / parseFloat(diamond.specifications.carat)).toFixed(2)}/ct</p>
                   </div>
                 </div>
 

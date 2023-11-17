@@ -11,16 +11,17 @@ import { useApp } from '../../hooks/useApp';
 
 // Euro, British Pound, Hong Kong Dollar, Indian Rupee, South African Rand
 const options = [
-  { id: 1, name: 'Euro', symbol: '€', imgSrc: euro, toOneUSD: 0.85, code: 'EUR' },
-  { id: 2, name: 'British Pound', symbol: '£', imgSrc: pound, toOneUSD: 0.72, code: 'GBP' },
-  { id: 3, name: 'Hong Kong Dollar', symbol: 'HK$', imgSrc: hongkong, toOneUSD: 7.77, code: 'HKD' },
-  { id: 4, name: 'Indian Rupee', symbol: '₹', imgSrc: indian, toOneUSD: 73.66, code: 'INR' },
-  { id: 5, name: 'South African Rand', symbol: 'R', imgSrc: rand, toOneUSD: 14.66, code: 'ZAR' }
+  { id: 1, name: 'Euro', symbol: '€', imgSrc: euro, code: 'EUR' },
+  { id: 2, name: 'British Pound', symbol: '£', imgSrc: pound, code: 'GBP' },
+  { id: 3, name: 'Hong Kong Dollar', symbol: 'HK$', imgSrc: hongkong, code: 'HKD' },
+  { id: 4, name: 'Indian Rupee', symbol: '₹', imgSrc: indian, code: 'INR' },
+  { id: 5, name: 'South African Rand', symbol: 'R', imgSrc: rand, code: 'ZAR' }
 ];
 
 export const CurrencyDropdown = () => {
   const ref = useRef(null);
   const currency = useSelector((state) => state.app.currency);
+  const rates = useSelector((state) => state.app.rates);
 
   console.log(currency)
 
@@ -79,7 +80,7 @@ export const CurrencyDropdown = () => {
                 <img className='w-12 h-8 mr-2 object-cover rounded-lg' src={option.imgSrc} alt={option.name} />
                 <div className='flex flex-col'>
                   <p>{option.name} ({option.symbol})</p>
-                  <p className='text-xs'>1 USD = {option.toOneUSD} {option.code}</p>
+                  <p className='text-xs'>1 USD = {rates[option.code].toFixed(2)} {option.code}</p>
                 </div>
               </a>
             ))}
