@@ -121,7 +121,7 @@ td, tr, th {
 }
 
 .default-filter-button {
-  @apply default-button mr-2 my-2 text-sm bg-white;
+  @apply default-button mr-2 my-2 text-sm;
 }
 
 .default-filter-active {

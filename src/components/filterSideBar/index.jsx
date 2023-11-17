@@ -107,6 +107,8 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
     }
   }
 
+  console.log(filtersLocal)
+
   const checkIfCaratInRange = (carat) => {
     if (carat.endsWith("ct")) {
       carat = carat.slice(0, -2)

@@ -32,7 +32,6 @@ export const Details = () => {
     spotPrice.current = Math.round((parseFloat(foundDiamond.total) * rates[currency.code]) * 10) / 10;
   }, [diamonds])
 
-  console.log(diamond)
 
   return (
 
@@ -59,7 +58,7 @@ export const Details = () => {
                     <div className='iframe-custom h-full my-2 bg-light-grey flex items-center justify-center'><img className='w-5 h-5' src={loader}/></div> :
                   </div>
                 }
-                <div className="flex mt-8">
+                <div onClick={() => navigator.clipboard.writeText(diamond["video_link"])} className="flex mt-8 cursor-pointer">
                   <div className="h-8 w-24 bg-text rounded-md border-solid border-grey border-[1.5px] flex justify-center items-center hover:border-black">
                     <p className="text-xs font-semibold">Copy Video Link</p>
                   </div>
@@ -119,18 +118,6 @@ export const Details = () => {
                 </div>
 
                 <DetailsGrid diamond={diamond}/>
-
-                <div className="mt-6 flex justify-end">
-                  <button className="h-8 px-2 rounded-md border-solid border-grey border-[1.5px] flex justify-center items-center hover:border-black">
-                    <p className="text-xs">Copy Video Link</p>
-                  </button>
-                  <button className="h-8 ml-2 px-2 rounded-md border-solid border-grey border-[1.5px] flex justify-center items-center hover:border-black">
-                    <p className="text-xs">Copy Video Link</p>
-                  </button>
-                  <button className="h-8 px-2 ml-2 rounded-md border-solid border-grey border-[1.5px] flex justify-center items-center hover:border-black">
-                    <p className="text-xs">Copy Video Link</p>
-                  </button>
-                </div>
               </div>
             </>
           }
