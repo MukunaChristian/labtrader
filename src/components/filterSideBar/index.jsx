@@ -140,7 +140,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
     }
   }
 
-
+  filtersLocal["carat_range"]["from"]
 
   return (
     <div>
@@ -231,7 +231,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
               <div>
                 <label className="text-xs">Min</label>
                 <div className="flex border-solid border-[1.5px] rounded-md">
-                  <input name="min" className="w-24 p-1 rounded-md" onChange={handleCaratInput} value={filtersLocal["carat_range"]["from"]}/>
+                  <input name="min" className="w-24 p-1 rounded-md" onChange={handleCaratInput} value={filtersLocal["carat_range"]["from"] ? filtersLocal["carat_range"]["from"] : null}/>
                   <p className="text-xs text-dark-grey px-2">ct</p>
                 </div>
                 
@@ -240,7 +240,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
               <div className="ml-2">
                 <label className="text-xs">Max</label>
                 <div className="flex border-solid border-[1.5px] rounded-md">
-                  <input name="max" className="w-24 p-1 rounded-md" onChange={handleCaratInput} value={filtersLocal["carat_range"]["to"]}/>
+                  <input name="max" className="w-24 p-1 rounded-md" onChange={handleCaratInput} value={filtersLocal["carat_range"]["to"] ? filtersLocal["carat_range"]["to"] : null}/>
                   <p className="text-xs text-dark-grey px-2">ct</p>
                 </div>
               </div>

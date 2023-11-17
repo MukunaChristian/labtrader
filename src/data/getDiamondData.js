@@ -39,6 +39,21 @@ const callDiamondApi = async () => {
   return data;
 };
 
+function getRandomNumberInRange() {
+  const min = 1000;
+  const max = 2500;
+  const increment = 100;
+
+  // Calculate the number of increments between min and max
+  const numIncrements = (max - min) / increment;
+
+  // Generate a random number within the range of increments
+  const randomIncrement = Math.floor(Math.random() * (numIncrements + 1));
+
+  // Calculate the final number
+  return min + randomIncrement * increment;
+}
+
 function getDiamondDataList(sourceObj) {
   // fit diamond data into default object structure
   let videoLink = sourceObj["Video Link"];
@@ -99,7 +114,7 @@ function getDiamondDataList(sourceObj) {
         depth: sourceObj["H"] || 0, // Default to 0 if H is undefined
       },
     },
-    total: "1000", // Remains static
+    total: getRandomNumberInRange().toString(), // Remains static
     video_link: videoLink || "", // Default to empty string if videoLink is undefined
     crown_height: (sourceObj["Crown Height"] || 0).toString(),
     crown_angle: (sourceObj["Crown Angle"] || 0).toString(),

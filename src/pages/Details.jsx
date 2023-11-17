@@ -75,7 +75,14 @@ export const Details = () => {
                 <div className="flex">
                   <div className="flex">
                     <p className="pr-2 text-primary">Cert ID IGI:</p>
-                    <p className="text-dark-grey text-text">{diamond.cert_id}</p>
+                    <a 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      href={`http://www.igi.org/verify.php?r=${diamond.cert_id}`} 
+                      className="text-dark-grey text-text">
+                        {diamond.cert_id}
+                    </a>
+                    
                   </div>
                   <div className="ml-4 flex">
                     <p className="pr-2 text-primary">Stock ID:</p>

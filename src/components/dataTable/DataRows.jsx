@@ -83,7 +83,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
               <div className='mb-2'>
                 <p className='text-primary'>IGI</p>
                 <p className='font-semibold text-text'>
-                  <a target="_blank" rel="noreferrer" href={`http://www.igi.org/verify.php?r=${row.cert_id}`}>
+                  <a className='text-text' target="_blank" rel="noreferrer" href={`http://www.igi.org/verify.php?r=${row.cert_id}`}>
                     {row.cert_id}
                   </a>
                 </p>

@@ -2,15 +2,32 @@ import { AdjustmentsHorizontalIcon } from "@heroicons/react/20/solid"
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid"
 import { FilterDropdown } from "../dropdowns/filterDropdown"
 import { BarsArrowUpIcon } from "@heroicons/react/20/solid"
+import { useState } from "react"
 
 
 export const FilterBar = ({ setIsFilterSideBarOpen, setCurrentRows, currentRows }) => {
+  const [upDown, setUpDown] = useState(null);
 
   const sortPrice = () => {
-    let sortedRows = [...currentRows];
-    sortedRows.sort((a, b) => a.total > b.total ? 1 : -1);
-    console.log(sortedRows)
-    setCurrentRows(sortedRows);
+    if (upDown === null) {
+      let sortedRows = [...currentRows];
+      sortedRows.sort((a, b) => a.total > b.total ? 1 : -1);
+      console.log(sortedRows)
+      setCurrentRows(sortedRows);
+      setUpDown("down");
+    } else if (upDown === "down") {
+      let sortedRows = [...currentRows];
+      sortedRows.sort((a, b) => a.total < b.total ? 1 : -1);
+      console.log(sortedRows)
+      setCurrentRows(sortedRows);
+      setUpDown("up");
+    } else if (upDown === "up") {
+      let sortedRows = [...currentRows];
+      sortedRows.sort((a, b) => a.total > b.total ? 1 : -1);
+      console.log(sortedRows)
+      setCurrentRows(sortedRows);
+      setUpDown("down");
+    }
   }
 
   return (
