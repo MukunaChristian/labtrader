@@ -31,13 +31,15 @@ export const Dashboard = () => {
 
 
   function filterList() {
-    console.log(filters)
     return stateRows.filter(item => {
-        for (const [key, value] of Object.entries(filters)) {
+        for (const [key, value] of Object.entries(filters)) {  
+            if (!value && !(typeof value === 'boolean')) {
+              return true
+            }         
             if (Array.isArray(value) && value.length > 0 || (key === 'carat_range' && (value["from"] || value["to"]))) {
                 // Handling nested properties
                 let itemValue = item;
-                console.log(key)
+
                 // check if shape is asscher
                 if (key === "shape") {
                     if (itemValue.shape.toLowerCase().trim() === "asscher") {
@@ -61,9 +63,9 @@ export const Dashboard = () => {
                     itemValue = item[key];
                 }
 
-                if (!itemValue) {
+                if (itemValue) {
                   console.log(`filter ${key} does not exist`)
-                  return false;
+                  return true;
                 }
 
 
@@ -71,10 +73,8 @@ export const Dashboard = () => {
                   if (!value["from"] || !value["to"]) {
                     return true;
                   }
-                  if (value["from"] > itemValue || value["to"] < itemValue) {
-                    return false;
-                  } else {
-                    return true
+                  if (value["from"] < itemValue || value["to"] > itemValue) {
+                    return true;
                   }
                 }
 
@@ -89,23 +89,27 @@ export const Dashboard = () => {
                       console.log("color: ", color, "itemValue: ", itemValue)
                     }
                   })
-                  if (!colorMatch) {
-                    return false;
-                  } else {
-                    return true
+                  if (colorMatch) {
+                    return true;
                   }
                 }
 
-                if (!value.includes(itemValue.toUpperCase()) && !value.includes(itemValue.toLowerCase())) {
-                    return false; // Doesn't match this filter, so don't include in result
+                if (value.includes(itemValue.toUpperCase()) || value.includes(itemValue.toLowerCase())) {
+                    return true; // Doesn't match this filter, so don't include in result
                 }
-            } else if (typeof value === 'boolean' && value) {
-                if (!item[key]) {
-                    return false; // Doesn't match this boolean filter, so don't include in result
+            } else if (typeof value === 'boolean') {
+                if (item[key]) {
+                    return true; // Doesn't match this boolean filter, so don't include in result
+                }
+            } else if (typeof value === 'string') {
+                console.log(value === "")
+                // console.log(key)
+                if (String(item[key]).toLowerCase().includes(value.toLowerCase()) || value === "") {
+                    return true; // Doesn't match this filter, so don't include in result
                 }
             }
         }
-        return true; // Matches all filters
+        return false; // Matches all filters
     });
   }
 

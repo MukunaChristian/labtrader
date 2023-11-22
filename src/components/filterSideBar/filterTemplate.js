@@ -19,4 +19,6 @@ export let filterTemplate = {
   with_unknown_shade: false,
   with_unknown_luster: false,
   no_bgm: false,
+  id: "",
+  cert_id: "",
 };

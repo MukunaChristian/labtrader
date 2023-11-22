@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 
 export const CustomDataTable = ({ currentRows }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentRowsLocal, setCurrentRowsLocal] = useState(currentRows); // diamondRows.slice(0, 5) // [0, 5
   const [cutRows, setCutRows] = useState([]); // [0, 5
   
   const currency = useSelector(state => state.app.currency);
@@ -173,7 +172,6 @@ export const CustomDataTable = ({ currentRows }) => {
     setCutRows(cutDiamondRows);
   }, [currentRows])
 
-  console.log(currentRows[0])
 
 
   return (

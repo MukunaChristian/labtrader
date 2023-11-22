@@ -33,6 +33,8 @@ const appSlice = createSlice({
       "with_unknown_shade": false,
       "with_unknown_luster": false,
       "no_bgm": false,
+      "cert_id": "",
+      "id": ""
     },
     rates: {},
     diamondData: [],
@@ -83,6 +85,8 @@ const appSlice = createSlice({
         "with_unknown_shade": false,
         "with_unknown_luster": false,
         "no_bgm": false,
+        "cert_id": "",
+        "id": ""
       }
     }
   },
