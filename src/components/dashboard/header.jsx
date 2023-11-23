@@ -2,10 +2,12 @@ import { usePopper } from "react-popper";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useDropzone } from 'react-dropzone'
 import { uploadStock } from "../../api/diamonds";
+import { WarehouseDropdown } from "../dropdowns/WarehouseDropdown";
 
 
 export const Header = ({ title, results }) => {
   const [uploadConfirm, setUploadConfirm] = useState(false);
+  const [selectedWarehouse, setSelectedWarehouse] = useState(null);
   const [fileLoaded, setFileLoaded] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
   const popperElement = useRef(null);
@@ -36,7 +38,7 @@ export const Header = ({ title, results }) => {
     console.log("File uploaded");
     setUploadConfirm(false);
     setFileLoaded(null);
-    uploadStock(fileLoaded);
+    uploadStock(fileLoaded, selectedWarehouse);
   }
 
   const cancelFileUpload = (e) => {
@@ -68,6 +70,8 @@ export const Header = ({ title, results }) => {
             className="fixed z-[30] inset-0 bg-gray-700 opacity-50 h-[100vh]"
             onClick={() => {
               setUploadConfirm(false);
+              setSelectedWarehouse(null);
+              setFileLoaded(null);
             }} // Close the pop-up when clicking outside
           />
           <div
@@ -80,7 +84,7 @@ export const Header = ({ title, results }) => {
             position: "fixed"
           }}
           {...attributes.popper}
-          className="z-[31] fixed bg-white rounded shadow-lg p-6 text-center"
+          className="z-[31] h-[28rem] fixed bg-white rounded shadow-lg p-6 text-center"
         >
           <div>
             <div {...getRootProps()} className="h-[14rem] w-[24rem] border-1 border-solid rounded-2xl border-dashed">
@@ -90,15 +94,24 @@ export const Header = ({ title, results }) => {
                   <p className="font-semibold">Drop files here</p> :
                   <p>{fileLoaded.name}</p>
                 }
-                {fileLoaded && 
-                  <div className="flex justify-around">
-                    <button onClick={(e) => handleFileUpload(e)} className="default-button w-24">Upload</button>
-                    <button onClick={(e) => cancelFileUpload(e)} className="default-button w-24">Cancel</button>
-                  </div>
-                }
+                
               </div>
             </div>
           </div>
+          <div className="pt-5">
+            <WarehouseDropdown warehouse={selectedWarehouse} setWarehouse={setSelectedWarehouse} />
+          </div>
+
+          {(fileLoaded && selectedWarehouse) ?
+            <div className="flex justify-around mt-24">
+              <button onClick={(e) => handleFileUpload(e)} className="default-button w-24">Upload</button>
+              <button onClick={(e) => cancelFileUpload(e)} className="default-button w-24">Cancel</button>
+            </div> :
+            <div className="flex justify-around mt-24">
+              <button className="default-button-disabled w-24">Upload</button>
+              <button onClick={(e) => cancelFileUpload(e)} className="default-button w-24">Cancel</button>
+            </div>
+          }
         </div>
       </div>
     )}

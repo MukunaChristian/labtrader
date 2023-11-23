@@ -116,6 +116,10 @@ td, tr, th {
   @apply flex rounded-sm px-2 h-8 border-solid border-[1px] border-black justify-center items-center cursor-pointer hover:bg-light-grey
 }
 
+.default-button-disabled {
+  @apply flex rounded-sm px-2 h-8 border-solid border-[1px] border-black justify-center items-center bg-grey cursor-not-allowed
+}
+
 .default-save-button {
   @apply flex bg-navy-blue rounded-sm px-2 h-8 border-solid border-[1.5px] justify-center items-center cursor-pointer text-white hover:bg-light-blue
 }

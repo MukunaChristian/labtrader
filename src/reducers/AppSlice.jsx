@@ -39,7 +39,8 @@ const appSlice = createSlice({
     rates: {},
     diamondData: [],
     loadingData: true,
-    loggedIn: false
+    loggedIn: false,
+    warehouses: []
   },
   reducers: {
     setLoggedInState: (state, action) => {
@@ -62,6 +63,9 @@ const appSlice = createSlice({
     },
     setLoadingDataState: (state, action) => {
       state.loadingData = action.payload
+    },
+    setWarehousesState: (state, action) => {
+      state.warehouses = action.payload
     },
     resetFiltersState: (state) => {
       state.filters = {
@@ -100,6 +104,7 @@ export const {
   resetFiltersState, 
   setDiamondDataState, 
   setLoggedInState, 
-  setLoadingDataState 
+  setLoadingDataState,
+  setWarehousesState
 } = appSlice.actions
 export default appSlice.reducer;

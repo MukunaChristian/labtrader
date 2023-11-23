@@ -6,7 +6,7 @@ import { FilterBar } from "../components/dashboard/filterBar"
 import { FilterSideBar } from "../components/filterSideBar"
 import { CustomDataTable } from "../components/dataTable/CustomDataTable"
 import { diamonds } from '../api/diamonds';
-import { setDiamondDataState, setLoadingDataState, setCurrencyRateState } from '../reducers/AppSlice';
+import { setDiamondDataState, setLoadingDataState, setCurrencyRateState, setWarehousesState } from '../reducers/AppSlice';
 import { useDispatch } from 'react-redux';
 
 
@@ -24,7 +24,7 @@ export const Dashboard = () => {
   }, [stateRows])
 
   useEffect(() => {
-    diamonds(dispatch, setDiamondDataState, setLoadingDataState, setCurrencyRateState);
+    diamonds(dispatch, setDiamondDataState, setLoadingDataState, setCurrencyRateState, setWarehousesState);
   }, [])
 
 
