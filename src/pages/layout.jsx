@@ -17,19 +17,22 @@ export const Layout = ({ children }) => {
   const navigate = useNavigate();
   const develop = import.meta.env.VITE_DEVELOPMENT
 
-  let isLogin = location.pathname === '/login';
+  let isLogin = location.pathname === '/login' || location.pathname === '/forgot-password';
 
   const checkToken = () => {
     console.log("checking")
+    console.log(isLogin)
     setLoggedIn(false)
 
     const token = localStorage.getItem("jwt");
-    if (!token) {
+    if (!token && !isLogin) {
       navigate("/login")
       return
     }
 
-    validateToken(token, navigate, setLoggedIn);
+    if (!location.pathname === '/forgot-password') {
+      validateToken(token, navigate, setLoggedIn);
+    }
   }
 
 

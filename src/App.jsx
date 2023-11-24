@@ -6,6 +6,7 @@ import { Dashboard } from './pages/dashboard'
 import { Layout } from './pages/layout';
 import { Login } from './pages/login';
 import { Details } from './pages/Details';
+import { ForgotPassword } from './pages/ForgotPassword';
 import store from './store';
 import axios from 'axios';
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/details/:id" element={<Details />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
           </Routes>
         </Layout>
       </BrowserRouter>

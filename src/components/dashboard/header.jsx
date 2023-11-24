@@ -55,7 +55,7 @@ export const Header = ({ title, results }) => {
           <p className="text-sm text-text font-semibold">{ results } results</p>
         </div>
         <div className="flex ml-auto mt-4">
-          <a href="src\assets\Stock Upload Template.xlsx" download>
+          <a href=".\Stock Upload Template.xlsx" download>
             <button className="default-button mr-4">Download Template</button>
           </a>
           <button onClick={() => {
