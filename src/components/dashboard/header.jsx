@@ -84,7 +84,7 @@ export const Header = ({ title, results }) => {
             position: "fixed"
           }}
           {...attributes.popper}
-          className="z-[31] h-[28rem] fixed bg-white rounded shadow-lg p-6 text-center"
+          className="z-[31] h-[20rem] fixed bg-white rounded shadow-lg p-6 text-center"
         >
           <div>
             <div {...getRootProps()} className="h-[14rem] w-[24rem] border-1 border-solid rounded-2xl border-dashed">
@@ -98,16 +98,16 @@ export const Header = ({ title, results }) => {
               </div>
             </div>
           </div>
-          <div className="pt-5">
+          {/* <div className="pt-5">
             <WarehouseDropdown warehouse={selectedWarehouse} setWarehouse={setSelectedWarehouse} />
-          </div>
+          </div> */}
 
-          {(fileLoaded && selectedWarehouse) ?
-            <div className="flex justify-around mt-24">
+          {(fileLoaded) ?
+            <div className="flex justify-around mt-6">
               <button onClick={(e) => handleFileUpload(e)} className="default-button w-24">Upload</button>
               <button onClick={(e) => cancelFileUpload(e)} className="default-button w-24">Cancel</button>
             </div> :
-            <div className="flex justify-around mt-24">
+            <div className="flex justify-around mt-6">
               <button className="default-button-disabled w-24">Upload</button>
               <button onClick={(e) => cancelFileUpload(e)} className="default-button w-24">Cancel</button>
             </div>

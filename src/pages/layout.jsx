@@ -63,7 +63,7 @@ export const Layout = ({ children }) => {
           <div className='h-24 w-[50vw] flex justify-start border-0 border-solid border-y-[1px] border-black'>
             <div className='h-full flex items-center ml-auto mr-6'>
               <CurrencyDropdown />
-              <LanguageDropdown /> 
+              {/* <LanguageDropdown />  */}
             </div>
           </div>
           

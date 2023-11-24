@@ -32,7 +32,7 @@ export const diamonds = async (
 export const uploadStock = async (file, warehouse) => {
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("warehouse", warehouse.WarehouseCode);
+  // formData.append("warehouse", warehouse.WarehouseCode);
   const response = await axios.post("/stock", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
