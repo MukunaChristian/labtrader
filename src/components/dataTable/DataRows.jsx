@@ -154,10 +154,11 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             <div className='pt-4'>
               <p className='font-bold pb-2 text-primary'>Price</p>
               <p className='text-primary'>Total Price</p>
-              <p className='text-text'>${row.total}</p>
-              <p className='text-text'>{spotPrice} {currency.code}</p>
+              <p className='text-text'>{row.total ? '$' + row.total : 'N/A'}</p>
+              <p className='text-text'>{row.total ? spotPrice + " " + currency.code : 'N/A'}</p>
               <p className='text-primary pt-2'>Price Per Carat</p>
-              <p className='text-text'>{currency.symbol} {(spotPrice / parseFloat(row.specifications.carat)).toFixed(2)}/ct</p>
+              <p className='text-text'>{row.total ? currency.symbol + " " + (spotPrice / parseFloat(row.specifications.carat)).toFixed(2) + '/ct' : 'N/A'}</p>
+              <p className='text-text'></p>
             </div>
             <div className='pt-4'>
               <p className='font-bold text-primary'>Actions</p>

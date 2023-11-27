@@ -45,6 +45,9 @@ export const Layout = ({ children }) => {
     if (loggedIn && isLogin) {
       navigate("/")
       return
+    } else if (!loggedIn && !isLogin) {
+      navigate("/login")
+      return
     }
   }, [loggedIn])
 
