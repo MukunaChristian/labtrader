@@ -158,11 +158,11 @@ export const CustomDataTable = ({ currentRows }) => {
         </div>
       )
     },
-    {
-      field: 'shipping',
-      headerName: 'Shipping',
-      width: 150,
-    },
+    // {
+    //   field: 'shipping',
+    //   headerName: 'Shipping',
+    //   width: 150,
+    // },
 
   ];
 

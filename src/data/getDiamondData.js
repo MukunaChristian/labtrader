@@ -114,7 +114,7 @@ function getDiamondDataList(sourceObj) {
         depth: sourceObj["H"] || 0, // Default to 0 if H is undefined
       },
     },
-    total: getRandomNumberInRange().toString(), // Remains static
+    total: sourceObj["Price"] ? sourceObj["Price"].toString() : undefined, // Remains static
     video_link: videoLink || "", // Default to empty string if videoLink is undefined
     crown_height: (sourceObj["Crown Height"] || 0).toString(),
     crown_angle: (sourceObj["Crown Angle"] || 0).toString(),
@@ -124,6 +124,8 @@ function getDiamondDataList(sourceObj) {
     culet: sourceObj["Culet"] || "N/A",
     canada: sourceObj["Canada Mark"] || "N/A",
     forever: sourceObj["Forever Mark"] || "N/A",
+    location: sourceObj["Location"] || "Location N/A",
+    company: sourceObj["Lab"] || "Lab N/A",
   };
 }
 

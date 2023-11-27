@@ -16,6 +16,7 @@ export const Layout = ({ children }) => {
   const loggedIn = useSelector(state => state.app.loggedIn);
   const navigate = useNavigate();
   const develop = import.meta.env.VITE_DEVELOPMENT
+  const [jwtChecked, setJwtChecked] = useState(false);
 
   let isLogin = location.pathname === '/login' || location.pathname === '/forgot-password';
 
@@ -49,13 +50,14 @@ export const Layout = ({ children }) => {
 
 
   return (
+    (loggedIn || isLogin) ?
     <div className='w-[100%] h-full'>
       {isLogin ? null : 
         <div className='w-full z-30 h-16 bg-white flex relative items-center justify-start px-5 pt-24 fixed'>
           <div className='h-24 w-[50vw] flex justify-start items-center pl-6 border-0 border-solid border-y-[1px] border-black'>
-            <div className='flex items-center hover:bg-grey h-12 w-12 p-2 rounded-sm cursor-pointer'>
+            {/* <div className='flex items-center hover:bg-grey h-12 w-12 p-2 rounded-sm cursor-pointer'>
               <Bars3Icon className='h-8 w-8' />
-            </div>
+            </div> */}
           </div>
 
           <div className='absolute left-[50%] translate-x-[-50%] bg-black w-48 h-48 rounded-full flex items-center justify-center border-solid border-[12px] border-white'> 
@@ -76,7 +78,8 @@ export const Layout = ({ children }) => {
         {children}
       </div>
       
-    </div>
+    </div> :
+    <div></div>
   )
 }
 

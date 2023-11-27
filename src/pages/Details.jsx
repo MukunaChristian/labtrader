@@ -30,7 +30,12 @@ export const Details = () => {
       return
     }
     setDiamond(foundDiamond)
-    spotPrice.current = Math.round((parseFloat(foundDiamond.total) * rates[currency.code]) * 10) / 10;
+    if (foundDiamond.total) {
+      spotPrice.current = Math.round((parseFloat(foundDiamond.total) * rates[currency.code]) * 10) / 10;
+    } else {
+      spotPrice.current = null;
+    }
+    
   }, [diamonds])
 
 
@@ -91,7 +96,7 @@ export const Details = () => {
                     <p className="font-bold text-text">{diamond.id}</p>
                   </div>  
                 </div>
-                <div className="flex mt-4 mb-2">
+                <div className="flex mt-4 mb-2 ">
                   <div>
                     <p className='pb-1 text-text'>COMPANY</p>
                     <div className='flex items-center pb-2'>
@@ -106,14 +111,21 @@ export const Details = () => {
                   </div>
 
                   <div className="ml-auto">
-                    <p className='pb-2 text-primary   '>Total Price</p> 
+                    <p className='pb-2 text-primary'>Total Price</p> 
                   </div>
-
-                  <div className="w-32 text-right">
+                  
+                  {spotPrice.current ?
+                  <div className="w-32 text-left mr-[2rem]">
                     <p className="text-text">{diamond["total"]}</p>
                     <p className="text-text">{spotPrice.current} {currency.code}</p>
                     <p className="text-text">{currency.symbol} {(spotPrice.current / parseFloat(diamond.specifications.carat)).toFixed(2)}/ct</p>
+                  </div> : 
+                  <div className="w-28 text-left ml-[70px]">
+                    <p className="text-text">-</p>
+                    <p className="text-text">-</p>
+                    <p className="text-text">-</p>
                   </div>
+                  }
                 </div>
 
                 <div className="flex">

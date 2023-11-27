@@ -18,7 +18,10 @@ export const DataRows = ({ row, rowIndex, columns }) => {
   const [gemLoaded, setGemLoaded] = useState(false);
   const navigate = useNavigate();
 
-  const spotPrice = Math.round((parseFloat(row.total) * rates[currency.code]) * 10) / 10;
+  let spotPrice = null;
+  if (row.total) {
+    spotPrice = Math.round((parseFloat(row.total) * rates[currency.code]) * 10) / 10;
+  }
 
   const handleExpand = () => {
     console.log("expand")
@@ -41,11 +44,15 @@ export const DataRows = ({ row, rowIndex, columns }) => {
           <td key={colIndex} className={`w-[${row.width}px] px-3 py-4 whitespace-nowrap text-text border-solid border-[1.5px] border-dark-grey`}>
             {
             column.field === "total" ? 
-            <div className="flex flex-col">
-              <div className="flex"><p className='text-xs'>{currency.symbol} {(spotPrice / parseFloat(row.specifications.carat)).toFixed(2)}/ct</p></div>
-              <div className="flex"><p className='text-lg'>${row[column.field]}</p></div>
-              <div className="flex"><p>{spotPrice} {currency.code}</p></div>
-            </div> : 
+            <>
+              {spotPrice ? <div className="flex flex-col">
+                <div className="flex"><p className='text-xs'>{currency.symbol} {(spotPrice / parseFloat(row.specifications.carat)).toFixed(2)}/ct</p></div>
+                <div className="flex"><p className='text-lg'>${row[column.field]}</p></div>
+                <div className="flex"><p>{spotPrice} {currency.code}</p></div>
+              </div> : <div className="flex flex-col">
+                <div className="flex"><p className='text-lg'>N/A</p></div>
+              </div>}
+            </> : 
             column.renderCell ? 
             column.renderCell({ value: row[column.field], row: row }) : 
             row[column.field]
@@ -94,8 +101,8 @@ export const DataRows = ({ row, rowIndex, columns }) => {
                 <p className='text-primary'>Stock ID</p>
                 <p className='font-semibold text-text'>{row.id}</p>
               </div>
-              <p className='mb-4 rounded-full border-solid border-[1.5px] border-dark-grey px-6 text-text'>Req. Shade</p>
-              <p className='mb-2 rounded-full border-solid border-[1.5px] border-dark-grey px-6 text-text'>Req. Eye clean</p>
+              {/* <p className='mb-4 rounded-full border-solid border-[1.5px] border-dark-grey px-6 text-text'>Req. Shade</p>
+              <p className='mb-2 rounded-full border-solid border-[1.5px] border-dark-grey px-6 text-text'>Req. Eye clean</p> */}
             </div>
             <div className='pt-4'>
               <p className='font-bold pb-2 text-primary'>Diamond Details</p>
@@ -135,14 +142,14 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             </div>
             <div className='pt-4'>
               <p className='font-bold pb-2 text-primary'>Delivery</p>
-              <p className='pb-2 text-text'>COMPANY</p>
+              <p className='pb-2 text-text'>{row.location}</p>
               <div className='flex items-center pb-2'>
-                <p className='pr-1 text-text'>LOCATION</p>
+                <p className='pr-1 text-text'>{row.company}</p>
               </div>
               
-              <p className='pb-2 text-text'>DELIVERY TYPE</p>
+              {/* <p className='pb-2 text-text'>DELIVERY TYPE</p>
               <p className='pb-2 text-text'>DELIVERY TIME</p>
-              <p className='pb-2 text-text'>RETURNABLE</p>
+              <p className='pb-2 text-text'>RETURNABLE</p> */}
             </div>
             <div className='pt-4'>
               <p className='font-bold pb-2 text-primary'>Price</p>
@@ -154,17 +161,17 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             </div>
             <div className='pt-4'>
               <p className='font-bold text-primary'>Actions</p>
-              <button className='mt-4 h-7 w-28 rounded-md bg-accent text-white flex justify-center items-center'>Add to cart</button>
+              {/* <button className='mt-4 h-7 w-28 rounded-md bg-accent text-white flex justify-center items-center'>Add to cart</button> */}
               <button onClick={() => {navigate("/details/" + row["id"])}} className='mt-4 h-7 w-28 rounded-md border-solid border-[1.5px] flex justify-center items-center'>More details</button>
 
-              <div className='flex mt-4 justify-between'>
+              {/* <div className='flex mt-4 justify-between'>
                 <button className='group h-10 w-12 rounded-md border-solid border-[#e8413d]/30 border-[1.5px] flex justify-center items-center hover:border-[#e8413d]'>
                   <HeartIcon className='group-hover:text-[#e8413d] w-6 h-6 text-[#e8413d]/30'/>
                 </button>
                 <button className='group h-10 w-12 rounded-md border-solid border-grey border-[1.5px] flex justify-center items-center hover:border-black'>
                   <HandRaisedIcon className='group-hover:text-black w-6 h-6 text-grey'/>
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </td>

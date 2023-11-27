@@ -149,7 +149,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
           <p className="font-bold">Filters</p>
           <XMarkIcon onClick={() => {setIsFilterSideBarOpen(false)}} className="w-6 h-6 text-dark-grey hover:text-navy-blue ml-auto cursor-pointer" />
         </div>
-        <div className="flex justify-between border-solid border-0 border-b-[1.5px] pb-12">
+        {/* <div className="flex justify-between border-solid border-0 border-b-[1.5px] pb-12">
           <div className="w-1/4">
             <p className="font-bold pb-2">Delivery time</p>
             <FieldGroups 
@@ -188,7 +188,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             </div>
             
           </div>
-        </div>
+        </div> */}
 
         <div>
           <p className="font-bold pt-4 pb-4">Shape</p>
@@ -346,7 +346,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
           </div>
         </div>
 
-        <div className="pt-12 w-[50%]">
+        {/* <div className="pt-12 w-[50%]">
           <p className="font-bold pb-2">Eye clean</p>
           <FieldGroups 
             fieldGroups={["Yes", "No", "Borderline"]} 
@@ -375,7 +375,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             <input onClick={() => handleFilterChange("with_unknown_luster")} type="checkbox"/>
             <label className="ml-2 text-sm">Allow unknown luster</label>
           </div>
-        </div>
+        </div> */}
       
 
         <div className="fixed py-4 flex justify-end mt-4 bottom-0 w-[93vh] bg-white border-0 border-solid border-t-[1px]">
