@@ -25,13 +25,15 @@ export const Layout = ({ children }) => {
     console.log(isLogin)
     setLoggedIn(false)
 
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem("jwt");  
     if (!token && !isLogin) {
       navigate("/login")
       return
     }
 
-    if (!location.pathname === '/forgot-password') {
+
+    if (!(location.pathname === '/forgot-password')) {
+      console.log("validating")
       validateToken(token, navigate, setLoggedIn);
     }
   }
@@ -44,9 +46,6 @@ export const Layout = ({ children }) => {
   useEffect(() => {
     if (loggedIn && isLogin) {
       navigate("/")
-      return
-    } else if (!loggedIn && !isLogin) {
-      navigate("/login")
       return
     }
   }, [loggedIn])

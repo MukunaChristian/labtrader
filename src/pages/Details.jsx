@@ -128,16 +128,6 @@ export const Details = () => {
                   }
                 </div>
 
-                <div className="flex">
-                  <div className="h-6 w-32 mr-2 text-xs bg-text border-solid border-grey border-[1.5px] flex justify-center items-center hover:border-black">
-                    REQUEST EYESHADE
-                  </div>
-
-                  <div className="h-6 w-32 text-xs bg-text border-solid border-grey border-[1.5px] flex justify-center items-center hover:border-black">
-                    REQUEST EYE CLEAN
-                  </div>
-                </div>
-
                 <DetailsGrid diamond={diamond}/>
               </div>
             </>

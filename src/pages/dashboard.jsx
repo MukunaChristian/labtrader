@@ -33,89 +33,61 @@ export const Dashboard = () => {
   function filterList() {
     return stateRows.filter(item => {
         for (const [key, value] of Object.entries(filters)) {  
-            if (!value && !(typeof value === 'boolean')) {
-              return true
-            }         
-            if (Array.isArray(value) && value.length > 0 || (key === 'carat_range' && (value["from"] || value["to"]))) {
-                // Handling nested properties
-                let itemValue = item;
+            // Skip if the filter value is empty (empty array, empty string, or null)
+            if (Array.isArray(value) && value.length === 0 || value === '' || value === null) {
+                continue;
+            }
 
-                // check if shape is asscher
-                if (key === "shape") {
-                    if (itemValue.shape.toLowerCase().trim() === "asscher") {
-                      console.log("asscher")
-                      console.log(itemValue)
-                    }   
+            let itemValue = item; // Default item value
+
+            // Determine the itemValue based on the key
+            if (['clarity', 'color', 'cut'].includes(key)) {
+                itemValue = item.specifications[key];
+            } else if (['polish', 'symmetry', 'fluorescence', 'fluorescence_color'].includes(key)) {
+                itemValue = item.finish[key];
+            } else if (key === 'carat_range') {
+                itemValue = item.specifications["carat"];
+            } else {
+                itemValue = item[key];
+            }
+
+            // If the itemValue is missing, skip this filter
+            if (!itemValue) {
+                continue;
+            }
+
+            // Logic for handling different filter types
+            if (key === "carat_range") {
+                if (itemValue < value["from"] || itemValue > value["to"]) {
+                    return false;
                 }
-
-                if (key === "clarity") {
-                  console.log("item: ", item)
+            } else if (key === "color") {
+                let colorMatch = value.some(color => itemValue.toLowerCase().startsWith(color.toLowerCase()));
+                if (!colorMatch) {
+                    return false;
                 }
-                
-
-                if (['clarity', 'color', 'cut'].includes(key)) {
-                    itemValue = item.specifications[key];
-                } else if (['polish', 'symmetry', 'fluorescence', 'fluorescence_color'].includes(key)) {
-                    itemValue = item.finish[key];
-                } else if (key === 'carat_range') {
-                    itemValue = item.specifications["carat"];
-                } else {
-                    itemValue = item[key];
-                }
-
-                if (itemValue) {
-                  console.log(`filter ${key} does not exist`)
-                  return true;
-                }
-
-
-                if (key === "carat_range") {
-                  if (!value["from"] || !value["to"]) {
-                    return true;
-                  }
-                  if (value["from"] < itemValue || value["to"] > itemValue) {
-                    return true;
-                  }
-                }
-
-
-                if (key === "color") {
-                  console.log("Checking color")
-                  // iterate through each color in the filter and check starts with
-                  let colorMatch = false;
-                  value.forEach(color => {
-                    if (itemValue.toLowerCase().startsWith(color.toLowerCase())) {
-                      colorMatch = true;
-                      console.log("color: ", color, "itemValue: ", itemValue)
-                    }
-                  })
-                  if (colorMatch) {
-                    return true;
-                  }
-                }
-
-                if (value.includes(itemValue.toUpperCase()) || value.includes(itemValue.toLowerCase())) {
-                    return true; // Doesn't match this filter, so don't include in result
+            } else if (Array.isArray(value)) {
+                if (!value.includes(itemValue.toUpperCase()) && !value.includes(itemValue.toLowerCase())) {
+                    return false;
                 }
             } else if (typeof value === 'boolean') {
-                if (item[key]) {
-                    return true; // Doesn't match this boolean filter, so don't include in result
+                if (!item[key]) {
+                    return false;
                 }
             } else if (typeof value === 'string') {
-                console.log(value === "")
-                // console.log(key)
-                if (String(item[key]).toLowerCase().includes(value.toLowerCase()) || value === "") {
-                    return true; // Doesn't match this filter, so don't include in result
+                if (!String(item[key]).toLowerCase().includes(value.toLowerCase())) {
+                    return false;
                 }
             }
         }
-        return false; // Matches all filters
+        return true; // If none of the filters rejected the item, include it
     });
-  }
+}
 
 
   useEffect(() => {
     const newData = filterList()
+    console.log(newData)
     setCurrentRows(newData)
 
   }, [filters])
