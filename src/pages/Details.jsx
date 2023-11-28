@@ -23,7 +23,6 @@ export const Details = () => {
 
   let spotPrice = useRef(0);
 
-
   useEffect(() => {
     const foundDiamond = diamonds.find(diamond => String(diamond.id) === String(diamondID));
     if (!foundDiamond) {
@@ -98,14 +97,8 @@ export const Details = () => {
                 </div>
                 <div className="flex mt-4 mb-2 ">
                   <div>
-                    <p className='pb-1 text-text'>COMPANY</p>
                     <div className='flex items-center pb-2'>
-                      <p className='font-semibold text-text'>LOCATION</p>
-                    </div>
-                    
-                    <div className="flex">
-                      <p className='pr-2 text-text'>DELIVERY TIME</p>
-                      <p className='pb-1 text-text'>Returnable</p>
+                      <p className='font-semibold text-text'>{diamond.location}</p>
                     </div>
                     
                   </div>

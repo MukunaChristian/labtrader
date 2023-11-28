@@ -168,8 +168,8 @@ export const CustomDataTable = ({ currentRows }) => {
 
 
   useEffect(() => {
-    let cutDiamondRows = currentRows.slice((currentPage - 1) * maxItems, currentPage * maxItems);
-    setCutRows(cutDiamondRows);
+    setCurrentPage(1);
+    setCutRows(currentRows.slice(0, maxItems));
   }, [currentRows])
 
 

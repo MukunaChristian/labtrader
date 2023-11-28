@@ -18,6 +18,8 @@ export const Dashboard = () => {
   const filters = useSelector(state => state.app.filters);
   const dispatch = useDispatch();
 
+  console.log(filters.shape)
+
 
   useEffect(() => {
     setCurrentRows(stateRows)
@@ -27,15 +29,21 @@ export const Dashboard = () => {
     diamonds(dispatch, setDiamondDataState, setLoadingDataState, setCurrencyRateState, setWarehousesState);
   }, [])
 
-
-
-
   function filterList() {
     return stateRows.filter(item => {
         for (const [key, value] of Object.entries(filters)) {  
             // Skip if the filter value is empty (empty array, empty string, or null)
             if (Array.isArray(value) && value.length === 0 || value === '' || value === null) {
                 continue;
+            }
+
+            if (key === 'id' || key === 'cert_id') {
+                if (
+                    !String(item["id"]).toLowerCase().includes(value.toLowerCase()) && 
+                    !String(item["cert_id"]).toLowerCase().includes(value.toLowerCase())
+                ) {
+                    return false;
+                }
             }
 
             let itemValue = item; // Default item value
@@ -74,7 +82,7 @@ export const Dashboard = () => {
                 if (!item[key]) {
                     return false;
                 }
-            } else if (typeof value === 'string') {
+            } else if (typeof value === 'string' && key !== 'id' && key !== 'cert_id') {
                 if (!String(item[key]).toLowerCase().includes(value.toLowerCase())) {
                     return false;
                 }
@@ -87,10 +95,10 @@ export const Dashboard = () => {
 
   useEffect(() => {
     const newData = filterList()
-    console.log(newData)
+    console.log("filtering")
     setCurrentRows(newData)
+  }, [filters, stateRows])
 
-  }, [filters])
 
 
   return (

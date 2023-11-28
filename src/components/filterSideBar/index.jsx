@@ -1,7 +1,8 @@
 import { XMarkIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
+import { useSelector } from "react-redux";
 
 import { FieldGroups, FancyColorFields } from "./fieldGroups";
 import { 
@@ -27,6 +28,12 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
   const [filtersLocal, setFiltersLocal] = useState(filterTemplate);
 
   const { setFilters, resetFilters } = useApp()
+
+  const globalFilters = useSelector(state => state.app.filters);
+
+  useEffect(() => {
+    setFiltersLocal(globalFilters)
+  }, [])
 
   const handleFilterChange = (filterName, filterItemInp) => {
     const filterItem = filterItemInp.toLowerCase();
@@ -139,7 +146,6 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
     }
   }
 
-  filtersLocal["carat_range"]["from"]
 
   return (
     <div>
@@ -230,7 +236,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
               <div>
                 <label className="text-xs">Min</label>
                 <div className="flex border-solid border-[1.5px] rounded-md">
-                  <input name="min" className="w-24 p-1 rounded-md" onChange={handleCaratInput} value={filtersLocal["carat_range"]["from"] ? filtersLocal["carat_range"]["from"] : null}/>
+                  <input name="min" className="w-24 p-1 rounded-md" onChange={handleCaratInput} value={filtersLocal["carat_range"]["from"] ? filtersLocal["carat_range"]["from"] : ""}/>
                   <p className="text-xs text-dark-grey px-2">ct</p>
                 </div>
                 
@@ -239,7 +245,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
               <div className="ml-2">
                 <label className="text-xs">Max</label>
                 <div className="flex border-solid border-[1.5px] rounded-md">
-                  <input name="max" className="w-24 p-1 rounded-md" onChange={handleCaratInput} value={filtersLocal["carat_range"]["to"] ? filtersLocal["carat_range"]["to"] : null}/>
+                  <input name="max" className="w-24 p-1 rounded-md" onChange={handleCaratInput} value={filtersLocal["carat_range"]["to"] ? filtersLocal["carat_range"]["to"] : ""}/>
                   <p className="text-xs text-dark-grey px-2">ct</p>
                 </div>
               </div>
