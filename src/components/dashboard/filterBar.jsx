@@ -13,24 +13,39 @@ export const FilterBar = ({ setIsFilterSideBarOpen, setCurrentRows, currentRows 
   const [upDown, setUpDown] = useState(null);
 
   const sortPrice = () => {
-    if (upDown === null) {
-      let sortedRows = [...currentRows];
-      sortedRows.sort((a, b) => a.total > b.total ? 1 : -1);
-      console.log(sortedRows)
-      setCurrentRows(sortedRows);
+    let sortedRows = [...currentRows];
+  
+    const compareFunction = (a, b) => {
+      // Both values are undefined, consider them equal
+      if (a.total === undefined && b.total === undefined) {
+        return 0;
+      }
+      // a is undefined, b is not, a should be considered greater (to move to the end)
+      if (a.total === undefined) {
+        return 1;
+      }
+      // b is undefined, a is not, b should be considered greater
+      if (b.total === undefined) {
+        return -1;
+      }
+      // Normal comparison when both values are defined
+      if (upDown === "down") {
+        return a.total < b.total ? 1 : -1;
+      } else {
+        return a.total > b.total ? 1 : -1;
+      }
+    };
+  
+    sortedRows.sort(compareFunction);
+  
+    console.log(sortedRows)
+    setCurrentRows(sortedRows);
+  
+    // Toggle the sorting direction
+    if (upDown === "up" || upDown === null) {
       setUpDown("down");
-    } else if (upDown === "down") {
-      let sortedRows = [...currentRows];
-      sortedRows.sort((a, b) => a.total < b.total ? 1 : -1);
-      console.log(sortedRows)
-      setCurrentRows(sortedRows);
+    } else {
       setUpDown("up");
-    } else if (upDown === "up") {
-      let sortedRows = [...currentRows];
-      sortedRows.sort((a, b) => a.total > b.total ? 1 : -1);
-      console.log(sortedRows)
-      setCurrentRows(sortedRows);
-      setUpDown("down");
     }
   }
 
