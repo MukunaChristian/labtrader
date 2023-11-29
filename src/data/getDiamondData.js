@@ -85,6 +85,18 @@ function getDiamondDataList(sourceObj) {
     imageIcon = defaultIcon;
   }
 
+  let price;
+  if (
+    typeof sourceObj["Price Per Carat"] === "number" &&
+    sourceObj["Price Per Carat"] > 0 &&
+    sourceObj["Carat"]
+  ) {
+    price = sourceObj["Price Per Carat"] * sourceObj["Carat"];
+  }
+  // } else {
+  //   price = getRandomNumberInRange();
+  // }
+
   return {
     id: sourceObj["Stock Id."] || null, // Default to null if undefined
     cert_id: sourceObj["Report"] || "N/A", // Append only if Report is defined
@@ -114,7 +126,7 @@ function getDiamondDataList(sourceObj) {
         depth: sourceObj["H"] || 0, // Default to 0 if H is undefined
       },
     },
-    total: sourceObj["Price"] ? sourceObj["Price"].toString() : undefined, // Remains static
+    total: price, // Remains static
     video_link: videoLink || "", // Default to empty string if videoLink is undefined
     crown_height: (sourceObj["Crown Height"] || 0).toString(),
     crown_angle: (sourceObj["Crown Angle"] || 0).toString(),
