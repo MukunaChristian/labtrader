@@ -88,7 +88,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
                   <iframe src={row["video_link"]} onLoad={() => setGemLoaded(true)} className={`iframe-custom my-2`}></iframe> 
                 : <div className='iframe-custom my-2 bg-text'></div>}
               </div> : 
-              <img className='w-[164px] h-[148px] my-2' src={MissingImage}/>}
+              <img className='w-[164px] h-[148px] my-2' src="/assets/missing.png"/>}
               {gemLoaded || missingImage ? null : 
                 <div className='iframe-container h-full flex items-center bg-white justify-center'><img className='w-5 h-5 text-white' src={loader}/></div>
               }

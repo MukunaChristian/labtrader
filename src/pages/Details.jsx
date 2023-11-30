@@ -62,7 +62,7 @@ export const Details = () => {
                   <div className={`${diamond["video_link"].includes("videos.gem360.in") ? 'iframe-container-second-details' : 'iframe-container-details'} border-none ${!isLoaded && "hidden"}`}>
                     <iframe src={diamond["video_link"]} onLoad={() => {setIsLoaded(true)}} className='iframe-custom my-2 border-none rounded-none'></iframe>
                   </div> : 
-                  <img className='w-[200px] h-[180px] my-2' src={MissingImage}/>}
+                  <img className='w-[200px] h-[180px] my-2' src="/assets/missing.png"/>}
                 </div>
                 
 
