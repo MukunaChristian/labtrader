@@ -71,11 +71,12 @@ export const Details = () => {
                     <div className='iframe-custom h-full my-2 bg-light-grey flex items-center justify-center'><img className='w-5 h-5' src={loader}/></div> :
                   </div>
                 }
+                {!missingImage && 
                 <div onClick={() => navigator.clipboard.writeText(diamond["video_link"])} className="flex mt-8 cursor-pointer">
                   <div className="h-8 w-24 bg-text rounded-md border-solid border-grey border-[1.5px] flex justify-center items-center hover:border-black">
                     <p className="text-xs font-semibold">Copy Video Link</p>
                   </div>
-                </div>
+                </div>}
                 <div className="flex">
                   <div></div>
                   <div></div>

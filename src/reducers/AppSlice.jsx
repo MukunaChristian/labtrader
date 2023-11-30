@@ -40,7 +40,9 @@ const appSlice = createSlice({
     diamondData: [],
     loadingData: true,
     loggedIn: false,
-    warehouses: []
+    warehouses: [],
+    uploadingLoader: false,
+    uploadErrors: {}
   },
   reducers: {
     setLoggedInState: (state, action) => {
@@ -66,6 +68,12 @@ const appSlice = createSlice({
     },
     setWarehousesState: (state, action) => {
       state.warehouses = action.payload
+    },
+    setUploadingLoaderState: (state, action) => {
+      state.uploadingLoader = action.payload
+    },
+    setUploadErrorsState: (state, action) => {
+      state.uploadErrors = action.payload
     },
     resetFiltersState: (state) => {
       state.filters = {
@@ -105,6 +113,8 @@ export const {
   setDiamondDataState, 
   setLoggedInState, 
   setLoadingDataState,
-  setWarehousesState
+  setWarehousesState,
+  setUploadingLoaderState,
+  setUploadErrorsState
 } = appSlice.actions
 export default appSlice.reducer;

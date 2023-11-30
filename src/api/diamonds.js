@@ -29,7 +29,13 @@ export const diamonds = async (
 };
 
 // upload stock excel file
-export const uploadStock = async (file, warehouse) => {
+export const uploadStock = async (
+  file,
+  warehouse,
+  dispatch,
+  setUploadLoading,
+  setErrors
+) => {
   const formData = new FormData();
   formData.append("file", file);
   // formData.append("warehouse", warehouse.WarehouseCode);
@@ -39,5 +45,9 @@ export const uploadStock = async (file, warehouse) => {
       Authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
   });
+
+  dispatch(setErrors(response.data.errors));
+  dispatch(setUploadLoading(false));
+
   return response.data;
 };

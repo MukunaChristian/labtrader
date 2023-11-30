@@ -1,8 +1,12 @@
 import { usePopper } from "react-popper";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useDropzone } from 'react-dropzone'
 import { uploadStock } from "../../api/diamonds";
 import { WarehouseDropdown } from "../dropdowns/WarehouseDropdown";
+import loader from '../../assets/loader.gif';
+
+import { setUploadingLoaderState, setUploadErrorsState } from '../../reducers/AppSlice';
 
 
 export const Header = ({ title, results }) => {
@@ -10,6 +14,14 @@ export const Header = ({ title, results }) => {
   const [selectedWarehouse, setSelectedWarehouse] = useState(null);
   const [fileLoaded, setFileLoaded] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
+
+  const dispatch = useDispatch();
+  const uploading = useSelector(state => state.app.uploadingLoader);
+  const uploadErrors = useSelector(state => state.app.uploadErrors);
+
+  console.log(uploadErrors)
+  console.log(uploading)
+
   const popperElement = useRef(null);
   const { styles, attributes } = usePopper(
     referenceElement,
@@ -34,11 +46,12 @@ export const Header = ({ title, results }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({onDrop})
 
   const handleFileUpload = (e) => {
+    dispatch(setUploadErrorsState({}));
+    dispatch(setUploadingLoaderState(true));
     e.stopPropagation();
     console.log("File uploaded");
-    setUploadConfirm(false);
     setFileLoaded(null);
-    uploadStock(fileLoaded, selectedWarehouse);
+    uploadStock(fileLoaded, selectedWarehouse, dispatch, setUploadingLoaderState, setUploadErrorsState);
   }
 
   const cancelFileUpload = (e) => {
@@ -46,6 +59,31 @@ export const Header = ({ title, results }) => {
     setUploadConfirm(false);
     setFileLoaded(null);
   }
+
+  const downloadFile = () => {
+    // Define the text to be written to the file
+    let fileText = '';
+    console.log(uploadErrors.count.failures)
+    for (let i = 0; i < uploadErrors.count.failures.length; i++) {
+      fileText += `Line ${uploadErrors.count.failures[i].line} - ${uploadErrors.count.failures[i].error}\n`;
+    }
+
+    // Create a Blob with the text
+    const blob = new Blob([fileText], { type: 'text/plain' });
+
+    // Create a link element
+    const link = document.createElement('a');
+
+    link.download = 'upload_errors.txt';
+
+    link.href = window.URL.createObjectURL(blob);
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+  };
 
   return (
     <>
@@ -84,16 +122,24 @@ export const Header = ({ title, results }) => {
             position: "fixed"
           }}
           {...attributes.popper}
-          className="z-[31] h-[20rem] fixed bg-white rounded shadow-lg p-6 text-center"
+          className={`z-[31] ${uploadErrors.count ? 'h-[26rem]' : 'h-[20rem]'} fixed bg-white rounded shadow-lg p-6 text-center`}
         >
           <div>
             <div {...getRootProps()} className="h-[14rem] w-[24rem] border-1 border-solid rounded-2xl border-dashed">
               <div className="flex flex-col justify-around p-6 h-full">
                 <input {...getInputProps()} className="w-10 h-10" />
-                {!fileLoaded ? 
-                  <p className="font-semibold">Drop files here</p> :
-                  <p>{fileLoaded.name}</p>
-                }
+                {uploading ? 
+                <div className='h-full flex flex-col items-center bg-white justify-center'>
+                  <img className='w-6 h-6 text-white' src={loader}/>
+                  <p className="pt-2">Uploading...</p>
+                </div> :
+                <>
+                  {!fileLoaded ? 
+                    <p className="font-semibold">Drop files here</p> :
+                    <p>{fileLoaded.name}</p>
+                  }
+                </>}
+                
                 
               </div>
             </div>
@@ -102,6 +148,13 @@ export const Header = ({ title, results }) => {
             <WarehouseDropdown warehouse={selectedWarehouse} setWarehouse={setSelectedWarehouse} />
           </div> */}
 
+          {(uploadErrors.count) && 
+          <div className="mt-6">
+            <div>
+              {uploadErrors.count.success_count} / {uploadErrors.count.total_data} uploaded successfully
+            </div>
+          </div>}
+
           {(fileLoaded) ?
             <div className="flex justify-around mt-6">
               <button onClick={(e) => handleFileUpload(e)} className="default-button w-24">Upload</button>
@@ -109,6 +162,7 @@ export const Header = ({ title, results }) => {
             </div> :
             <div className="flex justify-around mt-6">
               <button className="default-button-disabled w-24">Upload</button>
+              {uploadErrors.count ? <button onClick={(e) => downloadFile()} className="default-button w-26">Download Error Logs</button> : null }
               <button onClick={(e) => cancelFileUpload(e)} className="default-button w-24">Cancel</button>
             </div>
           }
