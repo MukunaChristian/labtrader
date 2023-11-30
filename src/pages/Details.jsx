@@ -8,6 +8,7 @@ import { LinkIcon } from "@heroicons/react/20/solid";
 
 import { DetailsGrid } from "../components/detailsComponents/DetailsGrid";
 import loader from '../assets/loader.gif';
+import MissingImage from '../assets/missing.svg';
 
 
 export const Details = () => {
@@ -22,6 +23,11 @@ export const Details = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   let spotPrice = useRef(0);
+
+  let missingImage = false;
+  if (diamond && !diamond["video_link"].includes("videos.gem360.in") && !diamond["video_link"].includes("view.gem360.in")) {
+    missingImage = true;
+  }
 
   useEffect(() => {
     const foundDiamond = diamonds.find(diamond => String(diamond.id) === String(diamondID));
@@ -51,14 +57,16 @@ export const Details = () => {
           {diamond && 
             <>
               <div className="w-[25%] py-2">
-                <div className="bg-text pr-4 w-[94%]">
+                <div className={`pr-4 ${missingImage ? 'w-[200px] h-[180px]' : 'w-[94%] bg-text'}`}>
+                  {!missingImage ? 
                   <div className={`${diamond["video_link"].includes("videos.gem360.in") ? 'iframe-container-second-details' : 'iframe-container-details'} border-none ${!isLoaded && "hidden"}`}>
                     <iframe src={diamond["video_link"]} onLoad={() => {setIsLoaded(true)}} className='iframe-custom my-2 border-none rounded-none'></iframe>
-                  </div>
+                  </div> : 
+                  <img className='w-[200px] h-[180px] my-2' src={MissingImage}/>}
                 </div>
                 
 
-                {!isLoaded &&
+                {!isLoaded && !missingImage &&
                   <div className={`${diamond["video_link"].includes("videos.gem360.in") ? 'iframe-container-second-details' : 'iframe-container-details'} border-none`}>
                     <div className='iframe-custom h-full my-2 bg-light-grey flex items-center justify-center'><img className='w-5 h-5' src={loader}/></div> :
                   </div>

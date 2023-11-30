@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import loader from '../../assets/loader.gif';
+import MissingImage from '../../assets/missing.svg';
 // import { getQuotes } from './scrapeGem';
 
 
@@ -21,6 +22,11 @@ export const DataRows = ({ row, rowIndex, columns }) => {
   let spotPrice = null;
   if (row.total) {
     spotPrice = Math.round((parseFloat(row.total) * rates[currency.code]) * 10) / 10;
+  }
+
+  let missingImage = false;
+  if (!row["video_link"].includes("videos.gem360.in") && !row["video_link"].includes("view.gem360.in")) {
+    missingImage = true;
   }
 
   const handleExpand = () => {
@@ -76,12 +82,14 @@ export const DataRows = ({ row, rowIndex, columns }) => {
           `}>
             <div className='flex flex-col items-center justify-top pt-4 pl-4'>
               <p className='font-bold text-primary'>Media</p>
+              {!missingImage ?
               <div className={`${row["video_link"].includes("videos.gem360.in") ? 'iframe-container-second' : 'iframe-container'} ${gemLoaded ? 'block bg-accent' : 'hidden'}`}>
                 {!gemDisabled ? 
                   <iframe src={row["video_link"]} onLoad={() => setGemLoaded(true)} className={`iframe-custom my-2`}></iframe> 
                 : <div className='iframe-custom my-2 bg-text'></div>}
-              </div>
-              {gemLoaded ? null : 
+              </div> : 
+              <img className='w-[164px] h-[148px] my-2' src={MissingImage}/>}
+              {gemLoaded || missingImage ? null : 
                 <div className='iframe-container h-full flex items-center bg-white justify-center'><img className='w-5 h-5 text-white' src={loader}/></div>
               }
               <button className='bg-dark-grey rounded-sm text-white px-3 py-1 cursor-pointer'>CVD</button>

@@ -119,7 +119,12 @@ function getDiamondDataList(sourceObj) {
       depth: (sourceObj["Td"] || 0).toString(),
     },
     ratio_measurements: {
-      ratio: (sourceObj["Ratio"] || 0).toString(),
+      ratio: (sourceObj["Table"] && sourceObj["Td"]
+        ? sourceObj["Td"] / sourceObj["Table"]
+        : 0
+      )
+        .toFixed(2)
+        .toString(),
       measurements: {
         width: sourceObj["L"] || 0, // Default to 0 if L is undefined
         height: sourceObj["W"] || 0, // Default to 0 if W is undefined
