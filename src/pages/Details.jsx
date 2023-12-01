@@ -117,7 +117,7 @@ export const Details = () => {
                   </div>
                   
                   {spotPrice.current ?
-                  <div className="w-32 text-left mr-[2rem]">
+                  <div className="w-36 text-left pl-[5%]">
                     <p className="text-text">{diamond["total"]}</p>
                     <p className="text-text">{spotPrice.current} {currency.code}</p>
                     <p className="text-text">{currency.symbol} {(spotPrice.current / parseFloat(diamond.specifications.carat)).toFixed(2)}/ct</p>
