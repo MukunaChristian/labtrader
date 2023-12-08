@@ -16,7 +16,13 @@ export const login = (email, password) => {
     });
 };
 
-export const validateToken = async (token, navigate, setLoggedin) => {
+export const validateToken = async (
+  token,
+  navigate,
+  setLoggedin,
+  setUserState,
+  dispatch
+) => {
   await axios
     .post("/validate", {
       token: token,
@@ -26,6 +32,9 @@ export const validateToken = async (token, navigate, setLoggedin) => {
       if (response.status === 200) {
         setLoggedin(true);
       }
+      dispatch(
+        setUserState({ email: response.data.email, role: response.data.role })
+      );
     })
     .catch((error) => {
       console.log(error.message);

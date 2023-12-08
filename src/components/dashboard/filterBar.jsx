@@ -52,6 +52,7 @@ export const FilterBar = ({ setIsFilterSideBarOpen, setCurrentRows, currentRows 
   const searchRows = (searchTerm) => {
     console.log(searchTerm)
     // set search id in filters
+
     setFilters({...filters, cert_id: searchTerm, id: searchTerm});
   }
 
@@ -63,7 +64,7 @@ export const FilterBar = ({ setIsFilterSideBarOpen, setCurrentRows, currentRows 
       </button>
       <div className="border border-solid border-[1px] border-black h-8 rounded-sm ml-4 bg-white flex items-center">
         <MagnifyingGlassIcon className="w-5 h-5 text-black ml-2" />
-        <input onChange={(e) => searchRows(String(e.target.value))} className="w-64 h-full p-2 border-none focus:outline-none" type="text" placeholder='Enter certificate No or stock ID' />
+        <input onChange={(e) => searchRows(String(e.target.value))} value={filters['cert_id']} className="w-64 h-full p-2 border-none focus:outline-none" type="text" placeholder='Enter certificate No or stock ID' />
       </div> 
       <button onClick={() => sortPrice()} className="default-button ml-auto">
         <p>Price: low to high</p>

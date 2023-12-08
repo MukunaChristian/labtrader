@@ -1,13 +1,16 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Bars3Icon } from "@heroicons/react/20/solid";
-import { LanguageDropdown } from '../components/dropdowns/languageDropdown';
-import { CurrencyDropdown } from '../components/dropdowns/currencyDropdown';
+import { ArrowLeftOnRectangleIcon } from '@heroicons/react/20/solid';
+import { LanguageDropdown } from '../components/Dropdowns/LanguageDropdown';
+import { CurrencyDropdown } from '../components/Dropdowns/CurrencyDropdown';
 import { useApp } from "../hooks/useApp";
 import { useSelector } from "react-redux";
 import { validateToken } from "../api/login";
 import { useEffect, useState } from 'react';
 import { default as Logo } from '../assets/Color logo with background (3).svg';
-import { getResponse } from './api_test';
+import { MenuSideBar } from '../components/MenuSideBar/MenuSideBar';
+import { useDispatch } from 'react-redux';
+import { setUserState } from '../reducers/UserSlice';
 
 
 export const Layout = ({ children }) => {
@@ -15,8 +18,7 @@ export const Layout = ({ children }) => {
   const { setLoggedIn } = useApp();
   const loggedIn = useSelector(state => state.app.loggedIn);
   const navigate = useNavigate();
-  const develop = import.meta.env.VITE_DEVELOPMENT
-  const [jwtChecked, setJwtChecked] = useState(false);
+  const dispatch = useDispatch();
 
   let isLogin = location.pathname === '/login' || location.pathname === '/forgot-password';
 
@@ -34,10 +36,9 @@ export const Layout = ({ children }) => {
 
     if (!(location.pathname === '/forgot-password')) {
       console.log("validating")
-      validateToken(token, navigate, setLoggedIn);
+      validateToken(token, navigate, setLoggedIn, setUserState, dispatch);
     }
   }
-
 
   useEffect(() => {
     checkToken()
@@ -60,6 +61,7 @@ export const Layout = ({ children }) => {
             {/* <div className='flex items-center hover:bg-grey h-12 w-12 p-2 rounded-sm cursor-pointer'>
               <Bars3Icon className='h-8 w-8' />
             </div> */}
+            <MenuSideBar setLoggedIn={setLoggedIn} />
           </div>
 
           <div className='absolute left-[50%] translate-x-[-50%] bg-black w-48 h-48 rounded-full flex items-center justify-center border-solid border-[12px] border-white'> 

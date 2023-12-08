@@ -15,6 +15,7 @@
   border-color: #E5E7EB;
 }
 
+
 a {
   cursor: pointer;
   text-decoration: none;
@@ -112,12 +113,16 @@ td, tr, th {
   height: 340px; /* This should match the iframe's actual height */
 }
 
+.profile-block {
+  @apply border-solid border-[1px] border-black w-[44rem] p-6;
+}
+
 .default-button {
   @apply flex rounded-sm px-2 h-8 border-solid border-[1px] border-black justify-center items-center cursor-pointer hover:bg-light-grey
 }
 
 .default-button-disabled {
-  @apply flex rounded-sm px-2 h-8 border-solid border-[1px] border-black justify-center items-center bg-grey cursor-not-allowed
+  @apply flex rounded-sm px-2 h-8 border-solid border-[1px] border-black justify-center items-center bg-light-grey cursor-default
 }
 
 .default-save-button {
@@ -134,11 +139,19 @@ td, tr, th {
 
 
 .default-input {
-  @apply w-full h-10 border border-solid rounded-md mt-5 px-2 focus:outline-none focus:border-navy-blue;
+  @apply w-full h-10 border border-solid rounded-md px-2 focus:outline-none focus:border-navy-blue;
 }
 
 .default-button-focus {
   @apply bg-dark-grey border-solid border-[1.5px] text-white
+}
+
+.default-tabs {
+  @apply mb-1 flex justify-center w-[9rem] py-3 border-solid border-[1px] hover:bg-light-grey hover:border-black cursor-pointer
+}
+
+.default-tabs-active {
+  @apply mb-1 flex justify-center w-[9rem] py-3 border-solid border-[1px] bg-light-grey border-black cursor-pointer
 }
 
 .logo {

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 
-import { Header } from "../components/dashboard/header"
-import { FilterBar } from "../components/dashboard/filterBar"
-import { FilterSideBar } from "../components/filterSideBar"
+import { Header } from "../components/Dashboard/header"
+import { FilterBar } from "../components/Dashboard/FilterBar"
+import { FilterSideBar } from "../components/FilterSideBar"
 import { CustomDataTable } from "../components/dataTable/CustomDataTable"
 import { diamonds } from '../api/diamonds';
 import { setDiamondDataState, setLoadingDataState, setCurrencyRateState, setWarehousesState } from '../reducers/AppSlice';
