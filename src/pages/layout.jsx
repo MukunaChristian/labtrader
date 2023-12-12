@@ -10,13 +10,16 @@ import { useEffect, useState } from 'react';
 import { default as Logo } from '../assets/Color logo with background (3).svg';
 import { MenuSideBar } from '../components/MenuSideBar/MenuSideBar';
 import { useDispatch } from 'react-redux';
-import { setUserState } from '../reducers/UserSlice';
+import { setUserState, setUserDetailsState } from '../reducers/UserSlice';
+import { getUserData } from '../api/profileData';
+import { get } from 'jquery';
 
 
 export const Layout = ({ children }) => {
   const location = useLocation();
   const { setLoggedIn } = useApp();
   const loggedIn = useSelector(state => state.app.loggedIn);
+  const user_id = useSelector(state => state.user.user.id);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -49,6 +52,11 @@ export const Layout = ({ children }) => {
       navigate("/")
       return
     }
+
+    if (user_id) {
+      getUserData(user_id, setUserDetailsState, dispatch)
+    }
+
   }, [loggedIn])
 
 

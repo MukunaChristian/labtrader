@@ -33,7 +33,11 @@ export const validateToken = async (
         setLoggedin(true);
       }
       dispatch(
-        setUserState({ email: response.data.email, role: response.data.role })
+        setUserState({
+          email: response.data.email,
+          role: response.data.role,
+          id: response.data.user_id,
+        })
       );
     })
     .catch((error) => {

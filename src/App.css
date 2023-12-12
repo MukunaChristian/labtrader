@@ -114,7 +114,7 @@ td, tr, th {
 }
 
 .profile-block {
-  @apply border-solid border-[1px] border-black w-[44rem] p-6;
+  @apply border-solid border-[1px] border-black w-[80%] p-6;
 }
 
 .default-button {

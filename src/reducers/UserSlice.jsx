@@ -7,6 +7,7 @@ const UserSlice = createSlice({
     user: {
       email: "",
       role: "",
+      id: ""
     },
     companyDetails: {
       company_name: "",
@@ -43,16 +44,10 @@ const UserSlice = createSlice({
     },
 
     setUserDetailsState: (state, action) => {
-      state.userDetails = action.payload
-    },
-    setCompanyDetailsState: (state, action) => {
-      state.companyDetails = action.payload
-    },
-    setDeliveryDetailsState: (state, action) => {
-      state.deliveryDetails = action.payload
-    },
-    setInvoiceDetailsState: (state, action) => {
-      state.invoiceDetails = action.payload
+      state.userDetails = action.payload.personal
+      state.companyDetails = action.payload.company
+      state.deliveryDetails = action.payload.delivery
+      state.invoiceDetails = action.payload.invoice
     }
   },
 });

@@ -1,19 +1,14 @@
 import { SaveResetButtons } from "./SaveResetButtons"
-import { useState } from "react"
 
-
-export const InvoiceForm = ({ details }) => {
-  const [changesMade, setChangesMade] = useState(true)
-  const [localDetails, setLocalDetails] = useState(details)
-
-  const onSaved = () => {
-    setChangesMade(false)
+export const InvoiceForm = (
+  {
+    details,
+    changesMade,
+    updateDetails,
+    resetDetails,
+    saveDetails,
   }
-
-  const onReset = () => {
-    setChangesMade(false)
-    setLocalDetails(details)
-  }
+) => {
 
   return (
     <div className="profile-block">
@@ -21,35 +16,35 @@ export const InvoiceForm = ({ details }) => {
       <div className="flex flex-wrap">
         <div className="w-[45%] mr-16 mt-4">
           <p className="">Bank Name</p>
-          <input className="default-input w-[50%] mt-1" type="text" />
+          <input name="bank_name" onChange={(e) => updateDetails(e.target.name, e.target.value, "invoiceDetails" )} value={details.bank_name} className="default-input w-[50%] mt-1" type="text" />
         </div>
 
         <div className="w-[45%] mr-8 mt-4">
           <p className="">Branch</p>
-          <input className="default-input w-[50%] mt-1" type="text" />
+          <input name="bank_branch" onChange={(e) => updateDetails(e.target.name, e.target.value, "invoiceDetails" )} value={details.bank_branch} className="default-input w-[50%] mt-1" type="text" />
         </div>
 
         <div className="w-[45%] mr-8 mt-4">
           <p className="">Branch Number</p>
-          <input className="default-input w-[50%] mt-1" type="text" />
+          <input name="bank_branch_number" onChange={(e) => updateDetails(e.target.name, e.target.value, "invoiceDetails" )} value={details.bank_branch_number} className="default-input w-[50%] mt-1" type="text" />
         </div>
 
         <div className="w-[45%] mr-8 mt-4">
           <p className="">Account Number</p>
-          <input className="default-input w-[50%] mt-1" type="text" />
+          <input name="bank_account_number" onChange={(e) => updateDetails(e.target.name, e.target.value, "invoiceDetails" )} value={details.bank_account_number} className="default-input w-[50%] mt-1" type="text" />
         </div>
 
         <div className="w-[45%] mr-8 mt-4">
           <p className="">Account Type</p>
-          <input className="default-input w-[50%] mt-1" type="text" />
+          <input name="bank_account_type" onChange={(e) => updateDetails(e.target.name, e.target.value, "invoiceDetails" )} value={details.bank_account_type} className="default-input w-[50%] mt-1" type="text" />
         </div>
       </div>
 
       <SaveResetButtons
         saveButtonDisabled={!changesMade} 
         resetButtonDisabled={!changesMade} 
-        saveButtonHandler={() => setChangesMade(false)}
-        resetButtonHandler={() => setChangesMade(false)}
+        saveButtonHandler={() => saveDetails()}
+        resetButtonHandler={() => resetDetails()}
       />
       
       
