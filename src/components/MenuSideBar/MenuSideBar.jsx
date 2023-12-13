@@ -15,7 +15,6 @@ export const MenuSideBar = ({ setLoggedIn }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const user = useSelector(state => state.user.user);
-  console.log(user)
 
 
   const handleToggle = (event) => {

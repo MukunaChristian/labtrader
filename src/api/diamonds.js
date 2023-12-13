@@ -21,10 +21,44 @@ export const diamonds = async (
 
   let objectList = response.data.items.map((str) => JSON.parse(str));
   objectList = transformedList(objectList);
-  console.log(response.data.warehouses);
+  console.log(response.data);
   dispatch(setData(objectList));
   dispatch(setRates(response.data.rates));
   dispatch(setWarehouses(response.data.warehouses));
+  dispatch(setLoading(false));
+};
+
+export const getFilteredData = async (
+  dispatch,
+  setData,
+  setLoading,
+  setRates,
+  setDiamondAmount,
+  page,
+  filters
+) => {
+  dispatch(setLoading(true));
+  const response = await axios.post(
+    "/diamond",
+    {
+      filters: filters,
+      page: page,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    }
+  );
+
+  let objectList = response.data.items.map((str) => JSON.parse(str));
+  objectList = transformedList(objectList);
+  console.log(objectList);
+
+  dispatch(setData(objectList));
+  dispatch(setDiamondAmount(response.data.item_length));
+  dispatch(setRates(response.data.rates));
   dispatch(setLoading(false));
 };
 

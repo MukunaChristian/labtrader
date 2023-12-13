@@ -38,6 +38,8 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
   const handleFilterChange = (filterName, filterItemInp) => {
     const filterItem = filterItemInp.toLowerCase();
 
+    console.log(filterName, filterItem)
+
     if (filterName === "fancyColor") {
       const newFilters = { ...filtersLocal };
       if (newFilters["color"].includes(filterItem)) {

@@ -13,6 +13,15 @@ export const FilterBar = ({ setIsFilterSideBarOpen, setCurrentRows, currentRows 
   const [upDown, setUpDown] = useState(null);
 
   const sortPrice = () => {
+
+    if (upDown === "up" || upDown === null) {
+      setFilters({...filters, sort_price: "desc"});
+      setUpDown("down");
+    } else {
+      setFilters({...filters, sort_price: "asc"});
+      setUpDown("up");
+    }
+
     let sortedRows = [...currentRows];
   
     const compareFunction = (a, b) => {
@@ -53,7 +62,7 @@ export const FilterBar = ({ setIsFilterSideBarOpen, setCurrentRows, currentRows 
     console.log(searchTerm)
     // set search id in filters
 
-    setFilters({...filters, cert_id: searchTerm, id: searchTerm});
+    setFilters({...filters, cert_id: searchTerm, stock_id: searchTerm});
   }
 
   return (

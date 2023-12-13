@@ -3,7 +3,8 @@ import { login } from "../api/login";
 import { useApp } from "../hooks/useApp";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setUserState } from "../reducers/UserSlice";
+import { setUserState, setUserDetailsState } from "../reducers/UserSlice";
+import { getUserData } from "../api/profileData";
 
 
 export const Login = () => {
@@ -18,13 +19,11 @@ export const Login = () => {
     const email = e.target["email"].value.trim();
     const password = e.target["password"].value.trim();
     const res = await login(email, password);
-    console.log(res)
     if (res.status === 200) {
-      console.log("success")
       localStorage.setItem("jwt", res.data.token)
-      console.log(res.data.token)
       setLoggedIn(true)
       dispatch(setUserState({"email": email, "role": res.data.role}))
+      getUserData(res.data.user_id, setUserDetailsState, dispatch)
       navigate("/")
     } else if (res.status === 401) {
       setInvalidCredentials(true)

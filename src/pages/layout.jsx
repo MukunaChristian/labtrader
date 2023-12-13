@@ -1,18 +1,16 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Bars3Icon } from "@heroicons/react/20/solid";
-import { ArrowLeftOnRectangleIcon } from '@heroicons/react/20/solid';
 import { LanguageDropdown } from '../components/Dropdowns/LanguageDropdown';
 import { CurrencyDropdown } from '../components/Dropdowns/CurrencyDropdown';
 import { useApp } from "../hooks/useApp";
 import { useSelector } from "react-redux";
 import { validateToken } from "../api/login";
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { default as Logo } from '../assets/Color logo with background (3).svg';
 import { MenuSideBar } from '../components/MenuSideBar/MenuSideBar';
 import { useDispatch } from 'react-redux';
 import { setUserState, setUserDetailsState } from '../reducers/UserSlice';
 import { getUserData } from '../api/profileData';
-import { get } from 'jquery';
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 
 
 export const Layout = ({ children }) => {
@@ -56,7 +54,6 @@ export const Layout = ({ children }) => {
     if (user_id) {
       getUserData(user_id, setUserDetailsState, dispatch)
     }
-
   }, [loggedIn])
 
 
@@ -66,9 +63,6 @@ export const Layout = ({ children }) => {
       {isLogin ? null : 
         <div className='w-full z-30 h-16 bg-white flex relative items-center justify-start px-5 pt-24 fixed'>
           <div className='h-24 w-[50vw] flex justify-start items-center pl-6 border-0 border-solid border-y-[1px] border-black'>
-            {/* <div className='flex items-center hover:bg-grey h-12 w-12 p-2 rounded-sm cursor-pointer'>
-              <Bars3Icon className='h-8 w-8' />
-            </div> */}
             <MenuSideBar setLoggedIn={setLoggedIn} />
           </div>
 
@@ -81,12 +75,15 @@ export const Layout = ({ children }) => {
             <div className='h-full flex items-center ml-auto mr-6'>
               <CurrencyDropdown />
               {/* <LanguageDropdown />  */}
+              <div onClick={() => navigate("/cart")} className='h-10 w-10 flex items-center justify-center ml-4 border-solid border-[1px] border-black rounded-full hover:bg-grey cursor-pointer'>
+                <ShoppingCartIcon className='h-5 w-5 text-black' />
+              </div>
             </div>
           </div>
           
         </div>
       }
-      <div className=''>
+      <div className='h-full'>
         {children}
       </div>
       

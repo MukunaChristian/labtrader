@@ -3,7 +3,11 @@ import { Pagenation } from './Pagenation';
 import { capitalizeFirstLetter } from '../toUpperCase';
 
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { getFilteredData } from '../../api/diamonds';
+import { setDiamondDataState, setLoadingDataState, setCurrencyRateState, setDiamondAmountState } from '../../reducers/AppSlice';
+
 
 
 export const CustomDataTable = ({ currentRows }) => {
@@ -11,18 +15,22 @@ export const CustomDataTable = ({ currentRows }) => {
   const [cutRows, setCutRows] = useState([]); // [0, 5
   
   const currency = useSelector(state => state.app.currency);
+  const diamondAmount = useSelector(state => state.app.diamondAmount);
   const rates = useSelector(state => state.app.rates);
+  const loading = useSelector(state => state.app.loadingData);
+  const filters = useSelector(state => state.app.filters);
   const maxItems = 5;
 
-  const maxPages = Math.ceil(currentRows.length / maxItems);
+  const maxPages = Math.ceil(diamondAmount / maxItems);
   const lastPage = currentPage === maxPages;
 
-
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    let cutDiamondRows = currentRows.slice((currentPage - 1) * maxItems, currentPage * maxItems);
-    setCutRows(cutDiamondRows);
-  }, [currentPage])
+    console.log("currentPage", currentPage)
+    getFilteredData(dispatch, setDiamondDataState, setLoadingDataState, setCurrencyRateState, setDiamondAmountState, currentPage, filters);
+  }, [currentPage, filters])
+
 
   const columns = [
     {
@@ -167,7 +175,11 @@ export const CustomDataTable = ({ currentRows }) => {
   ];
 
 
+
+  // figure this out
   useEffect(() => {
+    setCutRows(currentRows)
+    return
     setCurrentPage(1);
     setCutRows(currentRows.slice(0, maxItems));
   }, [currentRows])
@@ -179,6 +191,7 @@ export const CustomDataTable = ({ currentRows }) => {
       <div className='w-full my-1'>
         <Pagenation currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} />
       </div>
+      {loading ? <div className="flex justify-center items-center h-96"><p className="border-solid border-[1.5px] p-2 rounded-lg animate-pulse bg-light-grey">Loading...</p></div> :
       <table className="bg-secondary table-auto border-collapse w-full pb-4">
         <thead>
           <tr>
@@ -192,7 +205,7 @@ export const CustomDataTable = ({ currentRows }) => {
             <DataRows key={rowIndex} row={row} rowIndex={rowIndex} columns={columns} />
           ))}
         </tbody>
-      </table>
+      </table>}
       
       
       

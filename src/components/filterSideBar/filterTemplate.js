@@ -19,6 +19,7 @@ export let filterTemplate = {
   with_unknown_shade: false,
   with_unknown_luster: false,
   no_bgm: false,
-  id: "",
+  stock_id: "",
   cert_id: "",
+  price_sort: "",
 };
