@@ -1,33 +1,24 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 
-import { Header } from "../components/dashboard/header"
-import { FilterBar } from "../components/dashboard/filterBar"
-import { FilterSideBar } from "../components/filterSideBar"
+import { Header } from "../components/Dashboard/header"
+import { FilterBar } from "../components/Dashboard/FilterBar"
+import { FilterSideBar } from "../components/FilterSideBar"
 import { CustomDataTable } from "../components/dataTable/CustomDataTable"
-import { diamonds } from '../api/diamonds';
-import { setDiamondDataState, setLoadingDataState, setCurrencyRateState, setWarehousesState } from '../reducers/AppSlice';
-import { useDispatch } from 'react-redux';
 
 
 export const Dashboard = () => {
   const stateRows = useSelector(state => state.app.diamondData);
-  const loading = useSelector(state => state.app.loadingData);
+  const diamondAmount = useSelector(state => state.app.diamondAmount);
   const [isFilterSideBarOpen, setIsFilterSideBarOpen] = useState(false);
   const [currentRows, setCurrentRows] = useState(stateRows);
   const filters = useSelector(state => state.app.filters);
-  const dispatch = useDispatch();
-
-  console.log(filters.shape)
 
 
   useEffect(() => {
     setCurrentRows(stateRows)
   }, [stateRows])
 
-  useEffect(() => {
-    diamonds(dispatch, setDiamondDataState, setLoadingDataState, setCurrencyRateState, setWarehousesState);
-  }, [])
 
   function filterList() {
     return stateRows.filter(item => {
@@ -93,11 +84,10 @@ export const Dashboard = () => {
 }
 
 
-  useEffect(() => {
-    const newData = filterList()
-    console.log("filtering")
-    setCurrentRows(newData)
-  }, [filters, stateRows])
+//   useEffect(() => {
+//     const newData = filterList()
+//     setCurrentRows(newData)
+//   }, [filters, stateRows])
 
 
 
@@ -105,9 +95,9 @@ export const Dashboard = () => {
     <div className="pb-4">
       <FilterSideBar setIsFilterSideBarOpen={setIsFilterSideBarOpen} isFilterSideBarOpen={isFilterSideBarOpen} />
       <div className="border-0 pt-16 mx-6">
-        <Header title='Lab Grown Diamonds' results={currentRows ? currentRows.length : 0} />
+        <Header title='Lab Grown Diamonds' results={diamondAmount} />
         <FilterBar setIsFilterSideBarOpen={setIsFilterSideBarOpen} setCurrentRows={setCurrentRows} currentRows={currentRows} />
-        {loading ? <div className="flex justify-center items-center h-96"><p className="border-solid border-[1.5px] p-2 rounded-lg animate-pulse bg-light-grey">Loading...</p></div> : <CustomDataTable currentRows={currentRows} />}
+        <CustomDataTable currentRows={currentRows} />
         
       </div>
     </div>

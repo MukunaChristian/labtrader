@@ -54,103 +54,72 @@ function getRandomNumberInRange() {
   return min + randomIncrement * increment;
 }
 
-function getDiamondDataList(sourceObj) {
+function transformDBData(sourceObj) {
   // fit diamond data into default object structure
-  let videoLink = sourceObj["Video Link"];
-
-  if (Object.keys(sourceObj).length === 0 || !sourceObj["Stock Id."]) {
-    return false;
-  }
-
-  if (videoLink && !videoLink.startsWith("https")) {
-    // replace http with https
-    videoLink = videoLink.replace("http", "https");
-  }
-
-  if (
-    !videoLink ||
-    (!videoLink.includes("view.gem360.in") &&
-      !videoLink.includes("videos.gem360.in"))
-  ) {
-    videoLink = "";
-  }
-
   //console.log(sourceObj["Shape"]);
 
   let imageIcon;
   // check if shape is in imageHashMap
-  if (sourceObj["Shape"].toLowerCase() in imageHashMap) {
-    imageIcon = imageHashMap[sourceObj["Shape"].toLowerCase()];
+  if (sourceObj["shape"].toLowerCase() in imageHashMap) {
+    imageIcon = imageHashMap[sourceObj["shape"].toLowerCase()];
   } else {
     imageIcon = defaultIcon;
   }
 
-  let price;
-  if (
-    typeof sourceObj["Price Per Carat"] === "number" &&
-    sourceObj["Price Per Carat"] > 0 &&
-    sourceObj["Carat"]
-  ) {
-    price = sourceObj["Price Per Carat"] * sourceObj["Carat"];
+  let total;
+  if (!(sourceObj["total"] === "0")) {
+    total = sourceObj["total"];
   }
-  // } else {
-  //   price = getRandomNumberInRange();
-  // }
 
   return {
-    id: sourceObj["Stock Id."] || null, // Default to null if undefined
-    cert_id: sourceObj["Report"] || "N/A", // Append only if Report is defined
+    id: sourceObj["stock_id"] || null, // Default to null if undefined
+    cert_id: sourceObj["cert_id"] || "N/A", // Append only if Report is defined
     image: imageIcon, // Remains static
-    shape: (sourceObj["Shape"] || "N/A").toLowerCase(),
+    shape: (sourceObj["shape"] || "N/A").toLowerCase(),
     specifications: {
-      carat: (sourceObj["Carat"] || 0).toString(), // Default to '0' if Carat is undefined
-      color: (sourceObj["Color"] || "N/A").toUpperCase(),
-      clarity: sourceObj["Clarity"] || "N/A", // Default to empty string if Clarity is undefined
-      cut: sourceObj["Cut"] ? sourceObj["Cut"].toUpperCase() : "Unknown",
+      carat: (sourceObj["carat"] || 0).toString(), // Default to '0' if Carat is undefined
+      color: (sourceObj["color"] || "N/A").toUpperCase(),
+      clarity: sourceObj["clarity"] || "N/A", // Default to empty string if Clarity is undefined
+      cut: sourceObj["cut"] ? sourceObj["cut"].toUpperCase() : "Unknown",
     },
     finish: {
-      polish: (sourceObj["Pol"] || "N/A").toLowerCase(),
-      symmetry: (sourceObj["Sym"] || "N/A").toLowerCase(),
-      fluorescence: (sourceObj["Fluro"] || "N/A").toLowerCase(),
+      polish: (sourceObj["polish"] || "N/A").toLowerCase(),
+      symmetry: (sourceObj["symmetry"] || "N/A").toLowerCase(),
+      fluorescence: (sourceObj["fluorescence"] || "N/A").toLowerCase(),
       fluorescence_color: "None", // Remains static
     },
     table_depth: {
-      table: (sourceObj["Table"] || 0).toString(),
-      depth: (sourceObj["Td"] || 0).toString(),
+      table: (sourceObj["table_percent"] || 0).toString(),
+      depth: (sourceObj["depth_percent"] || 0).toString(),
     },
     ratio_measurements: {
-      ratio: (sourceObj["Table"] && sourceObj["Td"]
-        ? sourceObj["Td"] / sourceObj["Table"]
-        : 0
-      )
-        .toFixed(2)
-        .toString(),
+      ratio: sourceObj["ratio"],
       measurements: {
-        width: sourceObj["L"] || 0, // Default to 0 if L is undefined
-        height: sourceObj["W"] || 0, // Default to 0 if W is undefined
-        depth: sourceObj["H"] || 0, // Default to 0 if H is undefined
+        width: sourceObj["width"] || 0, // Default to 0 if L is undefined
+        height: sourceObj["height"] || 0, // Default to 0 if W is undefined
+        depth: sourceObj["depth"] || 0, // Default to 0 if H is undefined
       },
     },
-    total: price, // Remains static
-    video_link: videoLink || "", // Default to empty string if videoLink is undefined
-    crown_height: (sourceObj["Crown Height"] || 0).toString(),
-    crown_angle: (sourceObj["Crown Angle"] || 0).toString(),
-    pavilion_depth: (sourceObj["Pavilion Depth"] || 0).toString(),
-    pavilion_angle: (sourceObj["Pavilion Angle"] || 0).toString(),
-    girdle: sourceObj["Girdle"] || "N/A",
-    culet: sourceObj["Culet"] || "N/A",
-    canada: sourceObj["Canada Mark"] || "N/A",
-    forever: sourceObj["Forever Mark"] || "N/A",
-    location: sourceObj["Location"] || "Location N/A",
-    company: sourceObj["Lab"] || "Lab N/A",
+    total: total, // Remains static
+    video_link: sourceObj["videoLink"] || "", // Default to empty string if videoLink is undefined
+    crown_height: (sourceObj["crown_height"] || 0).toString(),
+    crown_angle: (sourceObj["crown_angle"] || 0).toString(),
+    pavilion_depth: (sourceObj["pavilion_depth"] || 0).toString(),
+    pavilion_angle: (sourceObj["pavilion_angle"] || 0).toString(),
+    girdle: sourceObj["girdle"] || "N/A",
+    culet: sourceObj["culet"] || "N/A",
+    canada: sourceObj["canada_mark"] || "N/A",
+    forever: sourceObj["forever_mark"] || "N/A",
+    location: sourceObj["location"] || "Location N/A",
+    company: sourceObj["company"] || "Lab N/A",
   };
 }
 
 export const transformedList = (data) => {
   const diamondDataCollect = [];
-  console.log(data.length);
   for (const item of data) {
-    const diamondItem = getDiamondDataList(item);
+    const diamondItem = transformDBData(item);
+
     if (diamondItem) {
       diamondDataCollect.push(diamondItem);
     }

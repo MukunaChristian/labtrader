@@ -25,12 +25,17 @@ export const useApp = () => {
     dispatch(setLoggedInState(loggedIn))
   }
 
+  const setUser = (user) => {
+    dispatch(setUserState(user))
+  }
+
   return {
     setCurrency,
     setLanguage,
     setFilters,
     resetFilters,
-    setLoggedIn
+    setLoggedIn,
+    setUser
   }
 
 }

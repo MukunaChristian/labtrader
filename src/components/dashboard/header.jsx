@@ -19,9 +19,6 @@ export const Header = ({ title, results }) => {
   const uploading = useSelector(state => state.app.uploadingLoader);
   const uploadErrors = useSelector(state => state.app.uploadErrors);
 
-  console.log(uploadErrors)
-  console.log(uploading)
-
   const popperElement = useRef(null);
   const { styles, attributes } = usePopper(
     referenceElement,

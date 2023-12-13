@@ -4,7 +4,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import { useSelector } from "react-redux";
 
-import { FieldGroups, FancyColorFields } from "./fieldGroups";
+import { FieldGroups, FancyColorFields } from "./FieldGroups";
 import { 
   diamondShapes, 
   carat_list, 
@@ -37,6 +37,8 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
 
   const handleFilterChange = (filterName, filterItemInp) => {
     const filterItem = filterItemInp.toLowerCase();
+
+    console.log(filterName, filterItem)
 
     if (filterName === "fancyColor") {
       const newFilters = { ...filtersLocal };

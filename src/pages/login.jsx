@@ -2,10 +2,14 @@ import { useNavigate } from "react-router-dom"
 import { login } from "../api/login";
 import { useApp } from "../hooks/useApp";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUserState, setUserDetailsState } from "../reducers/UserSlice";
+import { getUserData } from "../api/profileData";
 
 
 export const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { setLoggedIn } = useApp();
   const [invalidCredentials, setInvalidCredentials] = useState(false);
 
@@ -15,12 +19,11 @@ export const Login = () => {
     const email = e.target["email"].value.trim();
     const password = e.target["password"].value.trim();
     const res = await login(email, password);
-    console.log(res)
     if (res.status === 200) {
-      console.log("success")
       localStorage.setItem("jwt", res.data.token)
-      console.log(res.data.token)
       setLoggedIn(true)
+      dispatch(setUserState({"email": email, "role": res.data.role}))
+      getUserData(res.data.user_id, setUserDetailsState, dispatch)
       navigate("/")
     } else if (res.status === 401) {
       setInvalidCredentials(true)
@@ -34,8 +37,8 @@ export const Login = () => {
         <p className="text-3xl mb-2">Login</p>
         {invalidCredentials && <p className="text-red-400 text-sm">Invalid Password or Email</p>}
         <form className="mb-4" onSubmit={(e) => {handleLogin(e)}}>
-          <input name="email" className="default-input" type="text" placeholder="Email" />
-          <input name="password" className="default-input" type="password" placeholder="Password" />
+          <input name="email" className="default-input mt-5" type="text" placeholder="Email" />
+          <input name="password" className="default-input mt-5" type="password" placeholder="Password" />
           <button type="submit" className="w-full h-10 bg-black text-white rounded-md mt-5">Log in</button>
         </form>
         <div className="w-full flex justify-end">

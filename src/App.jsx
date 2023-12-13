@@ -2,11 +2,13 @@ import './App.css'
 import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { Dashboard } from './pages/dashboard'
-import { Layout } from './pages/layout';
-import { Login } from './pages/login';
+import { Dashboard } from './pages/Dashboard'
+import { Layout } from './pages/Layout';
+import { Login } from './pages/Login';
 import { Details } from './pages/Details';
+import { Cart } from './pages/Cart';
 import { ForgotPassword } from './pages/ForgotPassword';
+import { Profile } from './pages/Profile';
 import store from './store';
 import axios from 'axios';
 
@@ -25,6 +27,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/details/:id" element={<Details />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/cart" element={<Cart />} />
           </Routes>
         </Layout>
       </BrowserRouter>
