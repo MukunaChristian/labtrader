@@ -69,24 +69,9 @@ export const MenuSideBar = ({ setLoggedIn }) => {
               <p className={`pt-[1px] ${location.pathname === "/portal" ? '' : 'text-white group-hover:text-black'}`}>Portal</p>
             </div>
 
-            <div className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/suppliers" ? 'bg-white' : 'hover:bg-white'}`}>
-              <StarIcon className={`h-6 w-6 mx-4 ${location.pathname === "/suppliers" ? '' : 'text-white group-hover:text-black'}`} />
-              <p className={`pt-[1px] ${location.pathname === "/suppliers" ? '' : 'text-white group-hover:text-black'}`}>Manage Suppliers</p>
-            </div>
-
-            <div className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/resellers" ? 'bg-white' : 'hover:bg-white'}`}>
-              <StarIcon className={`h-6 w-6 mx-4 ${location.pathname === "/resellers" ? '' : 'text-white group-hover:text-black'}`} />
-              <p className={`pt-[1px] ${location.pathname === "/resellers" ? '' : 'text-white group-hover:text-black'}`}>Manage Resellers</p>
-            </div>
-
-            <div className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/jewellers" ? 'bg-white' : 'hover:bg-white'}`}>
-              <StarIcon className={`h-6 w-6 mx-4 ${location.pathname === "/jewellers" ? '' : 'text-white group-hover:text-black'}`} />
-              <p className={`pt-[1px] ${location.pathname === "/jewellers" ? '' : 'text-white group-hover:text-black'}`}>Manage Jewellers</p>
-            </div>
-
-            <div className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/sales-reps" ? 'bg-white' : 'hover:bg-white'}`}>
-              <StarIcon className={`h-6 w-6 mx-4 ${location.pathname === "/sales-reps" ? '' : 'text-white group-hover:text-black'}`} />
-              <p className={`pt-[1px] ${location.pathname === "/sales-reps" ? '' : 'text-white group-hover:text-black'}`}>Manage Sales Reps</p>
+            <div onClick={() => {navigate("/company")}} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/company" ? 'bg-white' : 'hover:bg-white'}`}>
+              <StarIcon className={`h-6 w-6 mx-4 ${location.pathname === "/company" ? '' : 'text-white group-hover:text-black'}`} />
+              <p className={`pt-[1px] ${location.pathname === "/company" ? '' : 'text-white group-hover:text-black'}`}>Companies</p>
             </div>
 
             <div className={`fixed bottom-0 left-0 mx-4 mb-4 w-36 duration-300 ${open ? "left-0" : "left-[-100%]"}`}>
