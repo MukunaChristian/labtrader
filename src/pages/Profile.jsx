@@ -72,9 +72,9 @@ export const Profile = () => {
 
 
   return (
-    <div className="flex pb-16 border-0 pt-24 mx-14">
+    <div className="flex pb-16 border-0 pt-24 px-14 bg-light-grey">
       <div>
-        <p className="text-2xl font-bold mb-4">Profile</p>
+        <p className="text-2xl font-bold b-4">Profile</p>
         <p onClick={() => {setActiveTab("personal")}} className={`${activeTab === "personal" ? "default-tabs-active" : "default-tabs"}`}>Personal Details</p>
         <p onClick={() => {setActiveTab("company")}} className={`${activeTab === "company" ? "default-tabs-active" : "default-tabs"}`}>Company Details</p>
         <p onClick={() => {setActiveTab("invoice")}} className={`${activeTab === "invoice" ? "default-tabs-active" : "default-tabs"}`}>Invoice Details</p>

@@ -44,10 +44,19 @@ const UserSlice = createSlice({
     },
 
     setUserDetailsState: (state, action) => {
-      state.userDetails = action.payload.personal
-      state.companyDetails = action.payload.company
-      state.deliveryDetails = action.payload.delivery
-      state.invoiceDetails = action.payload.invoice
+      console.log(action.payload)
+      if (action.payload.personal) {
+        state.userDetails = action.payload.personal
+      }
+      if (action.payload.company) {
+        state.companyDetails = action.payload.company
+      }
+      if (action.payload.delivery) {
+        state.deliveryDetails = action.payload.delivery
+      }
+      if (action.payload.invoice) {
+        state.invoiceDetails = action.payload.invoice
+      }
     }
   },
 });

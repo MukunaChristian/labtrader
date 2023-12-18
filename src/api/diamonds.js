@@ -43,6 +43,7 @@ export const getFilteredData = async (
     {
       filters: filters,
       page: page,
+      page_size: 5,
     },
     {
       headers: {
