@@ -46,7 +46,7 @@ export const Details = () => {
 
   return (
 
-    <div className="w-full pb-4">
+    <div className="w-full pb-4 bg-light-grey">
 
       <div className="border-0 pt-28 h-full ml-6 mr-12">
         <div onClick={() => {navigate("/")}} className="flex text-white items-center ml-40 mb-2 pr-2 w-24 py-1 rounded-md bg-secondary hover:bg-black/80 cursor-pointer">

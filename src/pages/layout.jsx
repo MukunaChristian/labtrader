@@ -5,7 +5,7 @@ import { useApp } from "../hooks/useApp";
 import { useSelector } from "react-redux";
 import { validateToken } from "../api/login";
 import { useEffect } from 'react';
-import { default as Logo } from '../assets/Color logo with background (3).svg';
+import { default as Logo } from '../assets/1.svg';
 import { MenuSideBar } from '../components/MenuSideBar/MenuSideBar';
 import { useDispatch } from 'react-redux';
 import { setUserState, setUserDetailsState } from '../reducers/UserSlice';
@@ -59,19 +59,19 @@ export const Layout = ({ children }) => {
 
   return (
     (loggedIn || isLogin) ?
-    <div className='w-[100%] h-full'>
+    <div className='w-[100%] h-full '>
       {isLogin ? null : 
-        <div className='w-full z-30 h-16 bg-white flex relative items-center justify-start px-5 pt-24 fixed'>
-          <div className='h-24 w-[50vw] flex justify-start items-center pl-6 border-0 border-solid border-y-[1px] border-black'>
+        <div className='w-full z-30 h-16 bg-white flex relative items-center justify-end px-5 fixed'>
+          <div className='h-24 flex justify-start items-center'>
             <MenuSideBar setLoggedIn={setLoggedIn} />
           </div>
 
-          <div className='absolute left-[50%] translate-x-[-50%] bg-black w-48 h-48 rounded-full flex items-center justify-center border-solid border-[12px] border-white'> 
-            <img src={Logo} className='w-32 h-32' />
+          <div className='absolute left-[50%] -translate-x-1/2'>
+            <img className='h-8' src={Logo} />
           </div>
 
           
-          <div className='h-24 w-[50vw] flex justify-start border-0 border-solid border-y-[1px] border-black'>
+          <div className='h-24 flex justify-start ml-auto'>
             <div className='h-full flex items-center ml-auto mr-6'>
               <CurrencyDropdown />
               {/* <LanguageDropdown />  */}
@@ -83,7 +83,7 @@ export const Layout = ({ children }) => {
           
         </div>
       }
-      <div className='h-full'>
+      <div className='h-full bg-light-grey'>
         {children}
       </div>
       

@@ -16,7 +16,7 @@ export const ForgotPassword = () => {
 
   return (
     (!inConstruction) ?
-    <div className="h-[100vh] overflow-hidden w-full flex justify-center bg-white">
+    <div className="h-[100vh] overflow-hidden w-full flex justify-center bg-light-grey">
       <div className="w-[20rem] h-[22rem] border-[1.5px] border-solid border-text my-auto p-5 shadow-lg">
         <p className="mb-2">Enter the email address associated with you account and we will send you a link to reset your password.</p>
         <form className="mb-4" onSubmit={(e) => {handleForgotPassword(e)}}>
@@ -26,7 +26,7 @@ export const ForgotPassword = () => {
         </form>
       </div>
     </div> :
-    <div className="h-[100vh] overflow-hidden w-full flex flex-row justify-center  bg-white">
+    <div className="h-[100vh] overflow-hidden w-full flex flex-row justify-center bg-light-grey">
       <div className="relative w-[24rem] h-[28rem] border-[1.5px] flex flex-col items-center border-solid border-text my-auto p-5 shadow-lg">
         <ArrowLeftIcon className="h-8 w-8 absolute top-5 left-5 cursor-pointer hover:bg-grey/40 rounded-md" onClick={() => {navigate("/login")}} />
         <InformationCircleIcon className="h-20 w-20 my-8" />

@@ -35,7 +35,7 @@ export const MenuSideBar = ({ setLoggedIn }) => {
 
   return (
     <div>
-      <div onClick={() => setOpen(true)} className='flex items-center hover:bg-grey h-12 w-12 p-2 rounded-sm cursor-pointer'>
+      <div onClick={() => setOpen(true)} className='flex items-center hover:bg-grey h-11 w-11 p-2 rounded-sm cursor-pointer'>
         <Bars3Icon className='h-8 w-8' />
       </div>
       <div onClick={() => {setOpen(false)}} className={`fixed h-full top-0 left-0 w-full z-40 bg-dark-grey/40 duration-500 cursor-pointer ${open ? "block" : "hidden"}`}></div>
