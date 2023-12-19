@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getCompanies } from '../../api/company';
+import { getCompanies, deleteCompany } from '../../api/company';
 
 export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies }) => {
   const [companies, setCompanies] = useState([]);
@@ -10,8 +10,35 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
     setallCompanies(companies)
   };
 
-  const handleDeleteDetails = (company) => {
-    console.log("delete company")
+  const handleDeleteDetails = async (company) => {
+    try {
+      const response = await deleteCompany(company.id);
+      if (response === "success") {
+        fetchCompanies()
+      }
+    } catch (error) {
+      console.error('Error in handleDeleteDetails:', error);
+    }
+  };
+
+  const handleAddCompany = () => {
+    const newCompany = {
+      registration_number: '',
+      discount_percent: 0,
+      name: '',
+      email: '', 
+      phone_number: '',
+      address_1: '',
+      address_2: '',
+      city: '',
+      country: '',
+      pincode: '',
+      type_id: ''
+    };
+
+    setViewedCompany(newCompany);
+    setActiveTab("details");
+    setallCompanies(companies)
   };
 
   useEffect(() => {
@@ -21,7 +48,6 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
   const fetchCompanies = async () => {
     try {
       const data = await getCompanies();
-      console.log(data)
       setCompanies(data);
     } catch (error) {
       console.error('Error in fetchCompanies:', error);
@@ -30,7 +56,12 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
 
   return (
     <div className="profile-block">
-      <h2 className="font-semibold text-lg text-black mb-4">Company List</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="font-semibold text-lg text-black flex-1">Company List</h2>
+        <button onClick={handleAddCompany} className="default-button w-27 text-right">
+          Add Company
+        </button>
+      </div>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white table-fixed">
           <thead>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getUsersInCompany } from '../../api/company.js';
+import { getUsersInCompany, deleteUser } from '../../api/company';
 
-export const CompanyMembers = ({ details }) => {
-  console.log(details)
+export const CompanyMembers = ({ details, setActiveTab }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -12,7 +11,6 @@ export const CompanyMembers = ({ details }) => {
   const fetchUsers = async () => {
     try {
       const data = await getUsersInCompany(details.id);
-      console.log(data)
       setUsers(data || []);
     } catch (error) {
       console.error('Error in fetchUsers:', error);
@@ -20,9 +18,29 @@ export const CompanyMembers = ({ details }) => {
     }
   };
 
+  const handleDeleteMember = async (user_id) => {
+    try {
+      const response = await deleteUser(user_id);
+      if (response === "success") {
+        fetchUsers()
+      }
+    } catch (error) {
+      console.error('Error in fetchUsers:', error);
+    }
+  };
+
+  const handleAddMember = () => {
+    setActiveTab("member_details");
+  };
+
   return (
     <div className="profile-block">
-      <h2 className="font-semibold text-lg text-black mb-4">Company Users</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="font-semibold text-lg text-black mb-4">Company Users</h2>
+        <button onClick={handleAddMember} className="default-button w-27 text-right">
+          Add User
+        </button>
+      </div>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white table-fixed">
           <thead>
@@ -43,7 +61,9 @@ export const CompanyMembers = ({ details }) => {
                   <td className="px-4">{company.role}</td>
                   <td className="px-4">{company.user_details.phone}</td>
                   <td className="px-4">
-                    <a href={`/companies/${company.id}/delete`} className="text-red-600 hover:text-red-800">Delete</a>
+                    <button onClick={() => handleDeleteMember(company.id)} className="text-red-600 hover:text-red-800">
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))
