@@ -9,6 +9,7 @@ export const getUserData = async (user_id, setUserDetailsState, dispatch) => {
       },
     })
     .then((response) => {
+      console.log(response.data);
       if (response.status === 200) {
         dispatch(setUserDetailsState(JSON.parse(response.data.details)));
       }

@@ -3,7 +3,8 @@ import { login } from "../api/login";
 import { useApp } from "../hooks/useApp";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setUserState } from "../reducers/UserSlice";
+import { setUserState, setUserDetailsState } from "../reducers/UserSlice";
+import { getUserData } from "../api/profileData";
 
 
 export const Login = () => {
@@ -18,13 +19,11 @@ export const Login = () => {
     const email = e.target["email"].value.trim();
     const password = e.target["password"].value.trim();
     const res = await login(email, password);
-    console.log(res)
     if (res.status === 200) {
-      console.log("success")
       localStorage.setItem("jwt", res.data.token)
-      console.log(res.data.token)
       setLoggedIn(true)
       dispatch(setUserState({"email": email, "role": res.data.role}))
+      getUserData(res.data.user_id, setUserDetailsState, dispatch)
       navigate("/")
     } else if (res.status === 401) {
       setInvalidCredentials(true)
@@ -33,7 +32,7 @@ export const Login = () => {
 
 
   return (
-    <div className="h-[100vh] overflow-hidden w-full flex justify-center bg-white">
+    <div className="h-[100vh] overflow-hidden w-full flex justify-center bg-light-grey">
       <div className="w-[20rem] h-[22rem] border-[1.5px] border-solid border-text my-auto p-5 shadow-lg">
         <p className="text-3xl mb-2">Login</p>
         {invalidCredentials && <p className="text-red-400 text-sm">Invalid Password or Email</p>}

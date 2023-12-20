@@ -34,7 +34,8 @@ const appSlice = createSlice({
       "with_unknown_luster": false,
       "no_bgm": false,
       "cert_id": "",
-      "id": ""
+      "stock_id": "",
+      "price_sort": ""
     },
     rates: {},
     diamondData: [],
@@ -42,7 +43,8 @@ const appSlice = createSlice({
     loggedIn: false,
     warehouses: [],
     uploadingLoader: false,
-    uploadErrors: {}
+    uploadErrors: {},
+    diamondAmount: 0
   },
   reducers: {
     setLoggedInState: (state, action) => {
@@ -67,13 +69,21 @@ const appSlice = createSlice({
       state.loadingData = action.payload
     },
     setWarehousesState: (state, action) => {
+      console.log("Setting warehouses")
+      console.log(action.payload)
       state.warehouses = action.payload
+    },
+    setCompaniesState: (state, action) => {
+      state.companies = action.payload
     },
     setUploadingLoaderState: (state, action) => {
       state.uploadingLoader = action.payload
     },
     setUploadErrorsState: (state, action) => {
       state.uploadErrors = action.payload
+    },
+    setDiamondAmountState: (state, action) => {
+      state.diamondAmount = action.payload
     },
     resetFiltersState: (state) => {
       state.filters = {
@@ -98,7 +108,8 @@ const appSlice = createSlice({
         "with_unknown_luster": false,
         "no_bgm": false,
         "cert_id": "",
-        "id": ""
+        "stock_id": "",
+        "price_sort": ""
       }
     }
   },
@@ -115,6 +126,8 @@ export const {
   setLoadingDataState,
   setWarehousesState,
   setUploadingLoaderState,
-  setUploadErrorsState
+  setUploadErrorsState,
+  setDiamondAmountState,
+  setCompaniesState
 } = appSlice.actions
 export default appSlice.reducer;

@@ -1,6 +1,6 @@
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/20/solid"
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid"
-import { FilterDropdown } from "../dropdowns/filterDropdown"
+import { FilterDropdown } from "../Dropdowns/FilterDropdown"
 import { BarsArrowUpIcon } from "@heroicons/react/20/solid"
 import { useState } from "react"
 import { useApp } from "../../hooks/useApp"
@@ -13,6 +13,15 @@ export const FilterBar = ({ setIsFilterSideBarOpen, setCurrentRows, currentRows 
   const [upDown, setUpDown] = useState(null);
 
   const sortPrice = () => {
+
+    if (upDown === "up" || upDown === null) {
+      setFilters({...filters, sort_price: "desc"});
+      setUpDown("down");
+    } else {
+      setFilters({...filters, sort_price: "asc"});
+      setUpDown("up");
+    }
+
     let sortedRows = [...currentRows];
   
     const compareFunction = (a, b) => {
@@ -53,7 +62,7 @@ export const FilterBar = ({ setIsFilterSideBarOpen, setCurrentRows, currentRows 
     console.log(searchTerm)
     // set search id in filters
 
-    setFilters({...filters, cert_id: searchTerm, id: searchTerm});
+    setFilters({...filters, cert_id: searchTerm, stock_id: searchTerm});
   }
 
   return (

@@ -23,8 +23,6 @@ export const CurrencyDropdown = () => {
   const currency = useSelector((state) => state.app.currency);
   const rates = useSelector((state) => state.app.rates);
 
-  console.log(rates)
-
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(currency);
 

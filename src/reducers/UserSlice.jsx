@@ -36,6 +36,8 @@ const UserSlice = createSlice({
       surname: "",
       phone: ""
     },
+
+    diamonds_in_cart: [],
   },
   reducers: {
     setUserState: (state, action) => {
@@ -44,11 +46,28 @@ const UserSlice = createSlice({
     },
 
     setUserDetailsState: (state, action) => {
-      state.userDetails = action.payload.personal
-      state.companyDetails = action.payload.company
-      state.deliveryDetails = action.payload.delivery
-      state.invoiceDetails = action.payload.invoice
-    }
+      console.log(action.payload)
+      if (action.payload.personal) {
+        state.userDetails = action.payload.personal
+      }
+      if (action.payload.company) {
+        state.companyDetails = action.payload.company
+      }
+      if (action.payload.delivery) {
+        state.deliveryDetails = action.payload.delivery
+      }
+      if (action.payload.invoice) {
+        state.invoiceDetails = action.payload.invoice
+      }
+    },
+
+    addDiamondToCart: (state, action) => {
+      state.diamonds_in_cart.push(action.payload)
+    },
+
+    removeDiamondFromCart: (state, action) => {
+      state.diamonds_in_cart = state.diamonds_in_cart.filter(diamond => diamond.stock_id !== action.payload)
+    },
   },
 });
 
@@ -57,6 +76,8 @@ export const {
   setUserDetailsState,
   setCompanyDetailsState,
   setDeliveryDetailsState,
-  setInvoiceDetailsState
+  setInvoiceDetailsState,
+  addDiamondToCart,
+  removeDiamondFromCart
 } = UserSlice.actions
 export default UserSlice.reducer;
