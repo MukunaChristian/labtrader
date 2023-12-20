@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Pagination from '../pagination/pagination';
+import { Pagenation } from '../dataTable/Pagenation';
 import SearchBar from '../searchBar/searchBar';
 import { getCompanies, deleteCompany } from '../../api/company';
 
@@ -20,15 +20,17 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5)
+  const [itemsPerPage] = useState(9)
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   // Search Filtering
   const filteredCompanies = companies.filter(filterCompanies);
-  const totalFilteredItems = filteredCompanies.length;
   const currentCompanies = filteredCompanies.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Pagination Continued
+  const maxPages = Math.ceil(filteredCompanies.length / itemsPerPage);
+  const lastPage = currentPage === maxPages;
 
   const handleViewDetails = (company) => {
     setViewedCompany(company);
@@ -87,6 +89,11 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
 
   return (
     <div className="profile-block">
+      <Pagenation 
+        currentPage={currentPage} 
+        setCurrentPage={setCurrentPage} 
+        lastPage={lastPage}
+      />
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-semibold text-lg text-black flex-1">Company List</h2>
         <div className="ml-auto">
@@ -129,11 +136,6 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
           </tbody>
         </table>
       </div>
-      <Pagination
-        itemsPerPage={itemsPerPage}
-        totalItems={totalFilteredItems}
-        paginate={paginate}
-      />
     </div>
   )
 };
