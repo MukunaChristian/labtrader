@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 
-import { Header } from "../components/Dashboard/header"
-import { FilterBar } from "../components/Dashboard/FilterBar"
+import { Header } from "../components/Dashboard/header.jsx"
+import { FilterBar } from "../components/Dashboard/FilterBar.jsx"
 import { FilterSideBar } from "../components/FilterSideBar"
-import { CustomDataTable } from "../components/dataTable/CustomDataTable"
+import { CustomDataTable } from "../components/dataTable/CustomDataTable.jsx"
 
 
 export const Dashboard = () => {

@@ -28,7 +28,7 @@ export const CustomDataTable = ({ currentRows }) => {
 
   useEffect(() => {
     console.log("currentPage", currentPage)
-    getFilteredData(dispatch, setDiamondDataState, setLoadingDataState, setCurrencyRateState, setDiamondAmountState, currentPage, filters);
+    getFilteredData(dispatch, setDiamondDataState, setLoadingDataState, setDiamondAmountState, currentPage, filters);
   }, [currentPage, filters])
 
 
@@ -179,9 +179,6 @@ export const CustomDataTable = ({ currentRows }) => {
   // figure this out
   useEffect(() => {
     setCutRows(currentRows)
-    return
-    setCurrentPage(1);
-    setCutRows(currentRows.slice(0, maxItems));
   }, [currentRows])
 
 

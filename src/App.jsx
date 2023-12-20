@@ -9,6 +9,7 @@ import { Details } from './pages/Details';
 import { Cart } from './pages/Cart';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { Profile } from './pages/Profile';
+import { Confirm } from './pages/Confirm';
 import store from './store';
 import axios from 'axios';
 
@@ -29,6 +30,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/confirm" element={<Confirm />} />
           </Routes>
         </Layout>
       </BrowserRouter>
