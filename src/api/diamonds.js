@@ -28,11 +28,33 @@ export const diamonds = async (
   dispatch(setLoading(false));
 };
 
+// get data for specific stock ids
+export const getDataByIds = async (stockIds) => {
+  const response = await axios.post(
+    "/diamond",
+    {
+      filters: { stock_id: stockIds },
+      page: 1,
+      page_size: stockIds.length,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    }
+  );
+
+  let objectList = response.data.items.map((str) => JSON.parse(str));
+  objectList = transformedList(objectList);
+  console.log(objectList);
+  return objectList;
+};
+
 export const getFilteredData = async (
   dispatch,
   setData,
   setLoading,
-  setRates,
   setDiamondAmount,
   page,
   filters
@@ -59,7 +81,6 @@ export const getFilteredData = async (
 
   dispatch(setData(objectList));
   dispatch(setDiamondAmount(response.data.item_length));
-  dispatch(setRates(response.data.rates));
   dispatch(setLoading(false));
 };
 

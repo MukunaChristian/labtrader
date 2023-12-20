@@ -69,7 +69,12 @@ const appSlice = createSlice({
       state.loadingData = action.payload
     },
     setWarehousesState: (state, action) => {
+      console.log("Setting warehouses")
+      console.log(action.payload)
       state.warehouses = action.payload
+    },
+    setCompaniesState: (state, action) => {
+      state.companies = action.payload
     },
     setUploadingLoaderState: (state, action) => {
       state.uploadingLoader = action.payload
@@ -122,6 +127,7 @@ export const {
   setWarehousesState,
   setUploadingLoaderState,
   setUploadErrorsState,
-  setDiamondAmountState
+  setDiamondAmountState,
+  setCompaniesState
 } = appSlice.actions
 export default appSlice.reducer;

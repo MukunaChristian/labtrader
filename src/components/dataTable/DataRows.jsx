@@ -3,21 +3,24 @@ import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import { LinkIcon } from '@heroicons/react/20/solid';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { HandRaisedIcon } from '@heroicons/react/24/outline';
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import loader from '../../assets/loader.gif';
-import MissingImage from '../../assets/missing.svg';
-// import { getQuotes } from './scrapeGem';
+import { addDiamondToCart, removeDiamondFromCart } from '../../reducers/UserSlice';
+import { useDispatch } from 'react-redux';
 
 
 export const DataRows = ({ row, rowIndex, columns }) => {
   const currency = useSelector(state => state.app.currency);
   const rates = useSelector(state => state.app.rates);
+  const diamonds_in_cart = useSelector(state => state.user.diamonds_in_cart);
+
   const [isExpanded, setIsExpanded] = useState(false);
   const [gemDisabled, setGemDisabled] = useState(true);
   const [gemLoaded, setGemLoaded] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   let spotPrice = null;
   if (row.total) {
@@ -41,6 +44,14 @@ export const DataRows = ({ row, rowIndex, columns }) => {
     }
 
     setIsExpanded(!isExpanded);
+  }
+
+  const handleAddToCart = () => {
+    if (diamonds_in_cart.includes(row)) {
+      dispatch(removeDiamondFromCart(row.stock_id));
+    } else {
+      dispatch(addDiamondToCart(row));
+    }
   }
 
   return (
@@ -170,8 +181,8 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             </div>
             <div className='pt-4'>
               <p className='font-bold text-primary'>Actions</p>
-              {/* <button className='mt-4 h-7 w-28 rounded-md bg-accent text-white flex justify-center items-center'>Add to cart</button> */}
-              <button onClick={() => {navigate("/details/" + row["id"])}} className='mt-4 h-7 w-28 rounded-md border-solid border-[1.5px] flex justify-center items-center'>More details</button>
+              <button onClick={() => handleAddToCart()} className={`mt-4 h-7 w-32 rounded-md flex justify-center items-center text-white ${diamonds_in_cart.includes(row) ? 'bg-red-400 border-solid border-accent' : 'bg-accent'}`}>{diamonds_in_cart.includes(row) ? 'Remove from cart' : 'Add to cart'}</button>
+              <button onClick={() => {navigate("/details/" + row["id"])}} className='mt-4 h-7 w-32 rounded-md border-solid border-[1.5px] flex justify-center items-center'>More details</button>
 
               {/* <div className='flex mt-4 justify-between'>
                 <button className='group h-10 w-12 rounded-md border-solid border-[#e8413d]/30 border-[1.5px] flex justify-center items-center hover:border-[#e8413d]'>
