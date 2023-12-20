@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { getCompanies, deleteCompany } from '../../api/company';
+import { useSelector } from 'react-redux';
 
 export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies }) => {
-  const [companies, setCompanies] = useState([]);
+  // const [companies, setCompanies] = useState([]);
+  const companies = useSelector(state => state.app.companies);
 
   const handleViewDetails = (company) => {
     setViewedCompany(company);
@@ -14,7 +16,8 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
     try {
       const response = await deleteCompany(company.id);
       if (response === "success") {
-        fetchCompanies()
+        // fetchCompanies()
+        console.log("Company deleted")
       }
     } catch (error) {
       console.error('Error in handleDeleteDetails:', error);
@@ -41,18 +44,18 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
     setallCompanies(companies)
   };
 
-  useEffect(() => {
-    fetchCompanies();
-  }, []);
+  // useEffect(() => {
+  //   fetchCompanies();
+  // }, []);
 
-  const fetchCompanies = async () => {
-    try {
-      const data = await getCompanies();
-      setCompanies(data);
-    } catch (error) {
-      console.error('Error in fetchCompanies:', error);
-    }
-  };
+  // const fetchCompanies = async () => {
+  //   try {
+  //     const data = await getCompanies();
+  //     setCompanies(data);
+  //   } catch (error) {
+  //     console.error('Error in fetchCompanies:', error);
+  //   }
+  // };
 
   return (
     <div className="profile-block">
