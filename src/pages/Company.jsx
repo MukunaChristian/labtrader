@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { updateProfile } from "../api/profileData"
-import { getCompanyTypes, getUserRoles } from "../api/company"
+import { getCompanyTypes, getUserRoles, getCompanyTypeInfo } from "../api/company"
 
 import { CompanyList } from "../components/companies/CompanyList"
 import { CompanyDetails } from "../components/companies/CompanyDetails"
 import { CompanyMembers } from "../components/companies/CompanyMembers"
 import { CompanyMemberDetails } from "../components/companies/CompanyMemberDetails"
+import { CompanyWarehouse } from "../components/companies/CompanyWarehouse"
+import { CompanyWarehouseDetails } from "../components/companies/CompanyWarehouseDetails"
 
 export const Company = () => {
   const [activeTab, setActiveTab] = useState("list")
@@ -15,6 +17,8 @@ export const Company = () => {
   const [allCompanies, setallCompanies] = useState(null);
   const [companyTypes, setcompanyTypes] = useState(null);
   const [userRoles, setUserRoles] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
+  const [warehouseDetails, setWarehouseDetails] = useState(null);
   const user_id = useSelector(state => state.user.user.id)
 
   const personalDetails = useSelector(state => state.user.userDetails)
@@ -66,6 +70,19 @@ export const Company = () => {
     }
   };
 
+  const fetchCompanyTypeInfo = async (companyId) => {
+    try {
+      const response = await getCompanyTypeInfo(companyId);
+      setViewedCompany(prevCompany => ({
+        ...prevCompany,
+        system_mark_up: response.system_mark_up,
+        commission: response.commission
+      }));
+    } catch (error) {
+      console.error('Error fetching company type info:', error);
+    }
+  };
+
   const fetchUserRoles = async () => {
     try {
       const userRoles = await getUserRoles();
@@ -73,6 +90,10 @@ export const Company = () => {
     } catch (error) {
       console.error('Error fetching company types:', error);
     }
+  };
+
+  const handleTabChange = (tabName) => {
+    setActiveTab(tabName);
   };
 
   useEffect(() => {
@@ -85,17 +106,39 @@ export const Company = () => {
     fetchUserRoles();
   }, [personalDetails, companyDetails, invoiceDetails])
 
+  useEffect(() => {
+    if (viewedCompany?.id) {
+      fetchCompanyTypeInfo(viewedCompany.id);
+    }
+  }, [viewedCompany?.id]);
 
   return (
-    <div className="flex pb-16 border-0 pt-24 h-full mx-14">
+    <div className="flex pb-40 border-0 pt-24 h-full mx-14">
       <div>
         <p className="text-2xl font-bold mb-4">Companies</p>
         <p onClick={() => { setActiveTab("list") }} className={`${activeTab === "list" ? "default-tabs-active" : "default-tabs"}`}>Company List</p>
-        <p onClick={() => { activeTab === "list" ? null : setActiveTab("details") }} className={`${activeTab === "details" ? "default-tabs-active" : "default-tabs"} ${activeTab === "list" ? "non-clickable-tab" : ""}`}>Company Details</p>
-        <p onClick={() => { activeTab === "list" ? null : setActiveTab("members") }} className={`${activeTab === "members" ? "default-tabs-active" : "default-tabs"} ${activeTab === "list" ? "non-clickable-tab" : ""}`}>Company Users</p>
       </div>
 
-      <div className="flex w-full justify-items-center grid grid-cols-1 gap-10 mt-12 ml-12">
+      <div className="flex w-full justify-items-center grid grid-cols-1 mt-12 ml-12">
+        <div className={`tabs flex w-[80%] ${activeTab !== 'list' ? 'block' : 'hidden'}`}>
+          <label
+            className={`tab cursor-pointer px-5 py-2 mr-1 inline-block text-black rounded-t-md ${activeTab === 'details' ? 'bg-gray-800 text-white shadow-lg' : ''}`}
+            onClick={() => { setActiveTab("details") }}>
+            Details
+          </label>
+          <label
+            className={`tab cursor-pointer px-5 py-2 mr-1 inline-block text-black rounded-t-md ${activeTab === 'members' ? 'bg-gray-800 text-white shadow-lg' : ''}`}
+            onClick={() => { setActiveTab("members") }}>
+            Members
+          </label>
+          {viewedCompany && viewedCompany.type_id === 1 && (
+            <label
+              className={`tab cursor-pointer px-5 py-2 mr-1 inline-block text-black rounded-t-md ${activeTab === 'warehouse' ? 'bg-gray-800 text-white shadow-lg' : ''}`}
+              onClick={() => { setActiveTab("warehouse") }}>
+              Warehouses
+            </label>
+          )}
+        </div>
         {activeTab === "list" &&
           <CompanyList
             setActiveTab={setActiveTab}
@@ -109,6 +152,7 @@ export const Company = () => {
             allCompanies={allCompanies}
             companyTypes={companyTypes}
             changesMade={changesMade}
+            setActiveTab={setActiveTab}
             setChangesMade={setChangesMade}
             updateDetails={updateDetailsCopy}
             resetDetails={resetDetailsCopy}
@@ -117,13 +161,29 @@ export const Company = () => {
         }
         {activeTab === "members" && viewedCompany &&
           <CompanyMembers
+            user_details={setUserDetails}
             details={viewedCompany}
             setActiveTab={setActiveTab}
           />
         }
         {activeTab === "member_details" && viewedCompany &&
           <CompanyMemberDetails
+            user_info={userDetails}
             roleTypes={userRoles}
+            company_id={viewedCompany.id}
+            setActiveTab={setActiveTab}
+          />
+        }
+        {activeTab === "warehouse" && viewedCompany &&
+          <CompanyWarehouse
+            warehouse_details={setWarehouseDetails}
+            details={viewedCompany}
+            setActiveTab={setActiveTab}
+          />
+        }
+        {activeTab === "warehouse_details" && viewedCompany &&
+          <CompanyWarehouseDetails
+            warehouse_info={warehouseDetails}
             company_id={viewedCompany.id}
             setActiveTab={setActiveTab}
           />

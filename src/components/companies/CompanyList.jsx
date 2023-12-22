@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Pagenation } from '../dataTable/Pagenation';
 import SearchBar from '../searchBar/searchBar';
-import { getCompanies, deleteCompany } from '../../api/company';
+import { getCompanies, deleteCompany, getCompanyTypes } from '../../api/company';
 
 export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies }) => {
   const [companies, setCompanies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [totalCompanies, setTotalCompanies] = useState(0);
+  const [companyTypes, setCompanyTypes] = useState([]);
+  const [confirmDelete, setConfirmDelete] = useState(null);
 
-  const filterCompanies = (company) => {
-    if (!searchTerm) return true;
-    const lowerCaseSearchTerm = searchTerm.toLowerCase();
-    return (
-      company.name.toLowerCase().includes(lowerCaseSearchTerm) ||
-      company.company_type.toLowerCase().includes(lowerCaseSearchTerm) ||
-      company.discount_percent.toString().includes(lowerCaseSearchTerm) ||
-      company.registration_number.toLowerCase().includes(lowerCaseSearchTerm)
-    );
-  };
+  const [nameSortOrder, setNameSortOrder] = useState('None');
+  const [typeIdSortOrder, setTypeIdSortOrder] = useState('None');
+  const [registrationNumberSortOrder, setRegistrationNumberSortOrder] = useState('None');
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,12 +21,31 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   // Search Filtering
-  const filteredCompanies = companies.filter(filterCompanies);
-  const currentCompanies = filteredCompanies.slice(indexOfFirstItem, indexOfLastItem);
+  const currentCompanies = companies;
 
   // Pagination Continued
-  const maxPages = Math.ceil(filteredCompanies.length / itemsPerPage);
+  const maxPages = Math.ceil(totalCompanies / itemsPerPage);
   const lastPage = currentPage === maxPages;
+
+  const toggleNameSortOrder = () => {
+    setNameSortOrder(nameSortOrder === 'A-Z' ? 'Z-A' : nameSortOrder === 'Z-A' ? 'None' : 'A-Z');
+  };
+
+  const toggleTypeIdSortOrder = () => {
+    const typeIds = ['None', ...companyTypes.map(type => type.id.toString())];
+    const currentTypeIndex = typeIds.indexOf(typeIdSortOrder);
+    const nextTypeIndex = (currentTypeIndex + 1) % typeIds.length;
+    setTypeIdSortOrder(typeIds[nextTypeIndex]);
+  };
+
+
+  const toggleRegistrationNumberSortOrder = () => {
+    setRegistrationNumberSortOrder(registrationNumberSortOrder === 'asc' ? 'desc' : registrationNumberSortOrder === 'desc' ? 'None' : 'asc');
+  };
+
+  const handleEnterPress = () => {
+    fetchCompanies();
+  };
 
   const handleViewDetails = (company) => {
     setViewedCompany(company);
@@ -38,12 +53,17 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
     setallCompanies(companies)
   };
 
-  const handleDeleteDetails = async (company) => {
+  const handleDeleteDetails = async (company, confirm = false) => {
+    if (!confirm) {
+      setConfirmDelete(company.id);
+      return;
+    }
     try {
       const response = await deleteCompany(company.id);
       if (response === "success") {
         const updatedCompanies = companies.filter(c => c.id !== company.id);
         setCompanies(updatedCompanies);
+        setConfirmDelete(null);
 
         if (currentPage > 1 && updatedCompanies.length <= indexOfFirstItem) {
           setCurrentPage(currentPage - 1);
@@ -57,7 +77,6 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
   const handleAddCompany = () => {
     const newCompany = {
       registration_number: '',
-      discount_percent: 0,
       name: '',
       email: '',
       phone_number: '',
@@ -75,13 +94,40 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
   };
 
   useEffect(() => {
+    fetchCompanyTypes();
     fetchCompanies();
-  }, []);
+  }, [nameSortOrder, typeIdSortOrder, registrationNumberSortOrder, currentPage]);
+
+  const fetchCompanyTypes = async () => {
+    try {
+      const types = await getCompanyTypes();
+      setCompanyTypes(types);
+    } catch (error) {
+      console.error('Error fetching company types:', error);
+    }
+  };
 
   const fetchCompanies = async () => {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage
+
+    const filterList = {
+      name: nameSortOrder !== 'None' ? nameSortOrder : null,
+      type_id: typeIdSortOrder !== 'None' ? typeIdSortOrder : null,
+      registration_number: registrationNumberSortOrder !== 'None' ? registrationNumberSortOrder : null,
+      search: searchTerm !== '' ? searchTerm : null,
+    };
+
     try {
-      const data = await getCompanies();
-      setCompanies(data);
+      const data = await getCompanies([start, end], filterList);
+      console.log(data)
+      if (data != null) {
+        setTotalCompanies(data.total);
+        setCompanies(data.data);
+      } else {
+        setTotalCompanies(1);
+        setCompanies([]);
+      }
     } catch (error) {
       console.error('Error in fetchCompanies:', error);
     }
@@ -89,9 +135,9 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
 
   return (
     <div className="profile-block">
-      <Pagenation 
-        currentPage={currentPage} 
-        setCurrentPage={setCurrentPage} 
+      <Pagenation
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
         lastPage={lastPage}
       />
       <div className="flex justify-between items-center mb-4">
@@ -100,6 +146,7 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
           <SearchBar
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
+            onEnterPress={handleEnterPress}
             className="w-full max-w-xs"
           />
         </div>
@@ -113,26 +160,36 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
         <table className="min-w-full bg-white table-fixed">
           <thead>
             <tr className="w-full h-16 border-gray-300 border-b py-8">
-              <th className="text-left w-1/5 px-4">Name</th>
-              <th className="text-left w-1/5 px-4">Type</th>
-              <th className="text-left w-1/5 px-4">Discount %</th>
-              <th className="text-left w-1/5 px-4">Registration Number</th>
-              <th className="text-center w-1/5 px-4">Actions</th>
+              <th className="text-left w-1/4 px-4 cursor-pointer" onClick={toggleNameSortOrder}>Name {nameSortOrder !== 'None' && `(${nameSortOrder})`}</th>
+              <th className="text-left w-1/4 px-4 cursor-pointer" onClick={toggleTypeIdSortOrder}>Type {typeIdSortOrder !== 'None' && `(${companyTypes.find(type => type.id.toString() === typeIdSortOrder)?.name || 'Unknown'})`}</th>
+              <th className="text-left w-1/4 px-4 cursor-pointer" onClick={toggleRegistrationNumberSortOrder}>Registration Number {registrationNumberSortOrder !== 'None' && `(${registrationNumberSortOrder})`}</th>
+              <th className="text-center w-1/4 px-4">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-300">
-            {currentCompanies.map(company => (
-              <tr key={company.id} className="h-14">
-                <td className="w-1/5 px-4">{company.name}</td>
-                <td className="w-1/5 px-4">{company.company_type}</td>
-                <td className="w-1/5 px-4">{company.discount_percent}%</td>
-                <td className="w-1/5 px-4">{company.registration_number}</td>
-                <td className="text-center w-1/5 px-4">
-                  <button onClick={() => handleViewDetails(company)} className="text-blue-600 hover:text-blue-800 mr-3">View</button>
-                  <button onClick={() => handleDeleteDetails(company)} className="text-red-600 hover:text-red-800">Delete</button>
+            {currentCompanies.length > 0 ? (
+              currentCompanies.map(company => (
+                <tr key={company.id} className="h-14">
+                  <td className="w-1/4 px-4">{company.name}</td>
+                  <td className="w-1/4 px-4">{company.company_type}</td>
+                  <td className="w-1/4 px-4">{company.registration_number}</td>
+                  <td className="text-center w-1/4 px-4">
+                    <button onClick={() => handleViewDetails(company)} className="text-blue-600 hover:text-blue-800 mr-3">View</button>
+                    {confirmDelete === company.id ? (
+                      <button onClick={() => handleDeleteDetails(company, true)} className="text-red-600 hover:text-red-800">Confirm?</button>
+                    ) : (
+                      <button onClick={() => handleDeleteDetails(company)} className="text-red-600 hover:text-red-800">Delete</button>
+                    )}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className="text-center py-10">
+                  <span className="text-gray-500">No companies found</span>
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
