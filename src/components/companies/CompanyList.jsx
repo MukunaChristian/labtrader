@@ -78,18 +78,17 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
   };
 
   useEffect(() => {
-    // fetchCompanies();
-    setCompanies(companies_state)
-  }, [companies_state]);
+    fetchCompanies();
+  }, []);
 
-  // const fetchCompanies = async () => {
-  //   try {
-  //     const data = await getCompanies();
-  //     setCompanies(data);
-  //   } catch (error) {
-  //     console.error('Error in fetchCompanies:', error);
-  //   }
-  // };
+  const fetchCompanies = async () => {
+    try {
+      const data = await getCompanies();
+      setCompanies(data);
+    } catch (error) {
+      console.error('Error in fetchCompanies:', error);
+    }
+  };
 
   return (
     <div className="profile-block">
