@@ -73,6 +73,11 @@ export const MenuSideBar = ({ setLoggedIn }) => {
               <p className={`pt-[1px] ${location.pathname === "/company" ? '' : 'text-white group-hover:text-black'}`}>Companies</p>
             </div>
 
+            <div onClick={() => {navigate("/orders")}} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/orders" ? 'bg-white' : 'hover:bg-white'}`}>
+              <StarIcon className={`h-6 w-6 mx-4 ${location.pathname === "/orders" ? '' : 'text-white group-hover:text-black'}`} />
+              <p className={`pt-[1px] ${location.pathname === "/orders" ? '' : 'text-white group-hover:text-black'}`}>Orders</p>
+            </div>
+
             <div className={`fixed bottom-0 left-0 mx-4 mb-4 w-36 duration-300 ${open ? "left-0" : "left-[-100%]"}`}>
               <div onClick={() => onLogout()} className="flex flex-row hover:bg-white py-2 rounded-md cursor-pointer group">
                 <ArrowLeftOnRectangleIcon className="h-6 w-6 text-white mx-4 group-hover:text-black" />

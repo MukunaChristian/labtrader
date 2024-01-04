@@ -7,6 +7,7 @@ import { checkout } from "../api/checkout"
 import { clearCart, removeDiamondFromCart } from "../reducers/UserSlice"
 import { CheckoutDropdown } from "../components/Dropdowns/CheckoutDropdown"
 import { calculateDeliveryFee } from "../api/checkout"
+import { type } from "jquery"
 
 
 export const Cart = () => {
@@ -22,7 +23,8 @@ export const Cart = () => {
     const rates = useSelector(state => state.app.rates);
     const navigate = useNavigate()
 
-    const total = diamonds_in_cart.reduce((acc, curr) => acc + parseFloat(curr.total) * curr.specifications.carat * rates[currency.code], 0).toFixed(2)
+    const subTotal = diamonds_in_cart.reduce((acc, curr) => acc + parseFloat(curr.total) * rates[currency.code], 0).toFixed(2)
+    const total = (parseFloat(subTotal) + parseFloat(deliveryFee)).toFixed(2)
 
     useEffect(() => {
       if (diamonds_in_cart.length > 0) {
@@ -32,16 +34,16 @@ export const Cart = () => {
 
     const toggleDelivery = (option) => {
       if (option === "Deliver") {
-        setDelivery(false)
-        setDeliveryFee(0)
+        setDelivery(true)
         calculateDeliveryFee().then(
           res => {
             console.log(res)
+            setDeliveryFee((res.delivery_fee * rates[currency.code]).toFixed(2))
           }
         )
       } else {
-        setDelivery(true)
-        setDeliveryFee(100)
+        setDelivery(false)
+        setDeliveryFee(0)
       }
     }
 
@@ -87,12 +89,12 @@ export const Cart = () => {
 
                     <div className="ml-auto text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-black">
                       <p className="text-sm">Price in USD</p>
-                      <p className="font-semibold text-sm">$ {diamond.total * diamond.specifications.carat}</p>
+                      <p className="font-semibold text-sm">$ {diamond.total}</p>
                     </div>
 
                     <div className="text-right mr-4">
                       <p className="text-sm">Price in {currency.name}</p>
-                      <p className="font-semibold text-sm">{diamond.total ? currency.symbol + " " + (parseFloat(diamond.total) * diamond.specifications.carat * rates[currency.code] * 10 / 10).toFixed(2) : 'N/A'}</p>
+                      <p className="font-semibold text-sm">{diamond.total ? currency.symbol + " " + (parseFloat(diamond.total) * rates[currency.code] * 10 / 10).toFixed(2) : 'N/A'}</p>
                     </div>
                     
                   </div>
@@ -112,13 +114,13 @@ export const Cart = () => {
         
         <div className="flex items-center border-solid px-8 h-[8rem] border-[1px] border-black rounded-b-lg bg-black">
           <div className="text-white">
-            <p className="mb-2">Delivery fee</p>
             <p className="mb-2">Sub Total</p>
+            <p className="mb-2">Delivery fee</p> 
             <p className="font-semibold text-lg">Total</p>
           </div>
           <div className="ml-auto text-white">
-            <p className="mb-2">{currency.symbol} {0}</p>
-            <p className="mb-2">{currency.symbol} {total}</p>
+            <p className="mb-2">{currency.symbol} {subTotal}</p>
+            <p className="mb-2">{currency.symbol} {deliveryFee}</p>
             <p className="font-semibold text-lg">{currency.symbol} {total}</p> 
           </div>
         </div>

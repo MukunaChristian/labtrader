@@ -11,6 +11,7 @@ import { ForgotPassword } from './pages/ForgotPassword';
 import { Profile } from './pages/Profile';
 import { Company } from './pages/Company';
 import { Confirm } from './pages/Confirm';
+import { Orders } from './pages/Orders';
 import store from './store';
 import axios from 'axios';
 
@@ -33,6 +34,7 @@ function App() {
             <Route path="/company" element={<Company />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/confirm" element={<Confirm />} />
+            <Route path="/orders" element={<Orders />} />
           </Routes>
         </Layout>
       </BrowserRouter>
