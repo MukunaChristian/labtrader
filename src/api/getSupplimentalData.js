@@ -6,7 +6,7 @@ import {
 } from "../reducers/AppSlice";
 
 export const getSupplimentalData = async (dispatch) => {
-  const response = await axios.get("/get_companies", {
+  const response = await axios.get("/get_supplemental_data", {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("jwt")}`,
@@ -18,7 +18,6 @@ export const getSupplimentalData = async (dispatch) => {
   if (response.status === 200) {
     console.log(response.data.data);
     dispatch(setCurrencyRateState(response.data.rates));
-    dispatch(setCompaniesState(response.data.data));
     dispatch(setWarehousesState(response.data.warehouses));
   } else {
     console.error("Error fetching companies:", response.data.message);

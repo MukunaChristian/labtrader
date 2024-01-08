@@ -144,8 +144,7 @@ export const Header = ({ title, results }) => {
             </div>
           </div>
           <div className="pt-5 flex justify-around ">
-            <SupplierDropdown supplier={selectedSupplier} setSupplier={setSelectedSupplier} />
-            <WarehouseDropdown warehouse={selectedWarehouse} setWarehouse={setSelectedWarehouse} disabled={!selectedSupplier} />
+            <WarehouseDropdown warehouse={selectedWarehouse} setWarehouse={setSelectedWarehouse} />
           </div>
 
 
