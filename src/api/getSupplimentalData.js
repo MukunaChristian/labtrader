@@ -13,11 +13,14 @@ export const getSupplimentalData = async (dispatch) => {
     },
   });
 
-  console.log(response.data.data);
-  console.log(response.data.rates);
-  console.log(response.data.warehouses);
+  console.log(response);
 
-  dispatch(setCurrencyRateState(response.data.rates));
-  dispatch(setCompaniesState(response.data.data));
-  dispatch(setWarehousesState(response.data.warehouses));
+  if (response.status === 200) {
+    console.log(response.data.data);
+    dispatch(setCurrencyRateState(response.data.rates));
+    dispatch(setCompaniesState(response.data.data));
+    dispatch(setWarehousesState(response.data.warehouses));
+  } else {
+    console.error("Error fetching companies:", response.data.message);
+  }
 };

@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Pagenation } from '../dataTable/Pagenation';
 import SearchBar from '../searchBar/searchBar';
 import { getCompanies, deleteCompany, getCompanyTypes } from '../../api/company';
+import { useSelector } from 'react-redux';
 
 export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies }) => {
+  // const [companies, setCompanies] = useState([]);
+  const companies_state = useSelector(state => state.app.companies);
   const [companies, setCompanies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [totalCompanies, setTotalCompanies] = useState(0);

@@ -44,7 +44,8 @@ const appSlice = createSlice({
     warehouses: [],
     uploadingLoader: false,
     uploadErrors: {},
-    diamondAmount: 0
+    diamondAmount: 0,
+    companies: []
   },
   reducers: {
     setLoggedInState: (state, action) => {

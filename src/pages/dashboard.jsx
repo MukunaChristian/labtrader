@@ -98,7 +98,7 @@ export const Dashboard = () => {
         <Header title='Lab Grown Diamonds' results={diamondAmount} />
         <FilterBar setIsFilterSideBarOpen={setIsFilterSideBarOpen} setCurrentRows={setCurrentRows} currentRows={currentRows} />
         <CustomDataTable currentRows={currentRows} />
-        
+            
       </div>
     </div>
   )
