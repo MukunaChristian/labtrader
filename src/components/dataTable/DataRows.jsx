@@ -181,7 +181,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             </div>
             <div className='pt-4'>
               <p className='font-bold text-primary'>Actions</p>
-              <button onClick={() => handleAddToCart()} className={`mt-4 h-7 w-32 rounded-md flex justify-center items-center text-white ${diamonds_in_cart.includes(row) ? 'bg-red-400 border-solid border-accent' : 'bg-accent'}`}>{diamonds_in_cart.includes(row) ? 'Remove from cart' : 'Add to cart'}</button>
+              <button onClick={() => handleAddToCart()} className={`mt-4 h-7 w-32 rounded-md flex justify-center items-center text-white ${diamonds_in_cart.some(item => item.id === row.id) ? 'bg-red-400 border-solid border-accent' : 'bg-accent'}`}>{diamonds_in_cart.some(item => item.id === row.id) ? 'Remove from cart' : 'Add to cart'}</button>
               <button onClick={() => {navigate("/details/" + row["id"])}} className='mt-4 h-7 w-32 rounded-md border-solid border-[1.5px] flex justify-center items-center'>More details</button>
 
               {/* <div className='flex mt-4 justify-between'>

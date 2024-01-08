@@ -20,6 +20,8 @@ export const Layout = ({ children }) => {
   const loggedIn = useSelector(state => state.app.loggedIn);
   const user_id = useSelector(state => state.user.user.id);
   const warehouses = useSelector(state => state.app.warehouses);
+  const diamonds_in_cart = useSelector(state => state.user.diamonds_in_cart);
+  console.log(diamonds_in_cart.length)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -93,8 +95,11 @@ export const Layout = ({ children }) => {
             <div className='h-full flex items-center ml-auto mr-6'>
               <CurrencyDropdown />
               {/* <LanguageDropdown />  */}
-              <div onClick={() => navigate("/cart")} className='h-10 w-10 flex items-center justify-center ml-4 border-solid border-[1px] border-black rounded-full hover:bg-grey cursor-pointer'>
-                <ShoppingCartIcon className='h-5 w-5 text-black' />
+              <div onClick={() => navigate("/cart")} className='relative h-10 w-10 flex items-center justify-center ml-4 border-solid border-[1px] border-black rounded-full hover:bg-grey cursor-pointer'>
+                <ShoppingCartIcon className='relative h-5 w-5 text-black' />
+                {/* {diamonds_in_cart.length > 0 && 
+                  <p className='abolute bg-black rounded-full bottom-0 right-0 text-white text-xs w-4 h-4'>{diamonds_in_cart.length}</p>
+                } */}
               </div>
             </div>
           </div>

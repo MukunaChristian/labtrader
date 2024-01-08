@@ -1,0 +1,72 @@
+import { useState, useRef, useEffect } from 'react';
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
+
+// Euro, British Pound, Hong Kong Dollar, Indian Rupee, South African Rand
+const options = [
+  "Collect",
+  "Deliver"
+];
+
+export const CheckoutDropdown = ({ toggleDelivery }) => {
+  const ref = useRef(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("Collect");
+
+  const handleSetDelivery = (option) => {
+    setIsOpen(false);
+    setSelectedOption(option);
+    toggleDelivery(option);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleDocumentClick = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleDocumentClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleDocumentClick);
+    };
+  }, []);
+
+  return (
+    <div ref={ref} className="relative w-[8rem] rounded-md mr-4">
+      <button onClick={() => setIsOpen(!isOpen)} 
+        className="
+          flex items-center justify-between
+          w-full 
+          border-0 cursor-pointer
+          w-[8rem] px-4 py-3 
+          border-black border-solid border-[1px]
+          hover:outline-none hover:bg-text">
+        <p className=''>{selectedOption}</p>
+        <ChevronDownIcon className="w-4 h-4 text-black" />
+      </button>
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-[8rem] bg-white border-solid border-[1.5px] rounded-sm">
+          <div className="py-1">
+            {options.map((option) => (
+              <a
+                key={option.id}
+                href="#"
+                className="flex items-center text-black px-4 py-2 hover:bg-gray-200"
+                onClick={() => {
+                  handleSetDelivery(option);
+                }}
+              >
+                <div className='flex flex-col'>
+                  <p>{option}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

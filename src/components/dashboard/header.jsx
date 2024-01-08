@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useDropzone } from 'react-dropzone'
 import { uploadStock } from "../../api/diamonds";
 import { WarehouseDropdown } from "../Dropdowns/WarehouseDropdown.jsx";
+import { SupplierDropdown } from "../Dropdowns/SupplierDropdown.jsx";
 import loader from '../../assets/loader.gif';
 
 import { setUploadingLoaderState, setUploadErrorsState } from '../../reducers/AppSlice';
@@ -12,6 +13,7 @@ import { setUploadingLoaderState, setUploadErrorsState } from '../../reducers/Ap
 export const Header = ({ title, results }) => {
   const [uploadConfirm, setUploadConfirm] = useState(false);
   const [selectedWarehouse, setSelectedWarehouse] = useState(null);
+  const [selectedSupplier, setSelectedSupplier] = useState(null);
   const [fileLoaded, setFileLoaded] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
 
@@ -84,7 +86,7 @@ export const Header = ({ title, results }) => {
 
   return (
     <>
-      <div className="p-4 flex">
+      <div className="p-4 pt-24 flex">
         <div>
           <p className="text-xl font-bold text-secondary">{ title }</p>
           <p className="text-sm text-text font-semibold">{ results } results</p>
@@ -119,7 +121,7 @@ export const Header = ({ title, results }) => {
             position: "fixed"
           }}
           {...attributes.popper}
-          className={`z-[31] ${uploadErrors.count ? 'h-[26rem]' : 'h-[20rem]'} fixed bg-white rounded shadow-lg p-6 text-center`}
+          className={`z-[31] ${uploadErrors.count ? 'h-[30rem]' : 'h-[28rem]'} fixed bg-white rounded shadow-lg p-6 text-center`}
         >
           <div>
             <div {...getRootProps()} className="h-[14rem] w-[24rem] border-1 border-solid rounded-2xl border-dashed">
@@ -141,26 +143,28 @@ export const Header = ({ title, results }) => {
               </div>
             </div>
           </div>
-          {/* <div className="pt-5">
-            <WarehouseDropdown warehouse={selectedWarehouse} setWarehouse={setSelectedWarehouse} />
-          </div> */}
+          <div className="pt-5 flex justify-around ">
+            <SupplierDropdown supplier={selectedSupplier} setSupplier={setSelectedSupplier} />
+            <WarehouseDropdown warehouse={selectedWarehouse} setWarehouse={setSelectedWarehouse} disabled={!selectedSupplier} />
+          </div>
+
 
           {(uploadErrors.count) && 
-          <div className="mt-6">
+          <div className="mt-16">
             <div>
               {uploadErrors.count.success_count} / {uploadErrors.count.total_data} uploaded successfully
             </div>
           </div>}
 
-          {(fileLoaded) ?
-            <div className="flex justify-around mt-6">
+          {(fileLoaded && selectedWarehouse) ?
+            <div className="flex justify-end mt-24 ml-3">
               <button onClick={(e) => handleFileUpload(e)} className="default-button w-24">Upload</button>
-              <button onClick={(e) => cancelFileUpload(e)} className="default-button w-24">Cancel</button>
+              <button onClick={(e) => cancelFileUpload(e)} className="default-button w-24 ml-3">Cancel</button>
             </div> :
-            <div className="flex justify-around mt-6">
+            <div className={`flex  ${uploadErrors.count ? 'mt-8 justify-around' : 'mt-20 justify-end'}`}>
               <button className="default-button-disabled w-24">Upload</button>
-              {uploadErrors.count ? <button onClick={(e) => downloadFile()} className="default-button w-26">Download Error Logs</button> : null }
-              <button onClick={(e) => cancelFileUpload(e)} className="default-button w-24">Cancel</button>
+              {uploadErrors.count ? <button onClick={(e) => downloadFile()} className="default-button ml-3 w-26">Download Error Logs</button> : null }
+              <button onClick={(e) => cancelFileUpload(e)} className="default-button w-24 ml-3">Cancel</button>
             </div>
           }
         </div>

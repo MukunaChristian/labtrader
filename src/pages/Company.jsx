@@ -87,7 +87,7 @@ export const Company = () => {
 
 
   return (
-    <div className="flex pb-16 border-0 pt-24 h-full mx-14">
+    <div className="flex pb-16 border-0 pt-24 px-14 bg-light-grey">
       <div>
         <p className="text-2xl font-bold mb-4">Companies</p>
         <p onClick={() => { setActiveTab("list") }} className={`${activeTab === "list" ? "default-tabs-active" : "default-tabs"}`}>Company List</p>
@@ -95,7 +95,7 @@ export const Company = () => {
         <p onClick={() => { activeTab === "list" ? null : setActiveTab("members") }} className={`${activeTab === "members" ? "default-tabs-active" : "default-tabs"} ${activeTab === "list" ? "non-clickable-tab" : ""}`}>Company Users</p>
       </div>
 
-      <div className="flex w-full justify-items-center grid grid-cols-1 gap-10 mt-12 ml-12">
+      <div className="flex w-full justify-items-center grid grid-cols-1 gap-10 mt-12 ml-12 ">
         {activeTab === "list" &&
           <CompanyList
             setActiveTab={setActiveTab}

@@ -66,7 +66,12 @@ const UserSlice = createSlice({
     },
 
     removeDiamondFromCart: (state, action) => {
-      state.diamonds_in_cart = state.diamonds_in_cart.filter(diamond => diamond.stock_id !== action.payload)
+      state.diamonds_in_cart = state.diamonds_in_cart.filter(diamond => diamond.id !== action.payload)
+    },
+
+    clearCart: (state) => {
+      console.log("clearing cart")
+      state.diamonds_in_cart = []
     },
   },
 });
@@ -78,6 +83,7 @@ export const {
   setDeliveryDetailsState,
   setInvoiceDetailsState,
   addDiamondToCart,
-  removeDiamondFromCart
+  removeDiamondFromCart,
+  clearCart
 } = UserSlice.actions
 export default UserSlice.reducer;
