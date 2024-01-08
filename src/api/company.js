@@ -1,13 +1,19 @@
 import axios from "axios";
 
-export const getCompanies = async () => {
+export const getCompanies = async (startAndEnd, filterList) => {
     try {
-        const response = await axios.get('/get_companies', {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        const response = await axios.post('/get_companies', 
+            {
+                start_and_end: startAndEnd,
+                filter_list: filterList,
             },
-        });
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                },
+            }
+        );
 
         if (response.status === 200) {
             return response.data.data;
@@ -20,9 +26,55 @@ export const getCompanies = async () => {
     }
 };
 
+export const getCompanyWarehouses = async (company_id, filterList) => {
+    try {
+        const response = await axios.post('/get_company_warehouses', 
+            {
+                company_id: company_id,
+                filter_list: filterList,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                },
+            }
+        );
+
+        if (response.status === 200) {
+            return response.data.data;
+        } else {
+            throw new Error('Failed to fetch users in company');
+        }
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        throw error;
+    }
+};
+
 export const getCompanyTypes = async () => {
     try {
         const response = await axios.get('/get_company_types', {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        });
+
+        if (response.status === 200) {
+            return response.data.data;
+        } else {
+            throw new Error('Failed to fetch company types');
+        }
+    } catch (error) {
+        console.error('Error fetching company types:', error);
+        throw error;
+    }
+};
+
+export const getCompanyTypeInfo = async (company_id) => {
+    try {
+        const response = await axios.get(`/get_company_type_info?company_id=${company_id}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${localStorage.getItem("jwt")}`,
@@ -60,22 +112,28 @@ export const getUserRoles = async () => {
     }
 };
 
-export const getUsersInCompany = async (companyId) => {
+export const getUsersInCompany = async (company_id, filterList) => {
     try {
-        const response = await axios.get(`/get_users_in_company?company_id=${companyId}`, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        const response = await axios.post('/get_users_in_company', 
+            {
+                company_id: company_id,
+                filter_list: filterList,
             },
-        });
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                },
+            }
+        );
 
         if (response.status === 200) {
             return response.data.data;
         } else {
-            throw new Error('Failed to fetch users');
+            throw new Error('Failed to fetch users in company');
         }
     } catch (error) {
-        console.error('Error fetching users in company:', error);
+        console.error('Error fetching users:', error);
         throw error;
     }
 };
@@ -140,6 +198,27 @@ export const deleteCompany = async (companyID) => {
     }
 };
 
+export const updateUser = async (user_id, userData) => {
+    try {
+        const response = await axios.post('/update_company_members', { user_id, ...userData }, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        });
+
+        if (response.status === 200) {
+            console.log(response.data.data)
+            return response.data.data;
+        } else {
+            throw new Error('Failed to update user');
+        }
+    } catch (error) {
+        console.error('Error updating user:', error);
+        throw error;
+    }
+};
+
 export const addUser = async (userData) => {
     try {
         const response = await axios.post('/add_user_to_company', userData, {
@@ -163,6 +242,69 @@ export const addUser = async (userData) => {
 export const deleteUser = async (userID) => {
     try {
         const response = await axios.delete(`/delete_user?user_id=${userID}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        });
+
+        if (response.status === 200) {
+            return response.data.message;
+        } else {
+            throw new Error('Failed to delete user');
+        }
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        throw error;
+    }
+};
+
+export const addWarehouse = async (warehouseData) => {
+    console.log(warehouseData)
+    try {
+        const response = await axios.post('/add_warehouse_to_company', warehouseData, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        });
+
+        if (response.status === 200) {
+            return response.data.data;
+        } else {
+            throw new Error('Failed to add warehouse');
+        }
+    } catch (error) {
+        console.error('Error adding warehouse:', error);
+        throw error;
+    }
+};
+
+export const updateWarehouse = async (updateWarehouseData) => {
+    console.log(updateWarehouseData.id)
+    try {
+        const response = await axios.post('/update_company_warehouse', updateWarehouseData, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        });
+
+        if (response.status === 200) {
+            console.log(response.data.data)
+            return response.data.data;
+        } else {
+            throw new Error('Failed to update warehouse');
+        }
+    } catch (error) {
+        console.error('Error updating warehouse:', error);
+        throw error;
+    }
+};
+
+export const deleteWarehouse = async (warehouseID) => {
+    try {
+        const response = await axios.delete(`/delete_warehouse?warehouse_id=${warehouseID}`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${localStorage.getItem("jwt")}`,
