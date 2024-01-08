@@ -10,6 +10,7 @@ export const getOrders = async (
 ) => {
   setLoading(true);
   console.log("getting orders");
+  console.log(filters);
   const response = await axios.post(
     "/get_orders",
     {
@@ -40,6 +41,24 @@ export const updateStatus = async (id, status) => {
     {
       id: id,
       status: status,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    }
+  );
+
+  console.log(response.data);
+  return response.data;
+};
+
+export const getOrderInvoice = async (id) => {
+  const response = await axios.post(
+    "/get_invoice",
+    {
+      id: id,
     },
     {
       headers: {
