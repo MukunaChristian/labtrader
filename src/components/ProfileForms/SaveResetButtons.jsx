@@ -5,7 +5,7 @@ export const SaveResetButtons = ({
   resetButtonDisabled,
 }) => {
   return (
-    <div className="flex flex-row justify-end mt-8">
+    <div className="flex flex-row justify-end mr-8">
       <button
         className={`${resetButtonDisabled ? 'default-button-disabled' : 'default-button'} w-24 mr-4`}
         onClick={resetButtonHandler}
