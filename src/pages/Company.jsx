@@ -20,6 +20,8 @@ export const Company = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [warehouseDetails, setWarehouseDetails] = useState(null);
   const user_id = useSelector(state => state.user.user.id)
+  const user_role = useSelector(state => state.user.user.role)
+  const user = useSelector(state => state.user.user)
 
   const personalDetails = useSelector(state => state.user.userDetails)
   const companyDetails = useSelector(state => state.user.companyDetails)
@@ -51,7 +53,6 @@ export const Company = () => {
 
   const saveDetailsCopy = () => {
     console.log("Saving details")
-    console.log(detailsCopy)
     const data = {
       personal: detailsCopy.personalDetails,
       company: detailsCopy.companyDetails,
@@ -72,11 +73,13 @@ export const Company = () => {
 
   const fetchCompanyTypeInfo = async (companyId) => {
     try {
+      console.log("fetting company type info")
       const response = await getCompanyTypeInfo(companyId);
       setViewedCompany(prevCompany => ({
         ...prevCompany,
         system_mark_up: response.system_mark_up,
-        commission: response.commission
+        commission: response.commission,
+        sales_rep: response.sales_rep
       }));
     } catch (error) {
       console.error('Error fetching company type info:', error);
@@ -90,10 +93,6 @@ export const Company = () => {
     } catch (error) {
       console.error('Error fetching company types:', error);
     }
-  };
-
-  const handleTabChange = (tabName) => {
-    setActiveTab(tabName);
   };
 
   useEffect(() => {
@@ -113,7 +112,7 @@ export const Company = () => {
   }, [viewedCompany?.id]);
 
   return (
-    <div className="flex pb-40 border-0 pt-24 h-full mx-14">
+    <div className="flex pb-40 border-0 pt-24 mx-14">
       <div>
         <p className="text-2xl font-bold mb-4">Companies</p>
         <p onClick={() => { setActiveTab("list") }} className={`${activeTab === "list" ? "default-tabs-active" : "default-tabs"}`}>Company List</p>
@@ -126,11 +125,13 @@ export const Company = () => {
             onClick={() => { setActiveTab("details") }}>
             Details
           </label>
-          <label
-            className={`tab cursor-pointer px-5 py-2 mr-1 inline-block text-black rounded-t-md ${activeTab === 'members' ? 'bg-gray-800 text-white shadow-lg' : ''}`}
-            onClick={() => { setActiveTab("members") }}>
-            Members
-          </label>
+          {viewedCompany && viewedCompany.id && (
+            <label
+              className={`tab cursor-pointer px-5 py-2 mr-1 inline-block text-black rounded-t-md ${activeTab === 'members' ? 'bg-gray-800 text-white shadow-lg' : ''}`}
+              onClick={() => { setActiveTab("members") }}>
+              Members
+            </label>
+          )}
           {viewedCompany && viewedCompany.type_id === 1 && (
             <label
               className={`tab cursor-pointer px-5 py-2 mr-1 inline-block text-black rounded-t-md ${activeTab === 'warehouse' ? 'bg-gray-800 text-white shadow-lg' : ''}`}
@@ -144,6 +145,7 @@ export const Company = () => {
             setActiveTab={setActiveTab}
             setViewedCompany={setViewedCompany}
             setallCompanies={setallCompanies}
+            current_user={{ id: user_id, role: user_role }}
           />
         }
         {activeTab === "details" && viewedCompany &&
@@ -157,6 +159,7 @@ export const Company = () => {
             updateDetails={updateDetailsCopy}
             resetDetails={resetDetailsCopy}
             saveDetails={saveDetailsCopy}
+            current_user={{ id: user_id, role: user_role }}
           />
         }
         {activeTab === "members" && viewedCompany &&
@@ -164,6 +167,7 @@ export const Company = () => {
             user_details={setUserDetails}
             details={viewedCompany}
             setActiveTab={setActiveTab}
+            current_user={{ id: user_id, role: user_role }}
           />
         }
         {activeTab === "member_details" && viewedCompany &&
@@ -171,7 +175,9 @@ export const Company = () => {
             user_info={userDetails}
             roleTypes={userRoles}
             company_id={viewedCompany.id}
+            company_type_id={viewedCompany.type_id}
             setActiveTab={setActiveTab}
+            current_user={{ id: user_id, role: user_role }}
           />
         }
         {activeTab === "warehouse" && viewedCompany &&

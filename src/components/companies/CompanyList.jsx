@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Pagenation } from '../dataTable/Pagenation';
 import SearchBar from '../searchBar/searchBar';
-import { getCompanies, deleteCompany, getCompanyTypes } from '../../api/company';
+import { getCompanies, getCompanyTypes } from '../../api/company';
 import { useSelector } from 'react-redux';
 
-export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies }) => {
+export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies, current_user }) => {
   // const [companies, setCompanies] = useState([]);
   const companies_state = useSelector(state => state.app.companies);
   const [companies, setCompanies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [totalCompanies, setTotalCompanies] = useState(0);
   const [companyTypes, setCompanyTypes] = useState([]);
-  const [confirmDelete, setConfirmDelete] = useState(null);
 
   const [nameSortOrder, setNameSortOrder] = useState('None');
   const [typeIdSortOrder, setTypeIdSortOrder] = useState('None');
@@ -56,27 +55,6 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
     setallCompanies(companies)
   };
 
-  const handleDeleteDetails = async (company, confirm = false) => {
-    if (!confirm) {
-      setConfirmDelete(company.id);
-      return;
-    }
-    try {
-      const response = await deleteCompany(company.id);
-      if (response === "success") {
-        const updatedCompanies = companies.filter(c => c.id !== company.id);
-        setCompanies(updatedCompanies);
-        setConfirmDelete(null);
-
-        if (currentPage > 1 && updatedCompanies.length <= indexOfFirstItem) {
-          setCurrentPage(currentPage - 1);
-        }
-      }
-    } catch (error) {
-      console.error('Error in handleDeleteDetails:', error);
-    }
-  };
-
   const handleAddCompany = () => {
     const newCompany = {
       registration_number: '',
@@ -101,6 +79,13 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
     fetchCompanies();
   }, [nameSortOrder, typeIdSortOrder, registrationNumberSortOrder, currentPage]);
 
+  useEffect(() => {
+    if (current_user.role === "Admin" && companies.length === 1) {
+      handleViewDetails(companies[0]);
+    }
+  }, [companies]);
+  
+
   const fetchCompanyTypes = async () => {
     try {
       const types = await getCompanyTypes();
@@ -119,11 +104,12 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
       type_id: typeIdSortOrder !== 'None' ? typeIdSortOrder : null,
       registration_number: registrationNumberSortOrder !== 'None' ? registrationNumberSortOrder : null,
       search: searchTerm !== '' ? searchTerm : null,
+      user_role: current_user.role,
+      user_id: current_user.id
     };
 
     try {
       const data = await getCompanies([start, end], filterList);
-      console.log(data)
       if (data != null) {
         setTotalCompanies(data.total);
         setCompanies(data.data);
@@ -153,11 +139,13 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
             className="w-full max-w-xs"
           />
         </div>
-        <div className="ml-4">
-          <button onClick={handleAddCompany} className="default-button w-32">
-            Add Company
-          </button>
-        </div>
+        {(current_user.role === 'Superadmin' || current_user.role === 'Sales Rep') && (
+          <div className="ml-4">
+            <button onClick={handleAddCompany} className="default-button w-32">
+              Add Company
+            </button>
+          </div>
+        )}
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white table-fixed">
@@ -178,11 +166,6 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies })
                   <td className="w-1/4 px-4">{company.registration_number}</td>
                   <td className="text-center w-1/4 px-4">
                     <button onClick={() => handleViewDetails(company)} className="text-blue-600 hover:text-blue-800 mr-3">View</button>
-                    {confirmDelete === company.id ? (
-                      <button onClick={() => handleDeleteDetails(company, true)} className="text-red-600 hover:text-red-800">Confirm?</button>
-                    ) : (
-                      <button onClick={() => handleDeleteDetails(company)} className="text-red-600 hover:text-red-800">Delete</button>
-                    )}
                   </td>
                 </tr>
               ))

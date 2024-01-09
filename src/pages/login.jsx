@@ -22,7 +22,7 @@ export const Login = () => {
     if (res.status === 200) {
       localStorage.setItem("jwt", res.data.token)
       setLoggedIn(true)
-      dispatch(setUserState({"email": email, "role": res.data.role}))
+      dispatch(setUserState({"email": email, "role": res.data.role, "id": res.data.user_id}))
       getUserData(res.data.user_id, setUserDetailsState, dispatch)
       navigate("/")
     } else if (res.status === 401) {

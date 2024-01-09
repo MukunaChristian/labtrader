@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import SearchBar from '../searchBar/searchBar';
-import { getUsersInCompany, deleteUser, getUserRoles } from '../../api/company';
+import { getUsersInCompany, getUserRoles } from '../../api/company';
 
-export const CompanyMembers = ({ user_details, details, setActiveTab }) => {
+export const CompanyMembers = ({ user_details, details, setActiveTab, current_user,  }) => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [userRoles, setUserRoles] = useState([]);
-  const [confirmDelete, setConfirmDelete] = useState(null);
+  const [userInCompany, setUserInCompany] = useState(false);
 
   const [nameSortOrder, setNameSortOrder] = useState('None');
   const [surnameSortOrder, setSurnameSortOrder] = useState('None');
@@ -28,7 +28,7 @@ export const CompanyMembers = ({ user_details, details, setActiveTab }) => {
     } else {
       const currentRoleIndex = userRoles.findIndex(role => role.name === roleSortOrder);
       let nextIndex = currentRoleIndex + 1;
-  
+
       if (nextIndex >= userRoles.length) {
         setRoleSortOrder('None');
       } else {
@@ -56,7 +56,7 @@ export const CompanyMembers = ({ user_details, details, setActiveTab }) => {
   };
 
   useEffect(() => {
-    fetchUserRoles()
+    fetchUserRoles();
     fetchUsers();
   }, [nameSortOrder, surnameSortOrder, roleSortOrder, phoneNumberSortOrder]);
 
@@ -71,32 +71,17 @@ export const CompanyMembers = ({ user_details, details, setActiveTab }) => {
 
     try {
       const data = await getUsersInCompany(details.id, filterList);
-      console.log(data)
       if (data != null) {
         setUsers(data.data);
+        const isInCompany = data.data.some(user => user.id === current_user.id);
+        setUserInCompany(isInCompany);
       } else {
         setUsers([]);
+        setUserInCompany(false);
       }
     } catch (error) {
       console.error('Error in fetchUsers:', error);
       setUsers([]);
-    }
-  };
-
-  const handleDeleteMember = async (user_id, confirm = false) => {
-    if (!confirm) {
-      setConfirmDelete(user_id);
-      return;
-    }
-    try {
-      const response = await deleteUser(user_id);
-      if (response === "success") {
-        const updatedUsers = users.filter(user => user.id !== user_id);
-        setUsers(updatedUsers);
-        setConfirmDelete(null);
-      }
-    } catch (error) {
-      console.error('Error in handleDeleteMember:', error);
     }
   };
 
@@ -149,11 +134,6 @@ export const CompanyMembers = ({ user_details, details, setActiveTab }) => {
                   <td className="w-1/5 px-4">{user.user_details.phone}</td>
                   <td className="text-center w-1/5 px-4">
                     <button onClick={() => handleViewMember(user)} className="text-blue-600 hover:text-blue-800 mr-3">Edit</button>
-                    {confirmDelete === user.id ? (
-                      <button onClick={() => handleDeleteMember(user.id, true)} className="text-red-600 hover:text-red-800">Confirm?</button>
-                    ) : (
-                      <button onClick={() => handleDeleteMember(user.id)} className="text-red-600 hover:text-red-800">Delete</button>
-                    )}
                   </td>
                 </tr>
               ))
