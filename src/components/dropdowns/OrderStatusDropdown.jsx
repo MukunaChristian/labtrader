@@ -3,13 +3,14 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 // Euro, British Pound, Hong Kong Dollar, Indian Rupee, South African Rand
 const options = [
-  { id: "hold", name: "On Hold" },
+  { id: "hold", name: "On Hold" },  
   { id: "in_stock", name: "In Stock" },
   { id: "no_stock", name: "No Stock" },
   { id: "sold", name: "Sold" },
   { id: "ready_for_ship", name: "Ready to be shipped" },
-  { id: "Ready_for_collect", name: "Ready for collection" },
+  { id: "ready_for_collect", name: "Ready for collection" },
   { id: "collected", name: "Collected" },
+  { id: "delivered", name: "Delivered" },
   { id: "cancelled", name: "Cancelled" }
 ];
 
