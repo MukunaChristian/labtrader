@@ -6,8 +6,17 @@ import { useSelector } from 'react-redux';
 export const WarehouseDropdown = ({ warehouse, setWarehouse, disabled, supplier }) => {
   const ref = useRef(null);
   const warehouses = useSelector((state) => state.app.warehouses);
+  const [stateWarehouses, setStateWarehouses] = useState(warehouses);
   const [isOpen, setIsOpen] = useState(false);
   console.log(warehouses)
+
+  useEffect(() => {
+    // if supplier filter warehouses so that only warehouses from that supplier are shown
+    if (supplier) {
+      setStateWarehouses(warehouses.filter((w) => w.company_id === supplier.id));
+    }
+    
+  }, [supplier]);
   
 
   // Close dropdown when clicking outside
@@ -38,7 +47,7 @@ export const WarehouseDropdown = ({ warehouse, setWarehouse, disabled, supplier 
           border-0 cursor-pointer
           border-solid border-[1px]
           ${disabled ? 'border-grey text-grey' : 'border-black hover:outline-none hover:bg-text'}`}>
-        <p className='ml-4'>{warehouse ? warehouse.WarehouseName : "---"}</p>
+        <p className='ml-4'>{warehouse ? warehouse.name : "---"}</p>
         {!disabled && 
           <ChevronDownIcon className="w-4 h-4 mr-4 text-black" />
         }
@@ -46,9 +55,9 @@ export const WarehouseDropdown = ({ warehouse, setWarehouse, disabled, supplier 
       {isOpen && (
         <div className="absolute right-0 mt-3 w-72 bg-white border-solid border-[1.5px] rounded-sm">
           <div className="py-1">
-            {warehouses.map((option) => (
+            {stateWarehouses.length > 0 ? stateWarehouses.map((option) => (
               <a
-                key={option.id}
+                key={option.name}
                 href="#"
                 className="flex items-center text-black px-4 py-2 hover:bg-gray-200"
                 onClick={() => {
@@ -57,14 +66,26 @@ export const WarehouseDropdown = ({ warehouse, setWarehouse, disabled, supplier 
                 }}
               >
                 <div>
-                  <p>{option.WarehouseName}</p>
-                    {(option.WarehouseCode.slice(1) > 50) && 
+                  <p>{option.name}</p>
+                    {/* {(option.WarehouseCode.slice(1) > 50) && 
                       <p className="text-left text-xs text-red-500 self-start">Consignment</p>
-                    }
+                    } */}
                 </div>
                   
               </a>
-            ))}
+            )) : <div
+
+            className="flex items-center text-black px-4 py-2"
+
+          >
+            <div>
+              <p>No Warehouses</p>
+                {/* {(option.WarehouseCode.slice(1) > 50) && 
+                  <p className="text-left text-xs text-red-500 self-start">Consignment</p>
+                } */}
+            </div>
+              
+          </div>}
           </div>
         </div>
       )}

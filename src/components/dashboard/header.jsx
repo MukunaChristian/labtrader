@@ -36,6 +36,8 @@ export const Header = ({ title, results }) => {
     setReferenceElement(dummyElement);
   }, []);
 
+  
+
   const onDrop = useCallback(acceptedFiles => {
     console.log("File dropped");
     console.log(acceptedFiles[0])
@@ -144,7 +146,8 @@ export const Header = ({ title, results }) => {
             </div>
           </div>
           <div className="pt-5 flex justify-around ">
-            <WarehouseDropdown warehouse={selectedWarehouse} setWarehouse={setSelectedWarehouse} />
+            <SupplierDropdown supplier={selectedSupplier} setSupplier={setSelectedSupplier} />
+            <WarehouseDropdown warehouse={selectedWarehouse} setWarehouse={setSelectedWarehouse} disabled={!selectedSupplier} supplier={selectedSupplier}/>
           </div>
 
 
