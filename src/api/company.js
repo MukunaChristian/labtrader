@@ -72,6 +72,26 @@ export const getCompanyTypes = async () => {
     }
 };
 
+export const getSalesReps = async () => {
+    try {
+        const response = await axios.get('/get_sales_reps', {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        });
+
+        if (response.status === 200) {
+            return response.data.data;
+        } else {
+            throw new Error('Failed to fetch sales reps');
+        }
+    } catch (error) {
+        console.error('Error fetching sales reps:', error);
+        throw error;
+    }
+};
+
 export const getCompanyTypeInfo = async (company_id) => {
     try {
         const response = await axios.get(`/get_company_type_info?company_id=${company_id}`, {
