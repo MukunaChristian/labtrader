@@ -6,11 +6,14 @@ import { useDispatch } from 'react-redux';
 import { OrderStatusDropdown } from '../components/Dropdowns/OrderStatusDropdown';
 import { debounce } from 'lodash';
 import { ArrowDownOnSquareIcon } from '@heroicons/react/24/outline';
+import { StatusFilterDropdown } from '../components/Dropdowns/StatusFilterDropdown';
+
 
 export const Orders = () => {
   // const [companies, setCompanies] = useState([]);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [statusFilter, setStatusFilter] = useState({ id: "all", name: "All" });
   const [dataAmount, setDataAmount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const maxItems = 10;
@@ -24,11 +27,31 @@ export const Orders = () => {
 
   const handleSearch = debounce((e) => {
     getOrders(dispatch, setOrders, setLoading, setDataAmount, currentPage, {
+      status: statusFilter.id === 'all' ? '' : statusFilter.id,
       id: e,
       label_number: e,
       customer: e,
     });
   }, 500)
+
+  const handleStatusFilter = (statusId) => {
+    if (statusId === 'all') {
+      getOrders(dispatch, setOrders, setLoading, setDataAmount, currentPage, {});
+      return;
+    }
+
+    getOrders(dispatch, setOrders, setLoading, setDataAmount, currentPage, {
+      status: statusId,
+      id: searchTerm,
+      label_number: searchTerm,
+      customer: searchTerm,
+    });
+  }
+
+  const formatNumberWithSpaces = (number) => {
+    const formatter = new Intl.NumberFormat('en-US');
+    return formatter.format(number).replace(/,/g, ' ');
+  }
 
   const handleLabelNumberChange = (e, order) => {
     const newOrders = [...orders];
@@ -61,11 +84,14 @@ export const Orders = () => {
       <div className="border-solid border-[1px] border-black w-[90%] p-6 h-full bg-white">
         <div className="flex justify-between items-center mb-4">
           <h2 className="font-semibold text-lg text-black flex-1">Orders</h2>
-          <div className="ml-auto">
+          <div className='mr-4'>
+            <StatusFilterDropdown handleStatusFilter={handleStatusFilter} statusFilter={statusFilter} setStatusFilter={setStatusFilter} />
+          </div>
+          <div>
             <SearchBar
               searchTerm={searchTerm}
               onSearchChange={(e) => {setSearchTerm(e); handleSearch(e)}}
-              className="w-full max-w-xs"
+              className="w-full"
             />
           </div>
         </div>
@@ -89,14 +115,14 @@ export const Orders = () => {
                   <td className="w-1/5 px-4 border-solid border-[1px]">
                       <input 
                           type="text" 
-                          value={order.label_number ? order.label_number : "N/A"}
+                          value={order.label_number}
                           className="w-full text-ellipsis overflow-hidden bg-transparent border-none"
                           onChange={(e) => { handleLabelNumberChange(e, order) }}
                       />
                   </td>
                   <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{order.customer}</td>
                   <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{order.order_date}</td>
-                  <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{order.total_price} {order.currency}</td>
+                  <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{formatNumberWithSpaces(order.total_price)} USD</td>
                   <td className="text-center w-1/5 border-solid border-[1px]">
                     <OrderStatusDropdown toggleStatus={(status) => {updateStatus(order.id, status)}} statusId={order.status} />
                   </td>

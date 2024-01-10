@@ -63,11 +63,6 @@ export const MenuSideBar = ({ setLoggedIn }) => {
               <p className={`pt-[1px] ${location.pathname === "/" ? '' : 'text-white group-hover:text-black'}`}>Home</p>
             </div>
 
-            <div className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/portal" ? 'bg-white' : 'hover:bg-white'}`}>
-              <StarIcon className={`h-6 w-6 mx-4 ${location.pathname === "/portal" ? '' : 'text-white group-hover:text-black'}`} />
-              <p className={`pt-[1px] ${location.pathname === "/portal" ? '' : 'text-white group-hover:text-black'}`}>Portal</p>
-            </div>
-
             {user.role !== "Buyer" && (
               <div onClick={() => { navigate("/company") }} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/company" ? 'bg-white' : 'hover:bg-white'}`}>
                 <StarIcon className={`h-6 w-6 mx-4 ${location.pathname === "/company" ? '' : 'text-white group-hover:text-black'}`} />
