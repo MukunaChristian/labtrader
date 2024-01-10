@@ -79,7 +79,7 @@ export const CompanyDetails = ({ details, allCompanies, companyTypes, changesMad
 
   const validateFields = () => {
     let newErrors = {};
-    const requiredFields = ['name', 'registration_number', 'company_type', 'address_1', 'address_2', 'city', 'country', 'pincode', 'email', 'phone_number'];
+    const requiredFields = ['name', 'registration_number', 'vat_number', 'company_type', 'address_1', 'address_2', 'city', 'country', 'pincode', 'email', 'phone_number'];
     for (const field of requiredFields) {
       if (!editedDetails[field]) {
         newErrors[field] = 'This field is required.';
@@ -127,7 +127,7 @@ export const CompanyDetails = ({ details, allCompanies, companyTypes, changesMad
 
           <div className="flex-1 basis-1/3 mr-8">
             <p className="">Parent Company</p>
-            <select name="parent_company" onChange={(e) => handleChange(e.target.name, e.target.value, "companyDetails")} value={editedDetails.parent_company} className="default-input w-[50%] mt-1" style={{ borderColor: 'black' }} >
+            <select name="parent_company" onChange={(e) => handleChange(e.target.name, e.target.value, "companyDetails")} value={editedDetails.parent_company} className="default-input w-[50%] mt-1" style={{ borderColor: 'black' }} disabled={current_user.role !== 'Superadmin'}>
               <option value="">Select Parent Company</option>
               {allCompanies.filter(company => company.name !== details.name).map((company, index) => (
                 <option key={index} value={company.id}>{company.name}</option>
@@ -136,13 +136,19 @@ export const CompanyDetails = ({ details, allCompanies, companyTypes, changesMad
           </div>
         </div>
 
-        <div className="flex-1 basis-1/4 mr-8 mt-4">
+        <div className="flex-1 basis-1/3 mr-8 mt-4">
           <p className="">Registration Number</p>
           <input name="registration_number" onChange={(e) => handleChange(e.target.name, e.target.value, "companyDetails")} value={editedDetails.registration_number} className="default-input w-[50%] mt-1" type="text"  required/>
           {errors.registration_number && <p className="text-red-500">{errors.registration_number}</p>}
         </div>
 
-        <div className="flex-1 basis-1/4 mr-8 mt-4">
+        <div className="flex-1 basis-1/3 mr-8 mt-4">
+          <p className="">Vat Number</p>
+          <input name="vat_number" onChange={(e) => handleChange(e.target.name, e.target.value, "companyDetails")} value={editedDetails.vat_number} className="default-input w-[50%] mt-1" type="text"  required/>
+          {errors.vat_number && <p className="text-red-500">{errors.vat_number}</p>}
+        </div>
+
+        <div className="flex-1 basis-1/3 mr-8 mt-4">
           <p className="">Company Type</p>
           <select name="company_type" onChange={(e) => handleChange(e.target.name, e.target.value, "companyDetails")} value={editedDetails.company_type} className="default-input w-[50%] mt-1" style={{ borderColor: 'black' }} disabled={current_user.role == 'Sales Rep' || current_user.role == 'Admin'} required>
             <option value="">Select Company Type</option>
@@ -157,7 +163,7 @@ export const CompanyDetails = ({ details, allCompanies, companyTypes, changesMad
         </div>
 
         {editedDetails.company_type === 'Supplier' && (
-          <div className="flex-1 basis-1/4 mr-8 mt-4">
+          <div className="flex-1 basis-1/3 mr-8 mt-4">
             <p className="">System Mark-Up %</p>
             <input
               name="system_mark_up"
@@ -171,7 +177,7 @@ export const CompanyDetails = ({ details, allCompanies, companyTypes, changesMad
         )}
 
         {editedDetails.company_type === 'Reseller' && (
-          <div className="flex-1 basis-1/4 mr-8 mt-4">
+          <div className="flex-1 basis-1/3 mr-8 mt-4">
             <p className="">Commission %</p>
             <input
               name="commission"
@@ -185,7 +191,7 @@ export const CompanyDetails = ({ details, allCompanies, companyTypes, changesMad
         )}
 
         {editedDetails.company_type === 'Jeweller' && (
-          <div className="flex-1 basis-1/4 mr-8 mt-4">
+          <div className="flex-1 basis-1/3 mr-8 mt-4">
             <p className="">Sales Rep</p>
             <select
               name="sales_rep"
