@@ -52,7 +52,7 @@ export const Header = ({ title, results }) => {
     e.stopPropagation();
     console.log("File uploaded");
     setFileLoaded(null);
-    uploadStock(fileLoaded, selectedWarehouse, dispatch, setUploadingLoaderState, setUploadErrorsState);
+    uploadStock(fileLoaded, selectedWarehouse, selectedSupplier, dispatch, setUploadingLoaderState, setUploadErrorsState);
   }
 
   const cancelFileUpload = (e) => {

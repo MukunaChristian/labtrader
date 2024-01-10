@@ -88,13 +88,15 @@ export const getFilteredData = async (
 export const uploadStock = async (
   file,
   warehouse,
+  supplier,
   dispatch,
   setUploadLoading,
   setErrors
 ) => {
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("warehouse", warehouse.id);
+  formData.append("warehouse_id", warehouse.id);
+  formData.append("supplier_id", supplier.id);
   const response = await axios.post("/stock", formData, {
     headers: {
       "Content-Type": "multipart/form-data",

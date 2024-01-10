@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import SearchBar from '../components/searchBar/searchBar';
-import { getOrders, updateStatus, getOrderInvoice } from '../api/orders';
+import { getOrders, updateStatus, getOrderInvoice, updateLabel } from '../api/orders';
 import { Pagenation } from '../components/dataTable/Pagenation';
 import { useDispatch } from 'react-redux';
 import { OrderStatusDropdown } from '../components/Dropdowns/OrderStatusDropdown';
@@ -30,6 +30,13 @@ export const Orders = () => {
     });
   }, 500)
 
+  const handleLabelNumberChange = (e, order) => {
+    const newOrders = [...orders];
+    const orderIndex = newOrders.findIndex(o => o.id === order.id);
+    newOrders[orderIndex].label_number = e.target.value;
+    setOrders(newOrders);
+    updateLabel(order.id, e.target.value);
+  }
 
   useEffect(() => {
     fetchOrders();
@@ -43,27 +50,6 @@ export const Orders = () => {
   const downloadInvoice = async (orderId) => {
     try {
       const response = await getOrderInvoice(orderId)
-      return
-      // Create a Blob from the PDF Stream
-      const file = new Blob(
-        [response.data], 
-        { type: 'application/pdf' }
-      );
-  
-      // Build a URL from the file
-      const fileURL = URL.createObjectURL(file);
-  
-      // Create a temporary link element
-      const link = document.createElement('a');
-      link.href = fileURL;
-      link.setAttribute('download', `Order_${orderId}.pdf`); // or any other filename
-      document.body.appendChild(link);
-      
-      // Programmatically click the link to trigger the download
-      link.click();
-  
-      // Remove the link after downloading
-      link.parentNode.removeChild(link);
     } catch (error) {
       console.error('There was an error downloading the file:', error);
     }
@@ -100,7 +86,14 @@ export const Orders = () => {
               {orders.map(order => (
                 <tr key={order.id} className="h-14 text-sm">
                   <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{order.id}</td>
-                  <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{order.label_number ? order.label_number : "N/A"}</td>
+                  <td className="w-1/5 px-4 border-solid border-[1px]">
+                      <input 
+                          type="text" 
+                          value={order.label_number ? order.label_number : "N/A"}
+                          className="w-full text-ellipsis overflow-hidden bg-transparent border-none"
+                          onChange={(e) => { handleLabelNumberChange(e, order) }}
+                      />
+                  </td>
                   <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{order.customer}</td>
                   <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{order.order_date}</td>
                   <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{order.total_price} {order.currency}</td>
