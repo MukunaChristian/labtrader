@@ -16,9 +16,19 @@ export const getSupplimentalData = async (dispatch) => {
   console.log(response);
 
   if (response.status === 200) {
-    console.log(response.data.data);
+    console.log(response.data.suppliers);
     dispatch(setCurrencyRateState(response.data.rates));
-    dispatch(setWarehousesState(response.data.warehouses));
+    // load string object and set
+    dispatch(
+      setCompaniesState(
+        response.data.suppliers.map((supplierStr) => JSON.parse(supplierStr))
+      )
+    );
+    dispatch(
+      setWarehousesState(
+        response.data.warehouses.map((warehouseStr) => JSON.parse(warehouseStr))
+      )
+    );
   } else {
     console.error("Error fetching companies:", response.data.message);
   }

@@ -3,6 +3,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 // Euro, British Pound, Hong Kong Dollar, Indian Rupee, South African Rand
 const options = [
+  { id: "all", name: "All" },
   { id: "hold", name: "On Hold" },  
   { id: "in_stock", name: "In Stock" },
   { id: "no_stock", name: "No Stock" },
@@ -14,16 +15,15 @@ const options = [
   { id: "cancelled", name: "Cancelled" }
 ];
 
-export const OrderStatusDropdown = ({ toggleStatus, statusId }) => {
+export const StatusFilterDropdown = ({ handleStatusFilter, statusFilter, setStatusFilter }) => {
   const ref = useRef(null);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(options.find(option => option.id === statusId).name);
 
-  const handleSetDelivery = (option) => {
+  const handleSetStatus = (option) => {
     setIsOpen(false);
-    setSelectedOption(option.name);
-    toggleStatus(option.id);
+    setStatusFilter(option);
+    handleStatusFilter(option.id);
   };
 
   // Close dropdown when clicking outside
@@ -42,15 +42,15 @@ export const OrderStatusDropdown = ({ toggleStatus, statusId }) => {
   }, []);
 
   return (
-    <div ref={ref} className="relative w-[100%] h-[100%] rounded-md">
+    <div ref={ref} className="relative w-[10rem] h-10 rounded-md">
       <button onClick={() => setIsOpen(!isOpen)} 
         className="
           flex items-center justify-between
-          w-[100%] h-14
-          border-0 cursor-pointer px-4 py-2 
-          border-solid focus:border-[1px]
-          hover:outline-none hover:bg-text focus:border-black">
-        <p className='w-full'>{selectedOption}</p>
+          w-[100%] h-10
+          cursor-pointer px-4 py-2 rounded-md
+          border-solid border-[1px]
+          hover:outline-none hover:bg-text border-black">
+        <p className=''>{statusFilter.name}</p>
         <ChevronDownIcon className="w-4 h-4 text-black" />
       </button>
       {isOpen && (
@@ -62,7 +62,7 @@ export const OrderStatusDropdown = ({ toggleStatus, statusId }) => {
                 href="#"
                 className="flex items-center text-black px-4 py-2 hover:bg-gray-200"
                 onClick={() => {
-                  handleSetDelivery(option);
+                  handleSetStatus(option);
                 }}
               >
                 <div className='text-left '>

@@ -54,6 +54,25 @@ export const updateStatus = async (id, status) => {
   return response.data;
 };
 
+export const updateLabel = async (id, label) => {
+  const response = await axios.post(
+    "/update_order",
+    {
+      id: id,
+      label: label,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    }
+  );
+
+  console.log(response.data);
+  return response.data;
+};
+
 export const getOrderInvoice = async (id) => {
   const response = await axios.post(
     "/get_invoice",
@@ -68,6 +87,12 @@ export const getOrderInvoice = async (id) => {
     }
   );
 
-  console.log(response.data);
+  const url = window.URL.createObjectURL(new Blob([response.data]));
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", "invoice.pdf"); // or any other filename
+  document.body.appendChild(link);
+  link.click();
+
   return response.data;
 };
