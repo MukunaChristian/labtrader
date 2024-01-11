@@ -112,7 +112,7 @@ export const Company = () => {
   }, [viewedCompany?.id]);
 
   return (
-    <div className="flex pb-40 border-0 pt-24 mx-14">
+    <div className="flex border-0 pt-24 mx-14">
       <div>
         <p className="text-2xl font-bold mb-4">Companies</p>
         <p onClick={() => { setActiveTab("list") }} className={`${activeTab === "list" ? "default-tabs-active" : "default-tabs"}`}>Company List</p>
