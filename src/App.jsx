@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Dashboard } from './pages/Dashboard'
 import { Layout } from './pages/Layout';
 import { Login } from './pages/Login';
+import { ResetPassword } from './pages/ResetPassword';
 import { Details } from './pages/Details';
 import { Cart } from './pages/Cart';
 import { ForgotPassword } from './pages/ForgotPassword';
@@ -30,6 +31,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/details/:id" element={<Details />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/company" element={<Company />} />
             <Route path="/cart" element={<Cart />} />
