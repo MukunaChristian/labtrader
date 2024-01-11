@@ -16,6 +16,7 @@ export const Header = ({ title, results }) => {
   const [selectedSupplier, setSelectedSupplier] = useState(null);
   const [fileLoaded, setFileLoaded] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
+  const user = useSelector(state => state.user.user)
 
   const dispatch = useDispatch();
   const uploading = useSelector(state => state.app.uploadingLoader);
@@ -97,9 +98,15 @@ export const Header = ({ title, results }) => {
           <a href=".\Stock Upload Template.xlsx" download>
             <button className="default-button mr-4">Download Template</button>
           </a>
-          <button onClick={() => {
-            setUploadConfirm(true);
-          }} className="default-button">Upload Stock</button>
+          <button
+            disabled={user.role !== 'Superadmin'}
+            onClick={() => {
+              setUploadConfirm(true);
+            }}
+            className={user.role !== 'Superadmin' ? 'default-button-disabled' : 'default-button'}
+          >
+            Upload Stock
+          </button>
         </div>
       </div>
 

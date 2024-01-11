@@ -33,7 +33,7 @@ export const Login = () => {
 
   return (
     <div className="h-[100vh] overflow-hidden w-full flex justify-center bg-light-grey">
-      <div className="w-[20rem] h-[22rem] border-[1.5px] border-solid border-text my-auto p-5 shadow-lg">
+      <div className="w-[24rem] h-[20rem] border-[1.5px] border-solid border-text my-auto p-5 shadow-lg">
         <p className="text-3xl mb-2">Login</p>
         {invalidCredentials && <p className="text-red-400 text-sm">Invalid Password or Email</p>}
         <form className="mb-4" onSubmit={(e) => {handleLogin(e)}}>

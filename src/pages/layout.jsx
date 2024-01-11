@@ -25,7 +25,7 @@ export const Layout = ({ children }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  let isLogin = location.pathname === '/login' || location.pathname === '/forgot-password';
+  let isLogin = location.pathname === '/login' || location.pathname === '/forgot-password' || location.pathname === '/reset-password';
 
   const checkToken = () => {
     console.log("checking")
@@ -39,7 +39,7 @@ export const Layout = ({ children }) => {
     }
 
 
-    if (!(location.pathname === '/forgot-password')) {
+    if (!(location.pathname === '/forgot-password' || location.pathname === '/reset-password')) {
       console.log("validating")
       validateToken(token, navigate, setLoggedIn, setUserState, dispatch);
     }
