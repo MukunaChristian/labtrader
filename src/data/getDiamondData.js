@@ -101,7 +101,7 @@ function transformDBData(sourceObj) {
       },
     },
     total: total, // Remains static
-    video_link: sourceObj["videoLink"] || "", // Default to empty string if videoLink is undefined
+    video_link: sourceObj["video_link"] || "", // Default to empty string if videoLink is undefined
     crown_height: (sourceObj["crown_height"] || 0).toString(),
     crown_angle: (sourceObj["crown_angle"] || 0).toString(),
     pavilion_depth: (sourceObj["pavilion_depth"] || 0).toString(),
