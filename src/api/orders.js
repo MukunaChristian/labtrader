@@ -1,4 +1,5 @@
 import axios from "axios";
+import { set } from "lodash";
 
 export const getOrders = async (
   dispatch,
@@ -8,7 +9,7 @@ export const getOrders = async (
   page,
   filters
 ) => {
-  setLoading(true);
+  if (setLoading) setLoading(true);
   console.log("getting orders");
   console.log(filters);
   const response = await axios.post(
@@ -30,8 +31,8 @@ export const getOrders = async (
   let objectList = response.data.orders;
 
   setData(objectList);
-  setAmount(response.data.count);
-  setLoading(false);
+  if (setAmount) setAmount(response.data.count);
+  if (setLoading) setLoading(false);
   return objectList;
 };
 
@@ -84,8 +85,11 @@ export const getOrderInvoice = async (id) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
+      responseType: "blob",
     }
   );
+
+  console.log(response.data);
 
   const url = window.URL.createObjectURL(new Blob([response.data]));
   const link = document.createElement("a");
@@ -93,6 +97,24 @@ export const getOrderInvoice = async (id) => {
   link.setAttribute("download", "invoice.pdf"); // or any other filename
   document.body.appendChild(link);
   link.click();
+
+  return response.data;
+};
+
+export const getOrderInvoiceDetails = async (id) => {
+  const response = await axios.post(
+    "/get_invoice_details",
+    {
+      id: id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+      responseType: "blob",
+    }
+  );
 
   return response.data;
 };

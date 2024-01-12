@@ -13,6 +13,7 @@ import { Profile } from './pages/Profile';
 import { Company } from './pages/Company';
 import { Confirm } from './pages/Confirm';
 import { Orders } from './pages/Orders';
+import { OrdersDetails } from './pages/OrdersDetails';
 import store from './store';
 import axios from 'axios';
 
@@ -37,6 +38,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/confirm" element={<Confirm />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/orders/details/:id" element={<OrdersDetails />} />
           </Routes>
         </Layout>
       </BrowserRouter>

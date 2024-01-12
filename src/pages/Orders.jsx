@@ -6,7 +6,22 @@ import { useDispatch } from 'react-redux';
 import { OrderStatusDropdown } from '../components/Dropdowns/OrderStatusDropdown';
 import { debounce } from 'lodash';
 import { ArrowDownOnSquareIcon } from '@heroicons/react/24/outline';
+import { EyeIcon } from '@heroicons/react/24/outline';
 import { StatusFilterDropdown } from '../components/Dropdowns/StatusFilterDropdown';
+import { useNavigate } from 'react-router-dom';
+
+
+const options = [
+  { id: "hold", name: "On Hold" },  
+  { id: "in_stock", name: "In Stock" },
+  { id: "no_stock", name: "No Stock" },
+  { id: "sold", name: "Sold" },
+  { id: "ready_for_ship", name: "Ready to be shipped" },
+  { id: "ready_for_collect", name: "Ready for collection" },
+  { id: "collected", name: "Collected" },
+  { id: "delivered", name: "Delivered" },
+  { id: "cancelled", name: "Cancelled" }
+];
 
 
 export const Orders = () => {
@@ -17,6 +32,8 @@ export const Orders = () => {
   const [dataAmount, setDataAmount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const maxItems = 10;
+
+  const navigate = useNavigate();
 
   const maxPages = Math.ceil(dataAmount / maxItems);
   const lastPage = currentPage === maxPages;
@@ -113,23 +130,23 @@ export const Orders = () => {
                 <tr key={order.id} className="h-14 text-sm">
                   <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{order.id}</td>
                   <td className="w-1/5 px-4 border-solid border-[1px]">
-                      <input 
-                          type="text" 
-                          value={order.label_number}
-                          className="w-full text-ellipsis overflow-hidden bg-transparent border-none"
-                          onChange={(e) => { handleLabelNumberChange(e, order) }}
-                      />
+                    {order.label_number}
                   </td>
                   <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{order.customer}</td>
                   <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{order.order_date}</td>
                   <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{formatNumberWithSpaces(order.total_price)} USD</td>
                   <td className="text-center w-1/5 border-solid border-[1px]">
-                    <OrderStatusDropdown toggleStatus={(status) => {updateStatus(order.id, status)}} statusId={order.status} />
+                    {options.find(o => o.id === order.status).name}
                   </td>
-                  <td className="w-1/5 px-4 border-solid border-[1px]">
+                  <td className="flex border-0 justify-around items-center h-14">
                     <a onClick={() => {downloadInvoice(order.id)}} className='flex justify-center'>
                       <div className="w-8 h-8 bg-light-grey hover:bg-grey flex items-center justify-center rounded-lg border-solid border-[1px] ">
                         <ArrowDownOnSquareIcon className="w-6 h-6 text-black" />
+                      </div>
+                    </a>
+                    <a onClick={() => {navigate("/orders/details/" + order.id)}} className='flex justify-center'>
+                      <div className="w-8 h-8 bg-light-grey hover:bg-grey flex items-center justify-center rounded-lg border-solid border-[1px] ">
+                        <EyeIcon className="w-6 h-6 text-black" />
                       </div>
                     </a>
                   </td>

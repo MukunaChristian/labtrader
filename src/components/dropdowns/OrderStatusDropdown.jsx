@@ -18,13 +18,20 @@ export const OrderStatusDropdown = ({ toggleStatus, statusId }) => {
   const ref = useRef(null);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(options.find(option => option.id === statusId).name);
+  const [selectedOption, setSelectedOption] = useState('');
 
   const handleSetDelivery = (option) => {
     setIsOpen(false);
     setSelectedOption(option.name);
     toggleStatus(option.id);
   };
+
+  useEffect(() => {
+    if ( statusId ) {
+      setSelectedOption(options.find(option => option.id === statusId).name);
+    
+    }
+  }, [statusId])
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -46,9 +53,9 @@ export const OrderStatusDropdown = ({ toggleStatus, statusId }) => {
       <button onClick={() => setIsOpen(!isOpen)} 
         className="
           flex items-center justify-between
-          w-[100%] h-14
-          border-0 cursor-pointer px-4 py-2 
-          border-solid focus:border-[1px]
+          w-[100%] border-solid border-text border-[1px] rounded-md
+          cursor-pointer px-4 py-2 
+          focus:border-[1px]
           hover:outline-none hover:bg-text focus:border-black">
         <p className='w-full'>{selectedOption}</p>
         <ChevronDownIcon className="w-4 h-4 text-black" />
