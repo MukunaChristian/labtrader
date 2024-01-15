@@ -26,6 +26,8 @@ export const CurrencyDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(currency);
 
+  console.log(rates)
+
   const { setCurrency } = useApp();
 
   const handleSetCurrency = (currency) => {

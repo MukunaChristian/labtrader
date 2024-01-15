@@ -18,13 +18,20 @@ export const OrderStatusDropdown = ({ toggleStatus, statusId }) => {
   const ref = useRef(null);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(options.find(option => option.id === statusId).name);
+  const [selectedOption, setSelectedOption] = useState('');
 
   const handleSetDelivery = (option) => {
     setIsOpen(false);
     setSelectedOption(option.name);
     toggleStatus(option.id);
   };
+
+  useEffect(() => {
+    if ( statusId ) {
+      setSelectedOption(options.find(option => option.id === statusId).name);
+    
+    }
+  }, [statusId])
 
   // Close dropdown when clicking outside
   useEffect(() => {

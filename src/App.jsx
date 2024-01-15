@@ -2,9 +2,9 @@ import './App.css'
 import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { Dashboard } from './pages/Dashboard'
-import { Layout } from './pages/Layout';
-import { Login } from './pages/Login';
+import { Dashboard } from './pages/dashboard'
+import { Layout } from './pages/layout';
+import { Login } from './pages/login';
 import { ResetPassword } from './pages/ResetPassword';
 import { Details } from './pages/Details';
 import { Cart } from './pages/Cart';
@@ -14,6 +14,7 @@ import { Company } from './pages/Company';
 import { Report } from './pages/Reports';
 import { Confirm } from './pages/Confirm';
 import { Orders } from './pages/Orders';
+import { OrdersDetails } from './pages/OrdersDetails';
 import store from './store';
 import axios from 'axios';
 
@@ -39,6 +40,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/confirm" element={<Confirm />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/orders/details/:id" element={<OrdersDetails />} />
           </Routes>
         </Layout>
       </BrowserRouter>
