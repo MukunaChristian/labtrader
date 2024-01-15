@@ -11,6 +11,7 @@ import { Cart } from './pages/Cart';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { Profile } from './pages/Profile';
 import { Company } from './pages/Company';
+import { Report } from './pages/Reports';
 import { Confirm } from './pages/Confirm';
 import { Orders } from './pages/Orders';
 import store from './store';
@@ -34,6 +35,7 @@ function App() {
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/company" element={<Company />} />
+            <Route path="/reports" element={<Report />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/confirm" element={<Confirm />} />
             <Route path="/orders" element={<Orders />} />
