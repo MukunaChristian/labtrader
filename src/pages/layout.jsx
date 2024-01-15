@@ -106,7 +106,7 @@ export const Layout = ({ children }) => {
 
         </div>
       }
-      {/* <div className='h-full' style={{ backgroundColor: 'rgb(100 100 100)' }}></div> */}
+      {/* <div className='h-full' style={{ backgroundColor: 'rgb(220 220 220)' }}> */}
       <div className='h-full bg-light-grey'>
         {children}
       </div>

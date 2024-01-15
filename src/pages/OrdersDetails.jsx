@@ -84,8 +84,8 @@ export const OrdersDetails = () => {
 
 
   return (
-    <div style={{ backgroundColor: 'rgb(220 220 220)' }} className="pb-16 border-0 pt-24 px-14 bg-light-grey flex justify-center h-full overflow-auto">
-      <div className="w-[595px]">
+    <div className="pb-16 border-0 pt-24 px-14 flex justify-center overflow-auto h-full" style={{ backgroundColor: 'rgb(220 220 220)' }}>
+      <div className="w-[595px] ">
         <OrdersDetailsHeader labelNumber={labelNumber.current} status={status.current} onSave={onSave} handleDownload={handleDownload} />
         <div className="w-full border-black bg-white">
           {(html && pdfLoaded) ? (

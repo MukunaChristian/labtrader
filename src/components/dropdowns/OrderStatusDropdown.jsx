@@ -56,9 +56,9 @@ export const OrderStatusDropdown = ({ toggleStatus, statusId }) => {
           w-[100%] border-solid border-text border-[1px] rounded-md
           cursor-pointer px-4 py-2 
           focus:border-[1px]
-          hover:outline-none hover:bg-text focus:border-black">
+          hover:outline-none focus:border-black bg-accent text-white">
         <p className='w-full'>{selectedOption}</p>
-        <ChevronDownIcon className="w-4 h-4 text-black" />
+        <ChevronDownIcon className="w-4 h-4 text-white" />
       </button>
       {isOpen && (
         <div className="absolute right-0 z-10 w-[100%] bg-white border-solid border-[1px] border-t-0 border-black rounded-sm">
