@@ -18,7 +18,7 @@ export const OrdersDetails = () => {
   
   const pdfCalled = useRef(false);
   const pdfLoaded = useRef(false);
-  const html = useRef('');
+  const [html, setHtml] = useState('');
   const dispatch = useDispatch();
 
   const labelNumber = useRef('');
@@ -29,7 +29,7 @@ export const OrdersDetails = () => {
     if (pdfCalled.current) return;
     getOrderInvoiceDetails(orderID).then(resp => {
       const pdfUrl = URL.createObjectURL(resp);
-      html.current = pdfUrl;
+      setHtml(pdfUrl);
       console.log(resp);
     });
 
@@ -74,7 +74,7 @@ export const OrdersDetails = () => {
 
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = html.current;
+    link.href = html;
     link.download = 'invoice.pdf';
     link.click();
   }
@@ -85,15 +85,15 @@ export const OrdersDetails = () => {
       <div className="w-[595px] ">
         <OrdersDetailsHeader labelNumber={labelNumber.current} status={status.current} onSave={onSave} />
         <div className="w-full border-black bg-white">
-          {(html.current && pdfLoaded) ? (
-             <PDFViewer file={html.current} />
+          {(html && pdfLoaded) ? (
+             <PDFViewer file={html} />
           ) : (
             <div className="flex justify-center mt-24 w-full bg-light-grey">
               <p className="border-black bg-white p-2 rounded border-solid border-text border-[1px]">Generating pdf...</p>
             </div>
           )}
         </div>
-        {(html.current && pdfLoaded) &&
+        {(html && pdfLoaded) &&
           <div className="flex justify-center mt-4">
             <button onClick={handleDownload} className={`border-solid border-[1px] border-text rounded-md px-4 py-1 text-sm ml-2 hover:bg-light-grey`}>Download</button>
           </div>
