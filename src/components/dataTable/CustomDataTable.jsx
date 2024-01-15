@@ -38,7 +38,7 @@ export const CustomDataTable = ({ currentRows }) => {
       headerName: 'Image',
       width: 80,
       renderCell: (params) => 
-        <img className="w-20 h-20 object-contain border-solid border-[1px] bg-white rounded-full" src={params.value} />, // renderCell will render the component
+        <img className="w-20 h-20 object-contain bg-black" src={params.value} />, // renderCell will render the component
     },
     {
       field: 'shape',
@@ -185,16 +185,19 @@ export const CustomDataTable = ({ currentRows }) => {
 
   return (
     <div>
-      <div className='w-full my-1'>
-        <Pagenation currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} />
-      </div>
-      {loading ? <div className="flex justify-center items-center h-96"><p className="border-solid border-[1.5px] p-2 rounded-lg animate-pulse bg-light-grey">Loading...</p></div> :
+      {loading ? <div className="flex justify-center items-center h-96"><p className="border-solid border-[1.5px] p-2 rounded-lg animate-pulse bg-black">Loading...</p></div> :
       <table className="bg-secondary table-auto border-collapse w-full pb-4">
         <thead>
           <tr>
             {columns.map((column, index) => (
-              <th key={index} width={column.width} className="px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] border-dark-grey">{column.headerName}</th>
+              <th 
+                key={index} 
+                width={column.headerName === "Image" ? "8%" : "15%"}
+                className={`px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] bg-black`}>
+                {column.headerName}
+              </th>
             ))}
+            <th key={7} width={'2%'} className="px-3 py-3 text-md text-left leading-4 text-text bg-black border-light-grey"></th>
           </tr>
         </thead>
         <tbody className='text-sm'>
@@ -203,6 +206,9 @@ export const CustomDataTable = ({ currentRows }) => {
           ))}
         </tbody>
       </table>}
+      <div className='w-full my-1 flex justify-center'>
+        <Pagenation currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} />
+      </div>
       
       
       

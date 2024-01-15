@@ -159,9 +159,10 @@ export const Report = () => {
   return (
     <div className="flex border-0 pt-24">
       <div className="flex w-full justify-items-center grid grid-cols-1 mt-12">
-        <div className="profile-block bg-white">
+        <div className="profile-block" style={{ backgroundColor: 'rgb(220 220 220)' }}>
           <div className="flex justify-between items-end mb-4">
             <div className={`flex-1 ${showSalesRep ? 'basis-1/5' : 'basis-1/4'} mr-8`}>
+              <p className="text-lg">Select Report:</p>
               <select name="reportType" value={selectedOptions.reportType} onChange={handleSelectChange} className="default-input w-[50%] mt-1" style={{ borderColor: 'black' }}>
                 <option value="" hidden>Select Report</option>
                 <option value="sales_commission">Sales Commission Report</option>
@@ -180,6 +181,7 @@ export const Report = () => {
             </div>
 
             <div className={`flex-1 ${showSalesRep ? 'basis-1/5' : 'basis-1/4'} mr-8`}>
+              <p className="text-lg">Select Reseller:</p>
               <select name="reseller" value={selectedOptions.reseller} onChange={handleSelectChange} className="default-input w-[50%] mt-1" style={{ borderColor: 'black' }}>
                 <option value="" hidden>Select Reseller</option>
                 {resellers.length > 0 ? (
@@ -192,6 +194,7 @@ export const Report = () => {
 
             {showSalesRep && (
               <div className="flex-1 basis-1/5 mr-8">
+                <p className="text-lg">Select Sales Rep:</p>
                 <select
                   name="salesRep"
                   value={selectedOptions.salesRep}
@@ -213,7 +216,7 @@ export const Report = () => {
           <div className="flex w-full justify-end">
             <button
               onClick={() => generateReport("HTML")}
-              className="default-button w-32 mr-8"
+              className={`default-button-reports w-32 mr-8 ${isGenerateButtonEnabled ? 'bg-accent text-white cursor-default' : ''}`}
               disabled={!isGenerateButtonEnabled}
               style={{ cursor: isGenerateButtonEnabled ? 'pointer' : 'default' }}>
               Generate
@@ -223,13 +226,13 @@ export const Report = () => {
         <br></br>
         {reportHtml ? (
           <>
-            <div className="profile-block bg-white">
+            <div className="profile-block" style={{ backgroundColor: 'rgb(220 220 220)' }}>
               <div className="flex w-full justify-end">
-                <img src="src/assets/download-pdf.png" alt="Download PDF" className="max-w-[30px] mr-2" onClick={() => generateReport("PDF")} />
-                <img src="src/assets/download-csv.png" alt="Download CSV" className="max-w-[50px] mr-2" onClick={() => generateReport("CSV")} />
+                <img src="src/assets/download-pdf.svg" alt="Download PDF" className="max-w-[30px] mr-2" onClick={() => generateReport("PDF")} />
+                <img src="src/assets/download-csv.svg" alt="Download CSV" className="max-w-[30px] mr-2" onClick={() => generateReport("CSV")} />
               </div>
               <br></br>
-              <div dangerouslySetInnerHTML={{ __html: reportHtml }} />
+              <div className="bg-white" dangerouslySetInnerHTML={{ __html: reportHtml }}/>
             </div>
           </>
         ) : (

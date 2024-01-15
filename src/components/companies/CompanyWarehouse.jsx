@@ -84,7 +84,7 @@ export const CompanyWarehouse = ({ warehouse_details, details, setActiveTab }) =
   };
 
   return (
-    <div className="profile-block">
+    <div className="profile-block" style={{ backgroundColor: 'rgb(220 220 220)' }}>
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-semibold text-lg text-black flex-1">{details.name}</h2>
         <div className="ml-auto">
@@ -96,34 +96,34 @@ export const CompanyWarehouse = ({ warehouse_details, details, setActiveTab }) =
           />
         </div>
         <div className="ml-4">
-          <button onClick={handleAddWarehouse} className="default-button w-32">
+          <button onClick={handleAddWarehouse} className="default-button w-32 bg-accent text-white">
             Add Warehouse
           </button>
         </div>
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white table-fixed">
+        <table className="min-w-full table-fixed">
           <thead>
             <tr className="w-full h-16 border-gray-300 border-b py-8">
-              <th className="text-left w-1/4 px-4 cursor-pointer" onClick={toggleNameSortOrder}>Name {nameSortOrder !== 'None' && `(${nameSortOrder})`}</th>
-              <th className="text-left w-1/4 px-4 cursor-pointer" onClick={toggleLocationSortOrder}>Location {locationSortOrder !== 'None' && `(${locationSortOrder})`}</th>
-              <th className="text-left w-1/4 px-4 cursor-pointer" onClick={toggleConsignmentStockSortOrder}>Consignment Stock {consignmentStockSortOrder !== 'None' && `(${consignmentStockSortOrder})`}</th>
-              <th className="text-center w-1/4 px-4">Actions</th>
+              <th className="text-left w-1/4 px-4 cursor-pointer bg-white border-none" onClick={toggleNameSortOrder}>Name {nameSortOrder !== 'None' && `(${nameSortOrder})`}</th>
+              <th className="text-left w-1/4 px-4 cursor-pointer bg-white border-none" onClick={toggleLocationSortOrder}>Location {locationSortOrder !== 'None' && `(${locationSortOrder})`}</th>
+              <th className="text-left w-1/4 px-4 cursor-pointer bg-white border-none" onClick={toggleConsignmentStockSortOrder}>Consignment Stock {consignmentStockSortOrder !== 'None' && `(${consignmentStockSortOrder})`}</th>
+              <th className="text-center w-1/4 px-4 bg-white border-none">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-300">
             {warehouses.length > 0 ? (
               warehouses.map(warehouse => (
                 <tr key={warehouse.id} className="h-14">
-                  <td className="w-1/4 px-4">{warehouse.name}</td>
-                  <td className="w-1/4 px-4">{warehouse.country}</td>
-                  <td className="w-1/4 px-4">{warehouse.consignment_stock ? 'Yes' : 'No'}</td>
-                  <td className="text-center w-1/4 px-4">
-                    <button onClick={() => handleViewWarehouseDetails(warehouse)} className="text-blue-600 hover:text-blue-800 mr-3">Edit</button>
+                  <td className="w-1/4 px-4 bg-white border-none">{warehouse.name}</td>
+                  <td className="w-1/4 px-4 bg-white border-none">{warehouse.country}</td>
+                  <td className="w-1/4 px-4 bg-white border-none">{warehouse.consignment_stock ? 'Yes' : 'No'}</td>
+                  <td className="text-center w-1/4 px-4 bg-white border-none">
+                    <a onClick={() => handleViewWarehouseDetails(warehouse)} className="text-blue-600 hover:text-blue-800 mr-3 text-base">Edit</a>
                     {confirmDelete === warehouse.id ? (
-                      <button onClick={() => handleDeleteWarehouse(warehouse.id, true)} className="text-red-600 hover:text-red-800">Confirm?</button>
+                      <a onClick={() => handleDeleteWarehouse(warehouse.id, true)} className="text-red-600 hover:text-red-800 text-base">Confirm?</a>
                     ) : (
-                      <button onClick={() => handleDeleteWarehouse(warehouse.id)} className="text-red-600 hover:text-red-800">Delete</button>
+                      <a onClick={() => handleDeleteWarehouse(warehouse.id)} className="text-red-600 hover:text-red-800 text-base">Delete</a>
                     )}
                   </td>
                 </tr>

@@ -39,7 +39,7 @@ export const Login = () => {
         <form className="mb-4" onSubmit={(e) => {handleLogin(e)}}>
           <input name="email" className="default-input mt-5" type="text" placeholder="Email" />
           <input name="password" className="default-input mt-5" type="password" placeholder="Password" />
-          <button type="submit" className="w-full h-10 bg-black text-white rounded-md mt-5">Log in</button>
+          <button type="submit" className="w-full h-10 bg-black text-white rounded-md mt-5 login-button">Log in</button>
         </form>
         <div className="w-full flex justify-end">
           <a href="/forgot-password" className="text-delete-red text-sm text-right hover:text-light-red">Forgot Password?</a>

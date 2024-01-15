@@ -115,26 +115,26 @@ export const Company = () => {
     <div className="flex border-0 pt-24 mx-14">
       <div>
         <p className="text-2xl font-bold mb-4">Companies</p>
-        <p onClick={() => { setActiveTab("list") }} className={`${activeTab === "list" ? "default-tabs-active" : "default-tabs"}`}>Company List</p>
+        <p onClick={() => { setActiveTab("list") }} className={`${activeTab === "list" ? "default-tabs-active br-6" : "default-tabs"}`}>Company List</p>
       </div>
 
       <div className="flex w-full justify-items-center grid grid-cols-1 mt-12 ml-12">
         <div className={`tabs flex w-[80%] ${activeTab !== 'list' ? 'block' : 'hidden'}`}>
           <label
-            className={`tab cursor-pointer px-5 py-2 mr-1 inline-block text-black rounded-t-md ${activeTab === 'details' ? 'bg-gray-800 text-white shadow-lg' : ''}`}
+            className={`tab cursor-pointer px-5 py-2 mr-1 inline-block text-black rounded-t-md ${activeTab === 'details' ? 'bg-black text-white shadow-lg' : ''}`}
             onClick={() => { setActiveTab("details") }}>
             Details
           </label>
           {viewedCompany && viewedCompany.id && (
             <label
-              className={`tab cursor-pointer px-5 py-2 mr-1 inline-block text-black rounded-t-md ${activeTab === 'members' ? 'bg-gray-800 text-white shadow-lg' : ''}`}
+              className={`tab cursor-pointer px-5 py-2 mr-1 inline-block text-black rounded-t-md ${activeTab === 'members' ? 'bg-black text-white shadow-lg' : ''}`}
               onClick={() => { setActiveTab("members") }}>
               Members
             </label>
           )}
           {viewedCompany && viewedCompany.type_id === 1 && (
             <label
-              className={`tab cursor-pointer px-5 py-2 mr-1 inline-block text-black rounded-t-md ${activeTab === 'warehouse' ? 'bg-gray-800 text-white shadow-lg' : ''}`}
+              className={`tab cursor-pointer px-5 py-2 mr-1 inline-block text-black rounded-t-md ${activeTab === 'warehouse' ? 'bg-black text-white shadow-lg' : ''}`}
               onClick={() => { setActiveTab("warehouse") }}>
               Warehouses
             </label>
