@@ -11,10 +11,10 @@ import { useApp } from '../../hooks/useApp';
 
 // Euro, British Pound, Hong Kong Dollar, Indian Rupee, South African Rand
 const options = [
-  { id: 1, name: 'Euro', symbol: '€', imgSrc: euro, code: 'EUR' },
-  { id: 2, name: 'British Pound', symbol: '£', imgSrc: pound, code: 'GBP' },
-  { id: 3, name: 'Hong Kong Dollar', symbol: 'HK$', imgSrc: hongkong, code: 'HKD' },
-  { id: 4, name: 'Indian Rupee', symbol: '₹', imgSrc: indian, code: 'INR' },
+  // { id: 1, name: 'Euro', symbol: '€', imgSrc: euro, code: 'EUR' },
+  // { id: 2, name: 'British Pound', symbol: '£', imgSrc: pound, code: 'GBP' },
+  // { id: 3, name: 'Hong Kong Dollar', symbol: 'HK$', imgSrc: hongkong, code: 'HKD' },
+  // { id: 4, name: 'Indian Rupee', symbol: '₹', imgSrc: indian, code: 'INR' },
   { id: 5, name: 'South African Rand', symbol: 'R', imgSrc: rand, code: 'ZAR' }
 ];
 
@@ -57,11 +57,13 @@ export const CurrencyDropdown = () => {
           w-full 
           h-8 rounded-lg
           border-0 cursor-pointer
-          border-black border-solid border-[1px]
+          bg-black
+          text-white
+          border-white border-solid border-[2px]
           hover:outline-none hover:bg-text">
         <p className=''>{selectedOption.symbol}</p>
         <p className='w-12'>{selectedOption.code}</p>
-        <ChevronDownIcon className="w-4 h-4 ml-1 text-black" />
+        <ChevronDownIcon className="w-5 h-5 ml-1 text-white" />
       </button>
       {isOpen && (
         <div className="absolute right-0 mt-2 w-72 bg-white border-solid border-[1.5px] rounded-sm">

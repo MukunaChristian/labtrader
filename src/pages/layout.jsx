@@ -5,7 +5,7 @@ import { useApp } from "../hooks/useApp";
 import { useSelector } from "react-redux";
 import { validateToken } from "../api/login";
 import { useEffect } from 'react';
-import { default as Logo } from '../assets/teomim-logo.png';
+import { default as Logo } from '../assets/teomim-logo.svg';
 import { MenuSideBar } from '../components/MenuSideBar/MenuSideBar';
 import { useDispatch } from 'react-redux';
 import { setUserState, setUserDetailsState } from '../reducers/UserSlice';
@@ -78,16 +78,16 @@ export const Layout = ({ children }) => {
     (loggedIn || isLogin) ?
     <div className='relative w-[100%] h-full '>
       {isLogin ? null : 
-        <div className='w-full z-30 h-16 bg-white flex items-center justify-end px-5 fixed border-solid border-0 border-b-[1px]'>
+        <div className='w-full z-30 h-16 bg-black flex items-center justify-end px-5 fixed border-solid border-0 border-b-[1px]'>
           <div className='h-24 flex justify-start items-center'>
             <MenuSideBar setLoggedIn={setLoggedIn} />
           </div>
 
-          <div className='flex absolute left-[50%] -translate-x-1/2'>
+          <div className='flex absolute left-[50%] -translate-x-1/2 cursor-pointer' onClick={() => navigate("/")}>
             <div className="rounded-full bg-black">
                 <img className='h-8 m-2 bg-black' src={Logo} />
             </div>
-            <p className="font-bold text-lg pl-2 flex items-center">Teomim</p>
+            <p className="font-bold text-lg pl-2 flex items-center text-white">Teomim</p>
           </div>
 
 
@@ -95,8 +95,8 @@ export const Layout = ({ children }) => {
             <div className='h-full flex items-center ml-auto mr-6'>
               <CurrencyDropdown />
               {/* <LanguageDropdown />  */}
-              <div onClick={() => navigate("/cart")} className='relative h-10 w-10 flex items-center justify-center ml-4 border-solid border-[1px] border-black rounded-full hover:bg-grey cursor-pointer'>
-                <ShoppingCartIcon className='relative h-5 w-5 text-black' />
+              <div onClick={() => navigate("/cart")} className='relative h-10 w-10 flex items-center justify-center ml-4 border-solid border-[2px] border-white rounded-full hover:bg-grey cursor-pointer'>
+                <ShoppingCartIcon className='relative h-6 w-6 text-white' />
                 {/* {diamonds_in_cart.length > 0 && 
                   <p className='abolute bg-black rounded-full bottom-0 right-0 text-white text-xs w-4 h-4'>{diamonds_in_cart.length}</p>
                 } */}
@@ -106,6 +106,7 @@ export const Layout = ({ children }) => {
 
         </div>
       }
+      {/* <div className='h-full' style={{ backgroundColor: 'rgb(100 100 100)' }}></div> */}
       <div className='h-full bg-light-grey'>
         {children}
       </div>
