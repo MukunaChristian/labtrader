@@ -5,11 +5,11 @@ const appSlice = createSlice({
   name: "app",
   initialState: {
     currency: { 
-      id: 1, 
-      name: 'Euro', 
-      symbol: '€', 
-      imgSrc: 'src/assets/euro.png', 
-      code: 'EUR' 
+      id: 5, 
+      name: 'South African Rand', 
+      symbol: 'R', 
+      imgSrc: 'src/assets/rand.png',
+      code: 'ZAR' 
     },
     language: "English",
     filters: {
