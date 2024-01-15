@@ -123,12 +123,7 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies, c
   };
 
   return (
-    <div className="profile-block">
-      <Pagenation
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        lastPage={lastPage}
-      />
+    <div className="profile-block" style={{ backgroundColor: 'rgb(220 220 220)' }}>
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-semibold text-lg text-black flex-1">Company List</h2>
         <div className="ml-auto">
@@ -141,31 +136,31 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies, c
         </div>
         {(current_user.role === 'Superadmin' || current_user.role === 'Sales Rep') && (
           <div className="ml-4">
-            <button onClick={handleAddCompany} className="default-button w-32">
+            <button onClick={handleAddCompany} className="default-button w-32 bg-accent text-white">
               Add Company
             </button>
           </div>
         )}
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white table-fixed">
+        <table className="min-w-full table-fixed">
           <thead>
-            <tr className="w-full h-16 border-gray-300 border-b py-8">
-              <th className="text-left w-1/4 px-4 cursor-pointer" onClick={toggleNameSortOrder}>Name {nameSortOrder !== 'None' && `(${nameSortOrder})`}</th>
-              <th className="text-left w-1/4 px-4 cursor-pointer" onClick={toggleTypeIdSortOrder}>Type {typeIdSortOrder !== 'None' && `(${companyTypes.find(type => type.id.toString() === typeIdSortOrder)?.name || 'Unknown'})`}</th>
-              <th className="text-left w-1/4 px-4 cursor-pointer" onClick={toggleRegistrationNumberSortOrder}>Registration Number {registrationNumberSortOrder !== 'None' && `(${registrationNumberSortOrder})`}</th>
-              <th className="text-center w-1/4 px-4">Actions</th>
+            <tr className="w-full h-16 py-8">
+              <th className="text-left w-1/4 px-4 cursor-pointer bg-white border-none" onClick={toggleNameSortOrder}>Name {nameSortOrder !== 'None' && `(${nameSortOrder})`}</th>
+              <th className="text-left w-1/4 px-4 cursor-pointer bg-white border-none" onClick={toggleTypeIdSortOrder}>Type {typeIdSortOrder !== 'None' && `(${companyTypes.find(type => type.id.toString() === typeIdSortOrder)?.name || 'Unknown'})`}</th>
+              <th className="text-left w-1/4 px-4 cursor-pointer bg-white border-none" onClick={toggleRegistrationNumberSortOrder}>Registration Number {registrationNumberSortOrder !== 'None' && `(${registrationNumberSortOrder})`}</th>
+              <th className="text-center w-1/4 px-4 bg-white border-none">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-300">
             {currentCompanies.length > 0 ? (
               currentCompanies.map(company => (
                 <tr key={company.id} className="h-14">
-                  <td className="w-1/4 px-4">{company.name}</td>
-                  <td className="w-1/4 px-4">{company.company_type}</td>
-                  <td className="w-1/4 px-4">{company.registration_number}</td>
-                  <td className="text-center w-1/4 px-4">
-                    <button onClick={() => handleViewDetails(company)} className="text-blue-600 hover:text-blue-800 mr-3">View</button>
+                  <td className="w-1/4 px-4 bg-white border-none">{company.name}</td>
+                  <td className="w-1/4 px-4 bg-white border-none">{company.company_type}</td>
+                  <td className="w-1/4 px-4 bg-white border-none">{company.registration_number}</td>
+                  <td className="text-center w-1/4 px-4 bg-white border-none">
+                    <a onClick={() => handleViewDetails(company)} className="text-blue-600 hover:text-blue-800 mr-3 text-base ">View</a>
                   </td>
                 </tr>
               ))
@@ -178,6 +173,13 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies, c
             )}
           </tbody>
         </table>
+      </div>
+      <div className='grid justify-center pt-6'>
+        <Pagenation
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          lastPage={lastPage}
+        />
       </div>
     </div>
   )

@@ -5,13 +5,13 @@ import asscherIcon from "../assets/diamond-shapes/asscher.png";
 import emeraldIcon from "../assets/diamond-shapes/emerald.png";
 import heartIcon from "../assets/diamond-shapes/heart.png";
 import marquiseIcon from "../assets/diamond-shapes/marquise.png";
-import ovalIcon from "../assets/diamond-shapes/oval.jpg";
+import ovalIcon from "../assets/diamond-shapes/oval.png";
 import pearIcon from "../assets/diamond-shapes/pear.png";
 import princessIcon from "../assets/diamond-shapes/princess.png";
 import radiantIcon from "../assets/diamond-shapes/radiant.png";
 import cushionIcon from "../assets/diamond-shapes/cushion.png";
 import oldMinerIcon from "../assets/diamond-shapes/old-miner.png";
-import squareEmeraldIcon from "../assets/diamond-shapes/square-emerald.jpg";
+import squareEmeraldIcon from "../assets/diamond-shapes/square-emerald.png";
 import defaultIcon from "../assets/diamond-shapes/diamond.png";
 
 const imageHashMap = {

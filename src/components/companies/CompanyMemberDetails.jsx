@@ -89,35 +89,35 @@ export const CompanyMemberDetails = ({ user_info, roleTypes, company_id, company
   };
 
   return (
-    <div className="profile-block">
+    <div className="profile-block" style={{ backgroundColor: 'rgb(220 220 220)' }}>
       <p className="font-semibold text-lg text-black">User Details</p>
       <div className="flex flex-wrap">
         <div className="flex-1 basis-1/3 mr-8 mt-4">
           <p className="">Name</p>
-          <input name="name" className="default-input w-[50%] mt-1" onChange={handleChange} type="text" required value={editedDetails.name || ''} />
+          <input name="name" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.name || ''} />
           {errors.name && <p className="text-red-500">{errors.name}</p>}
         </div>
 
         <div className="flex-1 basis-1/3 mr-8 mt-4">
           <p className="">Surname</p>
-          <input name="surname" className="default-input w-[50%] mt-1" onChange={handleChange} type="text" required value={editedDetails.surname} />
+          <input name="surname" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.surname} />
           {errors.surname && <p className="text-red-500">{errors.surname}</p>}
         </div>
 
         <div className="flex-1 basis-1/3 mr-8 mt-4">
           <p className="">Email</p>
-          <input name="email" className="default-input w-[50%] mt-1" onChange={handleChange} type="text" required value={editedDetails.email} />
+          <input name="email" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.email} />
           {errors.email && <p className="text-red-500">{errors.email}</p>}
         </div>
 
         <div className="flex-1 basis-1/3 mr-8 mt-4">
           <p className="">Phone Number</p>
-          <input name="phone" className="default-input w-[50%] mt-1" onChange={handleChange} type="text" value={editedDetails.phone} />
+          <input name="phone" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" value={editedDetails.phone} />
         </div>
 
         <div className="flex-1 basis-1/3 mr-8 mt-4">
           <p className="">Role</p>
-          <select name="role_id" className="default-input w-[50%] mt-1" style={{ borderColor: 'black' }} onChange={handleChange} required value={editedDetails.role_id}>
+          <select name="role_id" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} required value={editedDetails.role_id}>
             <option value="">Select a Role</option>
             {filteredRoleTypes.map((type, index) => (
               <option key={index} value={type.id}>{type.name}</option>
@@ -132,6 +132,7 @@ export const CompanyMemberDetails = ({ user_info, roleTypes, company_id, company
             <input
               name="sales_rep_commission"
               className="default-input w-[50%] mt-1"
+              style={{ borderColor: 'rgb(220 220 220)' }}
               onChange={handleChange}
               type="text"
               required

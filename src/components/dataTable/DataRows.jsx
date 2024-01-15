@@ -58,7 +58,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
     <>
       <tr>
         {columns.map((column, colIndex) => (
-          <td key={colIndex} className={`w-[${row.width}px] px-3 py-4 whitespace-nowrap text-text border-solid border-[1.5px] border-dark-grey`}>
+          <td key={colIndex} className={`px-3 py-4 whitespace-nowrap text-text border-solid border-[1.5px] bg-black border-dark-grey ${column.field === "image" ? "align-middle text-center" : ""}`}>
             {
             column.field === "total" ? 
             <>
@@ -76,14 +76,15 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             }
           </td>
         ))}
-        <td className="px-3 py-4 w-1 whitespace-nowrap border-solid border-[1.5px] border-dark-grey">
-          <button onClick={() => {handleExpand()}} className={`${isExpanded ? 'bg-accent text-white' : ''} rounded-md w-6 h-6 duration-300`}>
+        <td className="px-3 py-4 w-1 whitespace-nowrap bg-black border-dark-grey">
+          <button onClick={() => {handleExpand()}} className={`rounded-md w-6 h-6 duration-300 bg-black text-white`}>
             {isExpanded ? <ChevronUpIcon className='w-6 h-6'/> : <ChevronDownIcon className='w-6 h-6'/> }
           </button>
         </td>
       </tr>
       <tr>
-        <td colSpan={columns.length + 1} className={`
+        <td colSpan={1} className='bg-black'></td>
+        <td colSpan={columns.length - 1} className={`
             border-0
           `}>
           <div className={`
@@ -195,6 +196,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             </div>
           </div>
         </td>
+        <td colSpan={1} className='bg-black'></td>
       </tr>
     </>
   )

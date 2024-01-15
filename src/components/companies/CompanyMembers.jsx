@@ -96,7 +96,7 @@ export const CompanyMembers = ({ user_details, details, setActiveTab, current_us
   };
 
   return (
-    <div className="profile-block">
+    <div className="profile-block" style={{ backgroundColor: 'rgb(220 220 220)' }}>
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-semibold text-lg text-black flex-1">{details.name}</h2>
         <div className="ml-auto">
@@ -108,32 +108,32 @@ export const CompanyMembers = ({ user_details, details, setActiveTab, current_us
           />
         </div>
         <div className="ml-4">
-          <button onClick={handleAddMember} className="default-button w-32">
+          <button onClick={handleAddMember} className="default-button w-32 bg-accent text-white">
             Add User
           </button>
         </div>
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white table-fixed">
+        <table className="min-w-full table-fixed">
           <thead>
             <tr className="w-full h-16 border-gray-300 border-b py-8">
-              <th className="text-left w-1/5 px-4 cursor-pointer" onClick={toggleNameSortOrder}>Name {nameSortOrder !== 'None' && `(${nameSortOrder})`}</th>
-              <th className="text-left w-1/5 px-4 cursor-pointer" onClick={toggleSurnameSortOrder}>Surname {surnameSortOrder !== 'None' && `(${surnameSortOrder})`}</th>
-              <th className="text-left w-1/5 px-4 cursor-pointer" onClick={toggleRoleSortOrder}>Role {roleSortOrder !== 'None' && `(${roleSortOrder})`}</th>
-              <th className="text-left w-1/5 px-4 cursor-pointer" onClick={togglePhoneNumberSortOrder}>Phone Number {phoneNumberSortOrder !== 'None' && `(${phoneNumberSortOrder})`}</th>
-              <th className="text-center w-1/5 px-4">Actions</th>
+              <th className="text-left w-1/5 px-4 cursor-pointer bg-white border-none" onClick={toggleNameSortOrder}>Name {nameSortOrder !== 'None' && `(${nameSortOrder})`}</th>
+              <th className="text-left w-1/5 px-4 cursor-pointer bg-white border-none" onClick={toggleSurnameSortOrder}>Surname {surnameSortOrder !== 'None' && `(${surnameSortOrder})`}</th>
+              <th className="text-left w-1/5 px-4 cursor-pointer bg-white border-none" onClick={toggleRoleSortOrder}>Role {roleSortOrder !== 'None' && `(${roleSortOrder})`}</th>
+              <th className="text-left w-1/5 px-4 cursor-pointer bg-white border-none" onClick={togglePhoneNumberSortOrder}>Phone Number {phoneNumberSortOrder !== 'None' && `(${phoneNumberSortOrder})`}</th>
+              <th className="text-center w-1/5 px-4 bg-white border-none">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-300">
             {users.length > 0 ? (
               users.map(user => (
                 <tr key={user.id} className="h-14">
-                  <td className="w-1/5 px-4">{user.user_details.name}</td>
-                  <td className="w-1/5 px-4">{user.user_details.surname}</td>
-                  <td className="w-1/5 px-4">{user.role}</td>
-                  <td className="w-1/5 px-4">{user.user_details.phone}</td>
-                  <td className="text-center w-1/5 px-4">
-                    <button onClick={() => handleViewMember(user)} className="text-blue-600 hover:text-blue-800 mr-3">Edit</button>
+                  <td className="w-1/5 px-4 bg-white border-none">{user.user_details.name}</td>
+                  <td className="w-1/5 px-4 bg-white border-none">{user.user_details.surname}</td>
+                  <td className="w-1/5 px-4 bg-white border-none">{user.role}</td>
+                  <td className="w-1/5 px-4 bg-white border-none">{user.user_details.phone}</td>
+                  <td className="text-center w-1/5 px-4 bg-white border-none">
+                    <a onClick={() => handleViewMember(user)} className="text-blue-600 hover:text-blue-800 mr-3 text-base">Edit</a>
                   </td>
                 </tr>
               ))

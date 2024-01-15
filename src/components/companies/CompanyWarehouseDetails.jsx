@@ -76,19 +76,19 @@ export const CompanyWarehouseDetails = ({ warehouse_info, company_id, setActiveT
   };
 
   return (
-    <div className="profile-block">
+    <div className="profile-block" style={{ backgroundColor: 'rgb(220 220 220)' }}>
       <p className="font-semibold text-lg text-black">Warehouse Details</p>
       <div className="flex flex-wrap">
         <div className="flex flex-wrap -mx-4 w-[100%]">
           <div className="flex-1 px-4 mt-4">
             <p className="">Name</p>
-            <input name="name" className="default-input w-full mt-1" onChange={handleChange} type="text" required value={editedDetails.name} />
+            <input name="name" className="default-input w-full mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.name} />
             {errors.name && <p className="text-red-500">{errors.name}</p>}
           </div>
 
           <div className="flex-1 px-4 mt-4">
             <p className="">Mark Up %</p>
-            <input name="mark_up" className="default-input w-full mt-1" onChange={handleChange} type="text" required value={editedDetails.mark_up} />
+            <input name="mark_up" className="default-input w-full mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.mark_up} />
             {errors.mark_up && <p className="text-red-500">{errors.mark_up}</p>}
           </div>
 
@@ -108,31 +108,31 @@ export const CompanyWarehouseDetails = ({ warehouse_info, company_id, setActiveT
 
         <div className="w-[100%] mr-8 mt-4">
           <p className="">Address Line 1</p>
-          <input name="address_1" className="default-input w-[50%] mt-1" onChange={handleChange} type="text" required value={editedDetails.address_1} />
+          <input name="address_1" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.address_1} />
           {errors.address_1 && <p className="text-red-500">{errors.address_1}</p>}
         </div>
 
         <div className="w-[100%] mr-8 mt-4">
           <p className="">Address Line 2</p>
-          <input name="address_2" className="default-input w-[50%] mt-1" onChange={handleChange} type="text" required value={editedDetails.address_2} />
+          <input name="address_2" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.address_2} />
           {errors.address_2 && <p className="text-red-500">{errors.address_2}</p>}
         </div>
 
         <div className="flex-1 basis-1/4 mr-8 mt-4">
           <p className="">City</p>
-          <input name="city" className="default-input w-[50%] mt-1" onChange={handleChange} type="text" required value={editedDetails.city} />
+          <input name="city" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.city} />
           {errors.city && <p className="text-red-500">{errors.city}</p>}
         </div>
 
         <div className="flex-1 basis-1/4 mr-8 mt-4">
           <p className="">Country</p>
-          <input name="country" className="default-input w-[50%] mt-1" onChange={handleChange} type="text" required value={editedDetails.country} />
+          <input name="country" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.country} />
           {errors.country && <p className="text-red-500">{errors.country}</p>}
         </div>
 
         <div className="flex-1 basis-1/4 mr-8 mt-4">
           <p className="">Zip Code</p>
-          <input name="pincode" className="default-input w-[50%] mt-1" onChange={handleChange} type="text" required value={editedDetails.pincode} />
+          <input name="pincode" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.pincode} />
           {errors.pincode && <p className="text-red-500">{errors.pincode}</p>}
         </div>
       </div>

@@ -42,16 +42,16 @@ export const StatusFilterDropdown = ({ handleStatusFilter, statusFilter, setStat
   }, []);
 
   return (
-    <div ref={ref} className="relative w-[10rem] h-10 rounded-md">
+    <div ref={ref} className="relative w-[10rem] h-8 rounded-md">
       <button onClick={() => setIsOpen(!isOpen)} 
         className="
           flex items-center justify-between
-          w-[100%] h-10
+          w-[100%] h-8
           cursor-pointer px-4 py-2 rounded-md
           border-solid border-[1px]
-          hover:outline-none hover:bg-text border-black">
+          hover:outline-none border-black bg-accent text-white">
         <p className=''>{statusFilter.name}</p>
-        <ChevronDownIcon className="w-4 h-4 text-black" />
+        <ChevronDownIcon className="w-4 h-4 text-white" />
       </button>
       {isOpen && (
         <div className="absolute right-0 z-10 w-[100%] bg-white border-solid border-[1px] border-t-0 border-black rounded-sm">

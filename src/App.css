@@ -118,15 +118,19 @@ td, tr, th {
 }
 
 .default-button {
-  @apply flex rounded-sm px-2 h-8 border-solid border-[1px] border-black justify-center items-center cursor-pointer hover:bg-light-grey
+  @apply flex rounded-lg px-2 h-8 border-solid border-[1px] border-black justify-center items-center cursor-pointer
+}
+
+.default-button-reports {
+  @apply flex rounded-lg px-2 h-8 border-solid border-[1px] border-black justify-center items-center cursor-pointer
 }
 
 .default-button-disabled {
-  @apply flex rounded-sm px-2 h-8 border-solid border-[1px] border-black justify-center items-center bg-light-grey cursor-default
+  @apply flex rounded-lg px-2 h-8 border-solid border-[1px] border-black justify-center items-center bg-light-grey cursor-default
 }
 
 .default-save-button {
-  @apply flex bg-navy-blue rounded-sm px-2 h-8 border-solid border-[1.5px] justify-center items-center cursor-pointer text-white hover:bg-light-blue
+  @apply flex bg-accent rounded-lg px-2 h-8 border-solid border-[1.5px] justify-center items-center cursor-pointer text-white
 }
 
 .default-filter-button {
@@ -139,7 +143,7 @@ td, tr, th {
 
 
 .default-input {
-  @apply w-full h-10 border border-solid rounded-md px-2 focus:outline-none focus:border-navy-blue;
+  @apply w-full h-8 border border-solid rounded-md px-2 focus:outline-none focus:border-navy-blue;
 }
 
 .default-button-focus {
@@ -147,11 +151,11 @@ td, tr, th {
 }
 
 .default-tabs {
-  @apply mb-1 flex justify-center w-[9rem] py-3 border-solid border-[1px] hover:bg-light-grey hover:border-black cursor-pointer
+  @apply mb-1 flex justify-center w-[9rem] py-3 border-solid border-[1px] hover:bg-light-grey hover:border-black cursor-pointer rounded-lg
 }
 
 .default-tabs-active {
-  @apply mb-1 flex justify-center w-[9rem] py-3 border-solid border-[1px] bg-light-grey border-black cursor-pointer
+  @apply mb-1 flex justify-center w-[9rem] py-3 border-solid border-[1px] bg-light-grey border-black cursor-default rounded-lg
 }
 
 .logo {
@@ -165,6 +169,16 @@ td, tr, th {
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+.login-button {
+  box-shadow: inset 0px -3px 5px 0px hsl(165, 5%, 60%);
+  transition: 200ms ease-out;
+}
+
+.login-button:hover {
+  transform: scale(0.95);
+  background-color: hsl(165, 4%, 20%);
 }
 
 @keyframes logo-spin {
