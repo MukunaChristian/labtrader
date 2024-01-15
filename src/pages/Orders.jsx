@@ -81,7 +81,7 @@ export const Orders = () => {
 
   return (
     <div className="flex pb-16 border-0 pt-24 px-14 bg-light-grey justify-center">
-      <div className="border-solid border-[1px] border-black w-[90%] p-6 h-full bg-white">
+      <div className="border-solid border-[1px] border-black w-[90%] p-6 h-full" style={{ backgroundColor: 'rgb(220 220 220)' }}>
         <div className="flex justify-between items-center mb-4">
           <h2 className="font-semibold text-lg text-black flex-1">Orders</h2>
           <div className='mr-4'>
@@ -96,40 +96,40 @@ export const Orders = () => {
           </div>
         </div>
         <div className="">
-          <table className="w-full bg-white table-fixed border-collapse border-solid border-[1px]">
+          <table className="w-full table-fixed">
             <thead>
               <tr className="w-full h-16 py-8">
-                <th className="text-left w-[10%] px-4">ID</th>
-                <th className="text-left w-1/5 px-4">Label Number</th>
-                <th className="text-left w-1/4 px-4">Customer</th>
-                <th className="text-left w-1/5 px-4">Date</th>
-                <th className="text-left w-1/6 px-4">Total</th>
-                <th className="text-left w-1/6 px-4">Status</th>
-                <th className="text-left w-[10%] px-4">Invoice</th>
+                <th className="text-left w-[10%] px-4 bg-white border-none">ID</th>
+                <th className="text-left w-1/4 px-4 bg-white border-none">Label Number</th>
+                <th className="text-left w-1/4 px-4 bg-white border-none">Customer</th>
+                <th className="text-left w-1/4 px-4 bg-white border-none">Date</th>
+                <th className="text-left w-1/4 px-4 bg-white border-none">Total</th>
+                <th className="text-left w-[20%] px-4 bg-white border-none">Status</th>
+                <th className="text-left w-[13%] px-4 bg-white border-none">Invoice</th>
               </tr>
             </thead>
             <tbody className="">
               {orders.map(order => (
                 <tr key={order.id} className="h-14 text-sm">
-                  <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{order.id}</td>
-                  <td className="w-1/5 px-4 border-solid border-[1px]">
-                      <input 
-                          type="text" 
-                          value={order.label_number}
-                          className="w-full text-ellipsis overflow-hidden bg-transparent border-none"
-                          onChange={(e) => { handleLabelNumberChange(e, order) }}
-                      />
+                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.id}</td>
+                  <td className="w-1/5 px-4 bg-white border-none">
+                    {order.label_number}
                   </td>
-                  <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{order.customer}</td>
-                  <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{order.order_date}</td>
-                  <td className="w-1/5 px-4 border-solid border-[1px] text-ellipsis overflow-hidden ">{formatNumberWithSpaces(order.total_price)} USD</td>
-                  <td className="text-center w-1/5 border-solid border-[1px]">
-                    <OrderStatusDropdown toggleStatus={(status) => {updateStatus(order.id, status)}} statusId={order.status} />
+                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.customer}</td>
+                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.order_date}</td>
+                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{formatNumberWithSpaces(order.total_price)} USD</td>
+                  <td className="w-1/5 px-4 bg-white border-none">
+                    {options.find(o => o.id === order.status).name}
                   </td>
-                  <td className="w-1/5 px-4 border-solid border-[1px]">
+                  <td className="flex border-0 justify-around items-center h-14 bg-white border-none">
                     <a onClick={() => {downloadInvoice(order.id)}} className='flex justify-center'>
-                      <div className="w-8 h-8 bg-light-grey hover:bg-grey flex items-center justify-center rounded-lg border-solid border-[1px] ">
-                        <ArrowDownOnSquareIcon className="w-6 h-6 text-black" />
+                      <div className="w-8 h-8 bg-light-grey hover:bg-grey flex items-center justify-center rounded-lg border-solid border-[1px] text-blue-600">
+                        <ArrowDownOnSquareIcon className="w-6 h-6"/>
+                      </div>
+                    </a>
+                    <a onClick={() => {navigate("/orders/details/" + order.id)}} className='flex justify-center'>
+                      <div className="w-8 h-8 bg-light-grey hover:bg-grey flex items-center justify-center rounded-lg border-solid border-[1px] text-blue-600">
+                        <EyeIcon className="w-5 h-6"/>
                       </div>
                     </a>
                   </td>
@@ -139,7 +139,7 @@ export const Orders = () => {
           </table>
           
         </div>
-        <div className="flex justify-center mt-14">
+        <div className="flex justify-center pt-6">
           <Pagenation 
             currentPage={currentPage} 
             setCurrentPage={setCurrentPage} 
