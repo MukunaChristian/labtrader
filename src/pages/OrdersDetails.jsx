@@ -73,17 +73,20 @@ export const OrdersDetails = () => {
 
 
   const handleDownload = () => {
-    const link = document.createElement('a');
-    link.href = html;
-    link.download = 'invoice.pdf';
-    link.click();
+    if (html && pdfLoaded) {
+      const link = document.createElement('a');
+      link.href = html;
+      link.download = 'invoice.pdf';
+      link.click();
+    }
+    
   }
 
 
   return (
     <div className="pb-16 border-0 pt-24 px-14 bg-light-grey flex justify-center">
       <div className="w-[595px] ">
-        <OrdersDetailsHeader labelNumber={labelNumber.current} status={status.current} onSave={onSave} />
+        <OrdersDetailsHeader labelNumber={labelNumber.current} status={status.current} onSave={onSave} handleDownload={handleDownload} />
         <div className="w-full border-black bg-white">
           {(html && pdfLoaded) ? (
              <PDFViewer file={html} />
@@ -93,11 +96,6 @@ export const OrdersDetails = () => {
             </div>
           )}
         </div>
-        {(html && pdfLoaded) &&
-          <div className="flex justify-center mt-4">
-            <button onClick={handleDownload} className={`border-solid border-[1px] border-text rounded-md px-4 py-1 text-sm ml-2 hover:bg-light-grey`}>Download</button>
-          </div>
-        }
       </div>
     </div>
   )

@@ -3,14 +3,19 @@ import { updateStatus, updateLabel, getOrderInvoiceDetails, getOrders } from '..
 import { useState, useRef, useEffect } from "react";
 import { OrderStatusDropdown } from "../Dropdowns/OrderStatusDropdown";
 import { usePopper } from "react-popper";
+import { useNavigate } from "react-router-dom";
+import { set } from "lodash";
 
 
-export const OrdersDetailsHeader = ({ labelNumber, status, onSave }) => {
+export const OrdersDetailsHeader = ({ labelNumber, status, onSave, handleDownload }) => {
   const [changesMade, setChangesMade] = useState(false);
   const [labelNumberState, setLabelNumberState] = useState(labelNumber);
   const [statusState, setStatusState] = useState(status);
   const [confirming, setConfirming] = useState(false);
   const [referenceElement, setReferenceElement] = useState(null);
+  const [isShipped, setIsShipped] = useState(status === "ready_for_ship" ? true : false);
+
+  const navigate = useNavigate();
 
   const popperElement = useRef(null);
   const { styles, attributes } = usePopper(
@@ -38,24 +43,44 @@ export const OrdersDetailsHeader = ({ labelNumber, status, onSave }) => {
   }, [labelNumber])
 
   useEffect(() => {
+    if (status === "ready_for_ship") {
+      setIsShipped(true);
+    }
+  }, [status])
+
+  useEffect(() => {
     const dummyElement = document.createElement("div");
     dummyElement.style.position = "fixed";
     setReferenceElement(dummyElement);
   }, [])
 
+  const handleStatusChange = (status) => {
+    setStatusState(status);
+    setChangesMade(true);
+
+    if (status === "ready_for_ship") {
+      setIsShipped(true);
+    }
+  }
+
   return (
     <div className="flex mb-4">
       <div className="hover:bg-grey rounded-lg w-7 h-7 cursor-pointer mr-auto">
-        <ArrowLeftIcon className="h-7 w-7" onClick={() => window.history.back()}/>
+        <ArrowLeftIcon className="h-7 w-7" onClick={() => navigate("/orders")}/>
       </div>
+      {isShipped && (
       <input 
           type="text" 
           value={labelNumberState}
-          className="w-48 h-8 px-2 text-ellipsis overflow-hidden border-solid border-text border-[1px] rounded-md"
+          placeholder="Enter label number"
+          className="w-40 h-8 px-2 text-ellipsis overflow-hidden border-solid border-text border-[1px] rounded-md"
           onChange={(e) => { handleLabelNumberChange(e) }}
-      />
-      <div className="w-48 h-8 ml-2"><OrderStatusDropdown toggleStatus={(status) => {setStatusState(status); setChangesMade(true)}} statusId={status} /></div>
+      /> )}
+      <div className="w-48 h-8 ml-2"><OrderStatusDropdown toggleStatus={(status) => { handleStatusChange(status) }} statusId={status} /></div>
       <button onClick={() => {setConfirming(true)}} disabled={!changesMade} className={`border-solid border-[1px] border-text rounded-md px-4 py-1 text-sm ml-2 ${changesMade ? 'hover:bg-light-grey' : 'bg-grey cursor-default' } `}>Save</button>
+      <div className="flex justify-center h-8">
+        <button onClick={handleDownload} className={`border-solid border-[1px] border-text rounded-md px-4 py-1 text-sm ml-2 hover:bg-light-grey`}>Download</button>
+      </div>
       {confirming && (
       <div>
           <div
