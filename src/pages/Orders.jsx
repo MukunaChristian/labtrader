@@ -149,11 +149,6 @@ export const Orders = () => {
                         <EyeIcon className="w-5 h-6"/>
                       </div>
                     </a>
-                    <a onClick={() => {navigate("/orders/details/" + order.id)}} className='flex justify-center'>
-                      <div className="w-8 h-8 bg-light-grey hover:bg-grey flex items-center justify-center rounded-lg border-solid border-[1px] ">
-                        <EyeIcon className="w-5 h-6 text-black" />
-                      </div>
-                    </a>
                   </td>
                 </tr>
               ))}
