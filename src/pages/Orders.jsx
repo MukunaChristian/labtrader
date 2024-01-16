@@ -3,11 +3,11 @@ import SearchBar from '../components/searchBar/searchBar';
 import { getOrders, updateStatus, getOrderInvoice, updateLabel } from '../api/orders';
 import { Pagenation } from '../components/dataTable/Pagenation';
 import { useDispatch } from 'react-redux';
-import { OrderStatusDropdown } from '../components/Dropdowns/OrderStatusDropdown';
+import { OrderStatusDropdown } from '../components/dropdowns/OrderStatusDropdown';
 import { debounce } from 'lodash';
 import { ArrowDownOnSquareIcon } from '@heroicons/react/24/outline';
 import { EyeIcon } from '@heroicons/react/24/outline';
-import { StatusFilterDropdown } from '../components/Dropdowns/StatusFilterDropdown';
+import { StatusFilterDropdown } from '../components/dropdowns/StatusFilterDropdown';
 import { useNavigate } from 'react-router-dom';
 
 

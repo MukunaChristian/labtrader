@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { LanguageDropdown } from '../components/Dropdowns/LanguageDropdown';
-import { CurrencyDropdown } from '../components/Dropdowns/CurrencyDropdown';
+import { LanguageDropdown } from '../components/dropdowns/LanguageDropdown';
+import { CurrencyDropdown } from '../components/dropdowns/CurrencyDropdown';
 import { useApp } from "../hooks/useApp";
 import { useSelector } from "react-redux";
 import { validateToken } from "../api/login";
