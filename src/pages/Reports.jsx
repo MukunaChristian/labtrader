@@ -5,6 +5,9 @@ import { getReport } from '../api/reports';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { default as downloadPdf } from '../assets/download-pdf.svg';
+import { default as downloadCsv } from '../assets/download-csv.svg';
+
 
 export const Report = () => {
   const user = useSelector(state => state.user.user)
@@ -228,8 +231,8 @@ export const Report = () => {
           <>
             <div className="profile-block" style={{ backgroundColor: 'rgb(220 220 220)' }}>
               <div className="flex w-full justify-end">
-                <img src="src/assets/download-pdf.svg" alt="Download PDF" className="max-w-[30px] mr-2" onClick={() => generateReport("PDF")} />
-                <img src="src/assets/download-csv.svg" alt="Download CSV" className="max-w-[30px] mr-2" onClick={() => generateReport("CSV")} />
+                <img src={downloadPdf} alt="Download PDF" className="max-w-[30px] mr-2" onClick={() => generateReport("PDF")} />
+                <img src={downloadCsv} alt="Download CSV" className="max-w-[30px] mr-2" onClick={() => generateReport("CSV")} />
               </div>
               <br></br>
               <div className="bg-white" dangerouslySetInnerHTML={{ __html: reportHtml }}/>
