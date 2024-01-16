@@ -55,10 +55,10 @@ export const MenuSideBar = ({ setLoggedIn }) => {
           </div>
 
           <div className="container flex flex-col mt-6">
-            <div onClick={() => { navigate("/profile") }} className={`flex py-2 rounded-md cursor-pointer group ${location.pathname === "/profile" ? 'bg-white' : 'hover:bg-white'}`}>
+            {/* <div onClick={() => { navigate("/profile") }} className={`flex py-2 rounded-md cursor-pointer group ${location.pathname === "/profile" ? 'bg-white' : 'hover:bg-white'}`}>
               <UserIcon className={`h-6 w-6 mx-4 ${location.pathname === "/profile" ? '' : 'text-white group-hover:text-black'}`} />
               <p className={`pt-[1px] ${location.pathname === "/profile" ? '' : 'text-white group-hover:text-black'}`}>Profile</p>
-            </div>
+            </div> */}
 
             <div onClick={() => { navigate("/") }} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/" ? 'bg-white' : 'hover:bg-white'}`}>
               <HomeIcon className={`h-6 w-6 mx-4 ${location.pathname === "/" ? '' : 'text-white group-hover:text-black'}`} />
@@ -79,10 +79,12 @@ export const MenuSideBar = ({ setLoggedIn }) => {
               </div>
             )}
 
-            <div onClick={() => { navigate("/orders") }} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/orders" ? 'bg-white' : 'hover:bg-white'}`}>
-              <StarIcon className={`h-6 w-6 mx-4 ${location.pathname === "/orders" ? '' : 'text-white group-hover:text-black'}`} />
-              <p className={`pt-[1px] ${location.pathname === "/orders" ? '' : 'text-white group-hover:text-black'}`}>Orders</p>
-            </div>
+            {user.role == "Superadmin" && (
+              <div onClick={() => { navigate("/orders") }} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/orders" ? 'bg-white' : 'hover:bg-white'}`}>
+                <StarIcon className={`h-6 w-6 mx-4 ${location.pathname === "/orders" ? '' : 'text-white group-hover:text-black'}`} />
+                <p className={`pt-[1px] ${location.pathname === "/orders" ? '' : 'text-white group-hover:text-black'}`}>Orders</p>
+              </div>
+            )}
 
             <div className={`fixed bottom-0 left-0 mx-4 mb-4 w-36 duration-300 ${open ? "left-0" : "left-[-100%]"}`}>
               <div onClick={() => onLogout()} className="flex flex-row hover:bg-white py-2 rounded-md cursor-pointer group">

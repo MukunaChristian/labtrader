@@ -6,7 +6,7 @@ export const Confirm = () => {
 
   return (
     <div className="bg-light-grey overflow-hidden h-full">
-      <div className="max-w-[48rem] w-[80%] max-h-[32rem] h-[60%] border-solid border-[1px] rounded-xl shadow-sm m-auto mt-32">
+      <div className="max-w-[48rem] w-[80%] max-h-[32rem] h-[60%] border-solid border-[1px] rounded-xl shadow-sm m-auto mt-32" style={{ backgroundColor: 'rgb(220 220 220)' }}>
         <div className="flex justify-center items-center h-[80%] px-12">
           <div className="flex flex-col justify-center items-center">
             <EnvelopeIcon className="h-24 w-24 text-black" />
@@ -17,7 +17,7 @@ export const Confirm = () => {
       </div>
       <div className="max-w-[48rem] w-[80%] mx-auto">
         <div onClick={() => navigate("/")} className="flex items-center justify-end mt-6">
-          <button className="bg-black text-white px-8 py-3">Return home</button>
+          <button className="bg-accent rounded-lg text-white px-8 py-3">Return home</button>
         </div>
       </div>
       
