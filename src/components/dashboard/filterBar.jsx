@@ -1,6 +1,6 @@
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/20/solid"
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid"
-import { FilterDropdown } from "../Dropdowns/FilterDropdown"
+import { FilterDropdown } from "../Dropdowns/filterDropdown"
 import { BarsArrowUpIcon } from "@heroicons/react/20/solid"
 import { useState } from "react"
 import { useApp } from "../../hooks/useApp"
