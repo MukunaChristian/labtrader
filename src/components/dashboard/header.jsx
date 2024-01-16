@@ -3,8 +3,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDropzone } from 'react-dropzone'
 import { uploadStock } from "../../api/diamonds";
-import { WarehouseDropdown } from "../Dropdowns/WarehouseDropdown.jsx";
-import { SupplierDropdown } from "../Dropdowns/SupplierDropdown.jsx";
+import { WarehouseDropdown } from "../dropdowns/WarehouseDropdown.jsx";
+import { SupplierDropdown } from "../dropdowns/SupplierDropdown.jsx";
 import loader from '../../assets/loader.gif';
 
 import { setUploadingLoaderState, setUploadErrorsState } from '../../reducers/AppSlice';
