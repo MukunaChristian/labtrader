@@ -212,8 +212,8 @@ export const Report = () => {
   }, [selectedOptions, showSalesRep]);
 
   return (
-    <div className="flex border-0 pt-24">
-      <div className="flex w-full justify-items-center grid grid-cols-1 mt-12">
+    <div className="flex border-0 pt-24 bg-light-grey">
+      <div className="flex w-full justify-items-center grid grid-cols-1 mt-12 pb-10">
         <div className="profile-block" style={{ backgroundColor: 'rgb(220 220 220)' }}>
           <div className="flex justify-between items-end mb-4">
             <div className={`flex-1 ${showSalesRep ? 'basis-1/5' : 'basis-1/4'} mr-8`}>
@@ -291,6 +291,7 @@ export const Report = () => {
                   <option value="" hidden>
                     {salesReps.length > 0 ? 'Select Sales Rep' : 'No Sales Reps'}
                   </option>
+                  {salesReps.length > 1 && <option value="all">All</option>}
                   {salesReps.map(user => (
                     <option key={user.id} value={user.id}>{user.user_details.name}</option>
                   ))}
