@@ -5,18 +5,34 @@ import { sendResetPasswordLink } from '../api/password';
 
 export const ForgotPassword = () => {
   const navigate = useNavigate();
-  const [emailSent, setemailSent] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [error, setError] = useState("");
+
+  const validateEmail = (email) => {
+    return /\S+@\S+\.\S+/.test(email);
+  }
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
     const email = e.target["email"].value.trim();
-    console.log(email)
+
+    if (!email) {
+      setError("Please enter your email.");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email.");
+      return;
+    }
 
     try {
       await sendResetPasswordLink(email);
-      setemailSent(true)
+      setEmailSent(true);
+      setError("");
     } catch (error) {
       console.error("Error sending link:", error);
+      setError("Failed to send reset link. Please try again.");
     }
   }
 
@@ -28,8 +44,9 @@ export const ForgotPassword = () => {
         <p className="mb-2 font-semibold">In order to reset your password</p>
         <p className="mb-2 font-semibold">please provide us with your email</p>
         <p className="mb-2 font-semibold">so we can send a reset link</p>
-        {emailSent && <p className="text-green-500 text-med">Email Sent</p>}
-        <form className="mb-4" onSubmit={(e) => { handleForgotPassword(e) }}>
+        {emailSent && <div><p className="text-green-500 text-med">If an account is registered with this email</p> <p className="text-green-500 text-med flex justify-center">a reset link has been sent to you</p></div>}
+        {error && <p className="text-red-500 text-med">{error}</p>}
+        <form className="mb-4" onSubmit={handleForgotPassword}>
           <input name="email" className="default-input mt-5" type="text" placeholder="Email" />
           <button type="submit" className="w-full h-10 bg-black text-white rounded-md mt-5">Submit</button>
         </form>
