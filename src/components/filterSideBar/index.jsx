@@ -4,7 +4,7 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import { useSelector } from "react-redux";
 
-import { FieldGroups, FancyColorFields } from "./FieldGroups";
+import { FieldGroups, FancyColorFields } from "./fieldGroups";
 import { 
   diamondShapes, 
   carat_list, 
