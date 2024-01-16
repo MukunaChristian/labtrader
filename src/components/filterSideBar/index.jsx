@@ -24,7 +24,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
   const [showMore, setShowMore] = useState(false);
   const [whiteFancy, setWhiteFancy] = useState("white");
 
-  const imageDir = 'assets/diamond-shapes/';  
+  const imageDir = 'assets/diamond-shapes-neg/';  
   const [filtersLocal, setFiltersLocal] = useState(filterTemplate);
 
   const { setFilters, resetFilters } = useApp()

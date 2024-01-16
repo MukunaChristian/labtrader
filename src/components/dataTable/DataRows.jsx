@@ -48,7 +48,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
 
   const handleAddToCart = () => {
     if (diamonds_in_cart.includes(row)) {
-      dispatch(removeDiamondFromCart(row.stock_id));
+      dispatch(removeDiamondFromCart(row.id));
     } else {
       dispatch(addDiamondToCart(row));
     }

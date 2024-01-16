@@ -66,6 +66,8 @@ const UserSlice = createSlice({
     },
 
     removeDiamondFromCart: (state, action) => {
+      console.log(action.payload)
+      console.log(state.diamonds_in_cart)
       state.diamonds_in_cart = state.diamonds_in_cart.filter(diamond => diamond.id !== action.payload)
     },
 
