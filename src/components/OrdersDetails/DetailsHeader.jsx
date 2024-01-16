@@ -1,7 +1,7 @@
 import { ArrowLeftIcon } from "@heroicons/react/20/solid"
 import { updateStatus, updateLabel, getOrderInvoiceDetails, getOrders } from '../../api/orders';
 import { useState, useRef, useEffect } from "react";
-import { OrderStatusDropdown } from "../Dropdowns/OrderStatusDropdown";
+import { OrderStatusDropdown } from "../dropdowns/OrderStatusDropdown";
 import { usePopper } from "react-popper";
 import { useNavigate } from "react-router-dom";
 import { set } from "lodash";
