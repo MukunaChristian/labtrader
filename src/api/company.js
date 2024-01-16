@@ -72,6 +72,26 @@ export const getCompanyTypes = async () => {
     }
 };
 
+export const getUsersCompany = async (user_id) => {
+    try {
+        const response = await axios.get(`/get_users_company?user_id=${user_id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+        });
+
+        if (response.status === 200) {
+            return response.data.data;
+        } else {
+            throw new Error('Failed to fetch users company');
+        }
+    } catch (error) {
+        console.error('Error fetching users company:', error);
+        throw error;
+    }
+};
+
 export const getSalesReps = async () => {
     try {
         const response = await axios.get('/get_sales_reps', {

@@ -72,10 +72,12 @@ export const MenuSideBar = ({ setLoggedIn }) => {
               </div>
             )}
 
-            <div onClick={() => { navigate("/reports") }} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/reports" ? 'bg-white' : 'hover:bg-white'}`}>
-              <BookOpenIcon className={`h-6 w-6 mx-4 ${location.pathname === "/reports" ? '' : 'text-white group-hover:text-black'}`} />
-              <p className={`pt-[1px] ${location.pathname === "/reports" ? '' : 'text-white group-hover:text-black'}`}>Reports</p>
-            </div>
+            {user.role !== "Buyer" && (
+              <div onClick={() => { navigate("/reports") }} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/reports" ? 'bg-white' : 'hover:bg-white'}`}>
+                <BookOpenIcon className={`h-6 w-6 mx-4 ${location.pathname === "/reports" ? '' : 'text-white group-hover:text-black'}`} />
+                <p className={`pt-[1px] ${location.pathname === "/reports" ? '' : 'text-white group-hover:text-black'}`}>Reports</p>
+              </div>
+            )}
 
             <div onClick={() => { navigate("/orders") }} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/orders" ? 'bg-white' : 'hover:bg-white'}`}>
               <StarIcon className={`h-6 w-6 mx-4 ${location.pathname === "/orders" ? '' : 'text-white group-hover:text-black'}`} />
