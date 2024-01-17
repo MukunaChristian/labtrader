@@ -96,14 +96,14 @@ export const Header = ({ title, results }) => {
         </div>
         <div className="flex ml-auto mt-4">
           <a href=".\Stock Upload Template.xlsx" download>
-            <button className="default-button mr-4 bg-accent text-white">Download Template</button>
+            <button className={user.role !== 'Superadmin' ? 'hidden' : 'default-button mr-4 bg-accent text-white'}>Download Template</button>
           </a>
           <button
             disabled={user.role !== 'Superadmin'}
             onClick={() => {
               setUploadConfirm(true);
             }}
-            className={user.role !== 'Superadmin' ? 'default-button-disabled bg-accent text-white' : 'default-button bg-accent text-white'}
+            className={user.role !== 'Superadmin' ? 'hidden' : 'default-button bg-accent text-white'}
           >
             Upload Stock
           </button>

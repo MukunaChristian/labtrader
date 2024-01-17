@@ -151,11 +151,12 @@ td, tr, th {
 }
 
 .default-tabs {
-  @apply mb-1 flex justify-center w-[9rem] py-3 border-solid border-[1px] hover:bg-light-grey hover:border-black cursor-pointer rounded-lg
+  @apply mb-1 flex justify-center w-[9rem] py-3 border-solid border-[1px] hover:bg-light-grey hover:border-black cursor-pointer rounded-lg hover:scale-95;
+  transition: 200ms ease-out;
 }
 
 .default-tabs-active {
-  @apply mb-1 flex justify-center w-[9rem] py-3 border-solid border-[1px] bg-light-grey border-black cursor-default rounded-lg
+  @apply mb-1 flex justify-center w-[9rem] py-3 border-solid border-[1px] bg-light-grey border-black cursor-default rounded-lg bg-accent text-white
 }
 
 .logo {

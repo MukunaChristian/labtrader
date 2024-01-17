@@ -105,7 +105,7 @@ export const OrdersDetailsHeader = ({ labelNumber, status, onSave, handleDownloa
           <div>
             <p className="mb-6">Please confirm changes to invoice status.  </p>
             <button onClick={() => {setConfirming(false)}} className={`border-solid border-[1px] border-text rounded-md px-4 py-1 text-sm hover:bg-light-grey`}>Cancel</button>
-            <button onClick={() => {setConfirming(false); onSave(labelNumberState, statusState); setChangesMade(false)}} className={`border-solid border-[1px] border-text rounded-md px-4 py-1 text-sm ml-8 hover:bg-light-grey`}>Confirm</button>
+            <button onClick={() => {setConfirming(false); onSave(labelNumberState, statusState); setChangesMade(false)}} className={`border-solid border-[1px] border-text rounded-md px-4 py-1 text-sm ml-8 bg-accent text-white`}>Confirm</button>
           </div>
         </div>
       </div>)}

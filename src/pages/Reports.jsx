@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
-import { getCompanies, getUsersInCompany } from '../api/company';
+import { getCompanies, getUsersInCompany, getUsersCompany } from '../api/company';
 import { getReport } from '../api/reports';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -12,11 +12,11 @@ import { default as downloadCsv } from '../assets/download-csv.svg';
 export const Report = () => {
   const user = useSelector(state => state.user.user)
   const [isGenerateButtonEnabled, setIsGenerateButtonEnabled] = useState(false);
-  const [donwloadAs, setDonwloadAs] = useState("HTML");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [reportHtml, setReportHtml] = useState(null);
   const [resellers, setResellers] = useState([]);
+  const [adminAllowed, setAdminAllowed] = useState(false);
   const [salesReps, setSalesReps] = useState([]);
   const [showSalesRep, setShowSalesRep] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState({
@@ -31,14 +31,13 @@ export const Report = () => {
       type_id: 2, // Reseller Company
       registration_number: null,
       search: null,
-      user_role: user.role,
-      user_id: user.id
+      user_role: null,
+      user_id: null
     };
 
     try {
       const data = await getCompanies([0, 10], filterList);
       setResellers(data.data)
-      console.log(data)
     } catch (error) {
       console.error('Error in fetchCompanies:', error);
     }
@@ -60,6 +59,24 @@ export const Report = () => {
       } else {
         setSalesReps([]);
         console.log("No sales representatives found for the selected company.");
+      }
+    } catch (error) {
+      console.error('Error in fetchCompanies:', error);
+    }
+  };
+
+  const fetchUsersCompany = async () => {
+    try {
+      const data = await getUsersCompany(user.id);
+      if (data && data.company_type == "Supplier") {
+        fetchCompanies();
+        setAdminAllowed(true)
+      } else if (data && data.company_type == "Reseller") {
+        setResellers([data])
+        fetchUsersInCompany(data.id);
+      } else {
+        setResellers([])
+        console.log("No company found for user.");
       }
     } catch (error) {
       console.error('Error in fetchCompanies:', error);
@@ -152,21 +169,63 @@ export const Report = () => {
   };
 
   useEffect(() => {
-    fetchCompanies();
-  }, []);
-
+    if (user.role === "Sales Rep") {
+      setShowSalesRep(true);
+      fetchUsersCompany();
+    } if (user.role === "Admin") {
+      fetchUsersCompany();
+    } else {
+      fetchCompanies();
+      setAdminAllowed(true)
+    }
+  }, [user]);
+  
+  useEffect(() => {
+    if (resellers.length > 0 && user.role === "Sales Rep") {
+      const resellerId = resellers[0]?.id;
+      if (resellerId) {
+        fetchUsersInCompany(resellerId);
+      }
+    }
+  }, [resellers, user.role]);
+  
+  useEffect(() => {
+    if (salesReps.length > 0 && user.role === "Sales Rep") {
+      setSelectedOptions(prevOptions => ({
+        ...prevOptions,
+        reportType: 'sales_commission',
+        reseller: resellers[0]?.id,
+        salesRep: salesReps[0]?.id
+      }));
+    } else if (user.role === "Admin" && !adminAllowed) {
+      setSelectedOptions(prevOptions => ({
+        ...prevOptions,
+        reportType: '',
+        reseller: resellers[0]?.id,
+        salesRep: ''
+      }));
+    }
+  }, [salesReps, user.role, resellers]);
+  
   useEffect(() => {
     updateGenerateButtonState();
   }, [selectedOptions, showSalesRep]);
 
   return (
-    <div className="flex border-0 pt-24">
-      <div className="flex w-full justify-items-center grid grid-cols-1 mt-12">
+    <div className="flex border-0 pt-24 bg-light-grey">
+      <div className="flex w-full justify-items-center grid grid-cols-1 mt-12 pb-10">
         <div className="profile-block" style={{ backgroundColor: 'rgb(220 220 220)' }}>
           <div className="flex justify-between items-end mb-4">
             <div className={`flex-1 ${showSalesRep ? 'basis-1/5' : 'basis-1/4'} mr-8`}>
               <p className="text-lg">Select Report:</p>
-              <select name="reportType" value={selectedOptions.reportType} onChange={handleSelectChange} className="default-input w-[50%] mt-1" style={{ borderColor: 'black' }}>
+              <select 
+                name="reportType" 
+                value={selectedOptions.reportType} 
+                onChange={handleSelectChange} 
+                className="default-input w-[50%] mt-1" 
+                style={{ borderColor: 'black' }}
+                disabled={user.role === "Sales Rep"}
+              >
                 <option value="" hidden>Select Report</option>
                 <option value="sales_commission">Sales Commission Report</option>
                 <option value="reseller_commission">Reseller Commission Report</option>
@@ -175,23 +234,46 @@ export const Report = () => {
 
             <div className={`flex-1 ${showSalesRep ? 'basis-1/5' : 'basis-1/4'} mr-8`}>
               <p className="text-lg">From:</p>
-              <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} className="default-input w-[50%] mt-1" wrapperClassName="w-[100%]" />
+              <DatePicker 
+                selected={startDate} 
+                onChange={(date) => setStartDate(date)}
+                selectsStart
+                startDate={startDate}
+                endDate={endDate}
+                maxDate={endDate}
+                className="default-input w-[50%] mt-1" 
+                wrapperClassName="w-[100%]" />
             </div>
 
             <div className={`flex-1 ${showSalesRep ? 'basis-1/5' : 'basis-1/4'} mr-8`}>
               <p className="text-lg">To:</p>
-              <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} className="default-input w-[50%] mt-1" wrapperClassName="w-[100%]" />
+              <DatePicker 
+                selected={endDate} 
+                onChange={(date) => setEndDate(date)}
+                selectsEnd
+                startDate={startDate}
+                endDate={endDate}
+                minDate={startDate}
+                className="default-input w-[50%] mt-1" 
+                wrapperClassName="w-[100%]" />
             </div>
 
             <div className={`flex-1 ${showSalesRep ? 'basis-1/5' : 'basis-1/4'} mr-8`}>
               <p className="text-lg">Select Reseller:</p>
-              <select name="reseller" value={selectedOptions.reseller} onChange={handleSelectChange} className="default-input w-[50%] mt-1" style={{ borderColor: 'black' }}>
+              <select
+                name="reseller"
+                value={selectedOptions.reseller}
+                onChange={handleSelectChange}
+                className="default-input w-[50%] mt-1"
+                style={{ borderColor: 'black' }}
+                disabled={user.role === "Sales Rep" || !adminAllowed}
+              >
                 <option value="" hidden>Select Reseller</option>
                 {resellers.length > 0 ? (
                   resellers.map(company => (
                     <option value={company.id}>{company.name}</option>
                   ))
-                ) : (console.log("no companies"))}
+                ) : <option value="" hidden></option>}
               </select>
             </div>
 
@@ -204,11 +286,12 @@ export const Report = () => {
                   onChange={handleSelectChange}
                   className="default-input w-[50%] mt-1"
                   style={{ borderColor: 'black' }}
-                  disabled={salesReps.length === 0}
+                  disabled={user.role === "Sales Rep"}
                 >
                   <option value="" hidden>
                     {salesReps.length > 0 ? 'Select Sales Rep' : 'No Sales Reps'}
                   </option>
+                  {salesReps.length > 1 && <option value="all">All</option>}
                   {salesReps.map(user => (
                     <option key={user.id} value={user.id}>{user.user_details.name}</option>
                   ))}

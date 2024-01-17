@@ -40,12 +40,16 @@ export const CheckoutDropdown = ({ toggleDelivery }) => {
         className="
           flex items-center justify-between
           w-full 
+          rounded-lg
+          bg-accent
           border-0 cursor-pointer
           w-[8rem] px-4 py-3 
+          text-white
+          h-10
           border-black border-solid border-[1px]
-          hover:outline-none hover:bg-text">
+          ">
         <p className=''>{selectedOption}</p>
-        <ChevronDownIcon className="w-4 h-4 text-black" />
+        <ChevronDownIcon className="w-4 h-4 text-white" />
       </button>
       {isOpen && (
         <div className="absolute right-0 mt-2 w-[8rem] bg-white border-solid border-[1.5px] rounded-sm">
