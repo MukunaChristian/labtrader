@@ -286,7 +286,7 @@ export const Report = () => {
                   onChange={handleSelectChange}
                   className="default-input w-[50%] mt-1"
                   style={{ borderColor: 'black' }}
-                  disabled={user.role === "Sales Rep"}
+                  disabled={user.role === "Sales Rep" || salesReps.length === 0}
                 >
                   <option value="" hidden>
                     {salesReps.length > 0 ? 'Select Sales Rep' : 'No Sales Reps'}
