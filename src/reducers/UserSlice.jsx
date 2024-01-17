@@ -1,3 +1,4 @@
+import { cardActionsClasses } from "@mui/material";
 import { createSlice } from "@reduxjs/toolkit"
 
 
@@ -63,18 +64,36 @@ const UserSlice = createSlice({
 
     addDiamondToCart: (state, action) => {
       state.diamonds_in_cart.push(action.payload)
+      let cart = JSON.parse(localStorage.getItem('cartItems'));
+      cart = [...cart, action.payload]
+      console.log(cart)
+      localStorage.setItem('cartItems', JSON.stringify(cart));
     },
 
     removeDiamondFromCart: (state, action) => {
       console.log(action.payload)
       console.log(state.diamonds_in_cart)
       state.diamonds_in_cart = state.diamonds_in_cart.filter(diamond => diamond.id !== action.payload)
+      
+      let cart = JSON.parse(localStorage.getItem('cartItems'));
+      cart = cart.filter(diamond => diamond.id !== action.payload)
+      localStorage.setItem('cartItems', JSON.stringify(cart));
     },
 
     clearCart: (state) => {
       console.log("clearing cart")
       state.diamonds_in_cart = []
+      localStorage.setItem('cartItems', "[]");
     },
+
+    loadCart: (state) => {
+      if (!localStorage.getItem('cartItems')) {
+        localStorage.setItem('cartItems', "[]");
+      } else {
+        state.diamonds_in_cart = JSON.parse(localStorage.getItem('cartItems'));
+      }
+      
+    }
   },
 });
 
@@ -86,6 +105,7 @@ export const {
   setInvoiceDetailsState,
   addDiamondToCart,
   removeDiamondFromCart,
-  clearCart
+  clearCart,
+  loadCart
 } = UserSlice.actions
 export default UserSlice.reducer;

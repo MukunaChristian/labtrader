@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUserState, setUserDetailsState } from "../reducers/UserSlice";
 import { getUserData } from "../api/profileData";
+import { loadCart } from "../reducers/UserSlice";
 
 
 export const Login = () => {
