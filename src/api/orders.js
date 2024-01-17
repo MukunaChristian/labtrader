@@ -74,11 +74,12 @@ export const updateLabel = async (id, label) => {
   return response.data;
 };
 
-export const getOrderInvoice = async (id) => {
+export const getOrderInvoice = async (id, profoma) => {
   const response = await axios.post(
     "/get_invoice",
     {
       id: id,
+      profoma: profoma,
     },
     {
       headers: {

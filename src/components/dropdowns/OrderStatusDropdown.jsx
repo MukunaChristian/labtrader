@@ -17,18 +17,21 @@ const options = [
 export const OrderStatusDropdown = ({ toggleStatus, statusId }) => {
   const ref = useRef(null);
 
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
 
+  const filtered_options = options.filter(option => option.available_to.includes(selectedOption.id) || option.available_to.includes("all"));
+
   const handleSetDelivery = (option) => {
     setIsOpen(false);
-    setSelectedOption(option.name);
+    setSelectedOption(option);
     toggleStatus(option.id);
   };
 
   useEffect(() => {
     if ( statusId ) {
-      setSelectedOption(options.find(option => option.id === statusId).name);
+      setSelectedOption(options.find(option => option.id === statusId));
     
     }
   }, [statusId])
@@ -57,13 +60,13 @@ export const OrderStatusDropdown = ({ toggleStatus, statusId }) => {
           cursor-pointer px-4 py-2 
           focus:border-[1px]
           hover:outline-none focus:border-black bg-accent text-white">
-        <p className='w-full'>{selectedOption}</p>
+        <p className='w-full'>{selectedOption.name}</p>
         <ChevronDownIcon className="w-4 h-4 text-white" />
       </button>
       {isOpen && (
         <div className="absolute right-0 z-10 w-[100%] bg-white border-solid border-[1px] border-t-0 border-black rounded-sm">
           <div className="py-1">
-            {options.map((option) => (
+            {filtered_options.map((option) => (
               <a
                 key={option.id}
                 href="#"

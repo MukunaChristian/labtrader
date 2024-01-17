@@ -98,7 +98,7 @@ export const Orders = () => {
 
   const downloadInvoice = async (orderId) => {
     try {
-      const response = await getOrderInvoice(orderId)
+      const response = await getOrderInvoice(orderId, false)
     } catch (error) {
       console.error('There was an error downloading the file:', error);
     }
@@ -145,7 +145,7 @@ export const Orders = () => {
                   </td>
                   <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.customer}</td>
                   <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.order_date}</td>
-                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{formatNumberWithSpaces(order.total_price)} USD</td>
+                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">R{formatNumberWithSpaces(order.total_price)}</td>
                   <td className="w-1/5 px-4 bg-white border-none">
                     {options.find(o => o.id === order.status).name}
                   </td>
