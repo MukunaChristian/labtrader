@@ -41,8 +41,8 @@ export const SupplierDropdown = ({ supplier, setSupplier }) => {
         <ChevronDownIcon className="w-4 h-4 mr-4 text-black" />
       </button>
       {isOpen && (
-        <div className="absolute right-0 mt-3 w-72 bg-white border-solid border-[1.5px] rounded-sm">
-          <div className="py-1">
+        <div className="absolute right-0 mt-3 w-72 bg-white border-solid border-[1.5px] overflow-auto">
+          <div className="py-1 max-h-[10rem]">
             {suppliers.map((option) => (
               <a
                 key={option.id}

@@ -4,7 +4,7 @@ import { getOrders, updateStatus, getOrderInvoice, updateLabel } from '../api/or
 import { Pagenation } from '../components/dataTable/Pagenation';
 import { useDispatch } from 'react-redux';
 import { OrderStatusDropdown } from '../components/dropdowns/OrderStatusDropdown';
-import { debounce } from 'lodash';
+import { debounce, get, max } from 'lodash';
 import { ArrowDownOnSquareIcon } from '@heroicons/react/24/outline';
 import { EyeIcon } from '@heroicons/react/24/outline';
 import { StatusFilterDropdown } from '../components/dropdowns/StatusFilterDropdown';
@@ -31,7 +31,7 @@ export const Orders = () => {
   const [statusFilter, setStatusFilter] = useState({ id: "all", name: "All" });
   const [dataAmount, setDataAmount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const maxItems = 10;
+  const maxItems = 5;
 
   const navigate = useNavigate();
 
@@ -86,6 +86,15 @@ export const Orders = () => {
     getOrders(dispatch, setOrders, setLoading, setDataAmount, currentPage, {});
   };
 
+  useEffect(() => {
+    getOrders(dispatch, setOrders, setLoading, setDataAmount, currentPage, {
+      status: statusFilter.id,
+      id: searchTerm,
+      label_number: searchTerm,
+      customer: searchTerm,
+    });
+  }, [currentPage]);
+
 
   const downloadInvoice = async (orderId) => {
     try {
@@ -94,6 +103,8 @@ export const Orders = () => {
       console.error('There was an error downloading the file:', error);
     }
   }
+
+  console.log(maxItems)
 
 
   return (
