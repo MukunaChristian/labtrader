@@ -48,7 +48,7 @@ export const ForgotPassword = () => {
         {error && <p className="text-red-500 text-med">{error}</p>}
         <form className="mb-4" onSubmit={handleForgotPassword}>
           <input name="email" className="default-input mt-5" type="text" placeholder="Email" />
-          <button type="submit" className="w-full h-10 bg-black text-white rounded-md mt-5">Submit</button>
+          <button type="submit" className="w-full h-10 bg-black text-white rounded-md mt-5 login-button">Submit</button>
         </form>
       </div>
     </div>
