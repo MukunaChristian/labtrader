@@ -39,7 +39,7 @@ export const ResetPassword = () => {
         <form className="mb-4" onSubmit={(e) => { handleResetPassword(e) }}>
           <input name="password" className="default-input mt-5" type="password" placeholder="Password" />
           <input name="confirm_password" className="default-input mt-5" type="password" placeholder="Confirm Password" />
-          <button type="submit" className="w-full h-10 bg-black text-white rounded-md mt-5">Submit</button>
+          <button type="submit" className="w-full h-10 bg-black text-white rounded-md mt-5 login-button">Submit</button>
         </form>
       </div>
     </div>
