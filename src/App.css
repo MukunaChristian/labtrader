@@ -138,7 +138,7 @@ td, tr, th {
 }
 
 .default-filter-active {
-  @apply default-button mr-2 my-2 text-sm bg-dark-grey text-white hover:bg-dark-grey;
+  @apply default-button mr-2 my-2 text-sm bg-dark-grey text-white bg-accent;
 }
 
 
@@ -147,7 +147,7 @@ td, tr, th {
 }
 
 .default-button-focus {
-  @apply bg-dark-grey border-solid border-[1.5px] text-white
+  @apply bg-accent border-solid border-[1.5px] text-white
 }
 
 .default-tabs {
@@ -172,6 +172,14 @@ td, tr, th {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.forgot-color {
+  color: #20a7d2;
+}
+
+.login-color {
+  background-color: rgb(30 30 30);
+}
+
 .login-button {
   box-shadow: inset 0px -3px 5px 0px hsl(165, 5%, 60%);
   transition: 200ms ease-out;
@@ -179,7 +187,7 @@ td, tr, th {
 
 .login-button:hover {
   transform: scale(0.95);
-  background-color: hsl(165, 4%, 20%);
+  background-color: hsl(0, 0%, 63%);
 }
 
 @keyframes logo-spin {
