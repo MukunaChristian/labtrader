@@ -36,7 +36,7 @@ export const Details = () => {
     }
     setDiamond(foundDiamond)
     if (foundDiamond.total) {
-      spotPrice.current = Math.round((parseFloat(foundDiamond.total) * rates[currency.code]) * 10) / 10;
+      spotPrice.current = ((parseFloat(foundDiamond.total) * rates[currency.code] * 10) / 10).toFixed(2)
     } else {
       spotPrice.current = null;
     }

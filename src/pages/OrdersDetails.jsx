@@ -17,7 +17,7 @@ export const OrdersDetails = () => {
   const [order, setOrder] = useState([{}]);
   
   const pdfCalled = useRef(false);
-  const pdfLoaded = useRef(false);
+  const [pdfLoaded, setPdfLoaded] = useState(false);
   const [html, setHtml] = useState('');
   const dispatch = useDispatch();
 
@@ -31,6 +31,7 @@ export const OrdersDetails = () => {
       const pdfUrl = URL.createObjectURL(resp);
       setHtml(pdfUrl);
       console.log(resp);
+      setPdfLoaded(true)
     });
 
     getOrders(dispatch, setOrder, null, null, 1, { id: orderID }).then(resp => {
@@ -41,9 +42,19 @@ export const OrdersDetails = () => {
     
   }, [])
 
-  const onSave = (labelNumber, status) => {
+  const onSave = (labelNumber, new_status) => {
     updateLabel(orderID, labelNumber);
-    updateStatus(orderID, status);
+    updateStatus(orderID, new_status);
+
+    if (new_status === 'sold') {
+      setPdfLoaded(false);
+      getOrderInvoiceDetails(orderID).then(resp => {
+        const pdfUrl = URL.createObjectURL(resp);
+        setHtml(pdfUrl);
+        console.log(resp);
+        setPdfLoaded(true);
+      });
+    }
   }
 
   const PDFViewer = ({ file }) => {
@@ -51,7 +62,7 @@ export const OrdersDetails = () => {
   
     function onDocumentLoadSuccess({ numPages }) {
       setNumPages(numPages);
-      pdfLoaded.current = true;
+      setPdfLoaded(true);
     }
   
     return (
@@ -82,6 +93,7 @@ export const OrdersDetails = () => {
     
   }
 
+  console.log(pdfLoaded )
 
   return (
     <div className="pb-16 border-0 pt-24 px-14 flex justify-center overflow-auto h-full" style={{ backgroundColor: 'rgb(220 220 220)' }}>

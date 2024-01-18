@@ -5,7 +5,7 @@ import { TrashIcon } from "@heroicons/react/20/solid"
 import { useNavigate } from "react-router-dom"
 import { checkout } from "../api/checkout"
 import { clearCart, removeDiamondFromCart } from "../reducers/UserSlice"
-import { CheckoutDropdown } from "../components/Dropdowns/CheckoutDropdown"
+import { CheckoutDropdown } from "../components/dropdowns/CheckoutDropdown"
 import { calculateDeliveryFee } from "../api/checkout"
 import { type } from "jquery"
 

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 
-import { Header } from "../components/Dashboard/header.jsx"
-import { FilterBar } from "../components/Dashboard/filterBar.jsx"
-import { FilterSideBar } from "../components/FilterSideBar"
+import { Header } from "../components/dashboard/header.jsx"
+import { FilterBar } from "../components/dashboard/filterBar.jsx"
+import { FilterSideBar } from "../components/filterSideBar"
 import { CustomDataTable } from "../components/dataTable/CustomDataTable.jsx"
 
 

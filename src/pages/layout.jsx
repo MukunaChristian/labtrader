@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { LanguageDropdown } from '../components/Dropdowns/LanguageDropdown';
-import { CurrencyDropdown } from '../components/Dropdowns/CurrencyDropdown';
+import { LanguageDropdown } from '../components/dropdowns/languageDropdown';
+import { CurrencyDropdown } from '../components/dropdowns/currencyDropdown';
 import { useApp } from "../hooks/useApp";
 import { useSelector } from "react-redux";
 import { validateToken } from "../api/login";
@@ -9,6 +9,7 @@ import { default as Logo } from '../assets/teomim-logo.svg';
 import { MenuSideBar } from '../components/MenuSideBar/MenuSideBar';
 import { useDispatch } from 'react-redux';
 import { setUserState, setUserDetailsState } from '../reducers/UserSlice';
+import { loadCart } from '../reducers/UserSlice';
 import { getUserData } from '../api/profileData';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { getSupplimentalData } from '../api/getSupplimentalData';
@@ -31,6 +32,7 @@ export const Layout = ({ children }) => {
     console.log("checking")
     console.log(isLogin)
     setLoggedIn(false)
+    dispatch(loadCart())
 
     const token = localStorage.getItem("jwt");  
     if (!token && !isLogin) {

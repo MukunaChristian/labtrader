@@ -1,4 +1,5 @@
 import axios from "axios";
+import { loadCart } from "../reducers/UserSlice";
 
 export const login = (email, password) => {
   return axios

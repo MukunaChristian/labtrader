@@ -11,7 +11,7 @@ export const Confirm = () => {
           <div className="flex flex-col justify-center items-center">
             <EnvelopeIcon className="h-24 w-24 text-black" />
             <p className="text-2xl font-semibold">Confirmed.</p>
-            <p className="text-sm mt-12">We have sent you an email. Please check your inbox to start the EFT process with us</p>
+            <p className="text-sm mt-12">Please check your email in order to continue with the order process.</p>
           </div>
         </div>
       </div>

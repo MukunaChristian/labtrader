@@ -24,7 +24,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
 
   let spotPrice = null;
   if (row.total) {
-    spotPrice = Math.round((parseFloat(row.total) * rates[currency.code]) * 10) / 10;
+    spotPrice = ((parseFloat(row.total) * rates[currency.code]) * 10 / 10).toFixed(2)
   }
 
   let missingImage = false;
@@ -47,12 +47,14 @@ export const DataRows = ({ row, rowIndex, columns }) => {
   }
 
   const handleAddToCart = () => {
-    if (diamonds_in_cart.includes(row)) {
-      dispatch(removeDiamondFromCart(row.stock_id));
+    if (diamonds_in_cart.some(item => item.id === row.id)) {
+      dispatch(removeDiamondFromCart(row.id));
     } else {
       dispatch(addDiamondToCart(row));
     }
   }
+
+  console.log(diamonds_in_cart)
 
   return (
     <>
