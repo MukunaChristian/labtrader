@@ -203,13 +203,13 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
           <div className="grid grid-cols-4 gap-4">
             {showMore ? 
             diamondShapes.map((diamondShape) => (
-              <div key={diamondShape.id} onClick={() => {handleFilterChange("shape", diamondShape.name)}} className={`flex flex-col bg-white items-center justify-around border-solid border-[1.5px] h-24 ${filtersLocal["shape"].includes(diamondShape.name.toLowerCase()) && "border-red-100"}`}>
+              <div key={diamondShape.id} onClick={() => {handleFilterChange("shape", diamondShape.name)}} className={`flex flex-col items-center justify-around border-solid border-[2px] h-24 ${filtersLocal["shape"].includes(diamondShape.name.toLowerCase()) && "border-accent"}`}>
                 <p className="text-xs w-[80%] text-center">{diamondShape.name}</p>
                 <img className="w-12 h-12" src={imageDir + diamondShape.imgSrc}/>
               </div>
             )) : 
             diamondShapes.slice(0, 16).map((diamondShape) => (
-              <div key={diamondShape.id} onClick={() => {handleFilterChange("shape", diamondShape.name)}} className={`flex flex-col bg-white items-center justify-around border-solid border-[2px] h-24 ${filtersLocal["shape"].includes(diamondShape.name.toLowerCase()) && "border-primary"}`}>
+              <div key={diamondShape.id} onClick={() => {handleFilterChange("shape", diamondShape.name)}} className={`flex flex-col items-center justify-around border-solid border-[2px] h-24 ${filtersLocal["shape"].includes(diamondShape.name.toLowerCase()) && "border-accent"}`}>
                 <p className="text-xs w-[80%] text-center">{diamondShape.name}</p>
                 <img className="w-12 h-12" src={imageDir + diamondShape.imgSrc}/>
               </div>
@@ -255,7 +255,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
 
             <div className="flex flex-wrap ml-8">
               {carat_list.map((carat) => (
-                <div key={carat} className={`default-filter-button w-12 ${checkIfCaratInRange(carat) && 'bg-dark-grey'}`}>{carat}</div>
+                <div key={carat} className={`default-filter-button w-12 ${checkIfCaratInRange(carat) && 'bg-accent text-white'}`}>{carat}</div>
               ))}
             </div>
           </div>    

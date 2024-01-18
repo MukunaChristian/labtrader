@@ -16,16 +16,17 @@ export const Report = () => {
   const [endDate, setEndDate] = useState(new Date());
   const [reportHtml, setReportHtml] = useState(null);
   const [resellers, setResellers] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);
   const [adminAllowed, setAdminAllowed] = useState(false);
   const [salesReps, setSalesReps] = useState([]);
-  const [showSalesRep, setShowSalesRep] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState({
     reportType: '',
     reseller: '',
+    supplier: '',
     salesRep: '',
   });
 
-  const fetchCompanies = async () => {
+  const fetchResellerCompanies = async () => {
     const filterList = {
       name: null,
       type_id: 2, // Reseller Company
@@ -39,7 +40,25 @@ export const Report = () => {
       const data = await getCompanies([0, 10], filterList);
       setResellers(data.data)
     } catch (error) {
-      console.error('Error in fetchCompanies:', error);
+      console.error('Error in fetchResellerCompanies:', error);
+    }
+  };
+
+  const fetchSupplierCompanies = async () => {
+    const filterList = {
+      name: null,
+      type_id: 1, // Supplier Company
+      registration_number: null,
+      search: null,
+      user_role: null,
+      user_id: null
+    };
+
+    try {
+      const data = await getCompanies([0, 10], filterList);
+      setSuppliers(data.data)
+    } catch (error) {
+      console.error('Error in fetchSupplierCompanies:', error);
     }
   };
 
@@ -61,25 +80,31 @@ export const Report = () => {
         console.log("No sales representatives found for the selected company.");
       }
     } catch (error) {
-      console.error('Error in fetchCompanies:', error);
+      console.error('Error in fetchUsersInCompany:', error);
     }
   };
 
   const fetchUsersCompany = async () => {
     try {
       const data = await getUsersCompany(user.id);
-      if (data && data.company_type == "Supplier") {
-        fetchCompanies();
+      if (data && data.company_type == "Supplier") { // Admin in a supplier
+        fetchResellerCompanies();
+        setSuppliers([data])
         setAdminAllowed(true)
+        setSelectedOptions(prevState => ({
+          ...prevState,
+          supplier: data.id
+        }));
       } else if (data && data.company_type == "Reseller") {
         setResellers([data])
         fetchUsersInCompany(data.id);
       } else {
         setResellers([])
+        setSuppliers([])
         console.log("No company found for user.");
       }
     } catch (error) {
-      console.error('Error in fetchCompanies:', error);
+      console.error('Error in fetchUsersCompany:', error);
     }
   };
 
@@ -88,6 +113,7 @@ export const Report = () => {
       startDate: startDate.toISOString().split('T')[0],
       endDate: endDate.toISOString().split('T')[0],
       company_id: selectedOptions.reseller,
+      supplier: selectedOptions.supplier,
       salesRep: selectedOptions.salesRep
     };
 
@@ -125,9 +151,19 @@ export const Report = () => {
   }
 
   const updateGenerateButtonState = () => {
-    const isEnabled = selectedOptions.reportType && selectedOptions.reseller && (showSalesRep ? selectedOptions.salesRep : true);
+    const isSalesReport = selectedOptions.reportType === "sales";
+    const isSupplierSelected = !!selectedOptions.supplier;
+    const isResellerSelected = !!selectedOptions.reseller;
+    const isSalesCommissionReport = selectedOptions.reportType === "sales_commission";
+    const isSalesRepSelected = !!selectedOptions.salesRep;
+
+    const isEnabled = selectedOptions.reportType && (
+        (isSalesReport && isSupplierSelected) || 
+        (isSalesCommissionReport ? isSalesRepSelected : isResellerSelected)
+    );
+
     setIsGenerateButtonEnabled(isEnabled);
-  };
+};
 
   const handleSelectChange = async (e) => {
     const { name, value } = e.target;
@@ -137,14 +173,29 @@ export const Report = () => {
       [name]: value,
     }));
 
-    if (name === 'reseller') {
+    if (name === 'reportType') {
+      if (value === 'sales') {
+        setSelectedOptions(prevState => ({
+          ...prevState,
+          reseller: '',
+          salesRep: ''
+        }));
+      } else if (value === 'reseller_commission') {
+        setSelectedOptions(prevState => ({
+          ...prevState,
+          salesRep: '',
+          supplier: ''
+        }));
+      }
+    } else if (name === 'reseller') {
       if (value) {
         await fetchUsersInCompany(value);
         setSalesReps(data => {
           if (data.length === 0) {
             setSelectedOptions(prevOptions => ({
               ...prevOptions,
-              salesRep: ''
+              salesRep: '',
+              supplier: ''
             }));
           }
           return data;
@@ -153,30 +204,20 @@ export const Report = () => {
         setSalesReps([]);
         setSelectedOptions(prevOptions => ({
           ...prevOptions,
-          salesRep: ''
-        }));
-      }
-    } else if (name === 'reportType') {
-      const isResellerCommission = value === 'reseller_commission';
-      setShowSalesRep(!isResellerCommission);
-      if (isResellerCommission) {
-        setSelectedOptions(prevState => ({
-          ...prevState,
-          salesRep: ''
+          salesRep: '',
+          supplier: ''
         }));
       }
     }
   };
 
   useEffect(() => {
-    if (user.role === "Sales Rep") {
-      setShowSalesRep(true);
-      fetchUsersCompany();
-    } if (user.role === "Admin") {
-      fetchUsersCompany();
-    } else {
-      fetchCompanies();
+    if (user.role === "Superadmin") {
+      fetchResellerCompanies();
+      fetchSupplierCompanies();
       setAdminAllowed(true)
+    } else {
+      fetchUsersCompany();
     }
   }, [user]);
   
@@ -209,14 +250,14 @@ export const Report = () => {
   
   useEffect(() => {
     updateGenerateButtonState();
-  }, [selectedOptions, showSalesRep]);
+  }, [selectedOptions]);
 
   return (
     <div className="flex border-0 pt-24 bg-light-grey">
       <div className="flex w-full justify-items-center grid grid-cols-1 mt-12 pb-10">
         <div className="profile-block" style={{ backgroundColor: 'rgb(220 220 220)' }}>
           <div className="flex justify-between items-end mb-4">
-            <div className={`flex-1 ${showSalesRep ? 'basis-1/5' : 'basis-1/4'} mr-8`}>
+            <div className={`flex-1 mr-8 ${selectedOptions.reportType === 'sales_commission' ? 'basis-1/5' : 'basis-1/4'}`}>
               <p className="text-lg">Select Report:</p>
               <select 
                 name="reportType" 
@@ -229,10 +270,11 @@ export const Report = () => {
                 <option value="" hidden>Select Report</option>
                 <option value="sales_commission">Sales Commission Report</option>
                 <option value="reseller_commission">Reseller Commission Report</option>
+                <option value="sales" hidden={!(user.role === "Superadmin" || (user.role === "Admin" && selectedOptions.supplier))}>Sales Report</option>
               </select>
             </div>
 
-            <div className={`flex-1 ${showSalesRep ? 'basis-1/5' : 'basis-1/4'} mr-8`}>
+            <div className={`flex-1 mr-8 ${selectedOptions.reportType === 'sales_commission' ? 'basis-1/5' : 'basis-1/4'}`}>
               <p className="text-lg">From:</p>
               <DatePicker 
                 selected={startDate} 
@@ -245,7 +287,7 @@ export const Report = () => {
                 wrapperClassName="w-[100%]" />
             </div>
 
-            <div className={`flex-1 ${showSalesRep ? 'basis-1/5' : 'basis-1/4'} mr-8`}>
+            <div className={`flex-1 mr-8 ${selectedOptions.reportType === 'sales_commission' ? 'basis-1/5' : 'basis-1/4'}`}>
               <p className="text-lg">To:</p>
               <DatePicker 
                 selected={endDate} 
@@ -258,27 +300,29 @@ export const Report = () => {
                 wrapperClassName="w-[100%]" />
             </div>
 
-            <div className={`flex-1 ${showSalesRep ? 'basis-1/5' : 'basis-1/4'} mr-8`}>
-              <p className="text-lg">Select Reseller:</p>
-              <select
-                name="reseller"
-                value={selectedOptions.reseller}
-                onChange={handleSelectChange}
-                className="default-input w-[50%] mt-1"
-                style={{ borderColor: 'black' }}
-                disabled={user.role === "Sales Rep" || !adminAllowed}
-              >
-                <option value="" hidden>Select Reseller</option>
-                {resellers.length > 0 ? (
-                  resellers.map(company => (
-                    <option value={company.id}>{company.name}</option>
-                  ))
-                ) : <option value="" hidden></option>}
-              </select>
-            </div>
+            {selectedOptions.reportType !== 'sales' && (
+              <div className={`flex-1 mr-8 ${selectedOptions.reportType === 'sales_commission' ? 'basis-1/5' : 'basis-1/4'}`}>
+                <p className="text-lg">Select Reseller:</p>
+                <select
+                  name="reseller"
+                  value={selectedOptions.reseller}
+                  onChange={handleSelectChange}
+                  className="default-input w-[50%] mt-1"
+                  style={{ borderColor: 'black' }}
+                  disabled={user.role === "Sales Rep" || !adminAllowed}
+                >
+                  <option value="" hidden>Select Reseller</option>
+                  {resellers.length > 0 ? (
+                    resellers.map(company => (
+                      <option value={company.id}>{company.name}</option>
+                    ))
+                  ) : <option value="" hidden></option>}
+                </select>
+              </div>
+            )}
 
-            {showSalesRep && (
-              <div className="flex-1 basis-1/5 mr-8">
+            {selectedOptions.reportType === 'sales_commission' && (
+              <div className="flex-1 mr-8 basis-1/5">
                 <p className="text-lg">Select Sales Rep:</p>
                 <select
                   name="salesRep"
@@ -295,6 +339,28 @@ export const Report = () => {
                   {salesReps.map(user => (
                     <option key={user.id} value={user.id}>{user.user_details.name}</option>
                   ))}
+                </select>
+              </div>
+            )}
+
+            {selectedOptions.reportType === 'sales' && (
+              <div className="flex-1 mr-8 basis-1/4">
+                <p className="text-lg">Select Supplier:</p>
+                <select
+                  name="supplier"
+                  value={selectedOptions.supplier}
+                  onChange={handleSelectChange}
+                  className="default-input w-[50%] mt-1"
+                  style={{ borderColor: 'black' }}
+                  disabled={user.role !== "Superadmin"}
+                >
+                  <option value="" hidden>Select Supplier</option>
+                  {suppliers.length > 1 && <option value="all">All</option>}
+                  {suppliers.length > 0 ? (
+                    suppliers.map(supplier => (
+                      <option value={supplier.id}>{supplier.name}</option>
+                    ))
+                  ) : <option value="" hidden></option>}
                 </select>
               </div>
             )}
