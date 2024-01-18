@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { getCompanies, getUsersInCompany, getUsersCompany } from '../api/company';
 import { getReport } from '../api/reports';
+import { getOrderInvoiceDetails } from '../api/orders';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -163,7 +164,34 @@ export const Report = () => {
     );
 
     setIsGenerateButtonEnabled(isEnabled);
-};
+  };
+
+  const handleInvoiceNumberClick = (event) => {
+    let targetElement = event.target;
+    while (targetElement != null && targetElement.nodeName !== 'A') {
+      targetElement = targetElement.parentElement;
+    }
+  
+    if (targetElement && targetElement.nodeName === 'A' && targetElement.hasAttribute('data-invoice-number')) {
+      event.preventDefault();
+  
+      const invoiceNumber = targetElement.getAttribute('data-invoice-number');
+      if (invoiceNumber) {
+        document.body.style.cursor = 'wait';
+        getOrderInvoiceDetails(invoiceNumber).then(resp => {
+          const pdfUrl = URL.createObjectURL(resp);
+          window.open(pdfUrl, '_blank');
+          URL.revokeObjectURL(pdfUrl);
+        }).catch(error => {
+          console.error('Error fetching invoice details:', error);
+        }).finally(() => {
+          document.body.style.cursor = 'default';
+        });
+      } else {
+        console.error('Invoice number not found');
+      }
+    }
+  };
 
   const handleSelectChange = async (e) => {
     const { name, value } = e.target;
@@ -251,6 +279,19 @@ export const Report = () => {
   useEffect(() => {
     updateGenerateButtonState();
   }, [selectedOptions]);
+
+  useEffect(() => {
+    const reportContainer = document.getElementById('profile-block');
+    if (!reportContainer) {
+      return;
+    } else if (selectedOptions.reportType !== "sales") {
+      return;
+    }
+    reportContainer.addEventListener('click', handleInvoiceNumberClick);
+    return () => {
+      reportContainer.removeEventListener('click', handleInvoiceNumberClick);
+    };
+  }, [reportHtml]);
 
   return (
     <div className="flex border-0 pt-24 bg-light-grey">
@@ -378,7 +419,7 @@ export const Report = () => {
         <br></br>
         {reportHtml ? (
           <>
-            <div className="profile-block" style={{ backgroundColor: 'rgb(220 220 220)' }}>
+            <div id="profile-block" className="profile-block" style={{ backgroundColor: 'rgb(220 220 220)' }}>
               <div className="flex w-full justify-end">
                 <img src={downloadPdf} alt="Download PDF" className="max-w-[30px] mr-2" onClick={() => generateReport("PDF")} />
                 <img src={downloadCsv} alt="Download CSV" className="max-w-[30px] mr-2" onClick={() => generateReport("CSV")} />
