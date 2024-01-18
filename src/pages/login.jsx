@@ -34,7 +34,7 @@ export const Login = () => {
 
   return (
     <div className="w-full h-full flex items-center justify-center flex-col login-color">
-      <img className="w-[35rem] pb-10" src="src/assets/labtrader-login.png"></img>
+      <img className="w-[35rem] pb-10" src="../assets/labtrader-login.png"></img>
       <div className="w-[25rem] p-5">
         {invalidCredentials && <p className="text-red-400 text-sm flex justify-center">Invalid Password or Email</p>}
         <form className="mb-4" onSubmit={(e) => {handleLogin(e)}}>

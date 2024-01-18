@@ -42,7 +42,7 @@ export const ResetPassword = () => {
 
   return (
     <div className="w-full h-full flex items-center justify-center flex-col login-color">
-      <img className="w-[35rem] pb-10" src="src/assets/labtrader-login.png"></img>
+      <img className="w-[35rem] pb-10" src="../assets/labtrader-login.png"></img>
       <div className="relative w-[25rem] flex flex-col items-center p-5 text-white">
         <ArrowLeftIcon className="h-8 w-8 absolute top-5 left-5 cursor-pointer hover:bg-grey/40 rounded-md" onClick={() => { navigate("/login") }} />
         <p className="text-3xl mb-6">Reset Password</p>
