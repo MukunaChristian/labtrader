@@ -157,46 +157,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
           <p className="font-bold">Filters</p>
           <XMarkIcon onClick={() => {setIsFilterSideBarOpen(false)}} className="w-6 h-6 text-dark-grey hover:text-navy-blue ml-auto cursor-pointer" />
         </div>
-        {/* <div className="flex justify-between border-solid border-0 border-b-[1.5px] pb-12">
-          <div className="w-1/4">
-            <p className="font-bold pb-2">Delivery time</p>
-            <FieldGroups 
-              fieldGroups={["5d or less", "8d or less", "10d or less", "15d or less"]} 
-              fieldGroupName="delivery_time" 
-              selectedFieldGroup={filtersLocal["delivery_time"]} 
-              onFieldGroupSelect={handleFilterChange}  
-            /> 
-          </div>
-          <div className="w-1/3">
-            <p className="font-bold pb-2">Certificate</p>
-            <FieldGroups 
-              fieldGroups={certificate_list} 
-              fieldGroupName="certificate" 
-              selectedFieldGroup={filtersLocal["certificate"]} 
-              onFieldGroupSelect={handleFilterChange}  
-            /> 
-          </div>
-          <div className="w-1/3">
-            <p className="font-bold pb-4">Show/Hide Results</p>
-            <div className="flex pb-2">
-              <input onClick={() => handleFilterChange("show_only_image")} type="checkbox"/>
-              <label className="ml-2 text-sm">Show only image</label>
-            </div>
-            <div className="flex pb-2">
-              <input onClick={() => handleFilterChange("show_only_video")} type="checkbox"/>
-              <label className="ml-2 text-sm">Show only video</label>
-            </div>
-            <div className="flex pb-2">
-              <input onClick={() => handleFilterChange("show_only_returnable")} type="checkbox"/>
-              <label className="ml-2 text-sm">Show only returnable</label>
-            </div>
-            <div className="flex pb-2">
-              <input onClick={() => handleFilterChange("show_only_immediate_purchase")} type="checkbox"/>
-              <label className="ml-2 text-sm">Show only available for immediate purchase</label>
-            </div>
-            
-          </div>
-        </div> */}
+
 
         <div>
           <p className="font-bold pt-4 pb-4">Shape</p>
@@ -353,38 +314,6 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             />   
           </div>
         </div>
-
-        {/* <div className="pt-12 w-[50%]">
-          <p className="font-bold pb-2">Eye clean</p>
-          <FieldGroups 
-            fieldGroups={["Yes", "No", "Borderline"]} 
-            fieldGroupName="eye_clean" 
-            selectedFieldGroup={filtersLocal["eye_clean"]} 
-            onFieldGroupSelect={handleFilterChange} 
-          />  
-        </div>
-
-        <div className="flex pb-2">
-          <input onClick={() => handleFilterChange("with_unknown_eye_clean")} type="checkbox"/>
-          <label className="ml-2 text-sm">Allow unknown eye clean</label>
-        </div>
-
-        <div className="pt-12 w-[50%]">
-          <p className="font-bold pb-2">Shade and Luster</p>
-          <div className="flex pb-2">
-            <input onClick={() => handleFilterChange("no_bgm")} type="checkbox"/>
-            <label className="ml-2 text-sm">No BGM</label>
-          </div>
-          <div className="flex pb-2">
-            <input onClick={() => handleFilterChange("with_unknown_shade")} type="checkbox"/>
-            <label className="ml-2 text-sm">Allow unknown shade</label>
-          </div>
-          <div className="flex pb-2">
-            <input onClick={() => handleFilterChange("with_unknown_luster")} type="checkbox"/>
-            <label className="ml-2 text-sm">Allow unknown luster</label>
-          </div>
-        </div> */}
-      
 
         <div className="fixed py-4 flex justify-end mt-4 bottom-0 w-[93vh] bg-white border-0 border-solid border-t-[1px]">
           <button onClick={() => {handleReset()}} className="default-button w-16 mr-2" >Reset</button>
