@@ -35,7 +35,34 @@ const appSlice = createSlice({
       "no_bgm": false,
       "cert_id": "",
       "stock_id": "",
-      "price_sort": ""
+      "price_sort": "",
+      "type": 1
+    },
+    meleeFilters: {
+      "delivery_time": [],
+      "certificate": [],
+      "shape": [],
+      "carat": [],
+      "color": [],
+      "clarity": [],
+      "cut": [],
+      "polish": [],
+      "symmetry": [],
+      "fluorescence": [],
+      "fluorescence_color": [],
+      "eye_clean": [],
+      "show_only_image": false,
+      "show_only_video": false,
+      "show_only_returnable": false,
+      "show_only_immediate_purchase": false,
+      "with_unknown_eye_clean": false,
+      "with_unknown_shade": false,
+      "with_unknown_luster": false,
+      "no_bgm": false,
+      "cert_id": "",
+      "stock_id": "",
+      "price_sort": "",
+      "type": 2
     },
     rates: {},
     diamondData: [],
@@ -45,7 +72,8 @@ const appSlice = createSlice({
     uploadingLoader: false,
     uploadErrors: {},
     diamondAmount: 0,
-    companies: []
+    companies: [],
+    diamond_type: "diamond"
   },
   reducers: {
     setLoggedInState: (state, action) => {
@@ -86,6 +114,9 @@ const appSlice = createSlice({
     setDiamondAmountState: (state, action) => {
       state.diamondAmount = action.payload
     },
+    setDiamondTypeState: (state, action) => {
+      state.diamond_type = action.payload
+    },
     resetFiltersState: (state) => {
       state.filters = {
         "delivery_time": [],
@@ -110,9 +141,41 @@ const appSlice = createSlice({
         "no_bgm": false,
         "cert_id": "",
         "stock_id": "",
-        "price_sort": ""
+        "price_sort": "",
+        "type": 1
       }
-    }
+    },
+    setMeleeFiltersState: (state, action) => {
+      state.meleeFilters = action.payload
+    },
+    resetMeleeFiltersState: (state) => {
+      state.meleeFilters = {
+        "delivery_time": [],
+        "certificate": [],
+        "shape": [],
+        "carat": [],
+        "color": [],
+        "clarity": [],
+        "cut": [],
+        "polish": [],
+        "symmetry": [],
+        "fluorescence": [],
+        "fluorescence_color": [],
+        "eye_clean": [],
+        "show_only_image": false,
+        "show_only_video": false,
+        "show_only_returnable": false,
+        "show_only_immediate_purchase": false,
+        "with_unknown_eye_clean": false,
+        "with_unknown_shade": false,
+        "with_unknown_luster": false,
+        "no_bgm": false,
+        "cert_id": "",
+        "stock_id": "",
+        "price_sort": "",
+        "type": 2
+      }
+    },
   },
 })
 
@@ -129,6 +192,9 @@ export const {
   setUploadingLoaderState,
   setUploadErrorsState,
   setDiamondAmountState,
-  setCompaniesState
+  setCompaniesState,
+  setDiamondTypeState,
+  setMeleeFiltersState,
+  resetMeleeFiltersState
 } = appSlice.actions
 export default appSlice.reducer;

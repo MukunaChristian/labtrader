@@ -6,6 +6,8 @@ import { uploadStock } from "../../api/diamonds";
 import { WarehouseDropdown } from "../dropdowns/WarehouseDropdown.jsx";
 import { SupplierDropdown } from "../dropdowns/SupplierDropdown.jsx";
 import loader from '../../assets/loader.gif';
+import { setDiamondTypeState } from "../../reducers/AppSlice";
+import { useApp } from "../../hooks/useApp.jsx";
 
 import { setUploadingLoaderState, setUploadErrorsState } from '../../reducers/AppSlice';
 
@@ -16,12 +18,17 @@ export const Header = ({ title, results }) => {
   const [selectedSupplier, setSelectedSupplier] = useState(null);
   const [fileLoaded, setFileLoaded] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
-  const user = useSelector(state => state.user.user)
 
-  const dispatch = useDispatch();
+  const user = useSelector(state => state.user.user)
+  const filters = useSelector(state => state.app.filters);
   const uploading = useSelector(state => state.app.uploadingLoader);
   const uploadErrors = useSelector(state => state.app.uploadErrors);
+  const currentDiamondType = useSelector(state => state.app.diamond_type);
 
+  const { setFilters } = useApp()
+
+  const dispatch = useDispatch();
+  
   const popperElement = useRef(null);
   const { styles, attributes } = usePopper(
     referenceElement,
@@ -62,6 +69,10 @@ export const Header = ({ title, results }) => {
     setFileLoaded(null);
   }
 
+  const handleTabChange = (diamondType) => {
+    dispatch(setDiamondTypeState(diamondType === 1 ? 'diamond' : 'melee'));
+  }
+
   const downloadFile = () => {
     // Define the text to be written to the file
     let fileText = '';
@@ -88,8 +99,24 @@ export const Header = ({ title, results }) => {
   };
 
   return (
-    <>
-      <div className="p-4 pt-24 flex">
+    <div className="pt-24">
+      <div className="w-full h-[2rem] border-solid border-0 border-b-[1px]">
+        <button 
+          onClick={() => {handleTabChange(1)}} 
+          className={`
+            border-0 border-solid w-[10rem] h-full  
+            hover:bg-grey hover:border-[1px]
+            ${currentDiamondType === "diamond" ? 'bg-grey border-[1px]' : 'bg-light-grey'}`
+          }>Lab Grown Diamonds</button>
+        <button 
+          onClick={() => {handleTabChange(2)}} 
+          className={`
+            border-0 border-solid w-[10rem] h-full  
+            hover:bg-grey hover:border-[1px]
+            ${currentDiamondType === "melee" ? 'bg-grey border-[1px]' : 'bg-light-grey'}`
+          }>Lab Grown Melee</button>
+      </div>
+      <div className="p-4 flex">
         <div>
           <p className="text-xl font-bold text-secondary">{ title }</p>
           <p className="text-sm text-text font-semibold">{ results } results</p>
@@ -179,6 +206,6 @@ export const Header = ({ title, results }) => {
         </div>
       </div>
     )}
-  </>
+  </div>
   )
 }
