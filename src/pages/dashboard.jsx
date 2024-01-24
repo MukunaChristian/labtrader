@@ -3,8 +3,8 @@ import { useSelector } from "react-redux"
 
 import { Header } from "../components/dashboard/header.jsx"
 import { FilterBar } from "../components/dashboard/filterBar.jsx"
-import { FilterSideBar } from "../components/filterSideBar"
-import { MeleeFilterSideBar } from "../components/FilterSideBar/MeleeFilters.jsx"
+import { FilterSideBar } from "../components/filterSideBar/index.jsx"
+import { MeleeFilterSideBar } from "../components/filterSideBar/MeleeFilters.jsx"
 import { CustomDataTable } from "../components/dataTable/CustomDataTable.jsx"
 
 
