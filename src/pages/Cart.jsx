@@ -7,8 +7,7 @@ import { checkout } from "../api/checkout"
 import { clearCart, removeDiamondFromCart, addDiamondToCart } from "../reducers/UserSlice"
 import { CheckoutDropdown } from "../components/dropdowns/CheckoutDropdown"
 import { calculateDeliveryFee } from "../api/checkout"
-import { type } from "jquery"
-
+import { set } from "lodash"
 
 export const Cart = () => {
     const diamonds_in_cart = useSelector(state => state.user.diamonds_in_cart)
@@ -25,12 +24,6 @@ export const Cart = () => {
 
     const subTotal = diamonds_in_cart.reduce((acc, curr) => acc + parseFloat(curr.total) * curr.amount_in_cart * rates[currency.code], 0).toFixed(2)
     const total = (parseFloat(subTotal) + parseFloat(deliveryFee)).toFixed(2)
-
-    useEffect(() => {
-      if (diamonds_in_cart.length > 0) {
-        setSelectedDiamond(diamonds_in_cart[0])
-      }
-    }, [diamonds_in_cart])
 
     const toggleDelivery = (option) => {
       if (option === "Deliver") {
@@ -62,16 +55,23 @@ export const Cart = () => {
 
 
     const updateCurrentAmount = (e) => {
+      let amount;
       if (e.target.value === "") {
-        const amount = 0
+        amount = 0
       } else {
-        const amount = parseInt(e.target.value)
+        amount = e.target.value
       }
+
+      
+
+      console.log(amount)
       
       if (amount >= 0) {
-        const diamond = {...selectedDiamond, amount_in_cart: amount}
+        const diamond = {...selectedDiamond, amount_in_cart: parseInt(amount)}
+        setSelectedDiamond(diamond)
+        const diamondIndex = diamonds_in_cart.findIndex(diamond => diamond.id === selectedDiamond.id)
         dispatch(removeDiamondFromCart(selectedDiamond.id))
-        dispatch(addDiamondToCart(diamond))
+        dispatch(addDiamondToCart({diamond: diamond, index: diamondIndex}))
       }
     }
 
@@ -105,15 +105,17 @@ export const Cart = () => {
                       <p className='text-sm'>{diamond.ratio_measurements.measurements.width} - {diamond.ratio_measurements.measurements.height} x {diamond.ratio_measurements.measurements.depth}</p>
                     </div>
 
-                    <div className="ml-auto text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white">
-                      <p className='mb-2'>
-                        {diamond.amount ? diamond.amount : 0} Available
-                      </p>
-                      <div className="flex">
-                        <input className={`w-[6rem] h-[1.5rem] px-2 rounded-sm mr-2`} value={diamond.amount_in_cart === 0 ? 0 : diamond.amount_in_cart} onChange={(e) => {updateCurrentAmount(e)}} />
-                        <p>~ pcs</p>
+                    {diamond.diamond_type_id == 2 &&
+                      <div className="ml-auto text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white">
+                        <p className='mb-2'>
+                          {diamond.amount ? diamond.amount : 0} Available
+                        </p>
+                        <div className="flex">
+                          <input className={`w-[6rem] h-[1.5rem] px-2 rounded-sm mr-2`} value={diamond.amount_in_cart === 0 ? null : diamond.amount_in_cart} onChange={(e) => {updateCurrentAmount(e)}} />
+                          <p>~ pcs</p>
+                        </div>
                       </div>
-                    </div>
+                    }
 
                     <div className="ml-auto text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white">
                       <p className="text-sm">Price in USD</p>

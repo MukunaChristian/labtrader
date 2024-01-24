@@ -63,10 +63,21 @@ const UserSlice = createSlice({
     },
 
     addDiamondToCart: (state, action) => {
+      console.log(action.payload)
+      if (action.payload.diamond) {
+        console.log("index exists")
+        state.diamonds_in_cart.splice(action.payload.index, 0, action.payload.diamond)
+        let cart = JSON.parse(localStorage.getItem('cartItems'));
+        cart.splice(action.payload.index, 0, action.payload.diamond)
+        localStorage.setItem('cartItems', JSON.stringify(cart));
+        return
+      }
+
+      console.log("index does not exist")
+
       state.diamonds_in_cart.push(action.payload)
       let cart = JSON.parse(localStorage.getItem('cartItems'));
       cart = [...cart, action.payload]
-      console.log(cart)
       localStorage.setItem('cartItems', JSON.stringify(cart));
     },
 
