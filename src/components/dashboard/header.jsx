@@ -2,14 +2,14 @@ import { usePopper } from "react-popper";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDropzone } from 'react-dropzone'
-import { uploadStock } from "../../api/diamonds";
+import { uploadStock } from "../../api/diamonds.js";
 import { WarehouseDropdown } from "../dropdowns/WarehouseDropdown.jsx";
 import { SupplierDropdown } from "../dropdowns/SupplierDropdown.jsx";
 import loader from '../../assets/loader.gif';
-import { setDiamondTypeState } from "../../reducers/AppSlice";
+import { setDiamondTypeState } from "../../reducers/AppSlice.jsx";
 import { useApp } from "../../hooks/useApp.jsx";
 
-import { setUploadingLoaderState, setUploadErrorsState } from '../../reducers/AppSlice';
+import { setUploadingLoaderState, setUploadErrorsState } from '../../reducers/AppSlice.jsx';
 
 
 export const Header = ({ title, results }) => {
