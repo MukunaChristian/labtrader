@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 
+<<<<<<< Updated upstream
 import { Header } from "../components/dashboard/header.jsx"
 import { FilterBar } from "../components/dashboard/filterBar.jsx"
+=======
+import { Header } from "../components/Dashboard/header.jsx"
+import { FilterBar } from "../components/Dashboard/filterBar.jsx"
+>>>>>>> Stashed changes
 import { FilterSideBar } from "../components/filterSideBar"
 import { CustomDataTable } from "../components/dataTable/CustomDataTable.jsx"
 
