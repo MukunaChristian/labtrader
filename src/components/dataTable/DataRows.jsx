@@ -64,11 +64,13 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             {
             column.field === "total" ? 
             <>
-              {spotPrice ? <div className="flex flex-col">
-                <div className="flex"><p className='text-xs'>{currency.symbol} {(spotPrice / parseFloat(row.specifications.carat)).toFixed(2)}/ct</p></div>
-                <div className="flex"><p className='text-lg'>${row[column.field]}</p></div>
-                <div className="flex"><p>{spotPrice} {currency.code}</p></div>
-              </div> : <div className="flex flex-col">
+              {spotPrice ? <>
+                <div className="flex flex-col">
+                  <div className="flex"><p className='text-xs'>{currency.symbol} {(spotPrice / parseFloat(row.specifications.carat)).toFixed(2)}/ct</p></div>
+                  <div className="flex"><p className='text-lg'>${parseFloat(row[column.field]).toFixed(2)}</p></div>
+                  <div className="flex"><p>{spotPrice} {currency.code}</p></div>
+                </div>
+              </> : <div className="flex flex-col">
                 <div className="flex"><p className='text-lg'>N/A</p></div>
               </div>}
             </> : 
@@ -76,7 +78,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             column.renderCell({ value: row[column.field], row: row }) : 
             row[column.field]
             }
-          </td>
+          </td> 
         ))}
         <td className="px-3 py-4 w-1 whitespace-nowrap bg-black border-dark-grey">
           <button onClick={() => {handleExpand()}} className={`rounded-md w-6 h-6 duration-300 bg-black text-white`}>
@@ -181,10 +183,23 @@ export const DataRows = ({ row, rowIndex, columns }) => {
               <p className='text-primary pt-2'>Price Per Carat</p>
               <p className='text-text'>{row.total ? currency.symbol + " " + (spotPrice / parseFloat(row.specifications.carat)).toFixed(2) + '/ct' : 'N/A'}</p>
               <p className='text-text'></p>
+              {row.diamond_type_id === 2 ? 
+              <>
+                <p className='text-primary pt-2'>Stock Amount</p>
+                <p className='text-text'>{row.amount}</p>
+              </> : null}
             </div>
             <div className='pt-4'>
               <p className='font-bold text-primary'>Actions</p>
+              {row.diamond_type_id === 1 ?
               <button onClick={() => handleAddToCart()} className={`mt-4 h-7 w-32 rounded-md flex justify-center items-center text-white ${diamonds_in_cart.some(item => item.id === row.id) ? 'bg-red-400 border-solid border-accent' : 'bg-accent'}`}>{diamonds_in_cart.some(item => item.id === row.id) ? 'Remove from cart' : 'Add to cart'}</button>
+              : 
+              <div className='mt-4'>
+                <p className='text-white font-semibold text-center'>Add to cart</p>
+                <div>
+                  <button className={`mt-2 h-7 w-32 rounded-md flex justify-center items-center text-white bg-accent`}>Request</button>
+                </div>
+              </div>}
               <button onClick={() => {navigate("/details/" + row["id"])}} className='mt-4 h-7 w-32 rounded-md border-solid border-[1.5px] flex justify-center items-center'>More details</button>
 
               {/* <div className='flex mt-4 justify-between'>

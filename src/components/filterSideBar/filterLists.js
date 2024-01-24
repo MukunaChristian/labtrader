@@ -122,3 +122,29 @@ export const diamondShapes = [
   { id: 21, name: "Kite", imgSrc: "diamond.png" },
   { id: 22, name: "Shield", imgSrc: "diamond.png" },
 ];
+
+export const meleeShapes = [
+  { id: 1, name: "Round", imgSrc: "round.png" },
+  { id: 10, name: "Pear", imgSrc: "pear.png" },
+  { id: 12, name: "Marquise", imgSrc: "marquise.png" },
+];
+
+export const melee_color_list = ["D", "E", "F"];
+
+export const melee_clarity_list = ["VS", "SI"];
+
+export const melee_cut_list = [
+  { display: "Excellent", name: "EX" },
+  { display: "Very Good", name: "VG" },
+];
+
+export const melee_carat_list = [
+  "0.003",
+  "0.004",
+  "0.005",
+  "0.006",
+  "0.0068",
+  "0.0075",
+  "0.0085",
+  "0.0095",
+];

@@ -4,7 +4,7 @@ import { ArrowLeftIcon } from "@heroicons/react/20/solid"
 import { TrashIcon } from "@heroicons/react/20/solid"
 import { useNavigate } from "react-router-dom"
 import { checkout } from "../api/checkout"
-import { clearCart, removeDiamondFromCart } from "../reducers/UserSlice"
+import { clearCart, removeDiamondFromCart, addDiamondToCart } from "../reducers/UserSlice"
 import { CheckoutDropdown } from "../components/dropdowns/CheckoutDropdown"
 import { calculateDeliveryFee } from "../api/checkout"
 import { type } from "jquery"
@@ -23,7 +23,7 @@ export const Cart = () => {
     const rates = useSelector(state => state.app.rates);
     const navigate = useNavigate()
 
-    const subTotal = diamonds_in_cart.reduce((acc, curr) => acc + parseFloat(curr.total) * rates[currency.code], 0).toFixed(2)
+    const subTotal = diamonds_in_cart.reduce((acc, curr) => acc + parseFloat(curr.total) * curr.amount_in_cart * rates[currency.code], 0).toFixed(2)
     const total = (parseFloat(subTotal) + parseFloat(deliveryFee)).toFixed(2)
 
     useEffect(() => {
@@ -60,6 +60,21 @@ export const Cart = () => {
       )
     }
 
+
+    const updateCurrentAmount = (e) => {
+      if (e.target.value === "") {
+        const amount = 0
+      } else {
+        const amount = parseInt(e.target.value)
+      }
+      
+      if (amount >= 0) {
+        const diamond = {...selectedDiamond, amount_in_cart: amount}
+        dispatch(removeDiamondFromCart(selectedDiamond.id))
+        dispatch(addDiamondToCart(diamond))
+      }
+    }
+
     
     return (
       <div className="pt-24 px-24 bg-light-grey pb-24 relative">
@@ -91,13 +106,23 @@ export const Cart = () => {
                     </div>
 
                     <div className="ml-auto text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white">
+                      <p className='mb-2'>
+                        {diamond.amount ? diamond.amount : 0} Available
+                      </p>
+                      <div className="flex">
+                        <input className={`w-[6rem] h-[1.5rem] px-2 rounded-sm mr-2`} value={diamond.amount_in_cart === 0 ? 0 : diamond.amount_in_cart} onChange={(e) => {updateCurrentAmount(e)}} />
+                        <p>~ pcs</p>
+                      </div>
+                    </div>
+
+                    <div className="ml-auto text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white">
                       <p className="text-sm">Price in USD</p>
-                      <p className="font-semibold text-sm">$ {diamond.total}</p>
+                      <p className="font-semibold text-sm">$ {diamond.total * diamond.amount_in_cart}</p>
                     </div>
 
                     <div className="text-right mr-4">
                       <p className="text-sm">Price in {currency.name}</p>
-                      <p className="font-semibold text-sm">{diamond.total ? currency.symbol + " " + (parseFloat(diamond.total) * rates[currency.code] * 10 / 10).toFixed(2) : 'N/A'}</p>
+                      <p className="font-semibold text-sm">{diamond.total  ? currency.symbol + " " + (parseFloat(diamond.total) * diamond.amount_in_cart * rates[currency.code] * 10 / 10).toFixed(2) : 'N/A'}</p>
                     </div>
                     
                   </div>
