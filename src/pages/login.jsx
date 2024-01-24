@@ -33,17 +33,18 @@ export const Login = () => {
 
 
   return (
-    <div className="h-[100vh] overflow-hidden w-full flex justify-center bg-light-grey">
-      <div className="w-[24rem] h-[20rem] border-[1.5px] border-solid border-text my-auto p-5 shadow-lg">
-        <p className="text-3xl mb-2">Login</p>
-        {invalidCredentials && <p className="text-red-400 text-sm">Invalid Password or Email</p>}
+    <div className="w-full h-full flex items-center justify-center flex-col login-color">
+      <img className="w-[20rem]" src="../assets/diamond-login.png"></img>
+      <img className="w-[35rem] pb-10" src="../assets/labtrader-login.png"></img>
+      <div className="w-[25rem] p-5">
+        {invalidCredentials && <p className="text-red-400 text-sm flex justify-center">Invalid Password or Email</p>}
         <form className="mb-4" onSubmit={(e) => {handleLogin(e)}}>
           <input name="email" className="default-input mt-5" type="text" placeholder="Email" />
           <input name="password" className="default-input mt-5" type="password" placeholder="Password" />
-          <button type="submit" className="w-full h-10 bg-black text-white rounded-md mt-5 login-button">Log in</button>
+          <button type="submit" className="w-full h-10 bg-light-grey text-black rounded-md mt-5 login-button">Log in</button>
         </form>
         <div className="w-full flex justify-end">
-          <a href="/forgot-password" className="text-delete-red text-sm text-right hover:text-light-red">Forgot Password?</a>
+          <a href="/forgot-password" className="text-sm text-right forgot-color">Forgot Password?</a>
         </div> 
       </div>
     </div>

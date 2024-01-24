@@ -96,16 +96,16 @@ export const Layout = ({ children }) => {
           <div className='h-24 flex justify-start ml-auto'>
             <div className='h-full flex items-center ml-auto mr-6'>
               <CurrencyDropdown />
-              {/* <LanguageDropdown />  */}
-              <div onClick={() => navigate("/cart")} className='relative h-10 w-10 flex items-center justify-center ml-4 border-solid border-[2px] border-white rounded-full hover:bg-grey cursor-pointer'>
-                <ShoppingCartIcon className='relative h-6 w-6 text-white' />
-                {/* {diamonds_in_cart.length > 0 && 
-                  <p className='abolute bg-black rounded-full bottom-0 right-0 text-white text-xs w-4 h-4'>{diamonds_in_cart.length}</p>
-                } */}
+              <div className='relative h-10 w-10 flex items-center justify-center ml-4 border-solid border-[2px] border-white rounded-full hover:bg-grey cursor-pointer' onClick={() => navigate("/cart")}>
+                <ShoppingCartIcon className='h-6 w-6 text-white' />
+                {diamonds_in_cart.length > 0 && 
+                  <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full flex items-center justify-center w-5 h-5'>
+                    {diamonds_in_cart.length}
+                  </span>
+                }
               </div>
             </div>
           </div>
-
         </div>
       }
       {/* <div className='h-full' style={{ backgroundColor: 'rgb(220 220 220)' }}> */}

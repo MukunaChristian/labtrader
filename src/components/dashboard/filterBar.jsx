@@ -71,9 +71,9 @@ export const FilterBar = ({ setIsFilterSideBarOpen, setCurrentRows, currentRows 
         <AdjustmentsHorizontalIcon className="w-4 h-4 text-white mr-1" />
         <p>All Filters</p>
       </button>
-      <div className="border border-solid border-black h-8 rounded-lg ml-4 bg-white flex items-center">
+      <div className="border border-solid border-black h-8 rounded-lg ml-4 bg-white flex items-center w-64">
         <MagnifyingGlassIcon className="w-5 h-5 text-black ml-2" />
-        <input onChange={(e) => searchRows(String(e.target.value))} value={filters['cert_id']} className="w-64 h-full p-2 border-none focus:outline-none" type="text" placeholder='Enter certificate No or stock ID' />
+        <input onChange={(e) => searchRows(String(e.target.value))} value={filters['cert_id']} className="w-[13rem] h-full p-2 border-none focus:outline-none" type="text" placeholder='Enter certificate No or stock ID' />
       </div> 
       <button onClick={() => sortPrice()} className="default-button ml-auto bg-accent text-white rounded-lg">
         <p>Price: low to high</p>
