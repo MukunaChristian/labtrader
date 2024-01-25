@@ -22,7 +22,7 @@ export const diamondColumns = [
   {
     field: "specifications",
     headerName: "Specifications",
-    width: 200,
+    width: 100,
     renderCell: (params) => (
       <div>
         <div className="flex mb-1">
@@ -64,7 +64,7 @@ export const diamondColumns = [
   {
     field: "finish",
     headerName: "Finish",
-    width: 200,
+    width: 100,
     renderCell: (params) => (
       <div className="grid grid-cols-2 gap-4">
         <div>

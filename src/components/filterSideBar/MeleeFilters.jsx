@@ -1,20 +1,18 @@
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import { setMeleeFiltersState, resetMeleeFiltersState } from "../../reducers/AppSlice";
 import { useSelector, useDispatch } from "react-redux";
 
-import { FieldGroups, FancyColorFields } from "./fieldGroups";
+import { FieldGroups } from "./fieldGroups";
 import { 
   meleeShapes as diamondShapes, 
   melee_carat_list as carat_list, 
   melee_color_list as color_list, 
   melee_cut_list as cut_list, 
-  melee_clarity_list as clarity_list
+  melee_clarity_list as clarity_list,
+  meleeSizeRange
 } from "./filterLists";
-import { filterTemplate, filterTemplateMelee } from "./filterTemplate"
-import { filter } from "lodash";
+import { filterTemplateMelee } from "./filterTemplate"
 
 
 export const MeleeFilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) => {
@@ -44,6 +42,27 @@ export const MeleeFilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen
       }
       setFiltersLocal(newFilters);
       return  
+    }
+
+    if (filterName === 'size_range') {
+      const newFilters = { ...filtersLocal };
+      const sizeRange = filterItem.split("-");
+
+      if (newFilters[filterName].includes(filterItem)) {
+        newFilters[filterName] = newFilters[filterName].filter((item) => item !== filterItem);
+        newFilters["size_from"] = newFilters["size_from"].filter((item) => item !== parseFloat(sizeRange[0]));
+        newFilters["size_to"] = newFilters["size_to"].filter((item) => item !== parseFloat(sizeRange[1]));
+        setFiltersLocal(newFilters);
+        return
+      }
+
+      // split size range and add to size range array
+      
+      newFilters["size_from"] = [ ...newFilters["size_from"], parseFloat(sizeRange[0]) ]
+      newFilters["size_to"] = [ ...newFilters["size_to"], parseFloat(sizeRange[1]) ]
+      newFilters["size_range"] = [ ...newFilters["size_range"], filterItem ]
+      setFiltersLocal(newFilters);
+      return
     }
 
     if (typeof filterItem === 'string') {
@@ -99,7 +118,7 @@ export const MeleeFilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen
             <div 
               key={diamondShape.id} 
               onClick={() => handleFilterChange("shape", diamondShape.name)} 
-              className={`flex flex-col bg-white items-center justify-around border-solid border-[1.5px] h-24 ${filtersLocal["shape"].includes(diamondShape.name.toLowerCase()) ? "border-red-100" : ""}`}
+              className={`flex flex-col bg-white items-center justify-around border-solid border-[1.5px] h-24 ${filtersLocal["shape"].includes(diamondShape.name.toLowerCase()) ? "border-accent" : ""}`}
             >
               <p className="text-xs w-[80%] text-center">{diamondShape.name}</p>
               <img 
@@ -120,6 +139,18 @@ export const MeleeFilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen
               fieldGroups={carat_list} 
               fieldGroupName="carat" 
               selectedFieldGroup={filtersLocal["carat"]} 
+              onFieldGroupSelect={handleFilterChange}  
+            />   
+          </div>    
+        </div>
+
+        <div className="pt-12">
+          <p className="font-bold pb-2">Size (mm)</p>
+          <div className="flex">
+            <FieldGroups 
+              fieldGroups={meleeSizeRange} 
+              fieldGroupName="size_range" 
+              selectedFieldGroup={filtersLocal["size_range"]} 
               onFieldGroupSelect={handleFilterChange}  
             />   
           </div>    

@@ -49,4 +49,7 @@ export let filterTemplateMelee = {
   stock_id: "",
   price_sort: "",
   type: 2,
+  size_from: [],
+  size_to: [],
+  size_range: [],
 };

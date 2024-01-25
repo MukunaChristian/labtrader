@@ -105,15 +105,15 @@ export const Header = ({ title, results }) => {
           onClick={() => {handleTabChange(1)}} 
           className={`
             border-0 border-solid w-[10rem] h-full  
-            hover:bg-grey hover:border-[1px]
-            ${currentDiamondType === "diamond" ? 'bg-grey border-[1px]' : 'bg-light-grey'}`
+            hover:bg-black hover:text-white hover:border-[1px]
+            ${currentDiamondType === "diamond" ? 'bg-black text-white border-[1px]' : 'bg-grey border-[1px] '}`
           }>Lab Grown Diamonds</button>
         <button 
           onClick={() => {handleTabChange(2)}} 
           className={`
-            border-0 border-solid w-[10rem] h-full  
-            hover:bg-grey hover:border-[1px]
-            ${currentDiamondType === "melee" ? 'bg-grey border-[1px]' : 'bg-light-grey'}`
+          order-0 border-solid w-[10rem] h-full  
+          hover:bg-black hover:text-white hover:border-[1px]
+          ${currentDiamondType === "melee" ? 'bg-black text-white border-[1px]' : 'bg-grey border-[1px] '}`  
           }>Lab Grown Melee</button>
       </div>
       <div className="p-4 flex">

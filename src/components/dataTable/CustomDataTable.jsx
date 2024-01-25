@@ -54,12 +54,22 @@ export const CustomDataTable = ({ currentRows, diamondsType }) => {
           <thead>
             <tr>
               {columns.map((column, index) => (
-                <th 
-                  key={index} 
-                  width={column.headerName === "Image" ? "40" : column.headerName === "Total" ? "100" : "40"}
-                  className={`px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] bg-black`}>
-                  {column.headerName}
-                </th>
+                <>
+                  {diamondsType === "diamond" ? 
+                  <th 
+                    key={index} 
+                    width={column.headerName === "Image" ? "40" : column.headerName === "Total" ? "200" : "200"}
+                    className={`px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] bg-black`}>
+                    {column.headerName}
+                  </th> : 
+                  <th 
+                    key={index} 
+                    width={column.headerName === "Image" ? "40" : column.headerName === "Total" ? "100" : "40"}
+                    className={`px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] bg-black`}>
+                    {column.headerName}
+                  </th>
+                  }
+                </>
               ))}
               {diamondsType === "diamond" &&
                 <th key={7} width={'2%'} className="px-3 py-3 text-md text-left leading-4 text-text bg-black border-light-grey"></th>

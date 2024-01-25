@@ -125,13 +125,13 @@ export const DataRowsMelee = ({ row, columns }) => {
               <button 
                 disabled={checkoutUnallowed} 
                 onClick={() => handleAddToCart()} 
-                className={`h-7 w-7 rounded-md flex justify-center items-center 
-                            ${checkoutUnallowed ? 'bg-light-gray cursor-default' : ''} 
-                            ${inCart ? 'bg-red-400 border-solid border-accent' : 'bg-white'}`}
+                className={`h-8 w-8 bg-black rounded-full border-solid border-[2px] flex justify-center items-center 
+                            ${checkoutUnallowed ? 'cursor-default border-gray-200' : 'border-white'} 
+                            ${inCart ? 'bg-red-400' : ''}`}
                 >
                 {inCart ? 
                 <XMarkIcon className={`w-5 h-5 text-red`}/> :
-                <ShoppingCartIcon className={`w-5 h-5 text-black ${checkoutUnallowed ? 'text-grey' : ''}`}/>}
+                <ShoppingCartIcon className={`w-5 h-5 ${checkoutUnallowed ? 'text-gray-200' : 'text-white'}`}/>}
               </button>  
             </div> :
             column.renderCell ? column.field === "information" ?

@@ -62,7 +62,10 @@ const appSlice = createSlice({
       "cert_id": "",
       "stock_id": "",
       "price_sort": "",
-      "type": 2
+      "type": 2,
+      "size_from": [],
+      "size_to": [],
+      "size_range": []
     },
     rates: {},
     diamondData: [],
@@ -173,7 +176,10 @@ const appSlice = createSlice({
         "cert_id": "",
         "stock_id": "",
         "price_sort": "",
-        "type": 2
+        "type": 2,
+        "size_from": [],
+        "size_to": [],
+        "size_range": []
       }
     },
   },
