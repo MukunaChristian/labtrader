@@ -109,3 +109,42 @@ export const uploadStock = async (
 
   return response.data;
 };
+
+export const exportStock = async (
+  warehouse,
+  supplier,
+  selectedTimeFrom,
+  selectedTimeTo,
+  setSelectedSupplier,
+  setSelectedWarehouse
+) => {
+  const response = await axios.post(
+    "/export",
+    {
+      warehouse_id: warehouse.id,
+      supplier_id: supplier.id,
+      date_from: selectedTimeFrom,
+      date_to: selectedTimeTo,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+      responseType: "blob",
+    }
+  );
+
+  const url = window.URL.createObjectURL(new Blob([response.data]));
+  const a = document.createElement("a");
+  a.style.display = "none";
+  a.href = url;
+  // the filename you want
+  a.download = "exported_file.xlsx";
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(url);
+
+  setSelectedSupplier(null);
+  setSelectedWarehouse(null);
+};

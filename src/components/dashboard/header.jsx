@@ -2,7 +2,7 @@ import { usePopper } from "react-popper";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDropzone } from 'react-dropzone'
-import { uploadStock } from "../../api/diamonds.js";
+import { uploadStock, exportStock } from "../../api/diamonds.js";
 import { WarehouseDropdown } from "../dropdowns/WarehouseDropdown.jsx";
 import { SupplierDropdown } from "../dropdowns/SupplierDropdown.jsx";
 import loader from '../../assets/loader.gif';
@@ -14,8 +14,12 @@ import { setUploadingLoaderState, setUploadErrorsState } from '../../reducers/Ap
 
 export const Header = ({ title, results }) => {
   const [uploadConfirm, setUploadConfirm] = useState(false);
+  const [exportConfirm, setExportConfirm] = useState(false);
+
   const [selectedWarehouse, setSelectedWarehouse] = useState(null);
   const [selectedSupplier, setSelectedSupplier] = useState(null);
+  const [selectedTimeFrom, setSelectedTimeFrom] = useState(null);
+  const [selectedTimeTo, setSelectedTimeTo] = useState(null);
   const [fileLoaded, setFileLoaded] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
 
@@ -61,11 +65,29 @@ export const Header = ({ title, results }) => {
     console.log("File uploaded");
     setFileLoaded(null);
     uploadStock(fileLoaded, selectedWarehouse, selectedSupplier, dispatch, setUploadingLoaderState, setUploadErrorsState);
+    setSelectedSupplier(null);
+    setSelectedWarehouse(null);
+  }
+
+  const handleExportStock = (e) => {
+    e.stopPropagation();
+    setExportConfirm(false);
+
+    // call export stock api
+    exportStock(
+      selectedWarehouse, 
+      selectedSupplier, 
+      selectedTimeFrom, 
+      selectedTimeTo, 
+      setSelectedSupplier, 
+      setSelectedWarehouse
+    );
   }
 
   const cancelFileUpload = (e) => {
     e.stopPropagation();
     setUploadConfirm(false);
+    setExportConfirm(false);
     setFileLoaded(null);
   }
 
@@ -128,6 +150,15 @@ export const Header = ({ title, results }) => {
           <button
             disabled={user.role !== 'Superadmin'}
             onClick={() => {
+              setExportConfirm(true);
+            }}
+            className={user.role !== 'Superadmin' ? 'hidden' : 'default-button mr-4 bg-accent text-white'}
+          >
+            Export Stock
+          </button>
+          <button
+            disabled={user.role !== 'Superadmin'}
+            onClick={() => {
               setUploadConfirm(true);
             }}
             className={user.role !== 'Superadmin' ? 'hidden' : 'default-button bg-accent text-white'}
@@ -137,16 +168,19 @@ export const Header = ({ title, results }) => {
         </div>
       </div>
 
-      {uploadConfirm && (
+      {(uploadConfirm || exportConfirm) && (
         <div className="">
           <div
             className="fixed z-[30] inset-0 bg-gray-700 opacity-50 h-[100vh]"
             onClick={() => {
               setUploadConfirm(false);
+              setExportConfirm(false);
               setSelectedWarehouse(null);
               setFileLoaded(null);
             }} // Close the pop-up when clicking outside
           />
+
+          {uploadConfirm ? (
           <div
           ref={popperElement}
           style={{
@@ -203,7 +237,44 @@ export const Header = ({ title, results }) => {
               <button onClick={(e) => cancelFileUpload(e)} className="default-button w-24 ml-3">Cancel</button>
             </div>
           }
+        </div>) : (
+          <div
+          ref={popperElement}
+          style={{
+            ...styles.popper,
+            top: "45%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            position: "fixed"
+          }}
+          {...attributes.popper}
+          className={`z-[31] h-[19rem] fixed bg-white rounded shadow-lg p-6 text-center`}
+        >
+          <div className="pt-5 flex justify-around ">
+            <SupplierDropdown supplier={selectedSupplier} setSupplier={setSelectedSupplier} />
+            <WarehouseDropdown warehouse={selectedWarehouse} setWarehouse={setSelectedWarehouse} disabled={!selectedSupplier} supplier={selectedSupplier}/>
+          </div>
+
+          <div className="pt-[5rem] flex w-full">
+            <div className="w-full">
+              <p className="text-sm font-semibold">Export Stock from</p>
+              <input type="date" className="h-12" />
+            </div>
+            
+            <div className="w-full">
+              <p className="text-sm font-semibold">to</p>
+              <input type="date" className="h-12" />
+            </div>
+          </div>
+
+          <div className="flex justify-end mt-8 ml-3">
+            <button onClick={(e) => handleExportStock(e)} className="default-button w-24">Export</button>
+            <button onClick={(e) => cancelFileUpload(e)} className="default-button w-24 ml-3">Cancel</button>
+          </div> 
+
+          
         </div>
+        )}
       </div>
     )}
   </div>
