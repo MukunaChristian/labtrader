@@ -22,14 +22,13 @@ export const Header = ({ title, results }) => {
   const [selectedTimeTo, setSelectedTimeTo] = useState(null);
   const [fileLoaded, setFileLoaded] = useState(null);
   const [referenceElement, setReferenceElement] = useState(null);
+  const [uploadError, setUploadError] = useState('');
 
   const user = useSelector(state => state.user.user)
-  const filters = useSelector(state => state.app.filters);
   const uploading = useSelector(state => state.app.uploadingLoader);
   const uploadErrors = useSelector(state => state.app.uploadErrors);
   const currentDiamondType = useSelector(state => state.app.diamond_type);
 
-  const { setFilters } = useApp()
 
   const dispatch = useDispatch();
   
@@ -64,10 +63,22 @@ export const Header = ({ title, results }) => {
     e.stopPropagation();
     console.log("File uploaded");
     setFileLoaded(null);
-    uploadStock(fileLoaded, selectedWarehouse, selectedSupplier, dispatch, setUploadingLoaderState, setUploadErrorsState);
-    setSelectedSupplier(null);
-    setSelectedWarehouse(null);
+    uploadStock(fileLoaded, selectedWarehouse, selectedSupplier, dispatch, setUploadingLoaderState, setUploadErrorsState).then((resp) => {
+      setSelectedSupplier(null);
+      setSelectedWarehouse(null);
+
+      console.log(resp)
+
+      if (resp === 500) {
+        setUploadError("generic");
+      } else if (resp === 402) {
+        setUploadError("invalid");
+      }
+    });
+    
   }
+
+  console.log(uploadError)
 
   const handleExportStock = (e) => {
     e.stopPropagation();

@@ -97,17 +97,23 @@ export const uploadStock = async (
   formData.append("file", file);
   formData.append("warehouse_id", warehouse.id);
   formData.append("supplier_id", supplier.id);
-  const response = await axios.post("/stock", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-    },
-  });
+  try {
+    const response = await axios.post("/stock", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    });
 
-  dispatch(setErrors(response.data.errors));
-  dispatch(setUploadLoading(false));
+    dispatch(setErrors(response.data.errors));
+    dispatch(setUploadLoading(false));
 
-  return response.data;
+    return response.status;
+  } catch (error) {
+    console.log(error);
+    dispatch(setUploadLoading(false));
+    return 500;
+  }
 };
 
 export const exportStock = async (
