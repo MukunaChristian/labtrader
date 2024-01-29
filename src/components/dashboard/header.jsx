@@ -268,7 +268,7 @@ export const Header = ({ title, results }) => {
           </div>
 
           <div className="flex justify-end mt-8 ml-3">
-            <button onClick={(e) => handleExportStock(e)} className="default-button w-24">Export</button>
+            <button disabled={!selectedWarehouse} onClick={(e) => handleExportStock(e)} className={`${selectedWarehouse ? 'default-button' : 'default-button-disabled'} w-24`}>Export</button>
             <button onClick={(e) => cancelFileUpload(e)} className="default-button w-24 ml-3">Cancel</button>
           </div> 
 
