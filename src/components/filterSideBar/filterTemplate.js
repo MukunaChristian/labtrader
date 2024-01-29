@@ -22,6 +22,7 @@ export let filterTemplate = {
   stock_id: "",
   cert_id: "",
   price_sort: "",
+  type: 1,
 };
 
 export let filterTemplateMelee = {

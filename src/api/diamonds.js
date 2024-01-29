@@ -118,6 +118,7 @@ export const exportStock = async (
   setSelectedSupplier,
   setSelectedWarehouse
 ) => {
+  console.log(selectedTimeFrom, selectedTimeTo);
   const response = await axios.post(
     "/export",
     {

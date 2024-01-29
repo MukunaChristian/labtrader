@@ -258,12 +258,12 @@ export const Header = ({ title, results }) => {
           <div className="pt-[5rem] flex w-full">
             <div className="w-full">
               <p className="text-sm font-semibold">Export Stock from</p>
-              <input type="date" className="h-12" />
+              <input type="date" className="h-12" onChange={(e) => {setSelectedTimeFrom(e.target.value)}} />
             </div>
             
             <div className="w-full">
               <p className="text-sm font-semibold">to</p>
-              <input type="date" className="h-12" />
+              <input type="date" className="h-12" onChange={(e) => {setSelectedTimeTo(e.target.value)}} />
             </div>
           </div>
 
