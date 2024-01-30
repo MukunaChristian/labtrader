@@ -69,10 +69,14 @@ export const Header = ({ title, results }) => {
 
       console.log(resp)
 
-      if (resp === 500) {
-        setUploadError("generic");
-      } else if (resp === 402) {
-        setUploadError("invalid");
+      if (resp.code === 500) {
+        setUploadError("An unexpected error occurred. Please try again.");
+      } else if (resp.code === 402) {
+        if (resp.error === 'Invalid file format') {
+          setUploadError("Invalid file format. Please upload a .xlsx file.");
+        } 
+      } else {
+        setUploadError(null);
       }
     });
     
@@ -100,6 +104,7 @@ export const Header = ({ title, results }) => {
     setUploadConfirm(false);
     setExportConfirm(false);
     setFileLoaded(null);
+    setUploadError(null);
   }
 
   const handleTabChange = (diamondType) => {
@@ -188,6 +193,7 @@ export const Header = ({ title, results }) => {
               setExportConfirm(false);
               setSelectedWarehouse(null);
               setFileLoaded(null);
+              setUploadError(null);
             }} // Close the pop-up when clicking outside
           />
 
@@ -202,7 +208,7 @@ export const Header = ({ title, results }) => {
             position: "fixed"
           }}
           {...attributes.popper}
-          className={`z-[31] ${uploadErrors.count ? 'h-[30rem]' : 'h-[28rem]'} fixed bg-white rounded shadow-lg p-6 text-center`}
+          className={`z-[31] ${uploadErrors.count || uploadError ? 'h-[30rem]' : 'h-[28rem]'} fixed bg-white rounded shadow-lg p-6 text-center`}
         >
           <div>
             <div {...getRootProps()} className="h-[14rem] w-[24rem] border-1 border-solid rounded-2xl border-dashed">
@@ -224,6 +230,7 @@ export const Header = ({ title, results }) => {
               </div>
             </div>
           </div>
+          {uploadError ? <p className="text-red-500 text-sm mt-4">{uploadError}</p> : null}
           <div className="pt-5 flex justify-around ">
             <SupplierDropdown supplier={selectedSupplier} setSupplier={setSelectedSupplier} />
             <WarehouseDropdown warehouse={selectedWarehouse} setWarehouse={setSelectedWarehouse} disabled={!selectedSupplier} supplier={selectedSupplier}/>

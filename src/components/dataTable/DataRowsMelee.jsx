@@ -79,7 +79,6 @@ export const DataRowsMelee = ({ row, columns }) => {
   }, [diamonds_in_cart])
 
 
-  console.log(row)
   const inCart = diamonds_in_cart.some(item => item.id === row.id);
   const checkoutUnallowed = (currentAmount === "0" || currentAmount === '' || currentAmount > row.amount) && !inCart;
 

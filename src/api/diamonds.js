@@ -108,11 +108,15 @@ export const uploadStock = async (
     dispatch(setErrors(response.data.errors));
     dispatch(setUploadLoading(false));
 
-    return response.status;
+    return { code: 200, error: response.data };
   } catch (error) {
     console.log(error);
+    if (error.response.status === 402) {
+      dispatch(setUploadLoading(false));
+      return { code: 402, error: error.response.data.error };
+    }
     dispatch(setUploadLoading(false));
-    return 500;
+    return { code: 500, error: error };
   }
 };
 
