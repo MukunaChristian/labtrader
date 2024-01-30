@@ -38,6 +38,11 @@ export const CustomDataTable = ({ currentRows, diamondsType }) => {
     
   }, [currentPage, diamondsType, filters, meleeFilters])
 
+  useEffect(() => {
+    // if filters change set page to 1
+    setCurrentPage(1);
+  }, [filters, meleeFilters])
+
   console.log("diamondsType", diamondsType)
   let columns = [];
   if (diamondsType === "melee") {
