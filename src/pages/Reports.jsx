@@ -260,11 +260,12 @@ export const Report = () => {
   
   useEffect(() => {
     if (salesReps.length > 0 && user.role === "Sales Rep") {
+      const matchingSalesRep = salesReps.find(rep => rep.id === user.id);
       setSelectedOptions(prevOptions => ({
         ...prevOptions,
         reportType: 'sales_commission',
         reseller: resellers[0]?.id,
-        salesRep: salesReps[0]?.id
+        salesRep: matchingSalesRep?.id || salesReps[0]?.id
       }));
     } else if (user.role === "Admin" && !adminAllowed) {
       setSelectedOptions(prevOptions => ({
