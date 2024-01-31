@@ -51,54 +51,59 @@ export const CustomDataTable = ({ currentRows, diamondsType }) => {
     columns = diamondColumns 
   }
 
+  console.log(currentRows)
+
 
   return (
-    <div>
-      {loading ? <div className="flex justify-center items-center h-96"><p className="border-solid border-[1.5px] p-2 rounded-lg animate-pulse bg-black">Loading...</p></div> :
-        <table className="bg-secondary table-auto border-collapse w-full pb-4">
-          <thead>
-            <tr>
-              {columns.map((column, index) => (
+    <>
+    {currentRows.length === 0 ? <div className="flex justify-center items-center h-60"><p className="text-text">No items in your search criteria are currently in stock</p></div> : 
+      <div>
+        {loading ? <div className="flex justify-center items-center h-96"><p className="border-solid border-[1.5px] p-2 rounded-lg animate-pulse bg-black">Loading...</p></div> :
+          <table className="bg-secondary table-auto border-collapse w-full pb-4">
+            <thead>
+              <tr>
+                {columns.map((column, index) => (
+                  <>
+                    {diamondsType === "diamond" ? 
+                    <th 
+                      key={index} 
+                      width={column.headerName === "Image" ? "40" : column.headerName === "Total" ? "200" : "200"}
+                      className={`px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] bg-black`}>
+                      {column.headerName}
+                    </th> : 
+                    <th 
+                      key={index} 
+                      width={column.headerName === "Image" ? "40" : column.headerName === "Total" ? "100" : "40"}
+                      className={`px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] bg-black`}>
+                      {column.headerName}
+                    </th>
+                    }
+                  </>
+                ))}
+                {diamondsType === "diamond" &&
+                  <th key={7} width={'2%'} className="px-3 py-3 text-md text-left leading-4 text-text bg-black border-light-grey"></th>
+                }
+              </tr>
+            </thead>
+            <tbody className='text-sm'>
+              {currentRows.map((row, rowIndex) => (
                 <>
-                  {diamondsType === "diamond" ? 
-                  <th 
-                    key={index} 
-                    width={column.headerName === "Image" ? "40" : column.headerName === "Total" ? "200" : "200"}
-                    className={`px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] bg-black`}>
-                    {column.headerName}
-                  </th> : 
-                  <th 
-                    key={index} 
-                    width={column.headerName === "Image" ? "40" : column.headerName === "Total" ? "100" : "40"}
-                    className={`px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] bg-black`}>
-                    {column.headerName}
-                  </th>
+                  { diamondsType === "diamond" ?
+                    <DataRows key={rowIndex} row={row} rowIndex={rowIndex} columns={columns} /> :
+                    <DataRowsMelee key={rowIndex} row={row} rowIndex={rowIndex} columns={columns} />
                   }
                 </>
               ))}
-              {diamondsType === "diamond" &&
-                <th key={7} width={'2%'} className="px-3 py-3 text-md text-left leading-4 text-text bg-black border-light-grey"></th>
-              }
-            </tr>
-          </thead>
-          <tbody className='text-sm'>
-            {currentRows.map((row, rowIndex) => (
-              <>
-                { diamondsType === "diamond" ?
-                  <DataRows key={rowIndex} row={row} rowIndex={rowIndex} columns={columns} /> :
-                  <DataRowsMelee key={rowIndex} row={row} rowIndex={rowIndex} columns={columns} />
-                }
-              </>
-            ))}
-          </tbody>
-        </table>
-      }
-      <div className='w-full my-1 flex justify-center'>
-        <Pagenation currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} />
-      </div>
-      
-      
-      
-    </div>
+            </tbody>
+          </table>
+        }
+        <div className='w-full my-1 flex justify-center'>
+          <Pagenation currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} />
+        </div>
+        
+        
+        
+      </div>}
+    </>
   );
 }

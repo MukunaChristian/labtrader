@@ -66,7 +66,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             <>
               {spotPrice ? <>
                 <div className="flex flex-col">
-                  <div className="flex"><p className='text-xs'>{currency.symbol} {(spotPrice / parseFloat(row.specifications.carat)).toFixed(2)}/ct</p></div>
+                  <div className="flex"><p className='text-xs'>${(row[column.field] / parseFloat(row.specifications.carat)).toFixed(2)}/ct</p></div>
                   <div className="flex"><p className='text-lg'>${parseFloat(row[column.field]).toFixed(2)}</p></div>
                   <div className="flex"><p>{spotPrice} {currency.code}</p></div>
                 </div>
