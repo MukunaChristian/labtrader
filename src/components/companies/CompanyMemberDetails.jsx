@@ -77,6 +77,11 @@ export const CompanyMemberDetails = ({ user_info, roleTypes, company_id, company
       if (Object.keys(originalDetails).length === 0 || !originalDetails.role_id) {
         console.log("adding user")
         response = await addUser(editedDetails);
+        console.log(response)
+        if (response.data.error) {
+          setErrors({...errors, [response.data.field]: response.data.error});
+          return
+        }
       } else {
         console.log("updating user")
         response = await updateUser(user_info.user_details.id, editedDetails);

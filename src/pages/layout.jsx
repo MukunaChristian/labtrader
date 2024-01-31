@@ -31,11 +31,12 @@ export const Layout = ({ children }) => {
   const checkToken = () => {
     console.log("checking")
     console.log(isLogin)
-    setLoggedIn(false)
+    
     dispatch(loadCart())
 
     const token = localStorage.getItem("jwt");  
     if (!token && !isLogin) {
+      setLoggedIn(false)
       navigate("/login")
       return
     }
@@ -48,8 +49,10 @@ export const Layout = ({ children }) => {
   }
 
   useEffect(() => {
-    checkToken()
-  }, [])
+    if (!isLogin) {
+      checkToken()
+    }
+  }, [location])
 
   useEffect(() => {
     if (loggedIn) {

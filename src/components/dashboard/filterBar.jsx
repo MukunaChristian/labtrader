@@ -4,22 +4,42 @@ import { FilterDropdown } from "../dropdowns/filterDropdown"
 import { BarsArrowUpIcon } from "@heroicons/react/20/solid"
 import { useState } from "react"
 import { useApp } from "../../hooks/useApp"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import { setMeleeFiltersState } from "../../reducers/AppSlice"
 
 
 export const FilterBar = ({ setIsFilterSideBarOpen, setCurrentRows, currentRows }) => {
-  const filters = useSelector(state => state.app.filters);
+  const diamondType = useSelector(state => state.app.diamond_type);
+
+  let filters;
+  if (diamondType === "melee") {
+    filters = useSelector(state => state.app.meleeFilters);
+  } else {
+    filters = useSelector(state => state.app.filters);
+  }
+
   const { setFilters } = useApp()
   const [upDown, setUpDown] = useState(null);
+  const dispatch = useDispatch();
 
   const sortPrice = () => {
 
     if (upDown === "up" || upDown === null) {
-      setFilters({...filters, sort_price: "desc"});
+      if (diamondType === "melee") {
+        dispatch(setMeleeFiltersState({...filters, sort_price: "desc"}));
+      } else {
+        setFilters({...filters, sort_price: "desc"});
+      }
+      
       setUpDown("down");
     } else {
-      setFilters({...filters, sort_price: "asc"});
-      setUpDown("up");
+      if (diamondType === "melee") {
+        dispatch(setMeleeFiltersState({...filters, sort_price: "asc"}));
+      } else {
+        setFilters({...filters, sort_price: "asc"});
+      }
+      
+      setUpDown("down");
     }
 
     let sortedRows = [...currentRows];
@@ -62,7 +82,11 @@ export const FilterBar = ({ setIsFilterSideBarOpen, setCurrentRows, currentRows 
     console.log(searchTerm)
     // set search id in filters
 
-    setFilters({...filters, cert_id: searchTerm, stock_id: searchTerm});
+    if (diamondType === "melee") {
+      dispatch(setMeleeFiltersState({...filters, cert_id: searchTerm, stock_id: searchTerm}));
+    } else {
+      setFilters({...filters, cert_id: searchTerm, stock_id: searchTerm});
+    }
   }
 
   return (
