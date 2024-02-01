@@ -43,7 +43,6 @@ export const MenuSideBar = ({ setLoggedIn }) => {
           const data = await getUsersCompany(user.id);
           setUserCompany(data);
           setUserCompanyLoaded(true);
-          console.log("find user company");
         } catch (error) {
           console.error("Error fetching company data:", error);
         }

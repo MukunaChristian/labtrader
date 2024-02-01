@@ -54,7 +54,6 @@ export const DataRows = ({ row, rowIndex, columns }) => {
     }
   }
 
-  console.log(diamonds_in_cart)
 
   return (
     <>

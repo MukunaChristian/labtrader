@@ -42,12 +42,10 @@ const UserSlice = createSlice({
   },
   reducers: {
     setUserState: (state, action) => {
-      console.log(action.payload)
       state.user = action.payload
     },
 
     setUserDetailsState: (state, action) => {
-      console.log(action.payload)
       if (action.payload.personal) {
         state.userDetails = action.payload.personal
       }

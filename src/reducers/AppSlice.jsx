@@ -101,8 +101,6 @@ const appSlice = createSlice({
       state.loadingData = action.payload
     },
     setWarehousesState: (state, action) => {
-      console.log("Setting warehouses")
-      console.log(action.payload)
       state.warehouses = action.payload
     },
     setCompaniesState: (state, action) => {

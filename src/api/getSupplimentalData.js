@@ -13,10 +13,7 @@ export const getSupplimentalData = async (dispatch) => {
     },
   });
 
-  console.log(response);
-
   if (response.status === 200) {
-    console.log(response.data.suppliers);
     dispatch(setCurrencyRateState(response.data.rates));
     // load string object and set
     dispatch(

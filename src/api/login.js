@@ -7,11 +7,9 @@ export const login = (email, password) => {
       password: password,
     })
     .then((response) => {
-      console.log(response);
       return response;
     })
     .catch((error) => {
-      console.log(error.message);
       return error.response;
     });
 };
@@ -28,7 +26,6 @@ export const validateToken = async (
       token: token,
     })
     .then((response) => {
-      console.log(response);
       if (response.status === 200) {
         setLoggedin(true);
       }
@@ -41,8 +38,6 @@ export const validateToken = async (
       );
     })
     .catch((error) => {
-      console.log(error.message);
-
       if (!error.response) {
         console.log("Network error");
         navigate("/login");

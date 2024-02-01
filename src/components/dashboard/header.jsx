@@ -50,8 +50,6 @@ export const Header = ({ title, results }) => {
   
 
   const onDrop = useCallback(acceptedFiles => {
-    console.log("File dropped");
-    console.log(acceptedFiles[0])
     setFileLoaded(acceptedFiles[0]);
   })
 
@@ -67,7 +65,6 @@ export const Header = ({ title, results }) => {
       setSelectedSupplier(null);
       setSelectedWarehouse(null);
 
-      console.log(resp)
 
       if (resp.code === 500) {
         setUploadError("An unexpected error occurred. Please try again.");
@@ -82,7 +79,6 @@ export const Header = ({ title, results }) => {
     
   }
 
-  console.log(uploadError)
 
   const handleExportStock = (e) => {
     e.stopPropagation();
@@ -114,7 +110,6 @@ export const Header = ({ title, results }) => {
   const downloadFile = () => {
     // Define the text to be written to the file
     let fileText = '';
-    console.log(uploadErrors.count.failures)
     for (let i = 0; i < uploadErrors.count.failures.length; i++) {
       fileText += `Line ${uploadErrors.count.failures[i].line} - ${uploadErrors.count.failures[i].error}\n`;
     }

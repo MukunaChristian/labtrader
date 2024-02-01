@@ -28,9 +28,7 @@ export const CustomDataTable = ({ currentRows, diamondsType }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("currentPage", currentPage)
     if (diamondsType === "melee") {
-      console.log("meleeFilters", meleeFilters)
       getFilteredData(dispatch, setDiamondDataState, setLoadingDataState, setDiamondAmountState, currentPage, meleeFilters);
       return
     }
@@ -43,15 +41,12 @@ export const CustomDataTable = ({ currentRows, diamondsType }) => {
     setCurrentPage(1);
   }, [filters, meleeFilters])
 
-  console.log("diamondsType", diamondsType)
   let columns = [];
   if (diamondsType === "melee") {
     columns = meleeColumns
   } else if (diamondsType === "diamond") {
     columns = diamondColumns 
   }
-
-  console.log(currentRows)
 
 
   return (

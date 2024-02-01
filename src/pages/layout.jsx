@@ -4,7 +4,7 @@ import { CurrencyDropdown } from '../components/dropdowns/currencyDropdown';
 import { useApp } from "../hooks/useApp";
 import { useSelector } from "react-redux";
 import { validateToken } from "../api/login";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { default as Logo } from '../assets/teomim-logo.svg';
 import { MenuSideBar } from '../components/MenuSideBar/MenuSideBar';
 import { useDispatch } from 'react-redux';
@@ -13,6 +13,7 @@ import { loadCart } from '../reducers/UserSlice';
 import { getUserData } from '../api/profileData';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { getSupplimentalData } from '../api/getSupplimentalData';
+import { getUsersCompany } from '../api/company';
 
 
 export const Layout = ({ children }) => {
@@ -20,11 +21,13 @@ export const Layout = ({ children }) => {
   const { setLoggedIn } = useApp();
   const loggedIn = useSelector(state => state.app.loggedIn);
   const user_id = useSelector(state => state.user.user.id);
+  const user_role = useSelector(state => state.user.user.role);
   const warehouses = useSelector(state => state.app.warehouses);
   const diamonds_in_cart = useSelector(state => state.user.diamonds_in_cart);
-  console.log(diamonds_in_cart.length)
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(true);
 
   let isLogin = location.pathname === '/login' || location.pathname === '/forgot-password' || location.pathname === '/reset-password';
 
@@ -48,11 +51,40 @@ export const Layout = ({ children }) => {
     }
   }
 
+  // check if user is allowed to be on this page
+  const checkUser = async () => {
+    if (!user_id) {
+      return
+    }
+
+    const data = await getUsersCompany(user_id);
+    console.log(user_id)
+
+    if (location.pathname === '/company' && ["Buyer"].includes(user_role)) {
+      navigate("/")
+      return
+    }
+
+    if (location.pathname === '/reports' && data.company_type === "Jeweller") {
+      navigate("/")
+      return
+    }
+
+    if (location.pathname === '/orders' && user_role !== "Superadmin") {
+      navigate("/")
+      return
+    }
+
+    console.log("passed")
+    setIsLoading(false); 
+  }
+
   useEffect(() => {
     if (!isLogin) {
       checkToken()
+      checkUser()
     }
-  }, [location])
+  }, [location, user_id])
 
   useEffect(() => {
     if (loggedIn) {
@@ -78,6 +110,7 @@ export const Layout = ({ children }) => {
     }
   }, [loggedIn])
 
+  console.log(isLoading)
 
   return (
     (loggedIn || isLogin) ?
@@ -113,7 +146,11 @@ export const Layout = ({ children }) => {
       }
       {/* <div className='h-full' style={{ backgroundColor: 'rgb(220 220 220)' }}> */}
       <div className='h-full bg-light-grey'>
-        {children}
+        {!isLoading &&
+          <>
+            {children}
+          </>
+        }
       </div>
       
     </div> :

@@ -21,7 +21,6 @@ export const diamonds = async (
 
   let objectList = response.data.items.map((str) => JSON.parse(str));
   objectList = transformedList(objectList);
-  console.log(response.data);
   dispatch(setData(objectList));
   dispatch(setRates(response.data.rates));
   dispatch(setWarehouses(response.data.warehouses));
@@ -47,7 +46,6 @@ export const getDataByIds = async (stockIds) => {
 
   let objectList = response.data.items.map((str) => JSON.parse(str));
   objectList = transformedList(objectList);
-  console.log(objectList);
   return objectList;
 };
 
@@ -77,7 +75,6 @@ export const getFilteredData = async (
 
   let objectList = response.data.items.map((str) => JSON.parse(str));
   objectList = transformedList(objectList);
-  console.log(objectList);
 
   dispatch(setData(objectList));
   dispatch(setDiamondAmount(response.data.item_length));
@@ -110,7 +107,6 @@ export const uploadStock = async (
 
     return { code: 200, error: response.data };
   } catch (error) {
-    console.log(error);
     if (error.response.status === 402) {
       dispatch(setUploadLoading(false));
       return { code: 402, error: error.response.data.error };
