@@ -7,7 +7,7 @@ import { WarehouseDropdown } from "../dropdowns/WarehouseDropdown.jsx";
 import { SupplierDropdown } from "../dropdowns/SupplierDropdown.jsx";
 import loader from '../../assets/loader.gif';
 import { setDiamondTypeState } from "../../reducers/AppSlice.jsx";
-import { useApp } from "../../hooks/useApp.jsx";
+import { getSupplimentalData } from "../../api/getSupplimentalData.js";
 
 import { setUploadingLoaderState, setUploadErrorsState } from '../../reducers/AppSlice.jsx';
 
@@ -45,6 +45,8 @@ export const Header = ({ title, results }) => {
     const dummyElement = document.createElement("div");
     dummyElement.style.position = "fixed";
     setReferenceElement(dummyElement);
+
+    getSupplimentalData(dispatch);
   }, []);
 
   

@@ -53,6 +53,12 @@ export const Layout = ({ children }) => {
 
   // check if user is allowed to be on this page
   const checkUser = async () => {
+
+    if (isLogin) {
+      setIsLoading(false);
+      return
+    }
+
     if (!user_id) {
       return
     }
@@ -82,8 +88,8 @@ export const Layout = ({ children }) => {
   useEffect(() => {
     if (!isLogin) {
       checkToken()
-      checkUser()
     }
+    checkUser()
   }, [location, user_id])
 
   useEffect(() => {
