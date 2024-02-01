@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SaveResetButtons } from "../ProfileForms/SaveResetButtons"
-import { addUser, updateUser } from '../../api/company';
+import { addUser, updateUser, checkUserEmailExists } from '../../api/company';
 
 export const CompanyMemberDetails = ({ user_info, roleTypes, company_id, company_type_id, setActiveTab, current_user }) => {
   const [originalDetails, setOriginalDetails] = useState({});
@@ -53,12 +53,25 @@ export const CompanyMemberDetails = ({ user_info, roleTypes, company_id, company
     }));
   };  
 
-  const validateFields = () => {
+  const validateFields = async () => {
     let newErrors = {};
     const requiredFields = ['name', 'surname', 'email', 'role_id'];
+
     for (const field of requiredFields) {
       if (!editedDetails[field]) {
         newErrors[field] = 'This field is required.';
+      }
+    }
+
+    if (!user_info || (user_info && editedDetails.email !== user_info.email)) {
+      try {
+        const emailExists = await checkUserEmailExists(editedDetails.email);
+        if (emailExists) {
+          newErrors.email = 'This email is already in use.';
+        }
+      } catch (error) {
+        console.error("Error during email existence check:", error);
+        newErrors.email = 'Error checking email.';
       }
     }
 
@@ -69,7 +82,7 @@ export const CompanyMemberDetails = ({ user_info, roleTypes, company_id, company
   const handleSubmit = async () => {
     let response;
     try {
-      const isValid = validateFields();
+      const isValid = await validateFields();
       if (!isValid) return;
 
       editedDetails.company_id = company_id;
