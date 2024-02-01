@@ -79,13 +79,13 @@ export const MenuSideBar = ({ setLoggedIn }) => {
               <p className={`pt-[1px] ${location.pathname === "/profile" ? '' : 'text-white group-hover:text-black'}`}>Profile</p>
             </div> */}
 
-            <div onClick={() => { navigate("/") }} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/" ? 'bg-white' : 'hover:bg-white'}`}>
+            <div onClick={() => { navigate("/"); setOpen(false) }} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/" ? 'bg-white' : 'hover:bg-white'}`}>
               <HomeIcon className={`h-6 w-6 mx-4 ${location.pathname === "/" ? '' : 'text-white group-hover:text-black'}`} />
               <p className={`pt-[1px] ${location.pathname === "/" ? '' : 'text-white group-hover:text-black'}`}>Home</p>
             </div>
 
             {user.role !== "Buyer" && (
-              <div onClick={() => { navigate("/company") }} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/company" ? 'bg-white' : 'hover:bg-white'}`}>
+              <div onClick={() => { navigate("/company"); setOpen(false) }} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/company" ? 'bg-white' : 'hover:bg-white'}`}>
                 <BuildingOffice2Icon className={`h-6 w-6 mx-4 ${location.pathname === "/company" ? '' : 'text-white group-hover:text-black'}`} />
                 <p className={`pt-[1px] ${location.pathname === "/company" ? '' : 'text-white group-hover:text-black'}`}>Companies</p>
               </div>
@@ -99,7 +99,7 @@ export const MenuSideBar = ({ setLoggedIn }) => {
             )}
 
             {user.role == "Superadmin" && (
-              <div onClick={() => { navigate("/orders") }} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/orders" ? 'bg-white' : 'hover:bg-white'}`}>
+              <div onClick={() => { navigate("/orders"); setOpen(false)}} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/orders" ? 'bg-white' : 'hover:bg-white'}`}>
                 <StarIcon className={`h-6 w-6 mx-4 ${location.pathname === "/orders" ? '' : 'text-white group-hover:text-black'}`} />
                 <p className={`pt-[1px] ${location.pathname === "/orders" ? '' : 'text-white group-hover:text-black'}`}>Orders</p>
               </div>

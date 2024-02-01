@@ -1,6 +1,7 @@
 import { DataRows } from './DataRows';
+import { DataRowsMelee } from './DataRowsMelee';
 import { Pagenation } from './Pagenation';
-import { capitalizeFirstLetter } from '../toUpperCase';
+import { diamondColumns, meleeColumns } from './columnData';
 
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -10,15 +11,15 @@ import { setDiamondDataState, setLoadingDataState, setCurrencyRateState, setDiam
 
 
 
-export const CustomDataTable = ({ currentRows }) => {
+export const CustomDataTable = ({ currentRows, diamondsType }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [cutRows, setCutRows] = useState([]); // [0, 5
   
   const currency = useSelector(state => state.app.currency);
   const diamondAmount = useSelector(state => state.app.diamondAmount);
   const rates = useSelector(state => state.app.rates);
   const loading = useSelector(state => state.app.loadingData);
   const filters = useSelector(state => state.app.filters);
+  const meleeFilters = useSelector(state => state.app.meleeFilters);
   const maxItems = 5;
 
   const maxPages = Math.ceil(diamondAmount / maxItems);
@@ -28,190 +29,81 @@ export const CustomDataTable = ({ currentRows }) => {
 
   useEffect(() => {
     console.log("currentPage", currentPage)
+    if (diamondsType === "melee") {
+      console.log("meleeFilters", meleeFilters)
+      getFilteredData(dispatch, setDiamondDataState, setLoadingDataState, setDiamondAmountState, currentPage, meleeFilters);
+      return
+    }
     getFilteredData(dispatch, setDiamondDataState, setLoadingDataState, setDiamondAmountState, currentPage, filters);
-  }, [currentPage, filters])
+    
+  }, [currentPage, diamondsType, filters, meleeFilters])
 
-
-  const columns = [
-    {
-      field: 'image',
-      headerName: 'Image',
-      width: 80,
-      renderCell: (params) => 
-        <img className="w-20 h-20 object-contain bg-black" src={params.value} />, // renderCell will render the component
-    },
-    {
-      field: 'shape',
-      headerName: 'Shape',
-      width: 100,
-      renderCell: (params) => (
-        <p className='w-32'>{capitalizeFirstLetter(params.value)}</p>
-      )
-    },
-    {
-      field: 'specifications',
-      headerName: 'Specifications',
-      width: 200,
-      renderCell: (params) => (
-          <div>
-            <div className='flex mb-1'>
-              <div className='w-[30%]'>
-                <p>Carat: </p>
-              </div>
-              <div className='w-[50%]'>
-                <p>{params.value.carat}</p>
-              </div>
-            </div>
-
-            <div className='flex mb-1'>
-              <div className='w-[30%]'>
-                <p>Color: </p>
-              </div>
-              <div className='w-[70%] whitespace-normal'>
-                {params.value.color}
-              </div>
-            </div>
-
-            <div className='flex mb-1'>
-              <div className='w-[30%]'>
-                <p>Clarity: </p>
-              </div>
-              <div className='w-[50%]'>
-                <p>{params.value.clarity}</p>
-              </div>
-            </div>
-
-            <div className='flex mb-1'>
-              <div className='w-[30%]'>
-                <p>Cut: </p>
-              </div>
-              <div className='w-[50%]'>
-                <p>{params.value.cut}</p>
-              </div>
-            </div>
-          </div>
-      )
-    },
-    {
-      field: 'finish',
-      headerName: 'Finish',
-      width: 200,
-      renderCell: (params) => (
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <div className="flex"><p>Polish: </p></div>
-            <div className="flex"><p>Symmetry: </p></div>
-            <div className="flex"><p>Fluor: </p></div>
-            <div className="flex"><p>Fluor Color: </p></div>
-          </div>
-
-          <div>
-            <div className="flex"><p>{capitalizeFirstLetter(params.value.polish)}</p></div>
-            <div className="flex"><p>{capitalizeFirstLetter(params.value.symmetry)}</p></div>
-            <div className="flex"><p>{capitalizeFirstLetter(params.value.fluorescence)}</p></div>
-            <div className="flex"><p>{capitalizeFirstLetter(params.value.fluorescence_color)}</p></div>
-          </div>
-        </div>
-      )
-    },
-    {
-      field: 'table_depth',
-      headerName: 'Table/Depth',
-      width: 50,
-      renderCell: (params) => (
-        <div className="grid grid-cols-2 gap-6">
-          <div>
-            <div className="flex"><p>Table: </p></div>
-            <div className="flex"><p>Depth: </p></div>
-          </div>
-
-          <div>
-            <div className="flex"><p>{params.value.table}</p></div>
-            <div className="flex"><p>{params.value.depth}</p></div>
-          </div>
-        </div>
-      )
-    },
-    {
-      field: 'ratio_measurements',
-      headerName: 'Ratio/Measurements',
-      width: 80,
-      renderCell: (params) => (
-        <div className="grid grid-cols-2 gap-2">
-          <div>
-            <div className="flex"><p>Ratio: </p></div>
-            <div className="flex"><p>Width: </p></div>
-            <div className="flex"><p>Height: </p></div>
-            <div className="flex"><p>Depth: </p></div>
-          </div>
-
-          <div>
-            <div className="flex"><p>{params.value.ratio}</p></div>
-            <div className="flex"><p>{params.value.measurements.width}</p></div>
-            <div className="flex"><p>{params.value.measurements.height}</p></div>
-            <div className="flex"><p>{params.value.measurements.depth}</p></div>
-          </div>
-        </div>
-      )
-    },
-    {
-      field: 'total',
-      headerName: 'Total',
-      width: 150,
-      renderCell: (params) => (
-        <div className="flex flex-col">
-          <div className="flex"><p className='text-xs'>${(parseFloat(params.value) / parseFloat(params.row.specifications.carat)).toFixed(2)}/ct</p></div>
-          <div className="flex"><p className='text-lg'>${params.value}</p></div>
-          <div className="flex"><p>{Math.round((parseFloat(params.total) * rates[currency.code]) * 10) / 10} {currency.code}</p></div>
-        </div>
-      )
-    },
-    // {
-    //   field: 'shipping',
-    //   headerName: 'Shipping',
-    //   width: 150,
-    // },
-
-  ];
-
-
-
-  // figure this out
   useEffect(() => {
-    setCutRows(currentRows)
-  }, [currentRows])
+    // if filters change set page to 1
+    setCurrentPage(1);
+  }, [filters, meleeFilters])
 
+  console.log("diamondsType", diamondsType)
+  let columns = [];
+  if (diamondsType === "melee") {
+    columns = meleeColumns
+  } else if (diamondsType === "diamond") {
+    columns = diamondColumns 
+  }
+
+  console.log(currentRows)
 
 
   return (
-    <div>
-      {loading ? <div className="flex justify-center items-center h-96"><p className="border-solid border-[1.5px] p-2 rounded-lg animate-pulse bg-black">Loading...</p></div> :
-      <table className="bg-secondary table-auto border-collapse w-full pb-4">
-        <thead>
-          <tr>
-            {columns.map((column, index) => (
-              <th 
-                key={index} 
-                width={column.headerName === "Image" ? "8%" : "15%"}
-                className={`px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] bg-black`}>
-                {column.headerName}
-              </th>
-            ))}
-            <th key={7} width={'2%'} className="px-3 py-3 text-md text-left leading-4 text-text bg-black border-light-grey"></th>
-          </tr>
-        </thead>
-        <tbody className='text-sm'>
-          {cutRows.map((row, rowIndex) => (
-            <DataRows key={rowIndex} row={row} rowIndex={rowIndex} columns={columns} />
-          ))}
-        </tbody>
-      </table>}
-      <div className='w-full my-1 flex justify-center'>
-        <Pagenation currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} />
-      </div>
-      
-      
-      
-    </div>
+    <>
+    {currentRows.length === 0 ? <div className="flex justify-center items-center h-60"><p className="text-text">No items in your search criteria are currently in stock</p></div> : 
+      <div>
+        {loading ? <div className="flex justify-center items-center h-96"><p className="border-solid border-[1.5px] p-2 rounded-lg animate-pulse bg-black">Loading...</p></div> :
+          <table className="bg-secondary table-auto border-collapse w-full pb-4">
+            <thead>
+              <tr>
+                {columns.map((column, index) => (
+                  <>
+                    {diamondsType === "diamond" ? 
+                    <th 
+                      key={index} 
+                      width={column.headerName === "Image" ? "40" : column.headerName === "Total" ? "200" : "200"}
+                      className={`px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] bg-black`}>
+                      {column.headerName}
+                    </th> : 
+                    <th 
+                      key={index} 
+                      width={column.headerName === "Image" ? "40" : column.headerName === "Total" ? "100" : "40"}
+                      className={`px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] bg-black`}>
+                      {column.headerName}
+                    </th>
+                    }
+                  </>
+                ))}
+                {diamondsType === "diamond" &&
+                  <th key={7} width={'2%'} className="px-3 py-3 text-md text-left leading-4 text-text bg-black border-light-grey"></th>
+                }
+              </tr>
+            </thead>
+            <tbody className='text-sm'>
+              {currentRows.map((row, rowIndex) => (
+                <>
+                  { diamondsType === "diamond" ?
+                    <DataRows key={rowIndex} row={row} rowIndex={rowIndex} columns={columns} /> :
+                    <DataRowsMelee key={rowIndex} row={row} rowIndex={rowIndex} columns={columns} />
+                  }
+                </>
+              ))}
+            </tbody>
+          </table>
+        }
+        <div className='w-full my-1 flex justify-center'>
+          <Pagenation currentPage={currentPage} setCurrentPage={setCurrentPage} lastPage={lastPage} />
+        </div>
+        
+        
+        
+      </div>}
+    </>
   );
 }

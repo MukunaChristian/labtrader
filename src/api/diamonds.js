@@ -97,15 +97,65 @@ export const uploadStock = async (
   formData.append("file", file);
   formData.append("warehouse_id", warehouse.id);
   formData.append("supplier_id", supplier.id);
-  const response = await axios.post("/stock", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+  try {
+    const response = await axios.post("/stock", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    });
+
+    dispatch(setErrors(response.data.errors));
+    dispatch(setUploadLoading(false));
+
+    return { code: 200, error: response.data };
+  } catch (error) {
+    console.log(error);
+    if (error.response.status === 402) {
+      dispatch(setUploadLoading(false));
+      return { code: 402, error: error.response.data.error };
+    }
+    dispatch(setUploadLoading(false));
+    return { code: 500, error: error };
+  }
+};
+
+export const exportStock = async (
+  warehouse,
+  supplier,
+  selectedTimeFrom,
+  selectedTimeTo,
+  setSelectedSupplier,
+  setSelectedWarehouse
+) => {
+  console.log(selectedTimeFrom, selectedTimeTo);
+  const response = await axios.post(
+    "/export",
+    {
+      warehouse_id: warehouse.id,
+      supplier_id: supplier.id,
+      date_from: selectedTimeFrom,
+      date_to: selectedTimeTo,
     },
-  });
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+      responseType: "blob",
+    }
+  );
 
-  dispatch(setErrors(response.data.errors));
-  dispatch(setUploadLoading(false));
+  const url = window.URL.createObjectURL(new Blob([response.data]));
+  const a = document.createElement("a");
+  a.style.display = "none";
+  a.href = url;
+  // the filename you want
+  a.download = "exported_file.xlsx";
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(url);
 
-  return response.data;
+  setSelectedSupplier(null);
+  setSelectedWarehouse(null);
 };
