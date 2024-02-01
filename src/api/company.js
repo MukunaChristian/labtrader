@@ -282,7 +282,7 @@ export const addUser = async (userData) => {
     });
 
     if (response.status === 200) {
-      return response.data.data;
+      return response.data;
     } else {
       throw new Error("Failed to add user");
     }

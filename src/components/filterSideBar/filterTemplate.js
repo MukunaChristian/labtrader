@@ -2,7 +2,7 @@ export let filterTemplate = {
   delivery_time: [],
   certificate: [],
   shape: [],
-  carat_range: {},
+  carat_range: { from: null, to: null },
   color: [],
   clarity: [],
   cut: [],

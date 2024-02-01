@@ -19,6 +19,7 @@ import {
 import { filterTemplate } from "./filterTemplate"
 
 import { useApp } from "../../hooks/useApp"
+import { filter } from "lodash";
 
 export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) => {
   const [showMore, setShowMore] = useState(false);
@@ -34,6 +35,17 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
   useEffect(() => {
     setFiltersLocal(globalFilters)
   }, [])
+
+  const convertCaratToFloat = (carat) => {
+    if (carat.endsWith("ct")) {
+      carat = carat.slice(0, -2)
+    } else if (carat.endsWith("s")) {
+      carat = carat.slice(0, -1) / 100
+    } else if (carat.endsWith("ct+")) {
+      carat = carat.slice(0, -3)
+    }
+    return carat
+  }
 
   const handleFilterChange = (filterName, filterItemInp) => {
     const filterItem = filterItemInp.toLowerCase();
@@ -68,6 +80,35 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
       setFiltersLocal(newFilters);
     }
   }
+
+  console.log(filtersLocal.carat_range)
+
+  const handleCaratClick = (blockNumber) => {
+    console.log(blockNumber)
+    console.log(filtersLocal.carat_range)
+    const blockNumberCov = convertCaratToFloat(blockNumber)
+    console.log(filtersLocal.carat_range.from, filtersLocal.carat_range.to)
+    if (
+      filtersLocal.carat_range.from === null || 
+      ((filtersLocal.carat_range.from !== null && filtersLocal.carat_range.to !== null) && 
+      (filtersLocal.carat_range.from !== filtersLocal.carat_range.to))) {
+        let newFilters = { ...filtersLocal, carat_range: { to: blockNumberCov.toString(), from: blockNumberCov.toString() } };
+        setFiltersLocal(newFilters);
+        console.log("setting first")
+    } else if (
+      (filtersLocal.carat_range.from !== null && filtersLocal.carat_range.to === null) ||
+      filtersLocal.carat_range.from === filtersLocal.carat_range.to) {
+      console.log("setting second")
+      const fromCarat = convertCaratToFloat(filtersLocal.carat_range.from)
+      if (blockNumberCov >= fromCarat) {
+          let newFilters = { ...filtersLocal, carat_range: { ...filtersLocal['carat_range'], to: blockNumberCov.toString() } };
+          setFiltersLocal(newFilters);
+      } else {
+          let newFilters = { ...filtersLocal, carat_range: { ...filtersLocal['carat_range'], from: blockNumberCov.toString() } };
+          setFiltersLocal(newFilters);
+      }
+    }
+  };
 
   const handleEsc = (event) => {
     if (event.keyCode === 27) {
@@ -117,14 +158,11 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
   }
 
 
+  // calculate 
+
+
   const checkIfCaratInRange = (carat) => {
-    if (carat.endsWith("ct")) {
-      carat = carat.slice(0, -2)
-    } else if (carat.endsWith("s")) {
-      carat = carat.slice(0, -1) / 100
-    } else if (carat.endsWith("ct+")) {
-      carat = carat.slice(0, -3)
-    }
+    carat = convertCaratToFloat(carat)
 
     // if only "to" or "from" is set check if value is exactly equal to "to" or "from"
     if (filtersLocal["carat_range"]["from"] && !filtersLocal["carat_range"]["to"]) {
@@ -216,7 +254,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
 
             <div className="flex flex-wrap ml-8">
               {carat_list.map((carat) => (
-                <div key={carat} className={`default-filter-button w-12 ${checkIfCaratInRange(carat) && 'bg-accent text-white'}`}>{carat}</div>
+                <div onClick={() => handleCaratClick(carat)} key={carat} className={`default-filter-button w-12 ${checkIfCaratInRange(carat) && 'bg-accent text-white'}`}>{carat}</div>
               ))}
             </div>
           </div>    
