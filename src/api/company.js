@@ -378,10 +378,34 @@ export const deleteWarehouse = async (warehouseID) => {
     if (response.status === 200) {
       return response.data.message;
     } else {
-      throw new Error("Failed to delete user");
+      throw new Error("Failed to delete warehouse");
     }
-  } catch (error) {
-    console.error("Error deleting user:", error);
-    throw error;
-  }
+    } catch (error) {
+        console.error("Error deleting warehouse:", error);
+        throw error;
+    }
+}
+
+
+export const checkUserEmailExists = async (email) => {
+    try {
+      const response = await axios.get(
+        `/check_user_exists?email=${email}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+        }
+      );
+  
+      if (response.status === 200) {
+        return response.data.exist;
+      } else {
+        throw new Error("Failed to check if user exists");
+      }
+    } catch (error) {
+      console.error("Error checking if user exists:", error);
+      throw error;
+    }
 };
