@@ -1,5 +1,5 @@
 import { XMarkIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import Logo from '/assets/teomim-logo.png';
 import { HomeIcon } from "@heroicons/react/24/outline";
@@ -10,6 +10,7 @@ import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
 import { UserIcon } from '@heroicons/react/24/outline';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import { getUsersCompany } from '../../api/company';
 
 
 export const MenuSideBar = ({ setLoggedIn }) => {
@@ -17,15 +18,16 @@ export const MenuSideBar = ({ setLoggedIn }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const user = useSelector(state => state.user.user);
+  const [userCompany, setUserCompany] = useState({'company_type': ''});
+  const [userCompanyLoaded, setUserCompanyLoaded] = useState(false);
 
 
   const handleToggle = (event) => {
-
-
     if (event.type === "keydown" && open && (event.key === "Tab" || event.keyCode === 27 || event.key === "Shift")) {
       setOpen(false);
     }
   }
+
   document.addEventListener('keydown', handleToggle)
 
   const onLogout = () => {
@@ -33,6 +35,23 @@ export const MenuSideBar = ({ setLoggedIn }) => {
     setLoggedIn(false);
     navigate("/login");
   }
+
+  useEffect(() => {
+    const fetchCompany = async () => {
+      if (user && user.id && !userCompanyLoaded) {
+        try {
+          const data = await getUsersCompany(user.id);
+          setUserCompany(data);
+          setUserCompanyLoaded(true);
+          console.log("find user company");
+        } catch (error) {
+          console.error("Error fetching company data:", error);
+        }
+      }
+    };
+
+    fetchCompany();
+  }, [user, userCompanyLoaded]);
 
 
   return (
@@ -72,7 +91,7 @@ export const MenuSideBar = ({ setLoggedIn }) => {
               </div>
             )}
 
-            {user.role !== "Buyer" && (
+            {userCompanyLoaded && userCompany.company_type !== "Jeweller" && (
               <div onClick={() => { navigate("/reports"); setOpen(false) }} className={`flex py-2 mt-4 rounded-md cursor-pointer group ${location.pathname === "/reports" ? 'bg-white' : 'hover:bg-white'}`}>
                 <BookOpenIcon className={`h-6 w-6 mx-4 ${location.pathname === "/reports" ? '' : 'text-white group-hover:text-black'}`} />
                 <p className={`pt-[1px] ${location.pathname === "/reports" ? '' : 'text-white group-hover:text-black'}`}>Reports</p>
