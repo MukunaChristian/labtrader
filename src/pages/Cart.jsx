@@ -106,7 +106,7 @@ export const Cart = () => {
                     </div>
 
                     {diamond.diamond_type_id == 2 &&
-                      <div className="ml-auto text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white">
+                      <div className="ml-auto text-right border-solid border-0 border-r-[1px] pr-4 mr-32 border-white">
                         <p className='mb-2'>
                           {diamond.amount ? diamond.amount : 0} Available
                         </p>
@@ -117,7 +117,7 @@ export const Cart = () => {
                       </div>
                     }
 
-                    <div className="ml-auto text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white">
+                    <div className="ml-0 text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white">
                       <p className="text-sm">Price in USD</p>
                       <p className="font-semibold text-sm">$ {diamond.total * diamond.amount_in_cart}</p>
                     </div>
