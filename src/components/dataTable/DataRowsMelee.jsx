@@ -101,8 +101,7 @@ export const DataRowsMelee = ({ row, columns }) => {
             <div className="flex flex-col">
             <div className="flex">
               <p>
-                $ {(parseFloat(row["total"]).toFixed(2) / parseFloat(row.specifications.carat)).toFixed(2) * 10 /
-                  10}
+                $ {((parseFloat(row["total"]) / parseFloat(row.specifications.carat)).toFixed(2))}
               </p>
             </div>
             <div className="flex">
