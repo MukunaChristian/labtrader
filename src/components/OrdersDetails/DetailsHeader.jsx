@@ -73,7 +73,7 @@ export const OrdersDetailsHeader = ({ labelNumber, status, onSave, handleDownloa
       <input 
           type="text" 
           value={labelNumberState}
-          placeholder="Enter label number"
+          placeholder="Enter Tracking Number"
           className="w-40 h-8 px-2 text-ellipsis overflow-hidden border-solid border-text border-[1px] rounded-md"
           onChange={(e) => { handleLabelNumberChange(e) }}
       /> )}

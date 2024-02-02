@@ -128,7 +128,7 @@ export const Orders = () => {
             <thead>
               <tr className="w-full h-16 py-8">
                 <th className="text-left w-[10%] px-4 bg-white border-none">ID</th>
-                <th className="text-left w-1/4 px-4 bg-white border-none">Label Number</th>
+                <th className="text-left w-1/4 px-4 bg-white border-none">Tracking Number</th>
                 <th className="text-left w-1/4 px-4 bg-white border-none">Customer</th>
                 <th className="text-left w-1/4 px-4 bg-white border-none">Date</th>
                 <th className="text-left w-1/4 px-4 bg-white border-none">Total</th>
