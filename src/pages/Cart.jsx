@@ -117,7 +117,7 @@ export const Cart = () => {
                       </div>
                     }
 
-                    <div className="ml-0 text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white">
+                    <div className={`${diamond.diamond_type_id === 2 ? 'ml-0' : 'ml-auto'} text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white`}>
                       <p className="text-sm">Price in USD</p>
                       <p className="font-semibold text-sm">$ {(diamond.total * diamond.amount_in_cart).toFixed(2)}</p>
                     </div>
