@@ -77,7 +77,7 @@ export const OrdersDetailsHeader = ({ labelNumber, status, onSave, handleDownloa
           className="w-40 h-8 px-2 text-ellipsis overflow-hidden border-solid border-text border-[1px] rounded-md"
           onChange={(e) => { handleLabelNumberChange(e) }}
       /> )}
-      <button onClick={() => {setConfirming(true)}} disabled={!changesMade} className={`border-solid border-[1px] border-text rounded-md px-4 py-1 text-sm ml-2 bg-accent text-white ${changesMade ? '' : 'bg-grey cursor-default' } `}>Save</button>
+      <button onClick={() => {setConfirming(true)}} disabled={!changesMade || (isShipped && !labelNumberState)} className={`border-solid border-[1px] border-text rounded-md px-4 py-1 text-sm ml-2 bg-accent text-white ${changesMade ? '' : 'bg-grey cursor-default' } `}>Save</button>
       <div className="flex justify-center h-8">
         {/* <img src="src/assets/download-pdf.svg" alt="Download PDF" className={`border-solid border-[1px] bg-accent text-white border-text rounded-md px-4 py-1 text-sm ml-2`} onClick={handleDownload}/> */}
         <button onClick={handleDownload} className={`border-solid border-[1px] bg-accent text-white border-text rounded-md px-4 py-1 text-sm ml-2`}>Download</button>
