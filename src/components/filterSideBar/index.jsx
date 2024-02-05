@@ -48,9 +48,14 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
   }
 
   const handleFilterChange = (filterName, filterItemInp) => {
-    const filterItem = filterItemInp.toLowerCase();
 
-    console.log(filterName, filterItem)
+    let filterItem;
+    if (typeof filterItemInp === 'string') {
+      filterItem = filterItemInp.toLowerCase();
+    } else {
+      filterItem = filterItemInp;
+    }
+
 
     if (filterName === "fancyColor") {
       const newFilters = { ...filtersLocal };
@@ -63,7 +68,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
       return  
     }
 
-    if (typeof filterItem === 'string') {
+    if (typeof filterItemInp === 'string') {
       const newFilters = { ...filtersLocal };
       console.log(newFilters[filterName])
       if (newFilters[filterName].includes(filterItem)) {
@@ -71,6 +76,17 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
       } else {
         newFilters[filterName] = [ ...newFilters[filterName], filterItem]
       }
+      setFiltersLocal(newFilters);
+    } else if (Array.isArray(filterItem)) {
+      const newFilters = { ...filtersLocal };
+      console.log(newFilters[filterName])
+      filterItem.forEach((iterItem) => {
+        if (newFilters[filterName].includes(iterItem)) {
+          newFilters[filterName] = newFilters[filterName].filter((item) => item !== iterItem);
+        } else {
+          newFilters[filterName] = [ ...newFilters[filterName], iterItem]
+        }
+      })
       setFiltersLocal(newFilters);
     } else {
       // if filter is boolean
@@ -81,7 +97,6 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
     }
   }
 
-  console.log(filtersLocal.carat_range)
 
   const handleCaratClick = (blockNumber) => {
     console.log(blockNumber)
@@ -185,6 +200,8 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
       return false
     }
   }
+
+  console.log(filtersLocal["clarity"])
 
 
   return (

@@ -65,20 +65,20 @@ export const clarity_list = [
 ];
 
 export const cut_list = [
-  { display: "Ideal", name: "ID" },
-  { display: "Excellent", name: "EX" },
-  { display: "Very Good", name: "VG" },
-  { display: "Good", name: "GD" },
-  { display: "Fair", name: "FR" },
-  { display: "Poor", name: "PR" },
+  { display: "Ideal", name: ["ID", "ideal"] },
+  { display: "Excellent", name: ["EX", "excellent"] },
+  { display: "Very Good", name: ["VG", "very good"] },
+  { display: "Good", name: ["GD", "good"] },
+  { display: "Fair", name: ["FR", "fair"] },
+  { display: "Poor", name: ["PR", "poor"] },
 ];
 
 export const polish_symmetry_list = [
-  { display: "Excellent", name: "EX" },
-  { display: "Very Good", name: "VG" },
-  { display: "Good", name: "GD" },
-  { display: "Fair", name: "FR" },
-  { display: "Poor", name: "PR" },
+  { display: "Excellent", name: ["EX", "excellent"] },
+  { display: "Very Good", name: ["VG", "very good"] },
+  { display: "Good", name: ["GD", "good"] },
+  { display: "Fair", name: ["FR", "fair"] },
+  { display: "Poor", name: ["PR", "poor"] },
 ];
 
 export const fluorescence_list = [
@@ -134,8 +134,8 @@ export const melee_color_list = ["D", "E", "F"];
 export const melee_clarity_list = ["VS", "SI"];
 
 export const melee_cut_list = [
-  { display: "Excellent", name: "EX" },
-  { display: "Very Good", name: "VG" },
+  { display: "Excellent", name: ["EX", "excellent"] },
+  { display: "Very Good", name: ["VG", "very good"] },
 ];
 
 export const melee_carat_list = [

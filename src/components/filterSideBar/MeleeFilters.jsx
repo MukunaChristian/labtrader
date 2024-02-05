@@ -29,7 +29,12 @@ export const MeleeFilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen
   }, [])
 
   const handleFilterChange = (filterName, filterItemInp) => {
-    const filterItem = filterItemInp.toLowerCase();
+    let filterItem;
+    if (typeof filterItemInp === 'string') {
+      filterItem = filterItemInp.toLowerCase();
+    } else {
+      filterItem = filterItemInp;
+    }
 
     console.log(filterName, filterItem)
 
@@ -74,6 +79,17 @@ export const MeleeFilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen
       } else {
         newFilters[filterName] = [ ...newFilters[filterName], filterItem]
       }
+      setFiltersLocal(newFilters);
+    } else if (Array.isArray(filterItem)) {
+      const newFilters = { ...filtersLocal };
+      console.log(newFilters[filterName])
+      filterItem.forEach((iterItem) => {
+        if (newFilters[filterName].includes(iterItem)) {
+          newFilters[filterName] = newFilters[filterName].filter((item) => item !== iterItem);
+        } else {
+          newFilters[filterName] = [ ...newFilters[filterName], iterItem]
+        }
+      })
       setFiltersLocal(newFilters);
     } else {
       // if filter is boolean

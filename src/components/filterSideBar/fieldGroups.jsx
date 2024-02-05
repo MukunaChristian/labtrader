@@ -8,7 +8,7 @@ export const FieldGroups = ({ fieldGroups, fieldGroupName, selectedFieldGroup, o
                     <div 
                         key={fieldGroup.name} 
                         onClick={() => onFieldGroupSelect(fieldGroupName, fieldGroup.name)} 
-                        className={`${selectedFieldGroup.includes(fieldGroup.name.toLowerCase()) ? 'default-filter-active' : 'default-filter-button'}`}
+                        className={`${fieldGroup.name.some(r => {return selectedFieldGroup.includes(r.toLowerCase())}) ? 'default-filter-active' : 'default-filter-button'}`}
                     >
                         {fieldGroup.display}
                     </div>
