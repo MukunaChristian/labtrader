@@ -30,3 +30,20 @@ export const getSupplimentalData = async (dispatch) => {
     console.error("Error fetching companies:", response.data.message);
   }
 };
+
+export const getJewellersByReseller = async (resellerId, repId) => {
+  const response = await axios.post(
+    `/get_jewellers_by_reseller`,
+    {
+      reseller_id: resellerId,
+      rep_id: repId,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    }
+  );
+  return response.data;
+};

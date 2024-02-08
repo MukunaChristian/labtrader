@@ -7,17 +7,29 @@ import { checkout } from "../api/checkout"
 import { clearCart, removeDiamondFromCart, addDiamondToCart } from "../reducers/UserSlice"
 import { CheckoutDropdown } from "../components/dropdowns/CheckoutDropdown"
 import { calculateDeliveryFee } from "../api/checkout"
-import { set } from "lodash"
+import { getJewellersByReseller } from "../api/getSupplimentalData"
+import { getUsersCompany } from "../api/company"
+
+const optionsDelivery = [
+  "Collect",
+  "Deliver"
+];
+
 
 export const Cart = () => {
     const diamonds_in_cart = useSelector(state => state.user.diamonds_in_cart)
     const dispatch = useDispatch()
     const user_id = useSelector(state => state.user.user.id)
+    const user_role = useSelector(state => state.user.user.role)
     const currency = useSelector(state => state.app.currency)
     const [selectedDiamond, setSelectedDiamond] = useState()
 
     const [delivery, setDelivery] = useState(false)
     const [deliveryFee, setDeliveryFee] = useState((0).toFixed(2))
+
+    const [repPurchase, setRepPurchase] = useState(false)
+    const [jewellers, setJewellers] = useState([])
+    const [selectedJeweller, setSelectedJeweller] = useState({})
 
     const rates = useSelector(state => state.app.rates);
     const navigate = useNavigate()
@@ -40,17 +52,73 @@ export const Cart = () => {
       }
     }
 
+    const toggleJeweller = (option) => {
+      setSelectedJeweller(jewellers.find(jeweller => jeweller.email === option))
+    }
 
+    useEffect(() => {
+      if (!(user_id && user_role)) {
+        return
+      }
+
+      console.log(user_role)
+      if (user_role === 'Admin') {
+        getUsersCompany(user_id).then(
+          res => {
+            console.log(res)
+            if (!(res.type_id === 2)) {
+              return
+            }
+
+            getJewellersByReseller(res.id, null).then(
+              res => {
+                console.log(res)
+                setJewellers(res.data)
+                setRepPurchase(true)
+              }
+            )
+          }
+        )
+      } else if (user_role === 'Sales Rep') {
+        getJewellersByReseller(null, user_id).then(
+          res => {
+            console.log(res)
+            setJewellers(res.data)
+            // iter though jewellers and append to jewellerNames
+            setRepPurchase(true)
+          }
+        )
+      }
+    }, [user_id, user_role])
 
     const handleCheckout = () => {
+      
+      console.log(repPurchase)
+      console.log(selectedJeweller)
+      if (repPurchase && selectedJeweller.email === "---") {
+        return
+      }
 
-      checkout(diamonds_in_cart, user_id, 0, deliveryFee, currency.code, delivery).then(
-        res => {
-          console.log(res)
-          dispatch(clearCart())
-          navigate("/confirm")   
-        }
-      )
+      if (repPurchase) {
+        checkout(diamonds_in_cart, selectedJeweller.id, 0, deliveryFee, currency.code, delivery).then(
+          res => {
+            console.log(res)
+            console.log("repurchase")
+            dispatch(clearCart())
+            navigate("/confirm")   
+          }
+        )
+        return
+      } else {
+        checkout(diamonds_in_cart, user_id, 0, deliveryFee, currency.code, delivery).then(
+          res => {
+            console.log(res)
+            dispatch(clearCart())
+            navigate("/confirm")   
+          }
+        )
+      }
+      
     }
 
 
@@ -156,7 +224,11 @@ export const Cart = () => {
         </div>
         {diamonds_in_cart.length > 0 && 
           <div className="flex items-center justify-end mt-6">
-            <CheckoutDropdown toggleDelivery={toggleDelivery}/>
+            <CheckoutDropdown toggleDelivery={toggleDelivery} initialState="Collect" options={optionsDelivery}/>
+
+            {repPurchase && 
+              <CheckoutDropdown toggleDelivery={toggleJeweller} initialState="---" options={jewellers.map(jeweller => { return jeweller.email})}/>
+            }
             <button onClick={() => handleCheckout()} className="bg-accent rounded-lg text-white px-8 py-3 h-10">Confirm order</button>
 
           </div>
