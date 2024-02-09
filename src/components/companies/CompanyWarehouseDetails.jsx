@@ -16,6 +16,11 @@ export const CompanyWarehouseDetails = ({ warehouse_info, company_id, setActiveT
     }
   }, [warehouse_info]);
 
+  const isNumeric = (str) => {
+    return !isNaN(str) && 
+          !isNaN(parseFloat(str))
+  }
+
   const handleCheckboxChange = () => {
     const newConsignmentStockValue = !consignmentStock;
     setConsignmentStock(newConsignmentStockValue);
@@ -33,6 +38,21 @@ export const CompanyWarehouseDetails = ({ warehouse_info, company_id, setActiveT
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
+    // check if value is delivery_fee and check if it is a number
+    if (['delivery_fee', 'delivery_from', 'delivery_to'].includes(name) && !isNumeric(value)) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        [name]: 'This field must be a number.'
+      }));
+    } else if (['delivery_fee', 'delivery_from', 'delivery_to'].includes(name)) {
+      // remove valid field from errors
+      const newErrors = { ...errors };
+      delete newErrors[name];
+      setErrors(newErrors);
+    }
+
+
     setEditedDetails(prevDetails => ({
       ...prevDetails,
       [name]: value
@@ -57,6 +77,15 @@ export const CompanyWarehouseDetails = ({ warehouse_info, company_id, setActiveT
     try {
       const isValid = validateFields();
       if (!isValid) return;
+
+      if (editedDetails.delivery_from > editedDetails.delivery_to) {
+        setErrors(prevErrors => ({
+          ...prevErrors,
+          delivery_from: 'Delivery from cannot be greater than delivery to.',
+          delivery_to: 'Delivery to cannot be less than delivery from.'
+        }));
+        return;
+      }
 
       editedDetails.company_id = company_id
 
@@ -132,6 +161,22 @@ export const CompanyWarehouseDetails = ({ warehouse_info, company_id, setActiveT
 
         <div className="flex-1 basis-1/4 mr-8 mt-4">
           <p className="">Zip Code</p>
+          <input name="pincode" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.pincode} />
+          {errors.pincode && <p className="text-red-500">{errors.pincode}</p>}
+        </div>
+
+        <div className="flex-1 basis-1/4 mr-8 mt-4">
+          <p className="">Delivery Time (days)</p>
+          <div className='flex justify-between w-full'>
+            <input name="delivery_from" className="default-input w-[40%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.delivery_from} />
+            <p className='mx-4 text-2xl'>-</p>
+            <input name="delivery_to" className="default-input w-[40%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.delivery_to} />
+          </div>
+          {errors.city && <p className="text-red-500">{errors.city}</p>}
+        </div>
+
+        <div className="flex-1 basis-1/4 mr-8 mt-4">
+          <p className="">Delivery Fee</p>
           <input name="pincode" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.pincode} />
           {errors.pincode && <p className="text-red-500">{errors.pincode}</p>}
         </div>

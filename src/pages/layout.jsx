@@ -120,7 +120,7 @@ export const Layout = ({ children }) => {
 
   return (
     (loggedIn || isLogin) ?
-    <div className='relative w-[100%] h-full '>
+    <div className='relative w-[100%] min-h-screen  bg-light-grey'>
       {isLogin ? null : 
         <div className='w-full z-30 h-16 bg-black flex items-center justify-end px-5 fixed border-solid border-0 border-b-[1px]'>
           <div className='h-24 flex justify-start items-center'>
@@ -151,7 +151,7 @@ export const Layout = ({ children }) => {
         </div>
       }
       {/* <div className='h-full' style={{ backgroundColor: 'rgb(220 220 220)' }}> */}
-      <div className='h-full bg-light-grey'>
+      <div className=''>
         {!isLoading &&
           <>
             {children}

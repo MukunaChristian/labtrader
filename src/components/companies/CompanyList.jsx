@@ -123,7 +123,7 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies, c
   };
 
   return (
-    <div className="profile-block" style={{ backgroundColor: 'rgb(220 220 220)' }}>
+    <div className="profile-block h-[100%]" style={{ backgroundColor: 'rgb(220 220 220)' }}>
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-semibold text-lg text-black flex-1">Company List</h2>
         <div className="ml-auto">

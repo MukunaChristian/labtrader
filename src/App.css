@@ -4,8 +4,8 @@
 
 
 #root {
-  width: 100vw;
-  height: 100vh;
+  width: 100vw; 
+  height: 100%;
 }
 
 * {
@@ -114,7 +114,7 @@ td, tr, th {
 }
 
 .profile-block {
-  @apply border-solid border-[1px] border-black w-[80%] p-6 h-full;
+  @apply border-solid border-[1px] border-black w-[80%] p-6;
 }
 
 .default-button {
