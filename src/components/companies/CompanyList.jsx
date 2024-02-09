@@ -18,7 +18,7 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies, c
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(9)
+  const [itemsPerPage] = useState(10)
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
@@ -174,7 +174,10 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies, c
           </tbody>
         </table>
       </div>
-      <div className='grid justify-center pt-6'>
+      <div className='flex justify-between pt-6 px-1'>
+        <p className='flex items-center '>
+          Showing {indexOfFirstItem + 1} to {indexOfLastItem > totalCompanies ? totalCompanies : indexOfLastItem} of {totalCompanies} entries
+        </p>
         <Pagenation
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
