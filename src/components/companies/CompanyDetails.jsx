@@ -79,7 +79,7 @@ export const CompanyDetails = ({ details, allCompanies, companyTypes, changesMad
 
   const validateFields = () => {
     let newErrors = {};
-    const requiredFields = ['name', 'registration_number', 'company_type', 'address_1', 'address_2', 'city', 'country', 'pincode', 'email', 'phone_number'];
+    const requiredFields = ['name', 'company_type', 'address_1', 'address_2', 'city', 'country', 'pincode', 'email', 'phone_number'];
     for (const field of requiredFields) {
       if (!editedDetails[field]) {
         newErrors[field] = 'This field is required.';
