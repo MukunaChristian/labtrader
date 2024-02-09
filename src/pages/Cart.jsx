@@ -29,6 +29,7 @@ export const Cart = () => {
 
     const [repPurchase, setRepPurchase] = useState(false)
     const [jewellers, setJewellers] = useState([])
+    const [jewellerCompanyNames, setJewellerCompanyNames] = useState([])
     const [selectedJeweller, setSelectedJeweller] = useState({})
 
     const rates = useSelector(state => state.app.rates);
@@ -74,6 +75,7 @@ export const Cart = () => {
               res => {
                 console.log(res)
                 setJewellers(res.data)
+                setJewellerCompanyNames(res.company_names)
                 setRepPurchase(true)
               }
             )
@@ -84,6 +86,7 @@ export const Cart = () => {
           res => {
             console.log(res)
             setJewellers(res.data)
+            setJewellerCompanyNames(res.company_names)
             // iter though jewellers and append to jewellerNames
             setRepPurchase(true)
           }
@@ -227,7 +230,12 @@ export const Cart = () => {
             <CheckoutDropdown toggleDelivery={toggleDelivery} initialState="Collect" options={optionsDelivery}/>
 
             {repPurchase && 
-              <CheckoutDropdown toggleDelivery={toggleJeweller} initialState="---" options={jewellers.map(jeweller => { return jeweller.email})}/>
+              <CheckoutDropdown 
+                toggleDelivery={toggleJeweller} 
+                initialState="---" 
+                options={jewellers.map((jeweller, index) => { return jeweller.email})} 
+                display={jewellers.map((jeweller, index) => { return `${jeweller.email} (${jewellerCompanyNames[index]})`})} 
+              />
             }
             <button onClick={() => handleCheckout()} className="bg-accent rounded-lg text-white px-8 py-3 h-10">Confirm order</button>
 

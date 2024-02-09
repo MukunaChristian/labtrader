@@ -3,7 +3,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 // Euro, British Pound, Hong Kong Dollar, Indian Rupee, South African Rand
 
-export const CheckoutDropdown = ({ toggleDelivery, initialState, options }) => {
+export const CheckoutDropdown = ({ toggleDelivery, initialState, options, display }) => {
   const ref = useRef(null);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -51,7 +51,7 @@ export const CheckoutDropdown = ({ toggleDelivery, initialState, options }) => {
         <div className='absolute right-0 top-[-11rem] h-[10rem] flex items-end'>
           <div className={`min-w-[8rem] bg-white border-solid border-[1.5px] rounded-sm ${(options.length > 4) && 'overflow-y-scroll h-full'}`}>
             <div className="py-1 ">
-              {options.map((option) => (
+              {options.map((option, index) => (
                 <a
                   key={option.id}
                   href="#"
@@ -61,7 +61,7 @@ export const CheckoutDropdown = ({ toggleDelivery, initialState, options }) => {
                   }}
                 >
                   <div className='flex flex-col'>
-                    <p>{option}</p>
+                    <p>{display ? display[index] : option}</p>
                   </div>
                 </a>
               ))}
