@@ -38,6 +38,11 @@ export const Cart = () => {
     const subTotal = diamonds_in_cart.reduce((acc, curr) => acc + parseFloat(curr.total) * curr.amount_in_cart * rates[currency.code], 0).toFixed(2)
     const total = (parseFloat(subTotal) + parseFloat(deliveryFee)).toFixed(2)
 
+    const formatNumberWithSpaces = (number) => {
+      const formatter = new Intl.NumberFormat('en-US');
+      return formatter.format(number).replace(/,/g, ',');
+    }
+
     const toggleDelivery = (option) => {
       if (option === "Deliver") {
         setDelivery(true)
@@ -190,12 +195,12 @@ export const Cart = () => {
 
                     <div className={`${diamond.diamond_type_id === 2 ? 'ml-0' : 'ml-auto'} text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white`}>
                       <p className="text-sm">Price in USD</p>
-                      <p className="font-semibold text-sm">$ {(diamond.total * diamond.amount_in_cart).toFixed(2)}</p>
+                      <p className="font-semibold text-sm">$ {formatNumberWithSpaces((diamond.total * diamond.amount_in_cart).toFixed(2))}</p>
                     </div>
 
                     <div className="text-right mr-4">
                       <p className="text-sm">Price in {currency.name}</p>
-                      <p className="font-semibold text-sm">{diamond.total  ? currency.symbol + " " + (parseFloat(diamond.total) * diamond.amount_in_cart * rates[currency.code] * 10 / 10).toFixed(2) : 'N/A'}</p>
+                      <p className="font-semibold text-sm">{diamond.total  ? currency.symbol + " " + formatNumberWithSpaces((parseFloat(diamond.total) * diamond.amount_in_cart * rates[currency.code] * 10 / 10).toFixed(2)) : 'N/A'}</p>
                     </div>
                     
                   </div>
@@ -217,12 +222,12 @@ export const Cart = () => {
           <div className="text-white">
             <p className="mb-2">Sub Total</p>
             <p className="mb-2">Delivery Fee</p> 
-            <p className="font-semibold text-lg">Total</p>
+            <p className="font-semibold text-lg">Total (Excluding VAT)</p>
           </div>
           <div className="ml-auto text-white">
-            <p className="mb-2">{currency.symbol} {subTotal}</p>
-            <p className="mb-2">{currency.symbol} {deliveryFee}</p>
-            <p className="font-semibold text-lg">{currency.symbol} {total}</p> 
+            <p className="mb-2">{currency.symbol} {formatNumberWithSpaces(subTotal)}</p>
+            <p className="mb-2">{currency.symbol} {formatNumberWithSpaces(deliveryFee)}</p>
+            <p className="font-semibold text-lg">{currency.symbol} {formatNumberWithSpaces(total)}</p> 
           </div>
         </div>
         {diamonds_in_cart.length > 0 && 
@@ -234,7 +239,7 @@ export const Cart = () => {
                 toggleDelivery={toggleJeweller} 
                 initialState="---" 
                 options={jewellers.map((jeweller, index) => { return jeweller.email})} 
-                display={jewellers.map((jeweller, index) => { return `${jeweller.email} (${jewellerCompanyNames[index]})`})} 
+                display={jewellers.map((jeweller, index) => { return `${jewellerCompanyNames[index]} (${jeweller.email})`})} 
               />
             }
             <button onClick={() => handleCheckout()} className="bg-accent rounded-lg text-white px-8 py-3 h-10">Confirm order</button>

@@ -29,7 +29,9 @@ export const DataRows = ({ row, rowIndex, columns }) => {
 
   let missingImage = false;
   if (!row["video_link"].includes("videos.gem360.in") && 
-    !row["video_link"].includes("view.gem360.in") && !row["video_link"].includes("loupe360.com")) {
+    !row["video_link"].includes("view.gem360.in") && 
+    !row["video_link"].includes("loupe360.com") &&
+    !row["video_link"].includes("viw-us.s3.amazonaws.com")) {
     missingImage = true;
   }
 
@@ -47,6 +49,11 @@ export const DataRows = ({ row, rowIndex, columns }) => {
     setIsExpanded(!isExpanded);
   }
 
+  const formatNumberWithSpaces = (number) => {
+    const formatter = new Intl.NumberFormat('en-US');
+    return formatter.format(number).replace(/,/g, ',');
+  }
+
   const handleAddToCart = () => {
     if (diamonds_in_cart.some(item => item.id === row.id)) {
       dispatch(removeDiamondFromCart(row.id));
@@ -58,7 +65,10 @@ export const DataRows = ({ row, rowIndex, columns }) => {
   let videoLinkFormat = 
     row["video_link"].includes("view.gem360.in") ? "iframe-container-second" :
     row["video_link"].includes("videos.gem360.in") ? "iframe-container" :
-    row["video_link"].includes("loupe360.com") ? "iframe-container-loupe" : "hidden";
+    row["video_link"].includes("loupe360.com") ? "iframe-container-loupe" : 
+    row["video_link"].includes("viw-us.s3.amazonaws.com") ? "iframe-container-viw" : "hidden";
+
+
 
   console.log(row)
 
@@ -73,9 +83,9 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             <>
               {spotPrice ? <>
                 <div className="flex flex-col">
-                  <div className="flex"><p className='text-xs'>${(row[column.field] / parseFloat(row.specifications.carat)).toFixed(2)}/ct</p></div>
-                  <div className="flex"><p className='text-lg'>${parseFloat(row[column.field]).toFixed(2)}</p></div>
-                  <div className="flex"><p>{spotPrice} {currency.code}</p></div>
+                  <div className="flex"><p className='text-xs'>${formatNumberWithSpaces((row[column.field] / parseFloat(row.specifications.carat)).toFixed(2))}/ct</p></div>
+                  <div className="flex"><p className='text-lg'>${formatNumberWithSpaces(parseFloat(row[column.field]).toFixed(2))}</p></div>
+                  <div className="flex"><p>{formatNumberWithSpaces(spotPrice)} {currency.code}</p></div>
                 </div>
               </> : <div className="flex flex-col">
                 <div className="flex"><p className='text-lg'>N/A</p></div>
@@ -200,10 +210,10 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             <div className='pt-4'>
               <p className='font-bold pb-2 text-primary'>Price</p>
               <p className='text-primary'>Total Price</p>
-              <p className='text-text'>{row.total ? '$' + row.total : 'N/A'}</p>
-              <p className='text-text'>{row.total ? spotPrice + " " + currency.code : 'N/A'}</p>
+              <p className='text-text'>{row.total ? '$' + formatNumberWithSpaces(row.total) : 'N/A'}</p>
+              <p className='text-text'>{row.total ? formatNumberWithSpaces(spotPrice) + " " + currency.code : 'N/A'}</p>
               <p className='text-primary pt-2'>Price Per Carat</p>
-              <p className='text-text'>{row.total ? currency.symbol + " " + (spotPrice / parseFloat(row.specifications.carat)).toFixed(2) + '/ct' : 'N/A'}</p>
+              <p className='text-text'>{row.total ? currency.symbol + " " + formatNumberWithSpaces((spotPrice / parseFloat(row.specifications.carat)).toFixed(2)) + '/ct' : 'N/A'}</p>
               <p className='text-text'></p>
               {row.diamond_type_id === 2 ? 
               <>

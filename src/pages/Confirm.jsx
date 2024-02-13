@@ -7,7 +7,7 @@ export const Confirm = () => {
   return (
     <div className="bg-light-grey overflow-hidden h-full">
       <div className="max-w-[48rem] w-[80%] max-h-[32rem] h-[60%] border-solid border-[1px] rounded-xl shadow-sm m-auto mt-32" style={{ backgroundColor: 'rgb(220 220 220)' }}>
-        <div className="flex justify-center items-center h-[80%] px-12">
+        <div className="flex justify-center items-center h-[80%] px-12 py-14">
           <div className="flex flex-col justify-center items-center">
             <EnvelopeIcon className="h-24 w-24 text-black" />
             <p className="text-2xl font-semibold">Confirmed.</p>

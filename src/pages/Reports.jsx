@@ -33,8 +33,8 @@ export const Report = () => {
       type_id: 2, // Reseller Company
       registration_number: null,
       search: null,
-      user_role: null,
-      user_id: null
+      user_role: user.role,
+      user_id: user.id
     };
 
     try {
@@ -51,8 +51,8 @@ export const Report = () => {
       type_id: 1, // Supplier Company
       registration_number: null,
       search: null,
-      user_role: null,
-      user_id: null
+      user_role: user.role,
+      user_id: user.id
     };
 
     try {

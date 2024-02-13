@@ -28,7 +28,10 @@ export const Details = () => {
   let spotPrice = useRef(0);
 
   let missingImage = false;
-  if (diamond && !diamond["video_link"].includes("videos.gem360.in") && !diamond["video_link"].includes("view.gem360.in")) {
+  if (diamond && !diamond["video_link"].includes("videos.gem360.in") && 
+    !diamond["video_link"].includes("view.gem360.in") && 
+    !diamond["video_link"].includes("loupe360.com") &&
+    !diamond["video_link"].includes("viw-us.s3.amazonaws.com")) {
     missingImage = true;
   }
 
@@ -46,6 +49,22 @@ export const Details = () => {
     
   }, [diamonds])
 
+  const formatNumberWithSpaces = (number) => {
+    const formatter = new Intl.NumberFormat('en-US');
+    return formatter.format(number).replace(/,/g, ',');
+  }
+
+
+  let videoLinkFormat = "hidden";
+  if (diamond) {
+    videoLinkFormat = 
+    diamond["video_link"].includes("view.gem360.in") ? "iframe-container-details" :
+    diamond["video_link"].includes("videos.gem360.in") ? "iframe-container-second-details" :
+    diamond["video_link"].includes("loupe360.com") ? "iframe-container-loupe" : 
+    diamond["video_link"].includes("viw-us.s3.amazonaws.com") ? "iframe-container-viw" : "hidden";
+  }
+  
+
 
   return (
 
@@ -62,7 +81,7 @@ export const Details = () => {
               <div className="w-[25%] py-2">
                 <div className={`pr-4 ${missingImage ? 'w-[200px] h-[180px]' : 'w-[94%] bg-text'}`}>
                   {!missingImage ? 
-                  <div className={`${diamond["video_link"].includes("videos.gem360.in") ? 'iframe-container-second-details' : 'iframe-container-details'} border-none ${!isLoaded && "hidden"}`}>
+                  <div className={`${videoLinkFormat} border-none ${!isLoaded && "hidden"}`}>
                     <iframe src={diamond["video_link"]} onLoad={() => {setIsLoaded(true)}} className='iframe-custom my-2 border-none rounded-none'></iframe>
                   </div> : 
                   <img className='w-[200px] h-[180px] my-2' src="/assets/missing.png"/>}
@@ -70,7 +89,7 @@ export const Details = () => {
                 
 
                 {!isLoaded && !missingImage &&
-                  <div className={`${diamond["video_link"].includes("videos.gem360.in") ? 'iframe-container-second-details' : 'iframe-container-details'} border-none`}>
+                  <div className={`${videoLinkFormat} border-none`}>
                     <div className='iframe-custom h-full my-2 bg-light-grey flex items-center justify-center'><img className='w-5 h-5' src={loader}/></div> :
                   </div>
                 }
@@ -131,9 +150,9 @@ export const Details = () => {
                   
                   {spotPrice.current ?
                   <div className="w-36 text-left pl-[5%]">
-                    <p className="text-text">{diamond["total"]}</p>
-                    <p className="text-text">{spotPrice.current} {currency.code}</p>
-                    <p className="text-text">{currency.symbol} {(spotPrice.current / parseFloat(diamond.specifications.carat)).toFixed(2)}/ct</p>
+                    <p className="text-text">${formatNumberWithSpaces(diamond["total"])}</p>
+                    <p className="text-text">{formatNumberWithSpaces(spotPrice.current)} {currency.code}</p>
+                    <p className="text-text">{currency.symbol} {formatNumberWithSpaces((spotPrice.current / parseFloat(diamond.specifications.carat)).toFixed(2))}/ct</p>
                   </div> : 
                   <div className="w-28 text-left ml-[70px]">
                     <p className="text-text">-</p>
