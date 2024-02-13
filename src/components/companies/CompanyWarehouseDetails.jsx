@@ -177,7 +177,7 @@ export const CompanyWarehouseDetails = ({ warehouse_info, company_id, setActiveT
 
         <div className="flex-1 basis-1/4 mr-8 mt-4">
           <p className="">Delivery Fee</p>
-          <input name="pincode" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.pincode} />
+          <input name="delivery_fee" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.delivery_fee} />
           {errors.pincode && <p className="text-red-500">{errors.pincode}</p>}
         </div>
       </div>

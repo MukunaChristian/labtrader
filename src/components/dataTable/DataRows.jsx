@@ -125,7 +125,12 @@ export const DataRows = ({ row, rowIndex, columns }) => {
               {gemLoaded || missingImage ? null : 
                 <div className='iframe-container h-full flex items-center bg-white justify-center'><img className='w-5 h-5 text-white' src={loader}/></div>
               }
-              <button className='bg-dark-grey rounded-sm text-white px-3 py-1 cursor-pointer'>CVD</button>
+              {!missingImage && 
+                <div onClick={() => navigator.clipboard.writeText(row["video_link"])} className="flex  cursor-pointer">
+                  <div className="h-8 w-24 bg-text rounded-md border-solid border-grey border-[1.5px] flex justify-center items-center hover:border-black">
+                    <p className="text-xs font-semibold">Copy Video Link</p>
+                  </div>
+                </div>}
             </div>
             <div className='pt-4'>
               <p className='font-bold text-primary mb-2'>Information</p>
