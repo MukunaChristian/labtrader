@@ -123,6 +123,20 @@ export const diamondShapes = [
   { id: 22, name: "Shield", imgSrc: "diamond.png" },
 ];
 
+export const fancyIntensity = [
+  "Faint",
+  "Very Light",
+  "Light",
+  "Fancy Light",
+  "Fancy",
+  "Fancy Dark",
+  "Fancy Intense",
+  "Fancy Vivid",
+  "Fancy Deep",
+];
+
+export const fancyColors = [];
+
 export const meleeShapes = [
   { id: 1, name: "Round", imgSrc: "round.png" },
   { id: 10, name: "Pear", imgSrc: "pear.png" },

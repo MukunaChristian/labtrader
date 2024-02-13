@@ -5,10 +5,13 @@ import { useEffect, useState, useRef } from "react";
 import { capitalizeFirstLetter } from "../components/toUpperCase";
 import { ChevronLeftIcon } from "@heroicons/react/20/solid"
 import { LinkIcon } from "@heroicons/react/20/solid";
+import { ClipboardDocumentIcon } from "@heroicons/react/24/outline";
 
 import { DetailsGrid } from "../components/detailsComponents/DetailsGrid";
 import loader from '../assets/loader.gif';
 import MissingImage from '../assets/missing.svg';
+import { downloadCertFile } from "../api/certFile";
+import { ArrowDownOnSquareStackIcon } from "@heroicons/react/24/outline";
 
 
 export const Details = () => {
@@ -88,15 +91,25 @@ export const Details = () => {
                 </div>
                 <div className="flex">
                   <div className="flex">
-                    <p className="pr-2 text-primary">Cert ID IGI:</p>
-                    <a 
-                      target="_blank" 
-                      rel="noreferrer" 
-                      href={`http://www.igi.org/verify.php?r=${diamond.cert_id}`} 
-                      className="text-dark-grey text-text font-bold border-0 border-solid border-b-[1px]">
-                        {diamond.cert_id}
-                    </a>
-                    <LinkIcon className='w-4 h-4 text-text ml-1'/>
+                    <p className="pr-2 text-primary">Cert ID {diamond.certificate}:</p>
+                    {diamond.certificate === "IGI" ? 
+                      <>
+                        <a className='text-text font-bold border-0 border-solid border-b-[1px]' target="_blank" rel="noreferrer" href={`http://www.igi.org/verify.php?r=${diamond.cert_id}`}>
+                          {diamond.cert_id}
+                        </a>    
+                        <ClipboardDocumentIcon 
+                          className='w-5 h-5 text-text ml-2 mt-[1px] cursor-pointer'
+                          onClick={() => navigator.clipboard.writeText("http://www.igi.org/verify.php?r=" + diamond.cert_id)}  
+                        />
+                      </> : <>
+                        <button className='text-text font-bold border-0 border-solid border-b-[1px] bg-black' onClick={() => downloadCertFile(diamond.cert_id)}>
+                          {diamond.cert_id}
+                        </button>    
+                        <ArrowDownOnSquareStackIcon 
+                          className='w-5 h-5 text-text ml-2 mt-[1px] cursor-pointer'
+                          onClick={() => downloadCertFile(diamond.cert_id)}  
+                        />
+                      </>}
                     
                   </div>
                   <div className="ml-4 flex">

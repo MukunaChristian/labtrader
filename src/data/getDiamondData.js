@@ -71,9 +71,20 @@ function transformDBData(sourceObj) {
     total = sourceObj["total"];
   }
 
+  let videoLink = sourceObj["video_link"];
+  if (
+    !videoLink ||
+    (!videoLink.includes("view.gem360.in") &&
+      !videoLink.includes("videos.gem360.in") &&
+      !videoLink.includes("loupe360.com"))
+  ) {
+    videoLink = "";
+  }
+
   return {
     id: sourceObj["stock_id"] || null, // Default to null if undefined
     cert_id: sourceObj["cert_id"] || "N/A", // Append only if Report is defined
+    certificate: (sourceObj["certificate"] || "IGI").toUpperCase(),
     image: imageIcon, // Remains static
     shape: (sourceObj["shape"] || "N/A").toLowerCase(),
     specifications: {

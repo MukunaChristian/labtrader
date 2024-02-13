@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import { useSelector } from "react-redux";
+import { ColorPickerDropdown } from "../dropdowns/ColorPickerDropdown";
+import { fancyIntensity } from "./filterLists";
 
 import { FieldGroups, FancyColorFields } from "./fieldGroups";
 import { 
@@ -14,12 +16,11 @@ import {
   polish_symmetry_list,
   fluorescence_list,
   fluorescence_color_list,
-  certificate_list
 } from "./filterLists";
 import { filterTemplate } from "./filterTemplate"
 
 import { useApp } from "../../hooks/useApp"
-import { filter } from "lodash";
+
 
 export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) => {
   const [showMore, setShowMore] = useState(false);

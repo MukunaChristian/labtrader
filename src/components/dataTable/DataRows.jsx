@@ -1,14 +1,14 @@
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
-import { LinkIcon } from '@heroicons/react/20/solid';
-import { HeartIcon } from '@heroicons/react/24/outline';
-import { HandRaisedIcon } from '@heroicons/react/24/outline';
+import { ClipboardDocumentIcon } from '@heroicons/react/24/outline';
+import { ArrowDownOnSquareStackIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import loader from '../../assets/loader.gif';
 import { addDiamondToCart, removeDiamondFromCart } from '../../reducers/UserSlice';
 import { useDispatch } from 'react-redux';
+import { downloadCertFile } from '../../api/certFile';
 
 
 export const DataRows = ({ row, rowIndex, columns }) => {
@@ -28,7 +28,8 @@ export const DataRows = ({ row, rowIndex, columns }) => {
   }
 
   let missingImage = false;
-  if (!row["video_link"].includes("videos.gem360.in") && !row["video_link"].includes("view.gem360.in")) {
+  if (!row["video_link"].includes("videos.gem360.in") && 
+    !row["video_link"].includes("view.gem360.in") && !row["video_link"].includes("loupe360.com")) {
     missingImage = true;
   }
 
@@ -53,6 +54,13 @@ export const DataRows = ({ row, rowIndex, columns }) => {
       dispatch(addDiamondToCart(row));
     }
   }
+
+  let videoLinkFormat = 
+    row["video_link"].includes("view.gem360.in") ? "iframe-container-second" :
+    row["video_link"].includes("videos.gem360.in") ? "iframe-container" :
+    row["video_link"].includes("loupe360.com") ? "iframe-container-loupe" : "hidden";
+
+  console.log(row)
 
 
   return (
@@ -98,7 +106,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             <div className='flex flex-col items-center justify-top pt-4 pl-4'>
               <p className='font-bold text-primary'>Media</p>
               {!missingImage ?
-              <div className={`${row["video_link"].includes("videos.gem360.in") ? 'iframe-container-second' : 'iframe-container'} ${gemLoaded ? 'block bg-accent' : 'hidden'}`}>
+              <div className={`${videoLinkFormat} ${gemLoaded ? 'block bg-accent' : 'hidden'}`}>
                 {!gemDisabled ? 
                   <iframe src={row["video_link"]} onLoad={() => setGemLoaded(true)} className={`iframe-custom my-2`}></iframe> 
                 : <div className='iframe-custom my-2 bg-text'></div>}
@@ -112,12 +120,27 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             <div className='pt-4'>
               <p className='font-bold text-primary mb-2'>Information</p>
               <div className='mb-2'>
-                <p className='text-primary'>IGI</p>
-                <p className='font-semibold text-text'>
-                  <a className='text-text font-bold border-0 border-solid border-b-[1px]' target="_blank" rel="noreferrer" href={`http://www.igi.org/verify.php?r=${row.cert_id}`}>
-                    {row.cert_id}
-                  </a>
-                  <LinkIcon className='w-4 h-4 text-text ml-1'/>
+                <p className='text-primary'>{row.certificate}</p>
+                <p className='font-semibold text-text flex'>
+                  
+                  {row.certificate === "IGI" ? 
+                  <>
+                    <a className='text-text font-bold border-0 border-solid border-b-[1px]' target="_blank" rel="noreferrer" href={`http://www.igi.org/verify.php?r=${row.cert_id}`}>
+                      {row.cert_id}
+                    </a>    
+                    <ClipboardDocumentIcon 
+                      className='w-5 h-5 text-text ml-2 mt-[1px] cursor-pointer'
+                      onClick={() => navigator.clipboard.writeText("http://www.igi.org/verify.php?r=" + row.cert_id)}  
+                    />
+                  </> : <>
+                    <button className='text-text font-bold border-0 border-solid border-b-[1px] bg-black' onClick={() => downloadCertFile(row.cert_id)}>
+                      {row.cert_id}
+                    </button>    
+                    <ArrowDownOnSquareStackIcon 
+                      className='w-5 h-5 text-text ml-2 mt-[1px] cursor-pointer'
+                      onClick={() => downloadCertFile(row.cert_id)}  
+                    />
+                  </>}
                 </p>
               </div>
               <div className='mb-4'>

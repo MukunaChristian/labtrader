@@ -49,15 +49,44 @@ td, tr, th {
   position: relative; /* To allow absolute positioning inside */
   margin-bottom: 1rem;
   margin-top: 1rem;
+  margin-left: 1rem;
 }
 
 .iframe-container-second {
   width: 164px; /* Width of the visible area */
-  height: 148px; /* Height of the visible area */
+  height: 150px; /* Height of the visible area */
   overflow: hidden; /* Hide anything outside of the container */
   position: relative; /* To allow absolute positioning inside */
   margin-bottom: 1rem;
   margin-top: 1rem;
+}
+
+.iframe-container-loupe {
+  width: 10rem; /* This should match the iframe's actual width */
+  height: 10rem; /* Height of the visible area */
+  overflow: hidden; /* Hide anything outside of the container */
+
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+
+}
+
+.iframe-container-loupe iframe {
+  
+  margin-top: 0;
+  margin-bottom: 0;
+
+  width: 32rem; /* This should match the iframe's actual width */
+  height: 30rem; /* This should match the iframe's actual height */
+
+  -webkit-transform: scale(0.8); /* Adjust scale value as needed for Chrome, Safari, and Opera */
+  -ms-transform: scale(0.8); /* Adjust scale value as needed for IE 9 */
+  transform: scale(0.4); /* Adjust scale value as needed */
+  -webkit-transform-origin: center; /* Scales the content from the top left corner */
+  -ms-transform-origin: 0 0; /* Scales the content from the top left corner for IE 9 */
+  transform-origin: top left; /* Scales the content from the top left corner */
+
 }
 
 .iframe-container iframe {
@@ -73,11 +102,11 @@ td, tr, th {
 .iframe-container-second iframe {
   overflow: hidden;
   position: absolute;
-  top: -1rem;
+  top: -3rem;
   left: -1rem;
 
   width: 200px; /* This should match the iframe's actual width */
-  height: 320px; /* This should match the iframe's actual height */
+  height: 300px; /* This should match the iframe's actual height */
 }
 
 .iframe-container-details {
