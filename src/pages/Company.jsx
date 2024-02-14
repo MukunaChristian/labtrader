@@ -66,6 +66,7 @@ export const Company = () => {
     try {
       const companyTypes = await getCompanyTypes();
       setcompanyTypes(companyTypes);
+      console.log(companyTypes)
     } catch (error) {
       console.error('Error fetching company types:', error);
     }

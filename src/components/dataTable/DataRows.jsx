@@ -69,10 +69,6 @@ export const DataRows = ({ row, rowIndex, columns }) => {
     row["video_link"].includes("viw-us.s3.amazonaws.com") ? "iframe-container-viw" : "hidden";
 
 
-
-  console.log(row)
-
-
   return (
     <>
       <tr>

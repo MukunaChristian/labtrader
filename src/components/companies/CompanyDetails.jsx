@@ -10,17 +10,7 @@ export const CompanyDetails = ({ details, allCompanies, companyTypes, changesMad
 
   useEffect(() => {
     fetchSalesReps();
-    if (current_user.role === 'Sales Rep') {
-      setEditedDetails(prevDetails => ({
-        ...prevDetails,
-        company_type: 'Jeweller',
-        type_id: 3,
-        sales_rep: current_user.id,
-        sales_rep_id: current_user.id,
-      }));
-    } else {
-      setEditedDetails({ ...details });
-    }
+    setEditedDetails({ ...details });
   }, [details, current_user]);
 
   const handleChange = (name, value) => {
