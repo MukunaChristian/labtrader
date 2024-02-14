@@ -32,7 +32,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
     !row["video_link"].includes("view.gem360.in") && 
     !row["video_link"].includes("loupe360.com") &&
     !row["video_link"].includes("viw-us.s3.amazonaws.com") && 
-    !row["video_link"].includes("workshop.360view.link")) {
+    !row["video_link"].includes("www.v360videos.com")) {
     missingImage = true;
   }
 
@@ -68,7 +68,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
     row["video_link"].includes("videos.gem360.in") ? "iframe-container" :
     row["video_link"].includes("loupe360.com") ? "iframe-container-loupe" : 
     row["video_link"].includes("viw-us.s3.amazonaws.com") ? "iframe-container-viw": 
-    row["video_link"].includes("workshop.360view.link") ? "iframe-container-view" : "hidden";
+    row["video_link"].includes("www.v360videos.com") ? "iframe-container-view" : "hidden";
 
 
   return (
