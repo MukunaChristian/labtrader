@@ -140,8 +140,31 @@ td, tr, th {
   overflow: hidden;
   top: -1rem;
 
-  width: 220px; /* This should match the iframe's actual width */
+  width: 100px; /* This should match the iframe's actual width */
   height: 340px; /* This should match the iframe's actual height */
+}
+
+.iframe-container-details-diamonds {
+  width: 240px; /* Width of the visible area */
+  height: 250px; /* Height of the visible area */
+  overflow: hidden; /* Hide anything outside of the container */
+  position: relative; /* To allow absolute positioning inside */
+}
+
+.iframe-container-details-diamonds iframe {
+  position: absolute;
+  overflow: hidden;
+  top: -1rem;
+
+  width: 320px; /* This should match the iframe's actual width */
+  height: 520px; /* This should match the iframe's actual height */
+
+  -webkit-transform: scale(0.8); /* Adjust scale value as needed for Chrome, Safari, and Opera */
+  -ms-transform: scale(0.8); /* Adjust scale value as needed for IE 9 */
+  transform: scale(0.65); /* Adjust scale value as needed */
+  -webkit-transform-origin: top left; /* Scales the content from the top left corner */
+  -ms-transform-origin: 0 0; /* Scales the content from the top left corner for IE 9 */
+  transform-origin: top left; /* Scales the content from the top left corner */
 }
 
 .iframe-container-view iframe {

@@ -32,7 +32,8 @@ export const Details = () => {
     !diamond["video_link"].includes("view.gem360.in") && 
     !diamond["video_link"].includes("loupe360.com") &&
     !diamond["video_link"].includes("viw-us.s3.amazonaws.com") &&
-    !diamond["video_link"].includes("www.v360videos.com")) {
+    !diamond["video_link"].includes("www.v360videos.com") &&
+    !diamond["video_link"].includes("v360.diamonds")) {
     missingImage = true;
   }
 
@@ -63,7 +64,8 @@ export const Details = () => {
     diamond["video_link"].includes("videos.gem360.in") ? "iframe-container-second-details" :
     diamond["video_link"].includes("loupe360.com") ? "iframe-container-loupe" : 
     diamond["video_link"].includes("viw-us.s3.amazonaws.com") ? "iframe-container-viw" : 
-    diamond["video_link"].includes("www.v360videos.com") ? "iframe-container-details-view" : "hidden";
+    diamond["video_link"].includes("www.v360videos.com") ? "iframe-container-details-view" : 
+    diamond["video_link"].includes("v360.diamonds") ? "iframe-container-details-diamonds" : "hidden";
   }
   
 
