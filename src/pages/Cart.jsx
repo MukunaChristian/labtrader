@@ -25,7 +25,7 @@ export const Cart = () => {
     const [selectedDiamond, setSelectedDiamond] = useState()
 
     const [delivery, setDelivery] = useState(false)
-    const [deliveryFee, setDeliveryFee] = useState((0).toFixed(2))
+    const [deliveryFee, setDeliveryFee] = useState(0)
 
     const [repPurchase, setRepPurchase] = useState(false)
     const [jewellers, setJewellers] = useState([])
@@ -39,9 +39,15 @@ export const Cart = () => {
     const total = (parseFloat(subTotal) + parseFloat(deliveryFee)).toFixed(2)
 
     const formatNumberWithSpaces = (number) => {
-      const formatter = new Intl.NumberFormat('en-US');
-      return formatter.format(number).replace(/,/g, ',');
-    }
+      // Specify options to retain up to 2 decimal places, for example
+      const options = {
+        minimumFractionDigits: 2, // Minimum decimal places to show
+        maximumFractionDigits: 2, // Maximum decimal places to show
+      };
+      
+      const formatter = new Intl.NumberFormat('en-US', options);
+      return formatter.format(number).replace(/,/g, ' ');
+    };
 
     const toggleDelivery = (option) => {
       if (option === "Deliver") {
@@ -228,7 +234,7 @@ export const Cart = () => {
           </div>
           <div className="ml-auto text-white">
             <p className="mb-2">{currency.symbol} {formatNumberWithSpaces(subTotal)}</p>
-            <p className="mb-2">{currency.symbol} {formatNumberWithSpaces(deliveryFee)}</p>
+            <p className="mb-2">{currency.symbol} {formatNumberWithSpaces(deliveryFee.toFixed(2))}</p>
             <p className="font-semibold text-lg">{currency.symbol} {formatNumberWithSpaces(total)}</p> 
           </div>
         </div>
