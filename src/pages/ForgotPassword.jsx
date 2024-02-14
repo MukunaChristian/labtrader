@@ -37,7 +37,7 @@ export const ForgotPassword = () => {
   }
 
   return (
-    <div className="w-full h-full flex items-center justify-center flex-col login-color">
+    <div className="w-full min-h-screen flex items-center justify-center flex-col login-color">
       <img className="w-[20rem]" src="../assets/diamond-login.png"></img>
       <img className="w-[35rem] pb-10" src="../assets/labtrader-login.png"></img>
       <div className="relative w-[25rem] flex flex-col items-center p-5 text-white">
