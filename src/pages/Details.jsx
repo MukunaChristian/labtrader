@@ -83,7 +83,7 @@ export const Details = () => {
           {diamond && 
             <>
               <div className="w-[25%] py-2">
-                <div className={`pr-4 ${missingImage ? 'w-[200px] h-[180px]' : 'w-[94%] bg-text'}`}>
+                <div className={`pr-4 ${missingImage ? 'w-[200px] h-[180px]' : 'w-[94%] bg-[#0d080c]'}`}>
                   {!missingImage ? 
                   <div className={`${videoLinkFormat} border-none ${!isLoaded && "hidden"}`}>
                     <iframe src={diamond["video_link"]} onLoad={() => {setIsLoaded(true)}} className='iframe-custom my-2 border-none rounded-none'></iframe>
