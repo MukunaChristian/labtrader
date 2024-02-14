@@ -45,7 +45,7 @@ export const Cart = () => {
 
     const toggleDelivery = (option) => {
       if (option === "Deliver") {
-        setDeliveryFee(200)
+        setDeliveryFee(200.00)
         setDelivery(true)
         return;
         calculateDeliveryFee().then(
