@@ -151,7 +151,7 @@ export const Layout = ({ children }) => {
         </div>
       }
       {/* <div className='h-full' style={{ backgroundColor: 'rgb(220 220 220)' }}> */}
-      <div className=''>
+      <div className='min-h-screen'>
         {!isLoading &&
           <>
             {children}
