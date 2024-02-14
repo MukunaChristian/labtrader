@@ -31,7 +31,8 @@ export const DataRows = ({ row, rowIndex, columns }) => {
   if (!row["video_link"].includes("videos.gem360.in") && 
     !row["video_link"].includes("view.gem360.in") && 
     !row["video_link"].includes("loupe360.com") &&
-    !row["video_link"].includes("viw-us.s3.amazonaws.com")) {
+    !row["video_link"].includes("viw-us.s3.amazonaws.com") && 
+    !row["video_link"].includes("workshop.360view.link")) {
     missingImage = true;
   }
 
@@ -66,7 +67,8 @@ export const DataRows = ({ row, rowIndex, columns }) => {
     row["video_link"].includes("view.gem360.in") ? "iframe-container-second" :
     row["video_link"].includes("videos.gem360.in") ? "iframe-container" :
     row["video_link"].includes("loupe360.com") ? "iframe-container-loupe" : 
-    row["video_link"].includes("viw-us.s3.amazonaws.com") ? "iframe-container-viw" : "hidden";
+    row["video_link"].includes("viw-us.s3.amazonaws.com") ? "iframe-container-viw": 
+    row["video_link"].includes("workshop.360view.link") ? "iframe-container-view" : "hidden";
 
 
   return (

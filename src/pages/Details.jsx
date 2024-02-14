@@ -31,7 +31,8 @@ export const Details = () => {
   if (diamond && !diamond["video_link"].includes("videos.gem360.in") && 
     !diamond["video_link"].includes("view.gem360.in") && 
     !diamond["video_link"].includes("loupe360.com") &&
-    !diamond["video_link"].includes("viw-us.s3.amazonaws.com")) {
+    !diamond["video_link"].includes("viw-us.s3.amazonaws.com") &&
+    !diamond["video_link"].includes("workshop.360view.link")) {
     missingImage = true;
   }
 
@@ -61,7 +62,8 @@ export const Details = () => {
     diamond["video_link"].includes("view.gem360.in") ? "iframe-container-details" :
     diamond["video_link"].includes("videos.gem360.in") ? "iframe-container-second-details" :
     diamond["video_link"].includes("loupe360.com") ? "iframe-container-loupe" : 
-    diamond["video_link"].includes("viw-us.s3.amazonaws.com") ? "iframe-container-viw" : "hidden";
+    diamond["video_link"].includes("viw-us.s3.amazonaws.com") ? "iframe-container-viw" : 
+    diamond["video_link"].includes("workshop.360view.link") ? "iframe-container-details-view" : "hidden";
   }
   
 
