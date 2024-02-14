@@ -90,6 +90,8 @@ export const CompanyDetails = ({ details, allCompanies, companyTypes, changesMad
       const isValid = validateFields();
       if (!isValid) return;
 
+      console.log(editedDetails)
+
       if (isNewCompany) {
         response = await addCompany(editedDetails);
         console.log('Company added successfully:', response);

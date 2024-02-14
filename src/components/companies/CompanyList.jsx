@@ -66,7 +66,10 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies, c
       city: '',
       country: '',
       pincode: '',
-      type_id: ''
+      type_id: (current_user.role === 'Sales Rep' || current_user.role === 'Admin') ? 3 : '',
+      company_type: (current_user.role === 'Sales Rep' || current_user.role === 'Admin') ? 'Jeweller' : '',
+      sales_rep: current_user.role === 'Sales Rep' ? current_user.id : null,
+      sales_rep_id: current_user.role === 'Sales Rep' ? current_user.id : null,
     };
 
     setViewedCompany(newCompany);
