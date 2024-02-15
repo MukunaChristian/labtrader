@@ -46,15 +46,13 @@ export const OrdersDetails = () => {
     updateLabel(orderID, labelNumber);
     updateStatus(orderID, new_status);
 
-    if (new_status === 'sold' || new_status === 'cancelled') {
-      setPdfLoaded(false);
-      getOrderInvoiceDetails(orderID).then(resp => {
-        const pdfUrl = URL.createObjectURL(resp);
-        setHtml(pdfUrl);
-        console.log(resp);
-        setPdfLoaded(true);
-      });
-    }
+    setPdfLoaded(false);
+    getOrderInvoiceDetails(orderID).then(resp => {
+      const pdfUrl = URL.createObjectURL(resp);
+      setHtml(pdfUrl);
+      console.log(resp);
+      setPdfLoaded(true);
+    });
   }
 
   const PDFViewer = ({ file }) => {
