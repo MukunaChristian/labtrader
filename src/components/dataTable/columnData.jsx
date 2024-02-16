@@ -14,15 +14,15 @@ export const diamondColumns = [
   {
     field: "shape",
     headerName: "Shape",
-    width: 100,
+    width: 50,
     renderCell: (params) => (
-      <p className="w-32">{capitalizeFirstLetter(params.value)}</p>
+      <p>{capitalizeFirstLetter(params.value)}</p>
     ),
   },
   {
     field: "specifications",
     headerName: "Specifications",
-    width: 100,
+    width: 50,
     renderCell: (params) => (
       <div>
         <div className="flex mb-1">
@@ -64,7 +64,7 @@ export const diamondColumns = [
   {
     field: "finish",
     headerName: "Finish",
-    width: 100,
+    width: 150,
     renderCell: (params) => (
       <div className="grid grid-cols-2 gap-4">
         <div>
@@ -102,7 +102,7 @@ export const diamondColumns = [
   {
     field: "table_depth",
     headerName: "Table/Depth",
-    width: 50,
+    width: 100,
     renderCell: (params) => (
       <div className="grid grid-cols-2 gap-6">
         <div>
@@ -128,7 +128,7 @@ export const diamondColumns = [
   {
     field: "ratio_measurements",
     headerName: "Ratio/Measurements",
-    width: 80,
+    width: 50,
     renderCell: (params) => (
       <div className="grid grid-cols-2 gap-2">
         <div>
@@ -166,7 +166,7 @@ export const diamondColumns = [
   {
     field: "total",
     headerName: "Total",
-    width: 150,
+    width: 50,
     renderCell: (params) => (
       <div className="flex flex-col">
         <div className="flex">
@@ -192,6 +192,32 @@ export const diamondColumns = [
       </div>
     ),
   },
+  {
+    field: "delivery",
+    headerName: "Delivery",
+    width: 50,
+    renderCell: (params) => (
+      <div className="flex flex-col">
+        <p className="">
+            Delivery Time:
+        </p>
+        <div className="flex mb-2">      
+          <p className="">
+            {params.from}
+          </p>
+          <p className="mx-2"> - </p>
+          <p className="">
+            {params.to}
+          </p>
+          <p className="ml-2">Days</p>
+        </div>
+        <div>Location:</div>
+        <div>
+          {params.location}
+        </div>
+      </div>
+    ),
+  },
 ];
 
 
@@ -207,7 +233,7 @@ export const meleeColumns = [
   {
     field: "information",
     headerName: "Information",
-    width: 200,
+    width: 50,
     renderCell: (params) => (
       <div>
         <div className=''>
@@ -307,7 +333,7 @@ export const meleeColumns = [
   {
     field: "ppc",
     headerName: "Price Per Carat",
-    width: 150,
+    width: 100,
     renderCell: (params) => (
       <div className="flex flex-col">
         <div className="flex">
@@ -334,7 +360,7 @@ export const meleeColumns = [
   {
     field: "order",
     headerName: "Order",
-    width: 150,
+    width: 100,
     renderCell: (params) => (
       <></>
     ),
@@ -364,6 +390,32 @@ export const meleeColumns = [
               10}{" "}
             {currency.code}
           </p>
+        </div>
+      </div>
+    ),
+  },
+  {
+    field: "delivery",
+    headerName: "Delivery",
+    width: 100,
+    renderCell: (params) => (
+      <div className="flex flex-col">
+        <p className="">
+            Delivery Time:
+        </p>
+        <div className="flex mb-2">      
+          <p className="">
+            {params.from}
+          </p>
+          <p className="mx-2"> - </p>
+          <p className="">
+            {params.to}
+          </p>
+          <p className="ml-2">Days</p>
+        </div>
+        <div>Location:</div>
+        <div>
+          {params.location}
         </div>
       </div>
     ),

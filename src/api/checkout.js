@@ -6,7 +6,8 @@ export const checkout = async (
   discount,
   delivery_fee,
   currency,
-  deliver
+  deliver,
+  user_id
 ) => {
   const response = await axios.post(
     "/checkout",
@@ -17,6 +18,7 @@ export const checkout = async (
       delivery_fee: delivery_fee,
       currency: currency,
       deliver: deliver,
+      user_id: user_id,
     },
     {
       headers: {

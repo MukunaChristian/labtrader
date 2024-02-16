@@ -22,14 +22,20 @@ export const Cart = () => {
     const user_id = useSelector(state => state.user.user.id)
     const user_role = useSelector(state => state.user.user.role)
     const currency = useSelector(state => state.app.currency)
+    const warehouses = useSelector(state => state.app.warehouses)
+
     const [selectedDiamond, setSelectedDiamond] = useState()
 
     const [delivery, setDelivery] = useState(false)
     const [deliveryFee, setDeliveryFee] = useState(0)
 
     const [repPurchase, setRepPurchase] = useState(false)
+
     const [jewellers, setJewellers] = useState([])
     const [jewellerCompanyNames, setJewellerCompanyNames] = useState([])
+    const [filteredJewellers, setFilteredJewellers] = useState([])
+    const [filteredJewellerCompanyNames, setFilteredJewellerCompanyNames] = useState([])
+
     const [selectedJeweller, setSelectedJeweller] = useState({})
 
     const rates = useSelector(state => state.app.rates);
@@ -37,6 +43,16 @@ export const Cart = () => {
 
     const subTotal = diamonds_in_cart.reduce((acc, curr) => acc + parseFloat(curr.total) * curr.amount_in_cart * rates[currency.code], 0).toFixed(2)
     const total = (parseFloat(subTotal) + parseFloat(deliveryFee)).toFixed(2)
+
+    const isNumeric = (str) => {
+      return !isNaN(str) && 
+            !isNaN(parseFloat(str))
+    }
+
+    useEffect(() => {
+      setFilteredJewellerCompanyNames(jewellerCompanyNames)
+      setFilteredJewellers(jewellers)
+    }, [jewellers])
 
     const formatNumberWithSpaces = (number) => {
       // Specify options to retain up to 2 decimal places, for example
@@ -51,15 +67,23 @@ export const Cart = () => {
 
     const toggleDelivery = (option) => {
       if (option === "Deliver") {
-        setDeliveryFee(200.00)
+        const idsToFind = diamonds_in_cart.map(obj => obj.warehouse_id);
+        const diamond_warehouses = warehouses.filter(obj => idsToFind.includes(obj.id));
+
+        let deliveryFee = 0;
+        diamond_warehouses.forEach(warehouse => {
+          if (warehouse.delivery_fee && isNumeric(warehouse.delivery_fee)) {
+            deliveryFee += parseInt(warehouse.delivery_fee)
+          }
+        })
+
+        deliveryFee = deliveryFee * rates[currency.code] * 10 / 10
+
+        console.log(deliveryFee)
+
+        setDeliveryFee(deliveryFee)
         setDelivery(true)
         return;
-        calculateDeliveryFee().then(
-          res => {
-            console.log(res)
-            setDeliveryFee((res.delivery_fee * rates[currency.code]).toFixed(2))
-          }
-        )
       } else {
         setDelivery(false)
         setDeliveryFee(0)
@@ -116,7 +140,7 @@ export const Cart = () => {
       }
 
       if (repPurchase) {
-        checkout(diamonds_in_cart, selectedJeweller.id, 0, deliveryFee, currency.code, delivery).then(
+        checkout(diamonds_in_cart, selectedJeweller.id, 0, deliveryFee, currency.code, delivery, user_id).then(
           res => {
             console.log(res)
             console.log("repurchase")
@@ -126,7 +150,7 @@ export const Cart = () => {
         )
         return
       } else {
-        checkout(diamonds_in_cart, user_id, 0, deliveryFee, currency.code, delivery).then(
+        checkout(diamonds_in_cart, user_id, 0, deliveryFee, currency.code, delivery, user_id).then(
           res => {
             console.log(res)
             dispatch(clearCart())
@@ -159,6 +183,31 @@ export const Cart = () => {
       }
     }
 
+
+    const searchJeweller = (search) => {
+      if (search === "") {
+        setFilteredJewellers(jewellers)
+        setFilteredJewellerCompanyNames(jewellerCompanyNames)
+        return
+      }
+
+      const filteredIndexes = [];
+      // filter if email or company name includes search
+      const filteredJewellers = 
+        jewellers.filter((jeweller, index) => {
+          if (jeweller.email.includes(search) || jewellerCompanyNames[index].includes(search)) {
+            filteredIndexes.push(index)
+            return true
+          } else {
+            return false
+          }
+        })
+      
+      const filteredJewellerCompanyNames = jewellerCompanyNames.filter((_, index) => filteredIndexes.includes(index));
+
+      setFilteredJewellers(filteredJewellers)
+      setFilteredJewellerCompanyNames(filteredJewellerCompanyNames)
+    }
     
     return (
       <div className="pt-24 px-24 bg-light-grey pb-24 relative">
@@ -246,8 +295,9 @@ export const Cart = () => {
               <CheckoutDropdown 
                 toggleDelivery={toggleJeweller} 
                 initialState="---" 
-                options={jewellers.map((jeweller, index) => { return jeweller.email})} 
-                display={jewellers.map((jeweller, index) => { return `${jewellerCompanyNames[index]} (${jeweller.email})`})} 
+                options={filteredJewellers.map((jeweller, index) => { return jeweller.email})} 
+                display={filteredJewellers.map((jeweller, index) => { return `${filteredJewellerCompanyNames[index]} (${jeweller.email})`})} 
+                filter={searchJeweller}
               />
             }
             <button onClick={() => handleCheckout()} className="bg-accent rounded-lg text-white px-8 py-3 h-10">Confirm order</button>

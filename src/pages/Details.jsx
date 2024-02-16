@@ -18,6 +18,8 @@ export const Details = () => {
   const diamonds = useSelector(state => state.app.diamondData)
   const rates = useSelector(state => state.app.rates);
   const currency = useSelector(state => state.app.currency);
+  const warehouses = useSelector(state => state.app.warehouses);
+  
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -56,6 +58,7 @@ export const Details = () => {
     return formatter.format(number).replace(/,/g, ',');
   }
 
+  let warehouse = {}
 
   let videoLinkFormat = "hidden";
   if (diamond) {
@@ -66,6 +69,8 @@ export const Details = () => {
     diamond["video_link"].includes("viw-us.s3.amazonaws.com") ? "iframe-container-viw" : 
     diamond["video_link"].includes("www.v360videos.com") ? "iframe-container-details-view" : 
     diamond["video_link"].includes("v360.diamonds") ? "iframe-container-details-diamonds" : "hidden";
+
+    warehouse = warehouses.find(warehouse => warehouse.id === diamond.warehouse_id);
   }
   
 
@@ -142,10 +147,30 @@ export const Details = () => {
                 </div>
                 <div className="flex mt-4 mb-2 ">
                   <div>
-                    <div className='flex items-center pb-2'>
-                      <p className='font-semibold text-text'>{diamond.location}</p>
-                    </div>
-                    
+                    <div className="flex">
+                      <div className="mr-10">
+                        <p className="text-primary">
+                            Delivery Time:
+                        </p>
+                        <div className="flex mb-2">      
+                          <p className="text-text">
+                            {warehouse.delivery_from}
+                          </p>
+                          <p className="mx-2 text-text"> - </p>
+                          <p className="text-text">
+                            {warehouse.delivery_to}
+                          </p>
+                          <p className="ml-2 text-text">Days</p>
+                        </div>
+                      </div>
+                      <div>
+                        <div className='text-primary'>Location:</div>
+                        <div className='text-text'>
+                          {warehouse.country}
+                        </div>
+                      </div>
+                      
+                    </div>   
                   </div>
 
                   <div className="ml-auto">

@@ -14,6 +14,7 @@ export const DataRowsMelee = ({ row, columns }) => {
   const currency = useSelector(state => state.app.currency);
   const rates = useSelector(state => state.app.rates);
   const diamonds_in_cart = useSelector(state => state.user.diamonds_in_cart);
+  const warehouses = useSelector(state => state.app.warehouses);
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [currentAmount, setCurrentAmount] = useState('');
@@ -82,6 +83,8 @@ export const DataRowsMelee = ({ row, columns }) => {
   const inCart = diamonds_in_cart.some(item => item.id === row.id);
   const checkoutUnallowed = (currentAmount === "0" || currentAmount === '' || currentAmount > row.amount) && !inCart;
 
+  const warehouse = warehouses.find(warehouse => warehouse.id === row.warehouse_id);
+
   return (
     <>
       <tr>
@@ -116,7 +119,6 @@ export const DataRowsMelee = ({ row, columns }) => {
             </p>
             <div className="flex">
               <input disabled={inCart} className={`w-[6rem] h-[1.5rem] px-2 rounded-sm mr-2 ${inCart ? 'bg-light-grey' : ''}`} value={currentAmount} onChange={(e) => {updateCurrentAmount(e)}} />
-              <p>~ pcs</p>
             </div>
           </> : 
             column.field === "cart" ? <div className='w-full flex justify-center'>
@@ -134,6 +136,8 @@ export const DataRowsMelee = ({ row, columns }) => {
             </div> :
             column.renderCell ? column.field === "information" ?
             column.renderCell({ value: {"id": row.id, "cert_id": row.cert_id}, row: row }) :
+            column.field === "delivery" ?
+            column.renderCell({ location: warehouse.country, from: warehouse.delivery_from, to: warehouse.delivery_to}) :
             column.renderCell({ value: row[column.field], row: row }) : 
             row[column.field]
             }

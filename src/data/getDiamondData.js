@@ -123,13 +123,14 @@ function transformDBData(sourceObj) {
     culet: sourceObj["culet"] || "N/A",
     canada: sourceObj["canada_mark"] || "N/A",
     forever: sourceObj["forever_mark"] || "N/A",
-    location: sourceObj["location"] || "Location N/A",
+    location: sourceObj["location"] || "N/A",
     company: sourceObj["company"] || "Lab N/A",
     amount: sourceObj["stock_amount"],
     amount_in_cart: 1,
     diamond_type_id: sourceObj["diamond_type_id"] || "N/A",
     size_from: sourceObj["size_from"] || null,
     size_to: sourceObj["size_to"] || null,
+    warehouse_id: sourceObj["warehouse_id"] || null,
   };
 }
 
