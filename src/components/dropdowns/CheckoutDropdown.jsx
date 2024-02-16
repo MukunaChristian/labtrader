@@ -3,7 +3,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 // Euro, British Pound, Hong Kong Dollar, Indian Rupee, South African Rand
 
-export const CheckoutDropdown = ({ toggleDelivery, initialState, options, display }) => {
+export const CheckoutDropdown = ({ toggleDelivery, initialState, options, display, filter }) => {
   const ref = useRef(null);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +55,7 @@ export const CheckoutDropdown = ({ toggleDelivery, initialState, options, displa
                 <a
                   key={option.id}
                   href="#"
-                  className="flex items-center text-black px-4 py-2 hover:bg-gray-200"
+                  className="flex items-center text-black px-4 py-2 hover:bg-gray-200 w-[16rem]"
                   onClick={() => {
                     handleSetDelivery(option);
                   }}
@@ -65,6 +65,12 @@ export const CheckoutDropdown = ({ toggleDelivery, initialState, options, displa
                   </div>
                 </a>
               ))}
+              {options.length === 0 && (
+                <p className="px-4 py-2 text-center w-[16rem]">No options available</p>
+              )}
+              {filter && (
+                <input onChange={(e) => filter(e.target.value)} type="text" className="w-full h-10 px-4 py-2 border-solid border-0 border-grey border-t-[1px]" placeholder="Search" />
+              )}
             </div>
           </div>
         </div>

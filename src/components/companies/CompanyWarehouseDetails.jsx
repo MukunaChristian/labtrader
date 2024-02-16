@@ -39,6 +39,8 @@ export const CompanyWarehouseDetails = ({ warehouse_info, company_id, setActiveT
   const handleChange = (event) => {
     const { name, value } = event.target;
 
+    console.log(name, value)
+
     // check if value is delivery_fee and check if it is a number
     if (['delivery_fee', 'delivery_from', 'delivery_to'].includes(name) && !isNumeric(value)) {
       setErrors(prevErrors => ({
@@ -172,13 +174,13 @@ export const CompanyWarehouseDetails = ({ warehouse_info, company_id, setActiveT
             <p className='mx-4 text-2xl'>-</p>
             <input name="delivery_to" className="default-input w-[40%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.delivery_to} />
           </div>
-          {errors.city && <p className="text-red-500">{errors.city}</p>}
+          {errors.delivery_from && <p className="text-red-500">{errors.delivery_from}</p>}
         </div>
 
         <div className="flex-1 basis-1/4 mr-8 mt-4">
           <p className="">Delivery Fee</p>
           <input name="delivery_fee" className="default-input w-[50%] mt-1" style={{ borderColor: 'rgb(220 220 220)' }} onChange={handleChange} type="text" required value={editedDetails.delivery_fee} />
-          {errors.pincode && <p className="text-red-500">{errors.pincode}</p>}
+          {errors.delivery_fee && <p className="text-red-500">{errors.delivery_fee}</p>}
         </div>
       </div>
 

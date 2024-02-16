@@ -48,6 +48,7 @@ export const Orders = () => {
       id: e,
       label_number: e,
       customer: e,
+      stock_id: e,
     });
   }, 500)
 
@@ -104,7 +105,7 @@ export const Orders = () => {
     }
   }
 
-  console.log(maxItems)
+  console.log(orders)
 
 
   return (
@@ -129,11 +130,12 @@ export const Orders = () => {
               <tr className="w-full h-16 py-8">
                 <th className="text-left w-[10%] px-4 bg-white border-none">ID</th>
                 <th className="text-left w-1/4 px-4 bg-white border-none">Tracking Number</th>
+                <th className="text-left w-1/4 px-4 bg-white border-none">User</th>
                 <th className="text-left w-1/4 px-4 bg-white border-none">Customer</th>
-                <th className="text-left w-1/4 px-4 bg-white border-none">Date</th>
+                <th className="text-left w-[20%] px-4 bg-white border-none">Date</th>
                 <th className="text-left w-1/4 px-4 bg-white border-none">Total</th>
-                <th className="text-left w-[20%] px-4 bg-white border-none">Status</th>
-                <th className="text-left w-[13%] px-4 bg-white border-none">Invoice</th>
+                <th className="text-left w-[15%] px-4 bg-white border-none">Status</th>
+                <th className="text-left w-[15%] px-4 bg-white border-none">Invoice</th>
               </tr>
             </thead>
             <tbody className="">
@@ -143,7 +145,8 @@ export const Orders = () => {
                   <td className="w-1/5 px-4 bg-white border-none">
                     {order.label_number}
                   </td>
-                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.customer}</td>
+                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.user_name} {order.user_surname}</td>
+                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.jeweller_name}</td>
                   <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.order_date}</td>
                   <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">R{formatNumberWithSpaces(order.total_price)}</td>
                   <td className="w-1/5 px-4 bg-white border-none">

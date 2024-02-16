@@ -15,6 +15,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
   const currency = useSelector(state => state.app.currency);
   const rates = useSelector(state => state.app.rates);
   const diamonds_in_cart = useSelector(state => state.user.diamonds_in_cart);
+  const warehouses = useSelector(state => state.app.warehouses);
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [gemDisabled, setGemDisabled] = useState(true);
@@ -73,6 +74,10 @@ export const DataRows = ({ row, rowIndex, columns }) => {
     row["video_link"].includes("v360.diamonds") ? "iframe-container-diamond" : "hidden";
 
 
+  // get warehoue by id in diamond object
+  const warehouse = warehouses.find(warehouse => warehouse.id === row.warehouse_id);
+  console.log(warehouse)
+
   return (
     <>
       <tr>
@@ -90,7 +95,8 @@ export const DataRows = ({ row, rowIndex, columns }) => {
               </> : <div className="flex flex-col">
                 <div className="flex"><p className='text-lg'>N/A</p></div>
               </div>}
-            </> : 
+            </> : column.renderCell && column.field === "delivery" ?
+            column.renderCell({ location: warehouse.country, from: warehouse.delivery_from, to: warehouse.delivery_to}) :
             column.renderCell ? 
             column.renderCell({ value: row[column.field], row: row }) : 
             row[column.field]
@@ -203,9 +209,24 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             </div>
             <div className='pt-4'>
               <p className='font-bold pb-2 text-primary'>Delivery</p>
-              <p className='pb-2 text-text'>{row.location}</p>
-              <div className='flex items-center pb-2'>
-                <p className='pr-1 text-text'>{row.company}</p>
+              <div className="flex flex-col">
+                <p className="text-primary">
+                    Delivery Time:
+                </p>
+                <div className="flex mb-2">      
+                  <p className="text-text">
+                    {warehouse.delivery_from}
+                  </p>
+                  <p className="mx-2 text-text"> - </p>
+                  <p className="text-text">
+                    {warehouse.delivery_to}
+                  </p>
+                  <p className="ml-2 text-text">Days</p>
+                </div>
+                <div className='text-primary'>Location:</div>
+                <div className='text-text'>
+                  {warehouse.country}
+                </div>
               </div>
               
               {/* <p className='pb-2 text-text'>DELIVERY TYPE</p>

@@ -62,13 +62,13 @@ export const CustomDataTable = ({ currentRows, diamondsType }) => {
                     {diamondsType === "diamond" ? 
                     <th 
                       key={index} 
-                      width={column.headerName === "Image" ? "40" : column.headerName === "Total" ? "200" : "200"}
+                      width={column.headerName === "Image" ? "50" : column.headerName === "Total" ? "50" : column.width}
                       className={`px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] bg-black`}>
                       {column.headerName}
                     </th> : 
                     <th 
                       key={index} 
-                      width={column.headerName === "Image" ? "40" : column.headerName === "Total" ? "100" : "40"}
+                      width={column.headerName === "Image" ? "40" : column.headerName === "Total" ? "100" : column.width}
                       className={`px-3 py-3 text-md text-left leading-4 text-text border-solid border-[1.5px] bg-black`}>
                       {column.headerName}
                     </th>
