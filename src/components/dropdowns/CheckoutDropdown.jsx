@@ -44,7 +44,7 @@ export const CheckoutDropdown = ({ toggleDelivery, initialState, options, displa
           h-10
           border-black border-solid border-[1px]
           ">
-        <p className=''>{selectedOption}</p>
+        <p className='truncate'>{selectedOption}</p>
         <ChevronDownIcon className="w-4 h-4 text-white" />
       </button>
       {isOpen && (
@@ -60,7 +60,7 @@ export const CheckoutDropdown = ({ toggleDelivery, initialState, options, displa
                     handleSetDelivery(option);
                   }}
                 >
-                  <div className='flex flex-col'>
+                  <div className='flex flex-col flex-wrap '>
                     <p>{display ? display[index] : option}</p>
                   </div>
                 </a>

@@ -50,6 +50,7 @@ export const Orders = () => {
       customer: e,
       stock_id: e,
     });
+    setCurrentPage(1)
   }, 500)
 
   const handleStatusFilter = (statusId) => {
@@ -104,8 +105,6 @@ export const Orders = () => {
       console.error('There was an error downloading the file:', error);
     }
   }
-
-  console.log(orders)
 
 
   return (

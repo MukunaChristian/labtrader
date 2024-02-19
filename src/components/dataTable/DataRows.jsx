@@ -15,7 +15,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
   const currency = useSelector(state => state.app.currency);
   const rates = useSelector(state => state.app.rates);
   const diamonds_in_cart = useSelector(state => state.user.diamonds_in_cart);
-  const warehouses = useSelector(state => state.app.warehouses);
+  const warehouses = useSelector(state => state.app.warehouses);  
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [gemDisabled, setGemDisabled] = useState(true);
@@ -72,7 +72,6 @@ export const DataRows = ({ row, rowIndex, columns }) => {
     row["video_link"].includes("viw-us.s3.amazonaws.com") ? "iframe-container-viw": 
     row["video_link"].includes("www.v360videos.com") ? "iframe-container-view" : 
     row["video_link"].includes("v360.diamonds") ? "iframe-container-diamond" : "hidden";
-
 
   // get warehoue by id in diamond object
   const warehouse = warehouses.find(warehouse => warehouse.id === row.warehouse_id);
@@ -209,6 +208,10 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             </div>
             <div className='pt-4'>
               <p className='font-bold pb-2 text-primary'>Delivery</p>
+              {warehouse.delivery_from === "0" && warehouse.delivery_to === "0" ?
+              <div className='text-text'>
+                Not Available
+                </div> :
               <div className="flex flex-col">
                 <p className="text-primary">
                     Delivery Time:
@@ -227,7 +230,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
                 <div className='text-text'>
                   {warehouse.country}
                 </div>
-              </div>
+              </div>}
               
               {/* <p className='pb-2 text-text'>DELIVERY TYPE</p>
               <p className='pb-2 text-text'>DELIVERY TIME</p>

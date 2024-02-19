@@ -195,7 +195,7 @@ export const Cart = () => {
       // filter if email or company name includes search
       const filteredJewellers = 
         jewellers.filter((jeweller, index) => {
-          if (jeweller.email.includes(search) || jewellerCompanyNames[index].includes(search)) {
+          if (jeweller.email.toLowerCase().includes(search.toLowerCase()) || jewellerCompanyNames[index].toLowerCase().includes(search.toLowerCase())) {
             filteredIndexes.push(index)
             return true
           } else {
@@ -296,7 +296,7 @@ export const Cart = () => {
                 toggleDelivery={toggleJeweller} 
                 initialState="---" 
                 options={filteredJewellers.map((jeweller, index) => { return jeweller.email})} 
-                display={filteredJewellers.map((jeweller, index) => { return `${filteredJewellerCompanyNames[index]} (${jeweller.email})`})} 
+                display={filteredJewellers.map((jeweller, index) => { return `${filteredJewellerCompanyNames[index]}\n(${jeweller.email})`})} 
                 filter={searchJeweller}
               />
             }
