@@ -48,9 +48,9 @@ export const CheckoutDropdown = ({ toggleDelivery, initialState, options, displa
         <ChevronDownIcon className="w-4 h-4 text-white" />
       </button>
       {isOpen && (
-        <div className='absolute right-0 top-[-11rem] h-[10rem] flex items-end'>
-          <div className={`min-w-[8rem] bg-white border-solid border-[1.5px] rounded-sm ${(options.length > 4) && 'overflow-y-scroll h-full'}`}>
-            <div className="py-1 ">
+        <div className='absolute right-0 top-[-18.5rem] h-[17.5rem] flex flex-col justify-end'>
+          <div className={`min-w-[10rem] bg-white border-solid border-[1.5px] ${filter ? 'border-b-0 rounded-t-sm' : 'rounded-sm' } ${(options.length > 4) && 'overflow-y-scroll h-full'}`}>
+            <div className={`py-1 overflow-x-hidden `}>
               {options.map((option, index) => (
                 <a
                   key={option.id}
@@ -68,11 +68,12 @@ export const CheckoutDropdown = ({ toggleDelivery, initialState, options, displa
               {options.length === 0 && (
                 <p className="px-4 py-2 text-center w-[16rem]">No options available</p>
               )}
-              {filter && (
-                <input onChange={(e) => filter(e.target.value)} type="text" className="w-full h-10 px-4 py-2 border-solid border-0 border-grey border-t-[1px]" placeholder="Search" />
-              )}
+              
             </div>
           </div>
+          {filter && (
+            <input onChange={(e) => filter(e.target.value)} type="text" className="w-full rounded-b-sm h-10 px-4 py-2 border-solid border-0 border-grey border-[1px]" placeholder="Search" />
+          )}
         </div>
       )}
     </div>

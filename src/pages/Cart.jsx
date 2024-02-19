@@ -296,7 +296,7 @@ export const Cart = () => {
                 toggleDelivery={toggleJeweller} 
                 initialState="---" 
                 options={filteredJewellers.map((jeweller, index) => { return jeweller.email})} 
-                display={filteredJewellers.map((jeweller, index) => { return `${filteredJewellerCompanyNames[index]}\n(${jeweller.email})`})} 
+                display={filteredJewellers.map((jeweller, index) => { return `${filteredJewellerCompanyNames[index]}\n${jeweller.email.length > 28 ? jeweller.email.substring(0, 28) + '...' : jeweller.email}`})} 
                 filter={searchJeweller}
               />
             }
