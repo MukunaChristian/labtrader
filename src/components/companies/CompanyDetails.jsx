@@ -15,6 +15,7 @@ export const CompanyDetails = ({ details, allCompanies, companyTypes, changesMad
 
   const handleChange = (name, value) => {
     let updatedValue = {};
+    console.log(name, value, "companyDetails")
 
     if (name === "company_type") {
       if (current_user.role === 'Sales Rep' && name === 'company_type') {

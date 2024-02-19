@@ -80,7 +80,7 @@ export const CompanyWarehouseDetails = ({ warehouse_info, company_id, setActiveT
       const isValid = validateFields();
       if (!isValid) return;
 
-      if (editedDetails.delivery_from > editedDetails.delivery_to) {
+      if (parseInt(editedDetails.delivery_from) > parseInt(editedDetails.delivery_to)) {
         setErrors(prevErrors => ({
           ...prevErrors,
           delivery_from: 'Delivery from cannot be greater than delivery to.',
