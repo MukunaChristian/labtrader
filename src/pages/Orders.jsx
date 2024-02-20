@@ -9,6 +9,7 @@ import { ArrowDownOnSquareIcon } from '@heroicons/react/24/outline';
 import { EyeIcon } from '@heroicons/react/24/outline';
 import { StatusFilterDropdown } from '../components/dropdowns/StatusFilterDropdown';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 const options = [
@@ -32,6 +33,8 @@ export const Orders = () => {
   const [dataAmount, setDataAmount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const maxItems = 5;
+
+  const warehouses = useSelector(state => state.app.warehouses);
 
   const navigate = useNavigate();
 
@@ -68,6 +71,7 @@ export const Orders = () => {
   }
 
   const formatNumberWithSpaces = (number) => {
+    console.log(number)
     const formatter = new Intl.NumberFormat('en-US');
     return formatter.format(number).replace(/,/g, ' ');
   }
@@ -107,6 +111,27 @@ export const Orders = () => {
   }
 
 
+  const getLocationsFromWarehouse = (orders) => {
+
+    // collect all the warehouse ids
+    const warehouse_ids = [];
+    orders.forEach(o => {
+      if (o.warehouse_id) {
+        warehouse_ids.push(o.warehouse_id);
+      }
+    });
+
+    // return warehouse locations
+    const locations = []
+    warehouses.forEach(w => {
+      if (warehouse_ids.includes(w.id)) {
+        locations.push(w.country);
+      }
+    });
+    return locations.join(', ');
+  }
+
+
   return (
     <div className="flex pb-16 border-0 pt-24 px-14 bg-light-grey justify-center">
       <div className="border-solid border-[1px] border-black w-[90%] p-6 h-full" style={{ backgroundColor: 'rgb(220 220 220)' }}>
@@ -128,10 +153,10 @@ export const Orders = () => {
             <thead>
               <tr className="w-full h-16 py-8">
                 <th className="text-left w-[10%] px-4 bg-white border-none">ID</th>
-                <th className="text-left w-1/4 px-4 bg-white border-none">Tracking Number</th>
+                <th className="text-left w-[20%] px-4 bg-white border-none">Date</th>
+                <th className="text-left w-1/4 px-4 bg-white border-none">Location(s)</th>
                 <th className="text-left w-1/4 px-4 bg-white border-none">User</th>
                 <th className="text-left w-1/4 px-4 bg-white border-none">Customer</th>
-                <th className="text-left w-[20%] px-4 bg-white border-none">Date</th>
                 <th className="text-left w-1/4 px-4 bg-white border-none">Total</th>
                 <th className="text-left w-[15%] px-4 bg-white border-none">Status</th>
                 <th className="text-left w-[15%] px-4 bg-white border-none">Invoice</th>
@@ -141,13 +166,13 @@ export const Orders = () => {
               {orders.map(order => (
                 <tr key={order.id} className="h-14 text-sm">
                   <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.id}</td>
+                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.order_date}</td>
                   <td className="w-1/5 px-4 bg-white border-none">
-                    {order.label_number}
+                    {getLocationsFromWarehouse(order.orders)}
                   </td>
                   <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.user_name} {order.user_surname}</td>
                   <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.jeweller_name}</td>
-                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.order_date}</td>
-                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">R{formatNumberWithSpaces(order.total_price)}</td>
+                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">R{formatNumberWithSpaces(parseInt(order.total_price) + parseInt((order.total_price * 0.15).toFixed(2)))}</td>
                   <td className="w-1/5 px-4 bg-white border-none">
                     {options.find(o => o.id === order.status).name}
                   </td>
