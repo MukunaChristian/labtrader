@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { SaveResetButtons } from "../ProfileForms/SaveResetButtons"
 import { addUser, updateUser, checkUserEmailExists } from '../../api/company';
+import { ArrowRightIcon } from "@heroicons/react/20/solid"
+import { XMarkIcon } from '@heroicons/react/24/outline';
+
 
 export const CompanyMemberDetails = ({ user_info, roleTypes, company_id, company_type_id, setActiveTab, current_user }) => {
   const [originalDetails, setOriginalDetails] = useState({});
@@ -12,6 +15,7 @@ export const CompanyMemberDetails = ({ user_info, roleTypes, company_id, company
     role_id: ''
   });
   const [errors, setErrors] = useState({});
+  const [addingEmail, setAddingEmail] = useState('');
 
   const getFilteredRoleTypes = () => {
     switch (company_type_id) {
@@ -38,7 +42,8 @@ export const CompanyMemberDetails = ({ user_info, roleTypes, company_id, company
         phone: user_info.user_details.phone,
         active: user_info.active,
         role_id: role ? role.id : '',
-        sales_rep_commission: user_info.sales_rep_commission
+        sales_rep_commission: user_info.sales_rep_commission,
+        email_include: user_info.email_include
       };
       setEditedDetails(userDetails);
       setOriginalDetails(userDetails);
@@ -79,6 +84,36 @@ export const CompanyMemberDetails = ({ user_info, roleTypes, company_id, company
     return Object.keys(newErrors).length === 0;
   };
 
+  const addEmail = (event) => {
+    if (event && event.key === 'Enter') {
+        console.log('do validate');      
+    } else if (event && event.key !== 'Enter') {
+      return;
+    }
+
+    if (validEmail()) {
+      if (editedDetails.email_include) {
+        setEditedDetails(prevDetails => ({
+          ...prevDetails,
+          email_include: [...prevDetails.email_include, addingEmail]
+        }));
+      } else {
+        setEditedDetails(prevDetails => ({
+          ...prevDetails,
+          email_include: [addingEmail]
+        }));
+      }
+      
+      setAddingEmail('');
+    }
+  }
+
+  const validEmail = () => {
+    if (addingEmail === '') return false;
+    if (addingEmail.includes('@') && addingEmail.includes('.')) return true;
+    return false
+  }
+
   const handleSubmit = async () => {
     let response;
     try {
@@ -97,6 +132,7 @@ export const CompanyMemberDetails = ({ user_info, roleTypes, company_id, company
         }
       } else {
         console.log("updating user")
+        console.log(editedDetails)
         response = await updateUser(user_info.user_details.id, editedDetails);
       }
 
@@ -158,6 +194,49 @@ export const CompanyMemberDetails = ({ user_info, roleTypes, company_id, company
               disabled={current_user.role == 'Sales Rep'}
             />
             {errors.sales_rep_commission && <p className="text-red-500">{errors.sales_rep_commission}</p>}
+          </div>
+        )}
+
+        {editedDetails.role_id == 3 && (
+          <div className="flex flex-1 basis-1/3 mr-8 mt-4">
+            <div className="w-full mr-8">
+              <p>CC into emails:</p>
+              <div className='flex items-center'>
+                <input
+                  name="email_include"
+                  className="default-input w-full mt-1"
+                  style={{ borderColor: 'rgb(220 220 220)' }}
+                  onChange={(e) => setAddingEmail(e.target.value)}
+                  type="text"
+                  value={addingEmail}
+                  onKeyDown={addEmail}
+                />
+                <button className="group rounded-md ml-2 mt-1 bg-grey hover:bg-text" onClick={() => addEmail()}>
+                  <ArrowRightIcon className={`group-hover:text-black h-7 w-7 ${!validEmail() && 'text-text'}`} />
+                </button>
+                
+              </div>
+              
+            </div>
+            <div className='w-full'>
+              <div className="w-full">Current:</div>
+              <div className="w-full">
+                {editedDetails.email_include && editedDetails.email_include.map((email, index) => (
+                  <div key={index} className='default-input w-full mt-1 bg-white flex justify-between'>
+                    <p className='pt-1'>{email}</p>
+                    <button className="group rounded-md ml-2 bg-grey h-5 self-center" 
+                      onClick={() => setEditedDetails(
+                        prevDetails => (
+                          {...prevDetails, email_include: prevDetails.email_include.filter((e, i) => i !== index)}
+                        )
+                      )}
+                    >
+                      <XMarkIcon className="group-hover:text-black h-5 w-5 text-text" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
       </div>
