@@ -73,7 +73,7 @@ export const Orders = () => {
   const formatNumberWithSpaces = (number) => {
     console.log(number)
     const formatter = new Intl.NumberFormat('en-US');
-    return formatter.format(number).replace(/,/g, ' ');
+    return formatter.format(Math.round(number * 100) / 100).replace(/,/g, ' ');
   }
 
   const handleLabelNumberChange = (e, order) => {
@@ -172,7 +172,7 @@ export const Orders = () => {
                   </td>
                   <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.user_name} {order.user_surname}</td>
                   <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.jeweller_name}</td>
-                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">R{formatNumberWithSpaces(parseInt(order.total_price) + parseInt((order.total_price * 0.15).toFixed(2)))}</td>
+                  <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">R{formatNumberWithSpaces(parseFloat(order.total_price) + (order.total_price * 0.15))}</td>
                   <td className="w-1/5 px-4 bg-white border-none">
                     {options.find(o => o.id === order.status).name}
                   </td>
