@@ -285,8 +285,6 @@ export const Report = () => {
     const reportContainer = document.getElementById('profile-block');
     if (!reportContainer) {
       return;
-    } else if (selectedOptions.reportType !== "sales") {
-      return;
     }
     reportContainer.addEventListener('click', handleInvoiceNumberClick);
     return () => {

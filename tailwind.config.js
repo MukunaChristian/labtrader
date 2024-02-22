@@ -9,6 +9,9 @@ export default {
       fontFamily: {
         sans: ["Roboto", "ui-sans-serif", "system-ui", "sans-serif"],
       },
+      transitionProperty: {
+        height: "height",
+      },
       backgroundImage: {
         "login-background": "url('src/assets/login-bg.jpg')",
       },

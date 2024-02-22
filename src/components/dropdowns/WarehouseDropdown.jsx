@@ -53,7 +53,7 @@ export const WarehouseDropdown = ({ warehouse, setWarehouse, disabled, supplier 
         }
       </button>
       {isOpen && (
-        <div className="absolute right-0 mt-3 w-72 bg-white border-solid border-[1.5px] rounded-sm">
+        <div className="absolute right-0 mt-3 w-72 bg-white border-solid border-[1.5px] rounded-sm overflow-auto">
           <div className="py-1 max-h-[10rem]">
             {stateWarehouses.length > 0 ? stateWarehouses.map((option) => (
               <a

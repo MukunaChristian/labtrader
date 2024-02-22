@@ -208,6 +208,14 @@ export const Cart = () => {
       setFilteredJewellers(filteredJewellers)
       setFilteredJewellerCompanyNames(filteredJewellerCompanyNames)
     }
+
+    const getWarehouseDeliveryTime = (warehouse_id) => {
+      const warehouse = warehouses.find(warehouse => warehouse.id === warehouse_id)
+      if (warehouse) {
+        return warehouse.delivery_from + " - " + warehouse.delivery_to
+      }
+      return "N/A"
+    }
     
     return (
       <div className="pt-24 px-24 bg-light-grey pb-24 relative">
@@ -250,7 +258,12 @@ export const Cart = () => {
                       </div>
                     }
 
-                    <div className={`${diamond.diamond_type_id === 2 ? 'ml-0' : 'ml-auto'} text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white`}>
+                      <div className={`${diamond.diamond_type_id === 2 ? 'ml-0' : 'ml-auto'} text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white`}>
+                      <p className="text-sm">Delivery Time</p>
+                      <p className="font-semibold text-sm">{getWarehouseDeliveryTime(diamond.warehouse_id)}</p>
+                    </div>
+
+                    <div className={`text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white`}>
                       <p className="text-sm">Price in USD</p>
                       <p className="font-semibold text-sm">$ {formatNumberWithSpaces((diamond.total * diamond.amount_in_cart).toFixed(2))}</p>
                     </div>
@@ -263,11 +276,9 @@ export const Cart = () => {
                   </div>
                   <p className="">{diamond.price}</p>
 
-                  {selectedDiamond === diamond && 
-                    <div className="mr-5 ml-1 pt-2">
-                      <TrashIcon className="h-7 w-7 text-text hover:text-black" onClick={() => dispatch(removeDiamondFromCart(diamond.id))}/>
-                    </div> 
-                  }
+                  <div className="mr-6 ml-2 pt-2">
+                    <TrashIcon className="h-7 w-7 text-text hover:text-light-grey" onClick={() => dispatch(removeDiamondFromCart(diamond.id))}/>
+                  </div> 
                 </div>
               )
             

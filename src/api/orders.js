@@ -17,7 +17,7 @@ export const getOrders = async (
     {
       filters: filters,
       page: page,
-      page_size: 5,
+      page_size: 20,
     },
     {
       headers: {
