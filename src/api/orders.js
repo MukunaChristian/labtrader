@@ -119,3 +119,20 @@ export const getOrderInvoiceDetails = async (id) => {
 
   return response.data;
 };
+
+export const updateOrderFlag = async (id) => {
+  const response = await axios.post(
+    "/update_order_flag",
+    {
+      id: id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    }
+  );
+
+  return response.data;
+};

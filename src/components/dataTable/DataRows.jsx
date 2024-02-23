@@ -75,7 +75,6 @@ export const DataRows = ({ row, rowIndex, columns }) => {
 
   // get warehoue by id in diamond object
   const warehouse = warehouses.find(warehouse => warehouse.id === row.warehouse_id);
-  console.log(warehouse)
 
   return (
     <>

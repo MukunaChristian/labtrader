@@ -18,6 +18,7 @@ const UserSlice = createSlice({
       company_country: "",
       company_pincode: ""
     },
+    userCompany: {},
     deliveryDetails: {
       delivery_address_1: "",
       delivery_address_2: "",
@@ -102,7 +103,11 @@ const UserSlice = createSlice({
         state.diamonds_in_cart = JSON.parse(localStorage.getItem('cartItems'));
       }
       
-    }
+    },
+
+    setUserCompany: (state, action) => {
+      state.userCompany = action.payload
+    },
   },
 });
 
@@ -115,6 +120,7 @@ export const {
   addDiamondToCart,
   removeDiamondFromCart,
   clearCart,
-  loadCart
+  loadCart,
+  setUserCompany
 } = UserSlice.actions
 export default UserSlice.reducer;

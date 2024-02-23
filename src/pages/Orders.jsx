@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import SearchBar from '../components/searchBar/searchBar';
-import { getOrders, updateStatus, getOrderInvoice, updateLabel } from '../api/orders';
+import { getOrders, getOrderInvoice, updateLabel, updateOrderFlag } from '../api/orders';
 import { Pagenation } from '../components/dataTable/Pagenation';
 import { useDispatch } from 'react-redux';
 import { OrderStatusDropdown } from '../components/dropdowns/OrderStatusDropdown';
@@ -38,6 +38,7 @@ export const Orders = () => {
   const maxItems = 5;
 
   const warehouses = useSelector(state => state.app.warehouses);
+  const userCompany = useSelector(state => state.user.userCompany);
 
   const navigate = useNavigate();
 
@@ -114,6 +115,11 @@ export const Orders = () => {
   }
 
 
+  const handleFlagToggle = (order) => {
+    updateOrderFlag(order.id);
+  }
+
+
   const getLocationsFromWarehouse = (orders) => {
 
     // collect all the warehouse ids
@@ -133,6 +139,8 @@ export const Orders = () => {
     });
     return locations.join(', ');
   }
+
+  console.log(orders)
 
 
   return (
@@ -171,10 +179,9 @@ export const Orders = () => {
                   <tr key={order.id} className="h-14 text-sm border-[#dcdcdc]">
                     <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.id}</td>
                     <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.order_date}</td>
-
                     <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.user_name} {order.user_surname}</td>
                     <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.jeweller_name}</td>
-                    <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">R{formatNumberWithSpaces(parseFloat(order.total_price) + (order.total_price * 0.15))}</td>
+                    <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">R{order.customer_country && order.customer_country.toLowerCase() === 'south africa' ? formatNumberWithSpaces(parseFloat(order.total_price) + (order.total_price * 0.15)) : formatNumberWithSpaces(parseFloat(order.total_price))}</td>
                     <td className="w-1/5 px-4 bg-white border-none">
                       {options.find(o => o.id === order.status).name}
                     </td>
@@ -205,6 +212,7 @@ export const Orders = () => {
                             <th className="text-left w-1/4 bg-white border-none pt-4">Warehouse</th>
                             <th className="text-left w-1/4 bg-white border-none pt-4">Delivery</th>
                             <th className="text-left w-1/4 bg-white border-none pt-4">Total</th>
+                            <th className="text-left w-1/4 bg-white border-none pt-4">Ready</th>
                           </tr>
                         </thead>
                         <tbody className='w-full'>
@@ -218,6 +226,9 @@ export const Orders = () => {
                                 {warehouses.find(w => w.id === o.warehouse_id) ? `${warehouses.find(w => w.id === o.warehouse_id).delivery_from} - ${warehouses.find(w => w.id === o.warehouse_id).delivery_to} days` : ''}
                               </td>
                               <td className="w-1/4 text-left bg-white border-none text-ellipsis overflow-hidden ">R{formatNumberWithSpaces(parseFloat(o.price) * order.currency_rate)}</td>
+                              <td className="w-1/4 text-left bg-white border-none">
+                                <input type="checkbox" checked={o.flag} onChange={() => {handleFlagToggle(o)}} />
+                              </td>
                             </tr>
                           ))}
                         </tbody>

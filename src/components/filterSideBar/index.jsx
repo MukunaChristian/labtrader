@@ -59,12 +59,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
 
 
     if (filterName === "fancyColor") {
-      const newFilters = { ...filtersLocal };
-      if (newFilters["color"].includes(filterItem)) {
-        newFilters["color"] = newFilters["color"].filter((item) => item !== filterItem);
-      } else {
-        newFilters["color"] = [ ...newFilters["color"], filterItem]
-      }
+      const newFilters = { ...filtersLocal, "fancyColor": filterItem };
       setFiltersLocal(newFilters);
       return  
     }
@@ -202,7 +197,8 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
     }
   }
 
-  console.log(filtersLocal["clarity"])
+  console.log(filtersLocal["color"])
+  console.log(filtersLocal["fancyColor"])
 
 
   return (
@@ -304,8 +300,8 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             fieldGroupName="color" 
             selectedFieldGroup={filtersLocal["color"]} 
             onFieldGroupSelect={handleFilterChange} /> ) : (
-          <FancyColorFields selectedFieldGroup={filtersLocal["color"]} onFieldGroupSelect={handleFilterChange} />
-            )} 
+          <ColorPickerDropdown colorSelection={filtersLocal["fancyColor"]} setColorSelection={handleFilterChange} />
+          )} 
         </div>
 
         <div className="flex">

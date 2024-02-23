@@ -4,6 +4,7 @@ export let filterTemplate = {
   shape: [],
   carat_range: { from: null, to: null },
   color: [],
+  fancyColor: [],
   clarity: [],
   cut: [],
   polish: [],

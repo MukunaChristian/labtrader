@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { default as Logo } from '../assets/teomim-logo.svg';
 import { MenuSideBar } from '../components/MenuSideBar/MenuSideBar';
 import { useDispatch } from 'react-redux';
-import { setUserState, setUserDetailsState } from '../reducers/UserSlice';
+import { setUserState, setUserDetailsState, setUserCompany } from '../reducers/UserSlice';
 import { loadCart } from '../reducers/UserSlice';
 import { getUserData } from '../api/profileData';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
@@ -64,7 +64,7 @@ export const Layout = ({ children }) => {
     }
 
     const data = await getUsersCompany(user_id);
-    console.log(user_id)
+    dispatch(setUserCompany(data))
 
     if (location.pathname === '/company' && ["Buyer"].includes(user_role)) {
       navigate("/")
