@@ -157,8 +157,8 @@ td, tr, th {
 }
 
 .iframe-container-details-view {
-  width: 240px; /* Width of the visible area */
-  height: 205px; /* Height of the visible area */
+  width: 190px; /* Width of the visible area */
+  height: 200px; /* Height of the visible area */
   overflow: hidden; /* Hide anything outside of the container */
   position: relative; /* To allow absolute positioning inside */
 }
@@ -167,9 +167,10 @@ td, tr, th {
   position: absolute;
   overflow: hidden;
   top: -1rem;
+  right: -0.5rem;
 
-  width: 100px; /* This should match the iframe's actual width */
-  height: 340px; /* This should match the iframe's actual height */
+  width: 210px; /* This should match the iframe's actual width */
+  height: 350px; /* This should match the iframe's actual height */
 }
 
 .iframe-container-details-diamonds {
