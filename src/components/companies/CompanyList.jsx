@@ -137,7 +137,7 @@ export const CompanyList = ({ setActiveTab, setViewedCompany, setallCompanies, c
             className="w-full max-w-xs"
           />
         </div>
-        {(current_user.role === 'Superadmin' || current_user.role === 'Sales Rep') && (
+        {(current_user.role !== 'Buyer') && (
           <div className="ml-4">
             <button onClick={handleAddCompany} className="default-button w-32 bg-accent text-white">
               Add Company

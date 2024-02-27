@@ -4,7 +4,7 @@ import { getOrders, getOrderInvoice, updateLabel, updateOrderFlag } from '../api
 import { Pagenation } from '../components/dataTable/Pagenation';
 import { useDispatch } from 'react-redux';
 import { OrderStatusDropdown } from '../components/dropdowns/OrderStatusDropdown';
-import { debounce, get, max } from 'lodash';
+import { debounce, get, max, set } from 'lodash';
 import { ArrowDownOnSquareIcon } from '@heroicons/react/24/outline';
 import { EyeIcon } from '@heroicons/react/24/outline';
 import { StatusFilterDropdown } from '../components/dropdowns/StatusFilterDropdown';
@@ -75,7 +75,6 @@ export const Orders = () => {
   }
 
   const formatNumberWithSpaces = (number) => {
-    console.log(number)
     const formatter = new Intl.NumberFormat('en-US');
     return formatter.format(Math.round(number * 100) / 100).replace(/,/g, ' ');
   }
@@ -117,6 +116,18 @@ export const Orders = () => {
 
   const handleFlagToggle = (order) => {
     updateOrderFlag(order.id);
+    setOrders(orders.map(o => {
+      if (o.id === order.sales_order_id) {
+        return { ...o, orders: o.orders.map(oo => {
+          if (oo.id === order.id) {
+            console.log(oo)
+            return { ...oo, flag: !oo.flag }
+          }
+          return oo;
+        })}
+      }
+      return o;
+    }))
   }
 
 
@@ -140,8 +151,20 @@ export const Orders = () => {
     return locations.join(', ');
   }
 
-  console.log(orders)
+  const getOrderTotal = (sales_order, order) => {
+    let convertedPrice = order.price * sales_order.currency_rate;
+    let totalPriceIncludingVAT = parseFloat(convertedPrice.toFixed(2)) + parseFloat((sales_order.vat / 100 * convertedPrice).toFixed(2));
+    console.log(totalPriceIncludingVAT)
+    return totalPriceIncludingVAT.toFixed(2);
+  }
 
+  const getSalesOrderTotal = (sales_order) => {
+    let totalPrice = sales_order.total_price; // Assuming it's already rounded appropriately
+    let totalPriceIncludingVATTotal = totalPrice + (sales_order.vat / 100 * totalPrice);
+    console.log(totalPriceIncludingVATTotal)
+    return totalPriceIncludingVATTotal.toFixed(2);
+  }
+  
 
   return (
     <div className="flex pb-16 border-0 pt-24 px-8 bg-light-grey justify-center">
@@ -181,7 +204,7 @@ export const Orders = () => {
                     <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.order_date}</td>
                     <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.user_name} {order.user_surname}</td>
                     <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">{order.jeweller_name}</td>
-                    <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">R{order.customer_country && order.customer_country.toLowerCase() === 'south africa' ? formatNumberWithSpaces(parseFloat(order.total_price) + (order.total_price * 0.15)) : formatNumberWithSpaces(parseFloat(order.total_price))}</td>
+                    <td className="w-1/5 px-4 bg-white border-none text-ellipsis overflow-hidden ">R{formatNumberWithSpaces(getSalesOrderTotal(order))}</td>
                     <td className="w-1/5 px-4 bg-white border-none">
                       {options.find(o => o.id === order.status).name}
                     </td>
@@ -209,24 +232,28 @@ export const Orders = () => {
                         <thead className='w-full'>
                           <tr className="w-full border-[#dcdcdc]">
                             <th className="text-left w-[20rem] bg-white border-none pt-4">Stock ID</th>
-                            <th className="text-left w-1/4 bg-white border-none pt-4">Warehouse</th>
-                            <th className="text-left w-1/4 bg-white border-none pt-4">Delivery</th>
-                            <th className="text-left w-1/4 bg-white border-none pt-4">Total</th>
-                            <th className="text-left w-1/4 bg-white border-none pt-4">Ready</th>
+                            <th className="text-left w-1/5 bg-white border-none pt-4">Description</th>
+                            <th className="text-left w-1/5 bg-white border-none pt-4">Warehouse</th>
+                            <th className="text-left w-1/5 bg-white border-none pt-4">Delivery</th>
+                            <th className="text-left w-1/5 bg-white border-none pt-4">Total</th>
+                            <th className="text-left w-[2rem] bg-white border-none pt-4">Ready</th>
                           </tr>
                         </thead>
                         <tbody className='w-full'>
                           {order.orders.map(o => (
                             <tr key={o.id} className="h-12 w-full text-sm border-[#dcdcdc]">
-                              <td className=" w-1/4 text-left bg-white border-none text-ellipsis overflow-hidden ">{o.stock_id}</td>
-                              <td className=" w-1/4 text-left bg-white border-none">
+                              <td className=" w-1/6 text-left bg-white border-none text-ellipsis overflow-hidden ">{o.stock_id}</td>
+                              <td className=" w-1/6 text-left bg-white border-none text-ellipsis overflow-hidden pr-4">
+                                {o.diamond_description} 
+                              </td>
+                              <td className=" w-1/6 text-left bg-white border-none">
                                 {warehouses.find(w => w.id === o.warehouse_id) ? warehouses.find(w => w.id === o.warehouse_id).name : ''}
                               </td>
-                              <td className=" w-1/4 text-left bg-white border-none">
+                              <td className=" w-1/6 text-left bg-white border-none">
                                 {warehouses.find(w => w.id === o.warehouse_id) ? `${warehouses.find(w => w.id === o.warehouse_id).delivery_from} - ${warehouses.find(w => w.id === o.warehouse_id).delivery_to} days` : ''}
                               </td>
-                              <td className="w-1/4 text-left bg-white border-none text-ellipsis overflow-hidden ">R{formatNumberWithSpaces(parseFloat(o.price) * order.currency_rate)}</td>
-                              <td className="w-1/4 text-left bg-white border-none">
+                              <td className="w-1/6 text-left bg-white border-none text-ellipsis overflow-hidden ">R{formatNumberWithSpaces(getOrderTotal(order, o))}</td>
+                              <td className=" text-left bg-white border-none">
                                 <input type="checkbox" checked={o.flag} onChange={() => {handleFlagToggle(o)}} />
                               </td>
                             </tr>

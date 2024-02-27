@@ -32,9 +32,6 @@ export const Layout = ({ children }) => {
   let isLogin = location.pathname === '/login' || location.pathname === '/forgot-password' || location.pathname === '/reset-password';
 
   const checkToken = () => {
-    console.log("checking")
-    console.log(isLogin)
-    
     dispatch(loadCart())
 
     const token = localStorage.getItem("jwt");  
@@ -46,7 +43,6 @@ export const Layout = ({ children }) => {
 
 
     if (!(location.pathname === '/forgot-password' || location.pathname === '/reset-password')) {
-      console.log("validating")
       validateToken(token, navigate, setLoggedIn, setUserState, dispatch);
     }
   }
@@ -81,7 +77,6 @@ export const Layout = ({ children }) => {
       return
     }
 
-    console.log("passed")
     setIsLoading(false); 
   }
 
@@ -94,7 +89,6 @@ export const Layout = ({ children }) => {
 
   useEffect(() => {
     if (loggedIn) {
-      console.log("STARTING LOOP")
       getSupplimentalData(dispatch);
 
       const interval = setInterval(() => {
@@ -116,7 +110,6 @@ export const Layout = ({ children }) => {
     }
   }, [loggedIn])
 
-  console.log(isLoading)
 
   return (
     (loggedIn || isLogin) ?

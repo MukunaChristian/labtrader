@@ -75,6 +75,7 @@ export const getFilteredData = async (
 
   let objectList = response.data.items.map((str) => JSON.parse(str));
   objectList = transformedList(objectList);
+  console.log(objectList);
 
   dispatch(setData(objectList));
   dispatch(setDiamondAmount(response.data.item_length));
