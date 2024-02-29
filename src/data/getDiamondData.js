@@ -131,6 +131,8 @@ function transformDBData(sourceObj) {
     size_from: sourceObj["size_from"] || null,
     size_to: sourceObj["size_to"] || null,
     warehouse_id: sourceObj["warehouse_id"] || null,
+    markup: sourceObj["markup"] || 0,
+    system_markup: sourceObj["system_markup"] || 0,
   };
 }
 

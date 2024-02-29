@@ -153,13 +153,15 @@ export const Report = () => {
 
   const updateGenerateButtonState = () => {
     const isSalesReport = selectedOptions.reportType === "sales";
+    const isSystemMarkupReport = selectedOptions.reportType === "system_markup";
+
     const isSupplierSelected = !!selectedOptions.supplier;
     const isResellerSelected = !!selectedOptions.reseller;
     const isSalesCommissionReport = selectedOptions.reportType === "sales_commission";
     const isSalesRepSelected = !!selectedOptions.salesRep;
 
     const isEnabled = selectedOptions.reportType && (
-        (isSalesReport && isSupplierSelected) || 
+        ((isSalesReport || isSystemMarkupReport) && isSupplierSelected) || 
         (isSalesCommissionReport ? isSalesRepSelected : isResellerSelected)
     );
 
@@ -202,7 +204,7 @@ export const Report = () => {
     }));
 
     if (name === 'reportType') {
-      if (value === 'sales') {
+      if (value === 'sales' || value === 'system_markup') {
         setSelectedOptions(prevState => ({
           ...prevState,
           reseller: '',
@@ -311,6 +313,7 @@ export const Report = () => {
                 <option value="sales_commission">Sales Commission Report</option>
                 <option value="reseller_commission">Reseller Commission Report</option>
                 <option value="sales" hidden={!(user.role === "Superadmin" || (user.role === "Admin" && selectedOptions.supplier))}>Sales Report</option>
+                <option value="system_markup" hidden={!(user.role === "Superadmin" || (user.role === "Admin" && selectedOptions.supplier))}>System Markup Report</option>
               </select>
             </div>
 
@@ -340,7 +343,7 @@ export const Report = () => {
                 wrapperClassName="w-[100%]" />
             </div>
 
-            {selectedOptions.reportType !== 'sales' && (
+            {!["sales", "system_markup"].includes(selectedOptions.reportType) && (
               <div className={`flex-1 mr-8 ${selectedOptions.reportType === 'sales_commission' ? 'basis-1/5' : 'basis-1/4'}`}>
                 <p className="text-lg">Select Reseller:</p>
                 <select
@@ -354,7 +357,7 @@ export const Report = () => {
                   <option value="" hidden>Select Reseller</option>
                   {resellers.length > 0 ? (
                     resellers.map(company => (
-                      <option value={company.id}>{company.name}</option>
+                      <option key={company.id} value={company.id}>{company.name}</option>
                     ))
                   ) : <option value="" hidden></option>}
                 </select>
@@ -383,7 +386,7 @@ export const Report = () => {
               </div>
             )}
 
-            {selectedOptions.reportType === 'sales' && (
+            {["sales", "system_markup"].includes(selectedOptions.reportType) && (
               <div className="flex-1 mr-8 basis-1/4">
                 <p className="text-lg">Select Supplier:</p>
                 <select
