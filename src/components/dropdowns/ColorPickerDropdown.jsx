@@ -74,6 +74,12 @@ export const ColorPickerDropdown = ({ colorSelection, setColorSelection }) => {
       if (selectedColorsIntensities.colors.length === 0) {
         combinations.push(intensity.toLowerCase());
       }
+
+    });
+    selectedColorsIntensities.colors.forEach(color => {
+      if (selectedColorsIntensities.intensities.length === 0) {
+        combinations.push(color.toLowerCase());
+      }
     });
     console.log(combinations)
     return combinations;
