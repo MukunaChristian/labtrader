@@ -25,7 +25,7 @@ import { useApp } from "../../hooks/useApp"
 export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) => {
   const [showMore, setShowMore] = useState(false);
   const [whiteFancy, setWhiteFancy] = useState("white");
-
+  const [resetCounter, setResetCounter] = useState(0);
   const imageDir = 'assets/diamond-shapes-neg/';  
   const [filtersLocal, setFiltersLocal] = useState(filterTemplate);
 
@@ -131,12 +131,13 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
 
   const onSave = () => {
     setIsFilterSideBarOpen(false);
-    setFilters(filtersLocal)
+    setFilters(filtersLocal);
   }
 
   const handleReset = () => {
-    setFiltersLocal(filterTemplate);
-    resetFilters()
+    setFiltersLocal(filterTemplate);    
+    resetFilters();
+    setResetCounter((prevCounter) => prevCounter + 1);
   }
 
   // Triggered if min or max is changed
@@ -300,7 +301,7 @@ export const FilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen }) =
             fieldGroupName="color" 
             selectedFieldGroup={filtersLocal["color"]} 
             onFieldGroupSelect={handleFilterChange} /> ) : (
-          <ColorPickerDropdown colorSelection={filtersLocal["fancyColor"]} setColorSelection={handleFilterChange} />
+          <ColorPickerDropdown  key={resetCounter}  colorSelection={filtersLocal["fancyColor"]} setColorSelection={handleFilterChange} />
           )} 
         </div>
 
