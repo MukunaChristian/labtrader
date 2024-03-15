@@ -1,5 +1,4 @@
 import diamondData from "./output.json";
-
 import diamondIcon from "../assets/diamond-shapes/round.png";
 import asscherIcon from "../assets/diamond-shapes/asscher.png";
 import emeraldIcon from "../assets/diamond-shapes/emerald.png";
