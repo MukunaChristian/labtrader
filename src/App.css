@@ -179,6 +179,25 @@ td, tr, th {
   overflow: hidden; /* Hide anything outside of the container */
   position: relative; /* To allow absolute positioning inside */
 }
+.third-iframe-container{
+  width: 164px; /* Width of the visible area */
+  height: 150px; /* Height of the visible area */
+  overflow: hidden; /* Hide anything outside of the container */
+  position: relative; /* To allow absolute positioning inside */
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.third-iframe-container iframe{
+
+    overflow: hidden;
+    position: absolute;
+    top: -1rem;
+    left: -0.2rem;
+    width: 200px;
+    height: 300px;
+
+}
 
 .iframe-container-details-diamonds iframe {
   position: absolute;

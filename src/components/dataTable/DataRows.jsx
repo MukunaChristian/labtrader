@@ -34,7 +34,8 @@ export const DataRows = ({ row, rowIndex, columns }) => {
     !row["video_link"].includes("loupe360.com") &&
     !row["video_link"].includes("viw-us.s3.amazonaws.com") && 
     !row["video_link"].includes("www.v360videos.com") &&
-    !row["video_link"].includes("v360.diamonds")) {
+    !row["video_link"].includes("v360.diamonds") && 
+    !row["video_link"].includes("diamond.blissvideos")) {
     missingImage = true;
   }
 
@@ -71,8 +72,13 @@ export const DataRows = ({ row, rowIndex, columns }) => {
     row["video_link"].includes("loupe360.com") ? "iframe-container-loupe" : 
     row["video_link"].includes("viw-us.s3.amazonaws.com") ? "iframe-container-viw": 
     row["video_link"].includes("www.v360videos.com") ? "iframe-container-view" : 
-    row["video_link"].includes("v360.diamonds") ? "iframe-container-diamond" : "hidden";
+    row["video_link"].includes("v360.diamonds") ? "iframe-container-diamond" : 
+    row["video_link"].includes("diamond.blissvideos") ? "third-iframe-container" : "hidden";
 
+  var video_link = row["video_link"];
+  if (row["video_link"].includes("diamond.blissvideos")) {
+    video_link = `https://diamond.blissvideos.com/video.html?d=${row.id}&amp&z=1`;
+  }
   // get warehoue by id in diamond object
   const warehouse = warehouses.find(warehouse => warehouse.id === row.warehouse_id);
 
@@ -122,7 +128,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
               {!missingImage ?
               <div className={`${videoLinkFormat} ${gemLoaded ? 'block bg-accent' : 'hidden'}`}>
                 {!gemDisabled ? 
-                  <iframe src={row["video_link"]} onLoad={() => setGemLoaded(true)} className={`iframe-custom my-2`}></iframe> 
+                  <iframe src={video_link} onLoad={() => setGemLoaded(true)} className={`iframe-custom my-2`}></iframe> 
                 : <div className='iframe-custom my-2 bg-text'></div>}
               </div> : 
               <img className='w-[164px] h-[148px] my-2' src="/assets/missing.png"/>}
@@ -142,14 +148,27 @@ export const DataRows = ({ row, rowIndex, columns }) => {
                 <p className='text-primary'>{row.certificate}</p>
                 <p className='font-semibold text-text flex'>
                   
-                  {row.certificate === "IGI" ? 
+                  {row.certificate === "IGI"  || row.certificate === "GIA" ? 
                   <>
-                    <a className='text-text font-bold border-0 border-solid border-b-[1px]' target="_blank" rel="noreferrer" href={`http://www.igi.org/verify.php?r=${row.cert_id}`}>
-                      {row.cert_id}
-                    </a>    
+                    <a 
+                        className='text-text font-bold border-0 border-solid border-b-[1px]' 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        href={row.certificate === "IGI" ? `http://www.igi.org/verify.php?r=${row.cert_id}` : `https://diamond.blissvideos.com/?d=${row.id}`}
+                    >
+                        {row.cert_id}
+                    </a>  
                     <ClipboardDocumentIcon 
-                      className='w-5 h-5 text-text ml-2 mt-[1px] cursor-pointer'
-                      onClick={() => navigator.clipboard.writeText("http://www.igi.org/verify.php?r=" + row.cert_id)}  
+                        className='w-5 h-5 text-text ml-2 mt-[1px] cursor-pointer'
+                        onClick={() => {
+                            if (row.certificate === "IGI") {
+                                navigator.clipboard.writeText("http://www.igi.org/verify.php?r=" + row.cert_id);
+                            } else if (row.certificate === "GIA") {
+                                // Perform different action for GIA certificate
+                                // For example: navigate to GIA website
+                                window.open(`https://diamond.blissvideos.com/?d=${row.cert_id}`, "_blank");
+                            }
+                        }}  
                     />
                   </> : <>
                     <button className='text-text font-bold border-0 border-solid border-b-[1px] bg-black' onClick={() => downloadCertFile(row.cert_id)}>

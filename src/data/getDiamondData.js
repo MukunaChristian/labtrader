@@ -78,7 +78,8 @@ function transformDBData(sourceObj) {
       !videoLink.includes("videos.gem360.in") &&
       !videoLink.includes("loupe360.com") &&
       !videoLink.includes("viw-us.s3.amazonaws.com") &&
-      !videoLink.includes("workshop.360view.link"))
+      !videoLink.includes("workshop.360view.link") &&
+      !videoLink.includes("diamond.blissvideos"))
   ) {
     videoLink = "";
   }
