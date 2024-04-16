@@ -236,7 +236,7 @@ export const Orders = () => {
                             <th className="text-left w-1/5 bg-white border-none pt-4">Warehouse</th>
                             <th className="text-left w-1/5 bg-white border-none pt-4">Delivery</th>
                             <th className="text-left w-1/5 bg-white border-none pt-4">Total</th>
-                            <th className="text-left w-[2rem] bg-white border-none pt-4">Ready</th>
+                            <th className="text-left w-[2rem] bg-white border-none pt-4">Memo</th>
                           </tr>
                         </thead>
                         <tbody className='w-full'>
