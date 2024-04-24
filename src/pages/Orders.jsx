@@ -160,7 +160,8 @@ export const Orders = () => {
 
   const getSalesOrderTotal = (sales_order) => {
     let totalPrice = sales_order.total_price; // Assuming it's already rounded appropriately
-    let totalPriceIncludingVATTotal = totalPrice + (sales_order.vat / 100 * totalPrice);
+    // let totalPriceIncludingVATTotal = totalPrice + (sales_order.vat / 100 * totalPrice);
+    let totalPriceIncludingVATTotal = totalPrice ;
     console.log(totalPriceIncludingVATTotal)
     return totalPriceIncludingVATTotal.toFixed(2);
   }
