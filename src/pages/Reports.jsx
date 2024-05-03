@@ -313,7 +313,7 @@ export const Report = () => {
                 <option value="sales_commission">Sales Commission Report</option>
                 <option value="reseller_commission">Reseller Commission Report</option>
                 <option value="sales" hidden={!(user.role === "Superadmin" || (user.role === "Admin" && selectedOptions.supplier))}>Sales Report</option>
-                <option value="system_markup" hidden={!(user.role === "Superadmin" || (user.role === "Admin" && selectedOptions.supplier))}>System Markup Report</option>
+                <option value="system_markup" hidden={!(user.role === "Superadmin" || (user.role === "Admin" && selectedOptions.supplier))}>System Commision Report</option>
               </select>
             </div>
 
