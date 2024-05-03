@@ -157,7 +157,7 @@ export const CompanyDetails = ({ details, allCompanies, companyTypes, changesMad
 
         {editedDetails.company_type === 'Supplier' && (
           <div className="flex-1 basis-1/3 mr-8 mt-4">
-            <p className="">System Mark-Up %</p>
+            <p className="">System Revenue %</p>
             <input
               name="system_mark_up"
               onChange={(e) => handleChange(e.target.name, e.target.value)}
