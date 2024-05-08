@@ -38,7 +38,7 @@ export const Report = () => {
     };
 
     try {
-      const data = await getCompanies([0, 10], filterList);
+      const data = await getCompanies([0, 999], filterList);
       setResellers(data.data)
     } catch (error) {
       console.error('Error in fetchResellerCompanies:', error);
@@ -56,7 +56,7 @@ export const Report = () => {
     };
 
     try {
-      const data = await getCompanies([0, 10], filterList);
+      const data = await getCompanies([0, 999], filterList);
       setSuppliers(data.data)
     } catch (error) {
       console.error('Error in fetchSupplierCompanies:', error);
