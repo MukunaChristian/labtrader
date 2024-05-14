@@ -22,3 +22,35 @@ html {
     color: #747bff;
   }
 }
+
+.pay-now-container{
+    flex-direction: column;
+    border: solid black 1px;
+    padding: 1em 2em;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pay_now_price {
+  font-weight: bold;
+  animation: pulse 3s infinite;
+}
+
+.pay_later_container{
+  flex-direction: column;
+  padding: 2em 2em 2em 0em;
+}
+
+.pay_later_container button {
+  margin-bottom: 1em;
+}

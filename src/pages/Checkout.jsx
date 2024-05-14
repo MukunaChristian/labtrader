@@ -19,7 +19,7 @@ const optionsDelivery = [
 ];
 
 
-export const Cart = () => {
+export const Checkout = () => {
     
     const diamonds_in_cart = useSelector(state => state.user.diamonds_in_cart)
     const dispatch = useDispatch()
@@ -239,10 +239,10 @@ export const Cart = () => {
         </div>
         
         <div className="flex flex-col items-start pb-2">
-          <p className="text-2xl font-bold h-full mr-4">Cart</p>
+          <p className="text-2xl font-bold h-full mr-4">Checkout</p>
           <p className="inline-block h-full font-semibold pb-[2px] text-text">{diamonds_in_cart.length} items in Cart</p>
         </div>
-
+        <div style={{maxWidth:'70%'}} className="checkout_cart_container">
         <div className="border-solid h-[32rem] border-[1px] border-b-0 rounded-t-lg z-0 overflow-auto text-white" style={{ backgroundColor: 'rgb(50 50 50)' }}>
           {
             diamonds_in_cart.length === 0 ? (
@@ -291,9 +291,7 @@ export const Cart = () => {
                   </div>
                   <p className="">{diamond.price}</p>
 
-                  <div className="mr-6 ml-2 pt-2">
-                    <TrashIcon className="h-7 w-7 text-text hover:text-light-grey" onClick={() => dispatch(removeDiamondFromCart(diamond.id))}/>
-                  </div> 
+           
                 </div>
               )
             
@@ -313,35 +311,12 @@ export const Cart = () => {
             <p className="font-semibold text-lg">{currency.symbol} {formatNumberWithSpaces(total)}</p> 
           </div>
         </div>
-        {diamonds_in_cart.length > 0 && 
-          <div className="flex items-center justify-end mt-6">
-            <CheckoutDropdown toggleDelivery={toggleDelivery} initialState="Collect" options={optionsDelivery}/>
-
-            {repPurchase && 
-              <CheckoutDropdown 
-                toggleDelivery={toggleJeweller} 
-                initialState="---" 
-                options={filteredJewellers.map((jeweller, index) => { return jeweller.email})} 
-                display={filteredJewellers.map((jeweller, index) => { return `${filteredJewellerCompanyNames[index]}\n${jeweller.email.length > 28 ? jeweller.email.substring(0, 28) + '...' : jeweller.email}`})} 
-                filter={searchJeweller}
-              />
-            }
-          </div>
-        }
-            <div className="flex items-center justify-end mt-6">
-              <div className="flex pay_later_container">
-                <button onClick={() => handleCheckout()} className="bg-accent rounded-lg text-white px-8 py-3 h-10">Pay Later</button>
-                <p> ( We'll send an invoice )</p>
-              </div>
-              <div className="flex pay-now-container">
-                <p className="mb-2 font-semibold text-center text-lg">Pay Now</p>
-                <p className="mb-2 text-center text-sm pay_now_price"> {currency.symbol} {formatNumberWithSpaces(((subTotal - ( subTotal*0.03 ))+ deliveryFee ))} (3% off)</p>
+        </div>
+          <div className="text-right mt-4">
                 <button onClick={() => handlePayNow()} className="bg-accent rounded-lg text-white px-8 py-3 h-10" >
                   Proceed to checkout
                 </button>
               </div>
-            </div>
-
           </div>
           
     )
