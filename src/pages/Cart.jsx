@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useState, useEffect } from "react"
 import { ArrowLeftIcon } from "@heroicons/react/20/solid"
 import { TrashIcon } from "@heroicons/react/20/solid"
-import { useNavigate } from "react-router-dom"
+import { redirect, useNavigate } from "react-router-dom"
 import { checkout } from "../api/checkout"
 import { clearCart, removeDiamondFromCart, addDiamondToCart } from "../reducers/UserSlice"
 import { CheckoutDropdown } from "../components/dropdowns/CheckoutDropdown"
@@ -138,12 +138,13 @@ export const Cart = () => {
     }, [user_id, user_role])
 
     const handlePayNow = () => {
-      if (pay_later) {
-        setPayLater(false)
-      } else {
-        setPayLater(true)
+      console.log("pay now")
+      if ( delivery){
+        navigate("/checkout/1111/deliver")
       }
-      console.log(pay_later)
+      else{
+        navigate("/checkout/1111/collect")
+      }
     }
 
     const handleCheckout = () => {

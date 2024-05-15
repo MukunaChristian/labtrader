@@ -42,7 +42,7 @@ function App() {
             <Route path="/confirm" element={<Confirm />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/orders/details/:id" element={<OrdersDetails />} />
-            <Route path="/checkout/:id" element={<Checkout />} />
+            <Route path="/checkout/:checkout_id/:delivery_method" element={<Checkout />} />
           </Routes>
         </Layout>
       </BrowserRouter>

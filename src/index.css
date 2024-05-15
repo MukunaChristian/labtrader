@@ -1,3 +1,6 @@
+*{
+  outline: solid 2px red;
+}
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
 }
@@ -53,4 +56,70 @@ html {
 
 .pay_later_container button {
   margin-bottom: 1em;
+}
+
+@media (max-width: 1024px) {
+  .checkout_cart_container{
+    width: 100%;
+  }
+  .flex-col {
+    flex-direction: column;
+  }
+  .flex-row {
+    flex-direction: row;
+  }
+  .checkout_container {
+    width: 100%; /* Full width for mobile */
+  }
+
+  .address_section{
+    margin-top: 0rem;
+    padding: 0rem;
+    max-width: 100%;
+  }
+
+}
+.checkout_container {
+  
+  display: flex;
+  padding: 2em;
+  max-width: 1400px;
+}
+
+.address_section{
+  display: block;
+  background-color: rgb(50, 50, 50);
+
+  /* height: fit-content; */
+}
+
+.address_content{
+  background-color: rgb(50, 50, 50);
+}
+
+.address_paragraph{
+  padding: 1em 0em;
+  display: inline-block;
+}
+
+.diamond_detail_text{
+  font-size: clamp(0.7rem, 1vw, 0.9rem);
+}
+
+.diamond_detail_text_2{
+  font-size: clamp(0.7rem, 1vw, 0.9rem);
+}
+
+.diamond_detail_text_3{
+  font-size: clamp(0.7rem, 1vw, 0.9rem);
+}
+
+.diamond_detail_text_4{
+  font-size: clamp(0.7rem, 1vw, 0.9rem);
+}
+
+.address_top{
+  --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity));
+  border-bottom: solid 1px ;
 }
