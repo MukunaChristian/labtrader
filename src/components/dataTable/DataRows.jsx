@@ -22,6 +22,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
   const [gemLoaded, setGemLoaded] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  console.log(columns)
 
   let spotPrice = null;
   if (row.total) {
@@ -38,6 +39,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
     !row["video_link"].includes("diamond.blissvideos")) {
     missingImage = true;
   }
+  console.log(spotPrice)
 
   const handleExpand = () => {
     console.log("expand")
@@ -84,7 +86,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
 
   return (
     <>
-      <tr>
+      <tr className='flex-try'>
         {columns.map((column, colIndex) => (
           <td key={colIndex} className={`px-3 py-4 whitespace-nowrap text-text border-solid border-[1.5px] bg-black border-dark-grey ${column.field === "image" ? "align-middle text-center" : ""}`}>
             {

@@ -389,3 +389,60 @@ td, tr, th {
   cursor: default !important;
   opacity: 0.5;
 }
+
+@media only screen and (max-width: 600px) {
+  /* Hide the table on small screens */
+  table {
+    display: none;
+  }
+  .flex-try{
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Styles for the card layout */
+  .card-wrapper {
+    flex-wrap: wrap;
+  }
+
+  .card {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid red;
+  }
+
+  .card-content {
+    background-color: black;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-img {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    margin-bottom: 2em;
+    
+  }
+  .image-center{
+    display: flex !important;
+    margin: auto !important;  
+    justify-content: center !important;
+  }
+
+  .card-details {
+    padding: 1rem;
+  }
+  .card-details p {
+    color: white;
+  }
+}
+
+/* For larger screens */
+@media only screen and (min-width: 601px) {
+  /* Hide the card wrapper on larger screens */
+  .card-wrapper.hidden {
+    display: none;
+  }
+}
