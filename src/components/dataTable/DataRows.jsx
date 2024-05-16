@@ -193,7 +193,7 @@ export const DataRows = ({ row, rowIndex, columns }) => {
             <div className='pt-4'>
               <p className='font-bold pb-2 text-primary'>Diamond Details</p>
               <div className='pb-2 text-text'>
-                {row.shape.toUpperCase()} {row.specifications.carat}ct {row.specifications.color} {row.specifications.clarity.toUpperCase()} {row.specifications.cut.toUpperCase()} {row.finish.polish.toUpperCase()} {row.finish.symmetry.toUpperCase()} {row.finish.fluorescence.toUpperCase()}
+                {/* {row.shape.toUpperCase()} {row.specifications.carat}ct {row.specifications.color} {row.specifications.clarity.toUpperCase()} {row.specifications.cut.toUpperCase()} {row.finish.polish.toUpperCase()} {row.finish.symmetry.toUpperCase()} {row.finish.fluorescence.toUpperCase()} */}
               </div>
 
               <div className='grid grid-cols-2 gap-4'>

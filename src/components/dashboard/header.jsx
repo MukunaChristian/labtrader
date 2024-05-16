@@ -135,7 +135,7 @@ export const Header = ({ title, results }) => {
 
   return (
     <div className="pt-24">
-      <div className="w-full h-[2rem] border-solid border-0 border-b-[1px]">
+      <div className="hide w-full h-[2rem] border-solid border-0 border-b-[1px]">
         <button 
           onClick={() => {handleTabChange(1)}} 
           className={`
@@ -151,12 +151,31 @@ export const Header = ({ title, results }) => {
           ${currentDiamondType === "melee" ? 'bg-black text-white border-[1px]' : 'bg-grey border-[1px] '}`  
           }>Lab Grown Melee</button>
       </div>
-      <div className="p-4 flex">
+      <div className="top-btn-flex">
+        <button
+         onClick={() => {handleTabChange(1)}} 
+          className={`
+            border-0 border-solid w-[10rem] h-full  
+            hover:bg-black hover:text-white hover:border-[1px]
+            ${currentDiamondType === "diamond" ? 'bg-black text-white border-[1px]' : 'bg-grey border-[1px] '}`
+          }
+        >Lab Grown Diamonds</button>
+        <button
+         onClick={() => {handleTabChange(2)}} 
+         className={`
+         order-0 border-solid w-[10rem] h-full  
+         hover:bg-black hover:text-white hover:border-[1px]
+         ${currentDiamondType === "melee" ? 'bg-black text-white border-[1px]' : 'bg-grey border-[1px] '}`  
+         }>Lab Grown Melee</button>
+
+
+      </div>
+      <div className="  p-4 flex">
         <div>
           <p className="text-xl font-bold text-secondary">{ title }</p>
           <p className="text-sm text-text font-semibold">{ results } results</p>
         </div>
-        <div className="flex ml-auto mt-4">
+        <div className=" show-none flex ml-auto mt-4">
           <a href=".\Stock Upload Template.xlsx" download>
             <button className={user.role !== 'Superadmin' ? 'hidden' : 'default-button mr-4 bg-accent text-white'}>Download Template</button>
           </a>

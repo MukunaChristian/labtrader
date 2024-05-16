@@ -55,11 +55,11 @@ export const MenuSideBar = ({ setLoggedIn }) => {
 
   return (
     <div>
-      <div onClick={() => setOpen(true)} className='flex items-center hover:bg-grey h-11 w-11 p-2 rounded-sm cursor-pointer'>
+      <div onClick={() => setOpen(true)} className=' flex items-center hover:bg-grey h-11 w-11 p-2 rounded-sm cursor-pointer'>
         <Bars3Icon className='h-8 w-8 text-white' />
       </div>
-      <div onClick={() => { setOpen(false) }} className={`fixed h-full top-0 left-0 w-full z-40 bg-dark-grey/40 duration-500 cursor-pointer ${open ? "block" : "hidden"}`}></div>
-      <div className={`flex flex-col fixed h-[100%] w-[50vh] bg-black overflow-auto z-50 px-4 shadow-2xl duration-300 top-0 ${open ? "left-0" : "left-[-100%]"}`}>
+      <div onClick={() => { setOpen(false) }} className={`  fixed h-full top-0 left-0 w-full z-40 bg-dark-grey/40 duration-500 cursor-pointer ${open ? "block" : "hidden"}`}></div>
+      <div className={` size flex flex-col fixed h-[100%] w-[50vh] bg-black overflow-auto z-50 px-4 shadow-2xl duration-300 top-0 ${open ? "left-0" : "left-[-100%]"}`}>
         <div className="py-4">
           <div className="flex">
             <div className="flex items-center justify-center rounded-full w-20 h-20 bg-black">

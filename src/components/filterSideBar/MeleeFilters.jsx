@@ -120,16 +120,16 @@ export const MeleeFilterSideBar = ({ setIsFilterSideBarOpen, isFilterSideBarOpen
 
   return (
     <div>
-      <div onClick={() => {setIsFilterSideBarOpen(false)}} className={`fixed h-full top-0 left-0 w-full z-40 bg-dark-grey/40 duration-500 cursor-pointer ${isFilterSideBarOpen ? "block" : "hidden"}`}></div>
-      <div className={`flex flex-col fixed h-[100%] w-[100vh] overflow-auto z-50 py-20 px-4 bg-white shadow-2xl duration-300 top-0 ${isFilterSideBarOpen ? "left-0" : "left-[-100%]"}`}>
-        <div className="fixed flex py-4 w-[93vh] top-0 border-0 border-solid border-b-[1px] bg-white">
+      <div onClick={() => {setIsFilterSideBarOpen(false)}} className={` size2 fixed h-full top-0 left-0 w-full z-40 bg-dark-grey/40 duration-500 cursor-pointer ${isFilterSideBarOpen ? "block" : "hidden"}`}></div>
+      <div className={`size flex flex-col fixed h-[100%] w-[100vh] overflow-auto z-50 py-20  px-4 bg-white shadow-2xl duration-300 top-0 ${isFilterSideBarOpen ? "left-0" : "left-[-300%]"}`}>
+        <div className="size2 fixed flex py-4 w-[93vh] top-0 border-0 border-solid border-b-[1px] bg-white">
           <p className="font-bold">Filters</p>
           <XMarkIcon onClick={() => {setIsFilterSideBarOpen(false)}} className="w-6 h-6 text-dark-grey hover:text-navy-blue ml-auto cursor-pointer" />
         </div>
 
         <div>
           <p className="font-bold pt-4 pb-4">Shape</p>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {diamondShapes.map((diamondShape) => (
             <div 
               key={diamondShape.id} 

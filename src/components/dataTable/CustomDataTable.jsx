@@ -160,9 +160,9 @@ export const CustomDataTable = ({ currentRows, diamondsType }) => {
             </table>
           )}
 
-          <div className="w-full flex flex-wrap sm:hidden">
+          <div className="show-mobile ">
             {currentRows.length > 0 && (
-              <div className="w-full flex flex-wrap sm:hidden">
+              <div>
                 {currentRows.map((row, rowIndex) => {
                   // Calculate spotPrice here
                   let spotPrice = null;
@@ -183,54 +183,117 @@ export const CustomDataTable = ({ currentRows, diamondsType }) => {
                         <div className="card-content">
                           <div className="card-details">
                             <div className="image-center">
-                            <img
-                              src={row.image}
-                              alt="Diamond Image"
-                              className="card-img"
-                            />
+                              <img
+                                src={row.image}
+                                alt="Diamond Image"
+                                className="card-img"
+                              />
                             </div>
-                          
-                            <p>Diamond Information:</p>
-                            <p>
-                              Specifications: Carat - {row.specifications.carat}
-                              , Color - {row.specifications.color}, Clarity -{" "}
-                              {row.specifications.clarity}, Cut -{" "}
-                              {row.specifications.cut}
-                            </p>
-                            {/* Other Information */}
-                            <p>
-                              Price per Carat:{" "}
-                              {formatNumberWithSpaces(
-                                (
-                                  row.total /
-                                  parseFloat(row.specifications.carat)
-                                ).toFixed(2)
-                              )}
-                            </p>
-                            <p>
-                              Measurements: Ratio -{" "}
-                              {row.ratio_measurements.ratio} depth
-                              {row.ratio_measurements.measurements.depth} height
-                              {row.ratio_measurements.measurements.height} width
-                              {row.ratio_measurements.measurements.width}{" "}
-                            </p>
-                            <p>Final Price: {row.total}</p>
-                            <p>
-                              Rand Conversion:{" "}
-                              {formatNumberWithSpaces(spotPrice)}{" "}
-                              {currency.code}
-                            </p>
-                            <p>
-                              Delivery Time: From:{warehouse.delivery_from} to:{" "}
-                              {warehouse.delivery_to} Loaction:
-                              {warehouse.country}{" "}
-                            </p>
-                            <p>Certificate: {row.certificate}</p>
-                            <p>Video Links: {row.videoLinks}</p>
-                            <div onClick={() => navigator.clipboard.writeText(row.video_link)}>
-                              <a>Copy and Paste in Web Browser </a>
+
+                            <hr className="white-line" />
+                            <div className="link-container">
+                              <a
+                                target="_blank"
+                                rel="noreferrer"
+                                href={
+                                  row.certificate === "IGI"
+                                    ? `http://www.igi.org/verify.php?r=${row.cert_id}`
+                                    : `https://diamond.blissvideos.com/?d=${row.id}`
+                                }
+                              >
+                                IGI Link
+                              </a>
+                              <a
+                                onClick={() =>
+                                  navigator.clipboard.writeText(row.video_link)
+                                }
+                              >
+                                Video Link
+                              </a>
+                              <div className="btn-left">${row.total}/ct</div>
                             </div>
-                           
+                            <div className="text-container">
+                              <p>Stock ID - {row.id}</p>
+                              <p>
+                                {" "}
+                                {row.shape.toUpperCase()}{" "}
+                                {row.specifications.carat}ct{" "}
+                                {row.specifications.color}{" "}
+                                {row.specifications.clarity.toUpperCase()}{" "}
+                                {row.specifications.cut.toUpperCase()}{" "}
+                                {row.finish.polish.toUpperCase()}{" "}
+                                {row.finish.symmetry.toUpperCase()}{" "}
+                                {row.finish.fluorescence.toUpperCase()}
+                              </p>
+                            </div>
+                            <hr className="white-line" />
+                            <div className="specs-container">
+                              <p>Specifications</p>
+                              <button>More Details</button>
+                            </div>
+                            <div className="container-flex">
+                              <div className="specifications-flex">
+                                <div> Carat</div>
+                                <div>{row.specifications.carat}</div>
+                              </div>
+                              <div className="specifications-flex">
+                                <div> color</div>
+                                <div>{row.specifications.color}</div>
+                              </div>
+                              <div className="specifications-flex">
+                                <div> Clarity</div>
+                                <div>{row.specifications.clarity}</div>
+                              </div>
+                              <div className="specifications-flex">
+                                <div> Cut</div>
+                                <div>{row.specifications.cut}</div>
+                              </div>
+                              <div className="specifications-flex">
+                                <div> Table</div>
+                                <div>{row.table_depth.table}</div>
+                              </div>
+                              <div className="specifications-flex">
+                                <div> Depth</div>
+                                <div>{row.table_depth.depth}</div>
+                              </div>
+                              <div className="specifications-flex">
+                                <div> Measurements</div>
+                                <div className="data-flex">
+                                  {row.ratio_measurements.ratio}
+                                  {row.ratio_measurements.measurements.depth}
+                                  {row.ratio_measurements.measurements.height}
+                                  {
+                                    row.ratio_measurements.measurements.width
+                                  }{" "}
+                                </div>
+                              </div>
+                              <div className="specifications-flex">
+                                <div> Ratio</div>
+                                <div>{row.ratio_measurements.ratio}</div>
+                              </div>
+                            </div>
+                            <hr className="white-line" />
+                            <div className="contact-flex">
+                              <div>Location:</div>
+                              <div>{warehouse.country}</div>
+                            </div>
+                            <div className="contact-flex">
+                              <div>Delivery Time:</div>
+                              <div>
+                                {" "}
+                                {warehouse.delivery_from} to{" "}
+                                {warehouse.delivery_to}
+                              </div>
+                            </div>
+
+                            <hr className="white-line" />
+                            <div className="contact-flex">
+                              <div>Total Price:</div>
+                              <div>R{row.total}</div>
+                            </div>
+                            <div className="btn-cart">
+                              <button>Add to Cart</button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -240,7 +303,8 @@ export const CustomDataTable = ({ currentRows, diamondsType }) => {
               </div>
             )}
           </div>
-          <div className="w-full my-1 flex justify-center">
+
+          <div className=" margin w-full my-1 flex justify-center ">
             <Pagenation
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}

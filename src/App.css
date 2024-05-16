@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 #root {
   width: 100vw;
   height: 100%;
@@ -12,9 +11,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border-color: #E5E7EB;
+  border-color: #e5e7eb;
 }
-
 
 a {
   cursor: pointer;
@@ -37,9 +35,11 @@ input {
   outline: none;
 }
 
-td, tr, th {
-  border-bottom: 1px solid #E5E7EB;
-  border-top: 1px solid #E5E7EB;
+td,
+tr,
+th {
+  border-bottom: 1px solid #e5e7eb;
+  border-top: 1px solid #e5e7eb;
 }
 
 .iframe-container {
@@ -69,24 +69,23 @@ td, tr, th {
   margin-bottom: 1rem;
   margin-top: 1rem;
   margin-left: 1rem;
-
 }
 
 .iframe-container-loupe iframe {
-  
   margin-top: 0;
   margin-bottom: 0;
 
   width: 32rem; /* This should match the iframe's actual width */
   height: 30rem; /* This should match the iframe's actual height */
 
-  -webkit-transform: scale(0.8); /* Adjust scale value as needed for Chrome, Safari, and Opera */
+  -webkit-transform: scale(
+    0.8
+  ); /* Adjust scale value as needed for Chrome, Safari, and Opera */
   -ms-transform: scale(0.8); /* Adjust scale value as needed for IE 9 */
   transform: scale(0.4); /* Adjust scale value as needed */
   -webkit-transform-origin: center; /* Scales the content from the top left corner */
   -ms-transform-origin: 0 0; /* Scales the content from the top left corner for IE 9 */
   transform-origin: top left; /* Scales the content from the top left corner */
-
 }
 
 .iframe-container-viw {
@@ -97,24 +96,23 @@ td, tr, th {
   margin-bottom: 1rem;
   margin-top: 1rem;
   margin-left: 1rem;
-
 }
 
 .iframe-container-viw iframe {
-  
   margin-top: 0;
   margin-bottom: 0;
 
   width: 26rem; /* This should match the iframe's actual width */
   height: 30rem; /* This should match the iframe's actual height */
 
-  -webkit-transform: scale(0.8); /* Adjust scale value as needed for Chrome, Safari, and Opera */
+  -webkit-transform: scale(
+    0.8
+  ); /* Adjust scale value as needed for Chrome, Safari, and Opera */
   -ms-transform: scale(0.8); /* Adjust scale value as needed for IE 9 */
   transform: scale(0.4); /* Adjust scale value as needed */
   -webkit-transform-origin: top left; /* Scales the content from the top left corner */
   -ms-transform-origin: 0 0; /* Scales the content from the top left corner for IE 9 */
   transform-origin: top left; /* Scales the content from the top left corner */
-
 }
 
 .iframe-container-view {
@@ -125,7 +123,6 @@ td, tr, th {
   margin-bottom: 1rem;
   margin-top: 1rem;
   margin-left: 1rem;
-
 }
 
 .iframe-container-diamond {
@@ -136,24 +133,23 @@ td, tr, th {
   margin-bottom: 1rem;
   margin-top: 1rem;
   margin-left: 1rem;
-
 }
 
 .iframe-container-diamond iframe {
-  
   margin-top: 0;
   margin-bottom: 0;
 
   width: 26rem; /* This should match the iframe's actual width */
   height: 30rem; /* This should match the iframe's actual height */
 
-  -webkit-transform: scale(0.8); /* Adjust scale value as needed for Chrome, Safari, and Opera */
+  -webkit-transform: scale(
+    0.8
+  ); /* Adjust scale value as needed for Chrome, Safari, and Opera */
   -ms-transform: scale(0.8); /* Adjust scale value as needed for IE 9 */
   transform: scale(0.4); /* Adjust scale value as needed */
   -webkit-transform-origin: top left; /* Scales the content from the top left corner */
   -ms-transform-origin: 0 0; /* Scales the content from the top left corner for IE 9 */
   transform-origin: top left; /* Scales the content from the top left corner */
-
 }
 
 .iframe-container-details-view {
@@ -179,7 +175,7 @@ td, tr, th {
   overflow: hidden; /* Hide anything outside of the container */
   position: relative; /* To allow absolute positioning inside */
 }
-.third-iframe-container{
+.third-iframe-container {
   width: 164px; /* Width of the visible area */
   height: 150px; /* Height of the visible area */
   overflow: hidden; /* Hide anything outside of the container */
@@ -188,15 +184,13 @@ td, tr, th {
   margin-top: 1rem;
 }
 
-.third-iframe-container iframe{
-
-    overflow: hidden;
-    position: absolute;
-    top: -1rem;
-    left: -0.2rem;
-    width: 200px;
-    height: 300px;
-
+.third-iframe-container iframe {
+  overflow: hidden;
+  position: absolute;
+  top: -1rem;
+  left: -0.2rem;
+  width: 200px;
+  height: 300px;
 }
 
 .iframe-container-details-diamonds iframe {
@@ -207,7 +201,9 @@ td, tr, th {
   width: 20rem; /* This should match the iframe's actual width */
   height: 520px; /* This should match the iframe's actual height */
 
-  -webkit-transform: scale(0.8); /* Adjust scale value as needed for Chrome, Safari, and Opera */
+  -webkit-transform: scale(
+    0.8
+  ); /* Adjust scale value as needed for Chrome, Safari, and Opera */
   -ms-transform: scale(0.8); /* Adjust scale value as needed for IE 9 */
   transform: scale(0.65); /* Adjust scale value as needed */
   -webkit-transform-origin: top left; /* Scales the content from the top left corner */
@@ -216,20 +212,20 @@ td, tr, th {
 }
 
 .iframe-container-view iframe {
-  
   margin-top: 0;
   margin-bottom: 0;
 
   width: 26rem; /* This should match the iframe's actual width */
   height: 34rem; /* This should match the iframe's actual height */
 
-  -webkit-transform: scale(0.8); /* Adjust scale value as needed for Chrome, Safari, and Opera */
+  -webkit-transform: scale(
+    0.8
+  ); /* Adjust scale value as needed for Chrome, Safari, and Opera */
   -ms-transform: scale(0.8); /* Adjust scale value as needed for IE 9 */
   transform: scale(0.4); /* Adjust scale value as needed */
   -webkit-transform-origin: top left; /* Scales the content from the top left corner */
   -ms-transform-origin: 0 0; /* Scales the content from the top left corner for IE 9 */
   transform-origin: top left; /* Scales the content from the top left corner */
-
 }
 
 .iframe-container iframe {
@@ -290,19 +286,19 @@ td, tr, th {
 }
 
 .default-button {
-  @apply flex rounded-lg px-2 h-8 border-solid border-[1px] border-black justify-center items-center cursor-pointer
+  @apply flex rounded-lg px-2 h-8 border-solid border-[1px] border-black justify-center items-center cursor-pointer;
 }
 
 .default-button-reports {
-  @apply flex rounded-lg px-2 h-8 border-solid border-[1px] border-black justify-center items-center cursor-pointer
+  @apply flex rounded-lg px-2 h-8 border-solid border-[1px] border-black justify-center items-center cursor-pointer;
 }
 
 .default-button-disabled {
-  @apply flex rounded-lg px-2 h-8 border-solid border-[1px] border-black justify-center items-center bg-light-grey cursor-default
+  @apply flex rounded-lg px-2 h-8 border-solid border-[1px] border-black justify-center items-center bg-light-grey cursor-default;
 }
 
 .default-save-button {
-  @apply flex bg-accent rounded-lg px-2 h-8 border-solid border-[1.5px] justify-center items-center cursor-pointer text-white
+  @apply flex bg-accent rounded-lg px-2 h-8 border-solid border-[1.5px] justify-center items-center cursor-pointer text-white;
 }
 
 .default-filter-button {
@@ -313,13 +309,12 @@ td, tr, th {
   @apply default-button mr-2 my-2 text-sm bg-dark-grey text-white bg-accent;
 }
 
-
 .default-input {
   @apply w-full h-8 border border-solid rounded-md px-2 focus:outline-none focus:border-navy-blue;
 }
 
 .default-button-focus {
-  @apply bg-accent border-solid border-[1.5px] text-white
+  @apply bg-accent border-solid border-[1.5px] text-white;
 }
 
 .default-tabs {
@@ -328,7 +323,7 @@ td, tr, th {
 }
 
 .default-tabs-active {
-  @apply mb-1 flex justify-center w-[9rem] py-3 border-solid border-[1px] bg-light-grey border-black cursor-default rounded-lg bg-accent text-white
+  @apply mb-1 flex justify-center w-[9rem] py-3 border-solid border-[1px] bg-light-grey border-black cursor-default rounded-lg bg-accent text-white;
 }
 
 .logo {
@@ -390,14 +385,10 @@ td, tr, th {
   opacity: 0.5;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
   /* Hide the table on small screens */
   table {
     display: none;
-  }
-  .flex-try{
-    display: flex;
-    flex-direction: column;
   }
 
   /* Styles for the card layout */
@@ -407,8 +398,9 @@ td, tr, th {
 
   .card {
     width: 100%;
-    padding: 1rem;
-    border: 2px solid red;
+    padding: 0em;
+    padding-bottom: 1em;
+    margin: auto;
   }
 
   .card-content {
@@ -418,31 +410,277 @@ td, tr, th {
   }
 
   .card-img {
-    width: 100%;
-    height: auto;
+    width: 10em;
+    height: 11em;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     margin-bottom: 2em;
-    
+    margin: 0% auto;
+    aspect-ratio: 1/1;
   }
-  .image-center{
+  .image-center {
     display: flex !important;
-    margin: auto !important;  
+    margin: auto !important;
     justify-content: center !important;
   }
 
   .card-details {
     padding: 1rem;
+    color: white;
   }
   .card-details p {
     color: white;
   }
+
+  .white-line {
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+    margin: 1rem 0;
+  }
+  .specifications-flex {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .container-flex {
+    display: grid;
+    gap: 0.3em;
+    grid-template-columns: repeat(4,  1fr);
+  }
+  .data-flex {
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+    margin: auto;
+  }
+  .contact-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1em;
+  }
+  .margin-left {
+    margin-right: -2em;
+  }
+  .show-none {
+    display: none;
+  }
+
+  .link-container {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+  }
+  .link-container a {
+    color: white;
+    text-decoration: underline;
+  }
+
+  .btn-cart {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .link-container a:hover {
+    color: #888;
+  }
+  .btn-left {
+    margin-left: auto;
+    border: 1px solid white;
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  .text-container {
+    margin-top: 1rem;
+  }
+
+  .specs-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 1em;
+  }
+
+  .specs-container button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #FFFFFF;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .specs-container button:hover {
+    background-color: #333232;
+  }
+
+  .card-details button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #FFFFFF;
+    color: black;
+    cursor: pointer;
+  }
+
+  .card-details button:hover {
+    background-color: #3b3b3b;
+  }
+  .bottom-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: black; /* Light gray background */
+    padding: 1rem 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it's above other content */
+  }
+
+  .filter-button,
+  .sort-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #007bff; /* Blue color for buttons */
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .filter-button:hover,
+  .sort-button:hover {
+    background-color: #0056b3; /* Darker blue color on hover */
+  }
+
+
+  .postion {
+    position: relative;
+    margin-left: auto;
+    top: -10em;
+  }
+
+  .show-rand {
+    
+    color: white !important;
+    text-decoration: underline;
+  }
+  .flex-icon{
+    position: relative;
+    left: 5em;
+    top: 0.3em;
+    display: flex;
+    flex-direction: row;
+  }
+  .show-rand:hover {
+    color: #888;
+  }
+
+  .hide {
+    display: none;
+  }
+  .drop-icon{
+    width: 2em;
+    position: relative;
+    left: 1em;
+  }
+
+  .mobile-view {
+    padding: 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1em;
+    gap: 5px;
+  }
+  .btn-flex{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+  }
+  .top-btn-flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .top-btn-flex button{
+padding: 5px 5px;
+  }
 }
 
 /* For larger screens */
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: 900px) {
   /* Hide the card wrapper on larger screens */
-  .card-wrapper.hidden {
+  .show-mobile {
     display: none;
+  }
+  .bottom-bar {
+    display: none;
+  }
+  .show-rand, .flex-icon {
+    display: none;
+  }
+  .mobile-view{
+    display: none;
+  }
+  .top-btn-flex{
+    display: none;
+  }
+}
+
+.container {
+  position: relative;
+  width: 220px;
+}
+.search-input {
+  font-size: 14px;
+  width: 200px;
+  max-width: 0;
+  padding: 5px;
+  transition: all 0.5s ease;
+  position: absolute;
+  left: 30px;
+  box-sizing: border-box;
+  opacity: 0;
+  outline: none;
+  border: none;
+  z-index: 100;
+}
+
+.search-expanded {
+  max-width: 200px;
+  opacity: 1;
+}
+
+.search-wrapper {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 0;
+  top: -9px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding-top: 4px;
+  font-size: 18px;
+}
+
+/* Styles for the grid layout */
+.moile-view {
+  display: grid;
+  gap: 1rem; /* Adjust the gap between items */
+}
+
+/* For mobile devices */
+@media only screen and (max-width: 600px) {
+  .moile-view {
+    grid-template-columns: repeat(1, minmax(0, 1fr)); /* Display two columns */
+  }
+  .size {
+    width: 18em;
+  }
+  .size2 {
+    width: 17em;
   }
 }
