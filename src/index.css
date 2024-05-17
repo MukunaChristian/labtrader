@@ -51,11 +51,11 @@ html {
 
 .pay_later_container{
   flex-direction: column;
-  padding: 2em 2em 2em 0em;
+  padding: 1.6em 2em 0em 0em;
 }
 
 .pay_later_container button {
-  margin-bottom: 1em;
+  /* margin-bottom: 1em; */
 }
 
 @media (max-width: 1024px) {
@@ -76,6 +76,7 @@ html {
     margin-top: 0rem;
     padding: 0rem;
     max-width: 100%;
+    margin-bottom: 17em;
   }
 
 }
@@ -95,6 +96,7 @@ html {
 
 .address_content{
   background-color: rgb(50, 50, 50);
+  border-radius: 0.5rem;
 }
 
 .address_paragraph{
@@ -122,4 +124,34 @@ html {
   --tw-border-opacity: 1;
   border-color: rgb(107 114 128 / var(--tw-border-opacity));
   border-bottom: solid 1px ;
+  border-radius: 0.5rem;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+.modal-content p {
+  margin-bottom: 20px;
+}
+
+
+.modal button {
+  margin-right: 10px;
 }

@@ -14,9 +14,11 @@ import { CheckoutDropdown } from "../components/dropdowns/CheckoutDropdown";
 import { calculateDeliveryFee } from "../api/checkout";
 import { getJewellersByReseller } from "../api/getSupplimentalData";
 import { getUsersCompany } from "../api/company";
+import AddressForm from "../components/checkout/AddressForm";
 // import the index.css file
 import "../index.css";
 import { set } from "lodash";
+import { event } from "jquery";
 
 const optionsDelivery = ["Collect", "Deliver"];
 // get id and delivery method from the url
@@ -31,6 +33,7 @@ export const Checkout = () => {
   const warehouses = useSelector((state) => state.app.warehouses);
 
   const [selectedDiamond, setSelectedDiamond] = useState();
+  const [changeDate, setChangeDate] = useState(false);
 
   const [delivery, setDelivery] = useState(false);
   const [deliveryFee, setDeliveryFee] = useState(0);
@@ -81,7 +84,7 @@ export const Checkout = () => {
   };
 
   const toggleDelivery = (option) => {
-    if (option === "Deliver") {
+    if (option === "deliver") {
       const idsToFind = diamonds_in_cart.map((obj) => obj.warehouse_id);
       const diamond_warehouses = warehouses.filter((obj) =>
         idsToFind.includes(obj.id)
@@ -117,7 +120,7 @@ export const Checkout = () => {
     if (!(user_id && user_role)) {
       return;
     }
-
+    toggleDelivery(delivery_method);
     console.log(user_role);
     console.log(checkout_id);
     console.log(delivery_method);
@@ -145,6 +148,17 @@ export const Checkout = () => {
       });
     }
   }, [user_id, user_role]);
+
+  const handleAddressSubmit = () => {
+    console.log("address submitted");
+
+    changeDate ? setChangeDate(false) : setChangeDate(true);
+  };
+
+  const handleChangeAddress = () => {
+    changeDate ? setChangeDate(false) : setChangeDate(true);
+    console.log(changeDate);
+  };
 
   const handlePayNow = () => {
     if (pay_later) {
@@ -254,401 +268,214 @@ export const Checkout = () => {
     }
     return "N/A";
   };
-  if (delivery_method === "deliver")
-    return (
-      <div className="justify-center items-center align-center flex  m-auto">
-        <container className="">
-          <div className=" checkout_container  flex-col sm:flex-row">
-            <section className="pt-24 pr-0 bg-light-grey pb-3 relative mr-0 first_section  lg:pl-2">
-              <div className="hover:bg-grey rounded-full mb-4 p-2 w-11 h-11 cursor-pointer">
-                <ArrowLeftIcon
-                  className="h-7 w-7"
-                  onClick={() => window.history.back()}
-                />
-              </div>
 
-              <div className="flex flex-col items-start pb-2">
-                <p className="text-2xl font-bold h-full mr-4">Checkout</p>
-                <p className="inline-block h-full font-semibold pb-[2px] text-text">
-                  {diamonds_in_cart.length} items in Cart
-                </p>
-              </div>
-              <section className="checkout_cart_container min-w-[39rem] pr-0 lg:pr-6 pr-0">
-                <div
-                  className="border-solid h-[32rem] border-[1px] border-b-0 rounded-t-lg z-0 overflow-auto text-white"
-                  style={{ backgroundColor: "rgb(50 50 50)" }}
-                >
-                  {diamonds_in_cart.length === 0 ? (
-                    <div className="flex justify-center items-center h-[100%] text-[25px]">
-                      There are no items in your cart.
-                    </div>
-                  ) : (
-                    diamonds_in_cart.map((diamond, index) => {
-                      return (
-                        <div
-                          key={diamond.id}
-                          onClick={() => setSelectedDiamond(diamond)}
-                          className={`relative flex items-center cursor-pointer justify-between border-solid border-0 border-b-[1px] h-[6rem] border-gray-500 pl-4 ${
-                            index === 0 && "rounded-t-lg"
-                          } ${selectedDiamond === diamond ? "bg-grey/40" : ""}`}
-                        >
-                          <div className="flex items-center w-full">
-                            <img
-                              src={diamond.image}
-                              alt=""
-                              className="h-[4rem] w-[4rem]"
-                            />
-                            <div className="ml-10 h-full">
-                              <div className="font-semibold diamond_detail_text">
-                                {diamond.shape.toUpperCase()}{" "}
-                                {diamond.specifications.carat}ct{" "}
-                                {diamond.specifications.color}{" "}
-                                {diamond.specifications.clarity.toUpperCase()}{" "}
-                                {diamond.specifications.cut.toUpperCase()}{" "}
-                                {diamond.finish.polish.toUpperCase()}{" "}
-                                {diamond.finish.symmetry.toUpperCase()}{" "}
-                                {diamond.finish.fluorescence.toUpperCase()}
-                              </div>
-                              <p className="diamond_detail_text_2">
-                                {diamond.id}
-                              </p>
-                              <p className="diamond_detail_text_2">
-                                {diamond.ratio_measurements.measurements.width}{" "}
-                                -{" "}
-                                {diamond.ratio_measurements.measurements.height}{" "}
-                                x{" "}
-                                {diamond.ratio_measurements.measurements.depth}
-                              </p>
+  return (
+    <div className="justify-center items-center align-center flex  m-auto">
+      <container className="">
+        <div className=" checkout_container  flex-col sm:flex-row">
+          <section className="pt-16 pr-0 bg-light-grey pb-3 relative mr-0 first_section  lg:pl-2">
+            <div className="hover:bg-grey rounded-full mb-4 p-2 w-11 h-11 cursor-pointer">
+              <ArrowLeftIcon
+                className="h-7 w-7"
+                onClick={() => window.history.back()}
+              />
+            </div>
+
+            <div className="flex flex-col items-start pb-2">
+              <p className="text-2xl font-bold h-full mr-4">Checkout</p>
+            </div>
+            <section className="checkout_cart_container lg:min-w-[39rem] pr-0 lg:pr-6 pr-0">
+              <div
+                className="border-solid h-[32rem] border-[1px] border-b-0 rounded-t-lg z-0 overflow-auto text-white"
+                style={{ backgroundColor: "rgb(50 50 50)" }}
+              >
+                {diamonds_in_cart.length === 0 ? (
+                  <div className="flex justify-center items-center h-[100%] text-[25px]">
+                    There are no items in your checkout.
+                  </div>
+                ) : (
+                  diamonds_in_cart.map((diamond, index) => {
+                    return (
+                      <div
+                        key={diamond.id}
+                        onClick={() => setSelectedDiamond(diamond)}
+                        className={`relative flex items-center cursor-pointer justify-between border-solid border-0 border-b-[1px] h-[6rem] border-gray-500 pl-4 ${
+                          index === 0 && "rounded-t-lg"
+                        } ${selectedDiamond === diamond ? "bg-grey/40" : ""}`}
+                      >
+                        <div className="flex items-center w-full">
+                          <img
+                            src={diamond.image}
+                            alt=""
+                            className="h-[4rem] w-[4rem] hidden md:block"
+                          />
+                          <div className="md:ml-10 ml-0 h-full pr-2">
+                            <div className="font-semibold diamond_detail_text">
+                              {diamond.shape.toUpperCase()}{" "}
+                              {diamond.specifications.carat}ct{" "}
+                              {diamond.specifications.color}{" "}
+                              {diamond.specifications.clarity.toUpperCase()}{" "}
+                              {diamond.specifications.cut.toUpperCase()}{" "}
+                              {diamond.finish.polish.toUpperCase()}{" "}
+                              {diamond.finish.symmetry.toUpperCase()}{" "}
+                              {diamond.finish.fluorescence.toUpperCase()}
                             </div>
-
-                            {diamond.diamond_type_id == 2 && (
-                              <div className="ml-auto text-right border-solid border-0 border-r-[1px] pr-4 mr-32 border-white">
-                                <p className="mb-2">
-                                  {diamond.amount ? diamond.amount : 0}{" "}
-                                  Available
-                                </p>
-                                <div className="flex">
-                                  <input
-                                    className={`w-[6rem] h-[1.5rem] px-2 rounded-sm mr-2`}
-                                    value={
-                                      diamond.amount_in_cart === 0
-                                        ? null
-                                        : diamond.amount_in_cart
-                                    }
-                                    onChange={(e) => {
-                                      updateCurrentAmount(e);
-                                    }}
-                                  />
-                                  <p>~ pcs</p>
-                                </div>
-                              </div>
-                            )}
-
-                            <div
-                              className={`${
-                                diamond.diamond_type_id === 2
-                                  ? "ml-0"
-                                  : "ml-auto"
-                              } text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white`}
-                            >
-                              <p className="diamond_detail_text_3">
-                                Delivery Time
-                              </p>
-                              <p className="font-semibold diamond_detail_text_4">
-                                {getWarehouseDeliveryTime(diamond.warehouse_id)}
-                              </p>
-                            </div>
-
-                            <div
-                              className={`text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white`}
-                            >
-                              <p className="diamond_detail_text_3">
-                                Price in USD
-                              </p>
-                              <p className="font-semibold diamond_detail_text_4">
-                                ${" "}
-                                {formatNumberWithSpaces(
-                                  (
-                                    diamond.total * diamond.amount_in_cart
-                                  ).toFixed(2)
-                                )}
-                              </p>
-                            </div>
-
-                            <div className="text-right mr-4">
-                              <p className="diamond_detail_text_3">
-                                Price in {currency.name}
-                              </p>
-                              <p className="font-semibold diamond_detail_text_4">
-                                {diamond.total
-                                  ? currency.symbol +
-                                    " " +
-                                    formatNumberWithSpaces(
-                                      (
-                                        (parseFloat(diamond.total) *
-                                          diamond.amount_in_cart *
-                                          rates[currency.code] *
-                                          10) /
-                                        10
-                                      ).toFixed(2)
-                                    )
-                                  : "N/A"}
-                              </p>
-                            </div>
+                            <p className="diamond_detail_text_2">
+                              {diamond.id}
+                            </p>
+                            <p className="diamond_detail_text_2">
+                              {diamond.ratio_measurements.measurements.width} -{" "}
+                              {diamond.ratio_measurements.measurements.height} x{" "}
+                              {diamond.ratio_measurements.measurements.depth}
+                            </p>
                           </div>
-                          <p className="">{diamond.price}</p>
-                        </div>
-                      );
-                    })
-                  )}
-                </div>
 
-                <div className="flex items-center border-solid px-8 h-[8rem] border-[1px] border-black rounded-b-lg bg-black">
-                  <div className="text-white">
-                    <p className="mb-2">Sub Total</p>
-                    <p className="mb-2">Delivery Fee</p>
-                    <p className="font-semibold text-lg">
-                      Total (Excluding VAT)
-                    </p>
-                  </div>
-                  <div className="ml-auto text-white ">
-                    <p className="mb-2 text-right">
-                      {currency.symbol} {formatNumberWithSpaces(subTotal)}
-                    </p>
-                    <p className="mb-2 text-right">
-                      {currency.symbol}{" "}
-                      {formatNumberWithSpaces(deliveryFee.toFixed(2))}
-                    </p>
-                    <p className="font-semibold text-lg text-right">
-                      {currency.symbol} {formatNumberWithSpaces(total)}
-                    </p>
-                  </div>
+                          {diamond.diamond_type_id == 2 && (
+                            <div className="ml-auto text-right border-solid border-0 border-r-[1px] pr-4 mr-32 border-white">
+                              <p className="mb-2">
+                                {diamond.amount ? diamond.amount : 0} Available
+                              </p>
+                              <div className="flex">
+                                <input
+                                  className={`w-[6rem] h-[1.5rem] px-2 rounded-sm mr-2`}
+                                  value={
+                                    diamond.amount_in_cart === 0
+                                      ? null
+                                      : diamond.amount_in_cart
+                                  }
+                                  onChange={(e) => {
+                                    updateCurrentAmount(e);
+                                  }}
+                                />
+                                <p>~ pcs</p>
+                              </div>
+                            </div>
+                          )}
+
+                          <div
+                            className={`${
+                              diamond.diamond_type_id === 2 ? "ml-0" : "ml-auto"
+                            } text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white`}
+                          >
+                            <p className="diamond_detail_text_3">
+                              Delivery Time
+                            </p>
+                            <p className="font-semibold diamond_detail_text_4">
+                              {getWarehouseDeliveryTime(diamond.warehouse_id)}
+                            </p>
+                          </div>
+
+                          <div
+                            className={`text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white`}
+                          >
+                            <p className="diamond_detail_text_3">
+                              Price in USD
+                            </p>
+                            <p className="font-semibold diamond_detail_text_4">
+                              ${" "}
+                              {formatNumberWithSpaces(
+                                (
+                                  diamond.total * diamond.amount_in_cart
+                                ).toFixed(2)
+                              )}
+                            </p>
+                          </div>
+
+                          <div className="text-right mr-4">
+                            <p className="diamond_detail_text_3">
+                              Price in {currency.name}
+                            </p>
+                            <p className="font-semibold diamond_detail_text_4">
+                              {diamond.total
+                                ? currency.symbol +
+                                  " " +
+                                  formatNumberWithSpaces(
+                                    (
+                                      (parseFloat(diamond.total) *
+                                        diamond.amount_in_cart *
+                                        rates[currency.code] *
+                                        10) /
+                                      10
+                                    ).toFixed(2)
+                                  )
+                                : "N/A"}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="">{diamond.price}</p>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+
+              <div className="flex items-center border-solid px-8 h-[8rem] border-[1px] border-black rounded-b-lg bg-black">
+                <div className="text-white">
+                  <p className="mb-2">Sub Total</p>
+                  <p className="mb-2">Delivery Fee</p>
+                  <p className="font-semibold text-lg">Total (Excluding VAT)</p>
                 </div>
-              </section>
+                <div className="ml-auto text-white ">
+                  <p className="mb-2 text-right">
+                    {currency.symbol} {formatNumberWithSpaces(subTotal)}
+                  </p>
+                  <p className="mb-2 text-right">
+                    {currency.symbol}{" "}
+                    {formatNumberWithSpaces(deliveryFee.toFixed(2))}
+                  </p>
+                  <p className="font-semibold text-lg text-right">
+                    {currency.symbol} {formatNumberWithSpaces(total)}
+                  </p>
+                </div>
+              </div>
             </section>
-            <section className="address_section rounded-b-lg rounded-t-lg max-w-[39rem] md:mt-[13.8rem]  pt-0 h-96">
-              <div className="address_content text-white px-10 bg-light-grey relative address_top">
+          </section>
+          <section className="address_section rounded-b-lg rounded-t-lg max-w-[39rem] md:mt-[12.3rem]  pt-2 h-36 mt-[12.3rem]">
+            {delivery_method === "deliver" && changeDate === false && (
+              <div className="address_content text-white px-10 bg-light-grey relative address_top rounded-b-lg">
                 <h2 className="text-lg mb-2 mt-2 text-center">
                   Your Delivery Address
                 </h2>
                 <p className="address_paragraph pl-0">
-                  William Penn St, Milnerton, Cape Town, 7435,
-                  eeeeeeeeeeeeeeeeeeeeeeeeeeeee ,eeeeeeeeeeeeeeeeeeee
-                  ,eeeeeeeeeeeeeeeeeeee ,eeeeeeeeeeeeeee ,eeeeeeeeeeee
+                  William Penn St, Milnerton, Cape Town, 7435
                 </p>
               </div>
-              <div className=" text-center address_content text-white px-10 bg-light-grey relative h-20 py-5">
-                <button className="bg-accent rounded-lg text-white px-8 py-3 h-10">
-                  Change Delivery Address
-                </button>
-              </div>
-            </section>
-          </div>
-          <div className="text-right mt-4">
-            <button
-              onClick={() => handlePayNow()}
-              className="bg-accent rounded-lg text-white px-8 py-3 h-10 mr-8 "
-            >
-              Proceed to checkout
-            </button>
-          </div>
-        </container>
-      </div>
-    );
-  if (delivery_method === "collect") {
-    return (
-      <div className="justify-center items-center align-center flex  m-auto">
-        <container className="">
-          <div className=" checkout_container  flex-col sm:flex-row">
-            <section className="pt-24 pr-0 bg-light-grey pb-3 relative mr-0 first_section  lg:pl-2">
-              <div className="hover:bg-grey rounded-full mb-4 p-2 w-11 h-11 cursor-pointer">
-                <ArrowLeftIcon
-                  className="h-7 w-7"
-                  onClick={() => window.history.back()}
-                />
-              </div>
+            )}
+            {changeDate === true && delivery_method === "deliver" && (
+              <AddressForm />
+            )}
 
-              <div className="flex flex-col items-start pb-2">
-                <p className="text-2xl font-bold h-full mr-4">Checkout</p>
-                <p className="inline-block h-full font-semibold pb-[2px] text-text">
-                  {diamonds_in_cart.length} items in Cart
-                </p>
-              </div>
-              <section className="checkout_cart_container min-w-[39rem] pr-0 lg:pr-6 pr-0">
-                <div
-                  className="border-solid h-[32rem] border-[1px] border-b-0 rounded-t-lg z-0 overflow-auto text-white"
-                  style={{ backgroundColor: "rgb(50 50 50)" }}
-                >
-                  {diamonds_in_cart.length === 0 ? (
-                    <div className="flex justify-center items-center h-[100%] text-[25px]">
-                      There are no items in your cart.
-                    </div>
-                  ) : (
-                    diamonds_in_cart.map((diamond, index) => {
-                      return (
-                        <div
-                          key={diamond.id}
-                          onClick={() => setSelectedDiamond(diamond)}
-                          className={`relative flex items-center cursor-pointer justify-between border-solid border-0 border-b-[1px] h-[6rem] border-gray-500 pl-4 ${
-                            index === 0 && "rounded-t-lg"
-                          } ${selectedDiamond === diamond ? "bg-grey/40" : ""}`}
-                        >
-                          <div className="flex items-center w-full">
-                            <img
-                              src={diamond.image}
-                              alt=""
-                              className="h-[4rem] w-[4rem]"
-                            />
-                            <div className="ml-10 h-full">
-                              <div className="font-semibold diamond_detail_text">
-                                {diamond.shape.toUpperCase()}{" "}
-                                {diamond.specifications.carat}ct{" "}
-                                {diamond.specifications.color}{" "}
-                                {diamond.specifications.clarity.toUpperCase()}{" "}
-                                {diamond.specifications.cut.toUpperCase()}{" "}
-                                {diamond.finish.polish.toUpperCase()}{" "}
-                                {diamond.finish.symmetry.toUpperCase()}{" "}
-                                {diamond.finish.fluorescence.toUpperCase()}
-                              </div>
-                              <p className="diamond_detail_text_2">
-                                {diamond.id}
-                              </p>
-                              <p className="diamond_detail_text_2">
-                                {diamond.ratio_measurements.measurements.width}{" "}
-                                -{" "}
-                                {diamond.ratio_measurements.measurements.height}{" "}
-                                x{" "}
-                                {diamond.ratio_measurements.measurements.depth}
-                              </p>
-                            </div>
-
-                            {diamond.diamond_type_id == 2 && (
-                              <div className="ml-auto text-right border-solid border-0 border-r-[1px] pr-4 mr-32 border-white">
-                                <p className="mb-2">
-                                  {diamond.amount ? diamond.amount : 0}{" "}
-                                  Available
-                                </p>
-                                <div className="flex">
-                                  <input
-                                    className={`w-[6rem] h-[1.5rem] px-2 rounded-sm mr-2`}
-                                    value={
-                                      diamond.amount_in_cart === 0
-                                        ? null
-                                        : diamond.amount_in_cart
-                                    }
-                                    onChange={(e) => {
-                                      updateCurrentAmount(e);
-                                    }}
-                                  />
-                                  <p>~ pcs</p>
-                                </div>
-                              </div>
-                            )}
-
-                            <div
-                              className={`${
-                                diamond.diamond_type_id === 2
-                                  ? "ml-0"
-                                  : "ml-auto"
-                              } text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white`}
-                            >
-                              <p className="diamond_detail_text_3">
-                                Delivery Time
-                              </p>
-                              <p className="font-semibold diamond_detail_text_4">
-                                {getWarehouseDeliveryTime(diamond.warehouse_id)}
-                              </p>
-                            </div>
-
-                            <div
-                              className={`text-right border-solid border-0 border-r-[1px] pr-4 mr-4 border-white`}
-                            >
-                              <p className="diamond_detail_text_3">
-                                Price in USD
-                              </p>
-                              <p className="font-semibold diamond_detail_text_4">
-                                ${" "}
-                                {formatNumberWithSpaces(
-                                  (
-                                    diamond.total * diamond.amount_in_cart
-                                  ).toFixed(2)
-                                )}
-                              </p>
-                            </div>
-
-                            <div className="text-right mr-4">
-                              <p className="diamond_detail_text_3">
-                                Price in {currency.name}
-                              </p>
-                              <p className="font-semibold diamond_detail_text_4">
-                                {diamond.total
-                                  ? currency.symbol +
-                                    " " +
-                                    formatNumberWithSpaces(
-                                      (
-                                        (parseFloat(diamond.total) *
-                                          diamond.amount_in_cart *
-                                          rates[currency.code] *
-                                          10) /
-                                        10
-                                      ).toFixed(2)
-                                    )
-                                  : "N/A"}
-                              </p>
-                            </div>
-                          </div>
-                          <p className="">{diamond.price}</p>
-                        </div>
-                      );
-                    })
-                  )}
-                </div>
-
-                <div className="flex items-center border-solid px-8 h-[8rem] border-[1px] border-black rounded-b-lg bg-black">
-                  <div className="text-white">
-                    <p className="mb-2">Sub Total</p>
-                    <p className="mb-2">Delivery Fee</p>
-                    <p className="font-semibold text-lg">
-                      Total (Excluding VAT)
-                    </p>
-                  </div>
-                  <div className="ml-auto text-white ">
-                    <p className="mb-2 text-right">
-                      {currency.symbol} {formatNumberWithSpaces(subTotal)}
-                    </p>
-                    <p className="mb-2 text-right">
-                      {currency.symbol}{" "}
-                      {formatNumberWithSpaces(deliveryFee.toFixed(2))}
-                    </p>
-                    <p className="font-semibold text-lg text-right">
-                      {currency.symbol} {formatNumberWithSpaces(total)}
-                    </p>
-                  </div>
-                </div>
-              </section>
-            </section>
-            <section className="address_section rounded-b-lg rounded-t-lg max-w-[39rem] md:mt-[13.8rem]  pt-2 h-36">
-              <div className="address_content text-white px-10 bg-light-grey relative ">
+            {delivery_method === "collect" && (
+              <div className="address_content text-white px-10 bg-light-grey relative pt-4">
                 <h2 className="text-lg mb-2 mt-2 text-center">
-                  {" "}
                   Collection Address
                 </h2>
                 <p className="address_paragraph pl-0">
                   Office 210B, 5 Sturdee Avenue, Rosebank
                 </p>
               </div>
-            </section>
-          </div>
-          <div className="text-right mt-4">
-            <button
-              onClick={() => handlePayNow()}
-              className="bg-accent rounded-lg text-white px-8 py-3 h-10 mr-8 "
-            >
-              Proceed to checkout
-            </button>
-          </div>
-        </container>
-      </div>
-    );
-  }
+            )}
+            {delivery_method === "deliver" && changeDate === false && (
+              <div className="text-center address_content text-white px-10 bg-light-grey relative h-20 py-5">
+                <button
+                  onClick={() => handleChangeAddress()}
+                  className="bg-accent rounded-lg text-white px-8 py-3 h-10"
+                >
+                  Change Delivery Address
+                </button>
+              </div>
+            )}
+          </section>
+        </div>
+        <div className="text-right mt-9 mb-9">
+          <button
+            onClick={() => handlePayNow()}
+            className="bg-accent rounded-lg text-white px-8 py-3 h-10 mr-8 "
+          >
+            Proceed To Payment
+          </button>
+        </div>
+      </container>
+    </div>
+  );
 };

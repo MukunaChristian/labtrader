@@ -234,7 +234,7 @@ export const Cart = () => {
     }
     
     return (
-      <div className="pt-24 px-24 bg-light-grey pb-24 relative">
+      <div className="pt-24 px-24 bg-light-grey pb-24 relative max-w-[80rem] w-full m-auto">
         <div className="hover:bg-grey rounded-full mb-4 p-2 w-11 h-11 cursor-pointer">
           <ArrowLeftIcon className="h-7 w-7" onClick={() => window.history.back()}/>
         </div>
@@ -254,7 +254,7 @@ export const Cart = () => {
                 <div key={diamond.id} onClick={() => setSelectedDiamond(diamond)} className={`relative flex items-center cursor-pointer justify-between border-solid border-0 border-b-[1px] h-[6rem] border-gray-500 pl-4 ${index === 0 && 'rounded-t-lg'} ${selectedDiamond === diamond ? 'bg-grey/40' : ''}`}>
                   <div className="flex items-center w-full">
                     <img src={diamond.image} alt="" className="h-[4rem] w-[4rem]"/>
-                    <div className="ml-10 h-full">
+                    <div className="ml-10 h-full pr-2">
                       <div className='font-semibold text-sm pb-1'>
                         {diamond.shape.toUpperCase()} {diamond.specifications.carat}ct {diamond.specifications.color} {diamond.specifications.clarity.toUpperCase()} {diamond.specifications.cut.toUpperCase()} {diamond.finish.polish.toUpperCase()} {diamond.finish.symmetry.toUpperCase()} {diamond.finish.fluorescence.toUpperCase()}
                       </div>
@@ -330,15 +330,16 @@ export const Cart = () => {
           </div>
         }
             <div className="flex items-center justify-end mt-6">
-              <div className="flex pay_later_container">
+              <div className="flex pay_later_container">    
+               <p className="pb-4"> ( We'll send an invoice )</p>
                 <button onClick={() => handleCheckout()} className="bg-accent rounded-lg text-white px-8 py-3 h-10">Pay Later</button>
-                <p> ( We'll send an invoice )</p>
+           
               </div>
               <div className="flex pay-now-container">
                 <p className="mb-2 font-semibold text-center text-lg">Pay Now</p>
                 <p className="mb-2 text-center text-sm pay_now_price"> {currency.symbol} {formatNumberWithSpaces(((subTotal - ( subTotal*0.03 ))+ deliveryFee ))} (3% off)</p>
                 <button onClick={() => handlePayNow()} className="bg-accent rounded-lg text-white px-8 py-3 h-10" >
-                  Proceed to checkout
+                  Proceed To Checkout
                 </button>
               </div>
             </div>
