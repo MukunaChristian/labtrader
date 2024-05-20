@@ -16,6 +16,7 @@ import { Confirm } from './pages/Confirm';
 import { Orders } from './pages/Orders';
 import { OrdersDetails } from './pages/OrdersDetails';
 // import {MobileView} from './components/MobileView';
+import {Checkout} from './pages/Checkout';
 import store from './store';
 import axios from 'axios';
 
@@ -42,6 +43,7 @@ function App() {
             <Route path="/confirm" element={<Confirm />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/orders/details/:id" element={<OrdersDetails />} />
+            <Route path="/checkout/:checkout_id/:delivery_method" element={<Checkout />} />
           </Routes>
         </Layout>
       </BrowserRouter>
