@@ -15,6 +15,7 @@ import { Report } from './pages/Reports';
 import { Confirm } from './pages/Confirm';
 import { Orders } from './pages/Orders';
 import { OrdersDetails } from './pages/OrdersDetails';
+// import {MobileView} from './components/MobileView';
 import store from './store';
 import axios from 'axios';
 
