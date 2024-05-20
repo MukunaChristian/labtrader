@@ -175,15 +175,15 @@ export const Details = () => {
                       </p>
                       {diamond.certificate === "IGI" ? (
                         <>
-                          <a
+                          {/* <a
                             className="text-text font-bold border-0 border-solid border-b-[1px]"
                             target="_blank"
                             rel="noreferrer"
                             href={`http://www.igi.org/verify.php?r=${diamond.cert_id}`}
                           >
                             {diamond.cert_id}
-                          </a>
-                          <ClipboardDocumentIcon
+                          </a> */}
+                          {/* <ClipboardDocumentIcon
                             className="w-5 h-5 text-text ml-2 mt-[1px] cursor-pointer"
                             onClick={() =>
                               navigator.clipboard.writeText(
@@ -191,7 +191,7 @@ export const Details = () => {
                                   diamond.cert_id
                               )
                             }
-                          />
+                          /> */}
                         </>
                       ) : (
                         <>
